@@ -1,0 +1,30 @@
+name: Setup Branches
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  create-backend-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Backend branch if it does not exist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch origin
+          if git ls-remote --exit-code --heads origin Backend; then
+            echo "Backend branch already exists"
+          else
+            git push origin origin/main:refs/heads/Backend
+            echo "Backend branch created successfully"
+          fi
