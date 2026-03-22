@@ -25,6 +25,6 @@ jobs:
           if git ls-remote --exit-code --heads origin Backend; then
             echo "Backend branch already exists"
           else
-            git push origin origin/main:refs/heads/Backend
+            git push origin refs/remotes/origin/main:refs/heads/Backend
             echo "Backend branch created successfully"
           fi
