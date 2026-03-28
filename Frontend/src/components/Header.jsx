@@ -1,19 +1,33 @@
-export default function Header({ currentScreen }) {
-  // Thay đổi text đường dẫn dựa vào màn hình hiện tại
-  const getBreadcrumb = () => {
-    switch (currentScreen) {
-      case 'workspace': return 'Danh sách';
-      case 'calculations': return 'Tính toán kỹ thuật';
-      case 'reports': return 'Báo cáo';
-      default: return 'Danh sách';
-    }
-  };
-
+export default function Header({ currentScreen, onNavigate, activeProjectName }) {
   return (
     <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0">
-      <div className="text-sm text-slate-500">
-        Dự án › <span className="text-slate-900 font-medium">{getBreadcrumb()}</span>
+      
+      <div className="flex items-center">
+        {/* Logic hiển thị nút Quay lại khi ở trong phòng dự án */}
+        {currentScreen === 'calculations' || currentScreen === 'summary' || currentScreen === 'reports' ? (
+          <button 
+            onClick={() => onNavigate('workspace')}
+            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-colors bg-slate-50 hover:bg-primary-light px-3 py-1.5 rounded-lg border border-slate-200"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Thoát Dự án
+          </button>
+        ) : (
+          <div className="text-sm text-slate-500">
+            Hệ thống › <span className="text-slate-900 font-medium">
+              {currentScreen === 'workspace' ? 'Không gian làm việc' : 'Thư viện Linh kiện'}
+            </span>
+          </div>
+        )}
+
+        {/* Tên dự án đang mở */}
+        {(currentScreen === 'calculations' || currentScreen === 'summary' || currentScreen === 'reports') && activeProjectName && (
+          <div className="ml-4 pl-4 border-l border-slate-300 text-sm font-bold text-primary-dark">
+            {activeProjectName}
+          </div>
+        )}
       </div>
+
       <div className="flex items-center gap-4">
         <div className="relative">
           <input className="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary outline-none" placeholder="Tìm kiếm nhanh..." type="text"/>

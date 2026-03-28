@@ -43,9 +43,6 @@ function App() {
       const projectList = await appRequest('/projects');
       setIsAuthenticated(true);
       setProjects(projectList || []);
-      if (projectList?.length && !activeProject) {
-        setActiveProject(projectList[0]);
-      }
     } catch (error) {
       const message = error.message || '';
       if (message.includes('Không có token') || message.includes('Unauthorized')) {
@@ -86,8 +83,11 @@ function App() {
 
   const handleProjectSelected = async (project) => {
     setActiveProject(project);
-    setCurrentScreen('calculations');
+    setCurrentScreen('calculations'); // Nhảy vào phòng dự án
     setKinematics(null);
+
+    // Bỏ qua load kinematics nếu người dùng bấm "Tạo dự án mới" (project = null)
+    if (!project) return;
 
     try {
       const data = await appRequest(`/projects/${project.id}/kinematics`);
@@ -132,18 +132,20 @@ function App() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 transition-opacity duration-300">
-      {/* Cột bên trái */}
       <Sidebar 
         currentScreen={currentScreen} 
         onNavigate={setCurrentScreen} 
         onLogout={handleLogout}
       />
       
-      {/* Khu vực chính */}
       <main className="flex-1 flex flex-col overflow-hidden bg-slate-50">
-        <Header currentScreen={currentScreen} />
+        {/* ĐÃ SỬA: Truyền prop onNavigate và activeProjectName xuống cho Header */}
+        <Header 
+          currentScreen={currentScreen} 
+          onNavigate={setCurrentScreen} 
+          activeProjectName={activeProject?.name} 
+        />
         
-        {/* NỘI DUNG THAY ĐỔI THEO TAB (Đã dọn dẹp sạch sẽ) */}
         <div className="flex-1 overflow-y-auto p-8" id="screen-container">
           {currentScreen === 'workspace' && (
             <Workspace
@@ -155,6 +157,15 @@ function App() {
               onDeleteProject={handleProjectDeleted}
             />
           )}
+
+          {currentScreen === 'catalog' && (
+            <div className="flex flex-col items-center justify-center h-full text-slate-500 space-y-4 mt-20 animate-fade-in">
+               <svg className="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+               <h2 className="text-xl font-bold text-slate-700">Thư viện Linh kiện (Catalog)</h2>
+               <p>Giao diện UC-07 đang được phát triển đợi đi m...</p>
+            </div>
+          )}
+
           {currentScreen === 'calculations' && (
             <Calculations
               onNavigate={setCurrentScreen}

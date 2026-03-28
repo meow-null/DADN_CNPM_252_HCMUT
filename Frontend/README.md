@@ -43,3 +43,33 @@ Sau khi chạy lệnh trên, terminal sẽ cung cấp một đường link (thư
 ## 📝 Ghi chú cho Backend Developer
 - Logic chuyển trang hiện tại đang được xử lý cứng (hard-code) bằng State trong `App.jsx`.
 - Khi tích hợp API, cần chú ý cập nhật lại luồng Đăng nhập (`isAuthenticated`) để lưu Token.
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.1 (28/03)
+Tái cấu trúc Kiến trúc UI (Master-Detail) & Triển khai UC-05 (Chi tiết máy)
+
+### 1. Tái cấu trúc Luồng điều hướng (Navigation Architecture)
+* **Sửa gì:** Chuyển đổi từ menu phẳng (Global) sang mô hình Master-Detail (Local Project Scope). Xóa nút Tính toán/Báo cáo khỏi thanh điều hướng chung. Thêm nút "Thư viện linh kiện" (Chuẩn bị cho UC-07).
+* **Ở file nào:** 
+  - `src/components/Sidebar.jsx`
+  - `src/components/Header.jsx`
+  - `src/App.jsx`
+* **Để làm gì:** Ngăn chặn lỗi người dùng bấm vào Tính toán khi chưa chọn dự án. Tách biệt rõ ràng Không gian làm việc chung (Global) và Phòng dự án cụ thể (Local). Header giờ đây có thêm nút "Thoát dự án" để quay về Workspace mượt mà.
+
+### 2. Vá lỗi (Bug Fix) Workspace
+* **Sửa gì:** Cập nhật hàm xử lý của nút "Tạo dự án mới" và các Card dự án trống.
+* **Ở file nào:** `src/pages/Workspace.jsx`
+* **Để làm gì:** Fix lỗi dính dữ liệu cũ. Khi bấm tạo mới, hệ thống sẽ tự động gỡ dữ liệu (`activeProject = null`) trước khi điều hướng sang trang Nhập liệu.
+
+### 3. Cập nhật Quy trình Wizard & Giao diện UC-05 (Chi tiết máy)
+* **Sửa gì:** 
+  - Đảo vị trí Bước 3 và Bước 4: Luồng chuẩn mới là **Nhập liệu ➔ Động học ➔ Chi tiết máy ➔ Chọn động cơ**.
+  - Xây dựng Sub-menu bên trái cho Bước 3 để điều hướng giữa các module: Vật liệu, Bánh răng côn, Bánh răng trụ, Trục.
+  - Xây dựng UI cho module Bánh răng côn (Sub-step 2).
+* **Ở file nào:** `src/pages/Calculations.jsx`
+* **Để làm gì:** Tuân thủ đúng logic thiết kế cơ khí. Tránh làm màn hình bị quá tải thông tin bằng cách chia nhỏ UC-05.
+
+### 4. Tích hợp Logic kiểm nghiệm bền (Chuẩn bị cho API)
+* **Sửa gì:** Xây dựng State giả lập API (`gearData`) cho bánh răng côn. Thêm cơ chế chặn luồng (Disable nút Tiếp tục) khi ứng suất tiếp xúc không đạt (`σH > [σH]`).
+* **Ở file nào:** `src/pages/Calculations.jsx`
+* **Để làm gì:** Mô phỏng đúng AF1 & EF1 trong Đặc tả SRS. Tạo luồng "Thử & Sai" (Trial & Error) chân thực cho kỹ sư: Báo lỗi đỏ ➔ Đổi vật liệu ➔ Bấm cập nhật (có loading 1s) ➔ Đạt chuẩn xanh lá ➔ Mở khóa cho đi tiếp sang Bước 4. Giúp Backend dễ dàng map data JSON vào State sau này.
