@@ -73,3 +73,25 @@ Tái cấu trúc Kiến trúc UI (Master-Detail) & Triển khai UC-05 (Chi tiế
 * **Sửa gì:** Xây dựng State giả lập API (`gearData`) cho bánh răng côn. Thêm cơ chế chặn luồng (Disable nút Tiếp tục) khi ứng suất tiếp xúc không đạt (`σH > [σH]`).
 * **Ở file nào:** `src/pages/Calculations.jsx`
 * **Để làm gì:** Mô phỏng đúng AF1 & EF1 trong Đặc tả SRS. Tạo luồng "Thử & Sai" (Trial & Error) chân thực cho kỹ sư: Báo lỗi đỏ ➔ Đổi vật liệu ➔ Bấm cập nhật (có loading 1s) ➔ Đạt chuẩn xanh lá ➔ Mở khóa cho đi tiếp sang Bước 4. Giúp Backend dễ dàng map data JSON vào State sau này.
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.2 (10/04)
+Triển khai UC-06 (Chọn Động cơ) — Giao diện đề xuất & lựa chọn động cơ tối ưu
+
+### 1. Tạo component MotorRecommendation (UC-06)
+* **Sửa gì:** Xây dựng component mới `MotorRecommendation.jsx` phục vụ Bước 4 của Wizard. Component gọi trực tiếp 3 API Backend:
+  - `GET /projects/:id/motors/suggestions` → Lấy Top 3 động cơ đề xuất.
+  - `GET /projects/:id/motors/candidates` → Lấy toàn bộ danh sách động cơ thỏa mãn (AF1).
+  - `POST /projects/:id/motors/select` → Lưu động cơ đã chọn vào project.
+* **Ở file nào:** `src/pages/MotorRecommendation.jsx` **(MỚI)**
+* **Để làm gì:** Hiện thực hóa UC-06 với 5 trạng thái UI:
+  1. **Loading** — Skeleton cards khi đang truy vấn.
+  2. **Top 3 Cards** — Hiển thị 3 động cơ tối ưu nhất (card đầu nổi bật với viền primary, scale-105). Mỗi card có: mã motor, series badge (K/DK/4A color-coded), P_dm, n_dm, hiệu suất, cos φ, ΔP, Δn.
+  3. **Bảng mở rộng (AF1)** — Modal full-width hiển thị tất cả động cơ thỏa mãn, hỗ trợ sort theo từng cột.
+  4. **Empty State (EF1)** — Thông báo khi không tìm thấy động cơ phù hợp hoặc chưa có dữ liệu đầu vào.
+  5. **Xác nhận** — Card xác nhận xanh lá sau khi chọn, có nút "Chọn lại" hoặc "Hoàn tất & Xem tóm tắt".
+
+### 2. Tích hợp vào Wizard (Calculations)
+* **Sửa gì:** Thay thế block hardcode tĩnh ở Bước 4 (hiển thị cứng motor 4A132S4Y3) bằng component `MotorRecommendation` mới. Truyền props `activeProject`, `kinematicsResult`, `onMotorSelected`, `onNavigate`.
+* **Ở file nào:** `src/pages/Calculations.jsx`
+* **Để làm gì:** Kết nối Bước 4 với API Backend thật. Sau khi user chọn motor, Backend lưu `selected_motor_id` + `selected_motor_snapshot` vào project và chuyển step sang `motor_selected`.

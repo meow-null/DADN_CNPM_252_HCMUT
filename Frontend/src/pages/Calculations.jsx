@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import MotorRecommendation from './MotorRecommendation';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
@@ -23,6 +24,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   const [showFormulaModal, setShowFormulaModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedMotor, setSelectedMotor] = useState(null);
 
   // --- LOGIC GIẢ LẬP API CHO UC-05 ---
   const [isCalculatingGear, setIsCalculatingGear] = useState(false);
@@ -509,28 +511,14 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
         </div>
       )}
 
-      {/* STEP 4: ĐỘNG CƠ */}
+      {/* STEP 4: CHỌN ĐỘNG CƠ (UC-06) */}
       {step === 4 && (
-        <div className="space-y-8 animate-fade-in flex flex-col items-center">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-             <h2 className="text-3xl font-bold text-slate-900">Chọn Động cơ Tối ưu</h2>
-             <p className="text-slate-500">Hệ thống gợi ý các mẫu động cơ phù hợp với yêu cầu bài toán.</p>
-          </div>
-          
-          <div className="bg-white rounded-2xl border-2 border-primary shadow-xl overflow-hidden max-w-xl w-full">
-            <div className="bg-primary text-white text-[10px] font-bold py-1 text-center uppercase tracking-widest">Đề xuất tối ưu nhất</div>
-            <div className="p-8 space-y-6">
-              <h3 className="text-2xl font-black text-slate-800 text-center">4A132S4Y3</h3>
-              <div className="bg-slate-50 rounded-xl p-4 space-y-3">
-                <div className="flex justify-between border-b pb-2"><span className="text-sm">Công suất:</span><span className="font-bold">7.5 kW</span></div>
-                <div className="flex justify-between"><span className="text-sm">Vòng quay:</span><span className="font-bold">1450 rpm</span></div>
-              </div>
-            </div>
-            <button className="w-full bg-primary text-white py-4 font-bold hover:bg-primary-dark transition-all text-lg flex items-center justify-center gap-2" onClick={() => onNavigate('summary')}>
-               Hoàn tất & Xem báo cáo
-            </button>
-          </div>
-        </div>
+        <MotorRecommendation
+          activeProject={activeProject}
+          kinematicsResult={kinematicsResult}
+          onMotorSelected={setSelectedMotor}
+          onNavigate={onNavigate}
+        />
       )}
 
       {/* MODAL CÔNG THỨC */}
