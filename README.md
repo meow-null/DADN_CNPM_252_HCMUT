@@ -37,6 +37,12 @@ mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS dadn_252 CHARACTER SET utf8mb
 mysql -u root -p dadn_252 < DADN_252.sql
 ```
 
+Neu ban thay doi schema trong Backend/prisma/schema.prisma thi chay lai trong thu muc Backend:
+
+```bash
+npm run prisma
+```
+
 ## 4. Cau hinh Backend .env
 
 Tao file Backend/.env voi noi dung mau:
@@ -129,6 +135,17 @@ Kinematics:
 
 - POST /api/projects/:projectId/kinematics
 - GET /api/projects/:projectId/kinematics
+
+Motors:
+
+- GET /api/projects/:projectId/motors/suggestions
+- GET /api/projects/:projectId/motors/candidates
+- POST /api/projects/:projectId/motors/select
+
+Luu y:
+
+- Cac API motor nay doc P_ct va n_sb tu project da tinh dong hoc trong database.
+- Truoc khi goi API motor, can hoan thanh buoc kinematics cho project do.
 
 ## 9. Quy trinh chay nhanh (tom tat)
 
