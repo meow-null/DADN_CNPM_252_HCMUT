@@ -52,6 +52,26 @@ async login(req) {
 
     return { accessToken, refreshToken };
 },
+
+async getInfo(req) {
+    const userInfo = await prisma.users.findUnique({
+        where: { id: req.user.id },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
+        },
+    });
+
+    if (!userInfo) {
+        throw new UnauthorizedException("Người dùng không tồn tại");
+    }
+
+    return userInfo;
+},
 };
 
 

@@ -3336,8 +3336,10 @@ export namespace Prisma {
     id: number | null
     P_dm: Decimal | null
     n_dm: number | null
+    efficiency: Decimal | null
     cos_phi: Decimal | null
-    eta_motor: Decimal | null
+    t_start_ratio: Decimal | null
+    t_max_ratio: Decimal | null
     mass_kg: Decimal | null
     price: Decimal | null
     deletedBy: number | null
@@ -3347,8 +3349,10 @@ export namespace Prisma {
     id: number | null
     P_dm: Decimal | null
     n_dm: number | null
+    efficiency: Decimal | null
     cos_phi: Decimal | null
-    eta_motor: Decimal | null
+    t_start_ratio: Decimal | null
+    t_max_ratio: Decimal | null
     mass_kg: Decimal | null
     price: Decimal | null
     deletedBy: number | null
@@ -3356,11 +3360,14 @@ export namespace Prisma {
 
   export type MotorsMinAggregateOutputType = {
     id: number | null
+    series: string | null
     code: string | null
     P_dm: Decimal | null
     n_dm: number | null
+    efficiency: Decimal | null
     cos_phi: Decimal | null
-    eta_motor: Decimal | null
+    t_start_ratio: Decimal | null
+    t_max_ratio: Decimal | null
     mass_kg: Decimal | null
     price: Decimal | null
     is_active: boolean | null
@@ -3373,11 +3380,14 @@ export namespace Prisma {
 
   export type MotorsMaxAggregateOutputType = {
     id: number | null
+    series: string | null
     code: string | null
     P_dm: Decimal | null
     n_dm: number | null
+    efficiency: Decimal | null
     cos_phi: Decimal | null
-    eta_motor: Decimal | null
+    t_start_ratio: Decimal | null
+    t_max_ratio: Decimal | null
     mass_kg: Decimal | null
     price: Decimal | null
     is_active: boolean | null
@@ -3390,11 +3400,14 @@ export namespace Prisma {
 
   export type MotorsCountAggregateOutputType = {
     id: number
+    series: number
     code: number
     P_dm: number
     n_dm: number
+    efficiency: number
     cos_phi: number
-    eta_motor: number
+    t_start_ratio: number
+    t_max_ratio: number
     mass_kg: number
     price: number
     is_active: number
@@ -3411,8 +3424,10 @@ export namespace Prisma {
     id?: true
     P_dm?: true
     n_dm?: true
+    efficiency?: true
     cos_phi?: true
-    eta_motor?: true
+    t_start_ratio?: true
+    t_max_ratio?: true
     mass_kg?: true
     price?: true
     deletedBy?: true
@@ -3422,8 +3437,10 @@ export namespace Prisma {
     id?: true
     P_dm?: true
     n_dm?: true
+    efficiency?: true
     cos_phi?: true
-    eta_motor?: true
+    t_start_ratio?: true
+    t_max_ratio?: true
     mass_kg?: true
     price?: true
     deletedBy?: true
@@ -3431,11 +3448,14 @@ export namespace Prisma {
 
   export type MotorsMinAggregateInputType = {
     id?: true
+    series?: true
     code?: true
     P_dm?: true
     n_dm?: true
+    efficiency?: true
     cos_phi?: true
-    eta_motor?: true
+    t_start_ratio?: true
+    t_max_ratio?: true
     mass_kg?: true
     price?: true
     is_active?: true
@@ -3448,11 +3468,14 @@ export namespace Prisma {
 
   export type MotorsMaxAggregateInputType = {
     id?: true
+    series?: true
     code?: true
     P_dm?: true
     n_dm?: true
+    efficiency?: true
     cos_phi?: true
-    eta_motor?: true
+    t_start_ratio?: true
+    t_max_ratio?: true
     mass_kg?: true
     price?: true
     is_active?: true
@@ -3465,11 +3488,14 @@ export namespace Prisma {
 
   export type MotorsCountAggregateInputType = {
     id?: true
+    series?: true
     code?: true
     P_dm?: true
     n_dm?: true
+    efficiency?: true
     cos_phi?: true
-    eta_motor?: true
+    t_start_ratio?: true
+    t_max_ratio?: true
     mass_kg?: true
     price?: true
     is_active?: true
@@ -3569,11 +3595,14 @@ export namespace Prisma {
 
   export type MotorsGroupByOutputType = {
     id: number
+    series: string | null
     code: string
     P_dm: Decimal
     n_dm: number
+    efficiency: Decimal | null
     cos_phi: Decimal | null
-    eta_motor: Decimal | null
+    t_start_ratio: Decimal | null
+    t_max_ratio: Decimal | null
     mass_kg: Decimal | null
     price: Decimal | null
     is_active: boolean | null
@@ -3605,11 +3634,14 @@ export namespace Prisma {
 
   export type motorsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    series?: boolean
     code?: boolean
     P_dm?: boolean
     n_dm?: boolean
+    efficiency?: boolean
     cos_phi?: boolean
-    eta_motor?: boolean
+    t_start_ratio?: boolean
+    t_max_ratio?: boolean
     mass_kg?: boolean
     price?: boolean
     is_active?: boolean
@@ -3626,11 +3658,14 @@ export namespace Prisma {
 
   export type motorsSelectScalar = {
     id?: boolean
+    series?: boolean
     code?: boolean
     P_dm?: boolean
     n_dm?: boolean
+    efficiency?: boolean
     cos_phi?: boolean
-    eta_motor?: boolean
+    t_start_ratio?: boolean
+    t_max_ratio?: boolean
     mass_kg?: boolean
     price?: boolean
     is_active?: boolean
@@ -3641,7 +3676,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type motorsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "P_dm" | "n_dm" | "cos_phi" | "eta_motor" | "mass_kg" | "price" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["motors"]>
+  export type motorsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "series" | "code" | "P_dm" | "n_dm" | "efficiency" | "cos_phi" | "t_start_ratio" | "t_max_ratio" | "mass_kg" | "price" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["motors"]>
   export type motorsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projects?: boolean | motors$projectsArgs<ExtArgs>
     _count?: boolean | MotorsCountOutputTypeDefaultArgs<ExtArgs>
@@ -3654,11 +3689,14 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      series: string | null
       code: string
       P_dm: Prisma.Decimal
       n_dm: number
+      efficiency: Prisma.Decimal | null
       cos_phi: Prisma.Decimal | null
-      eta_motor: Prisma.Decimal | null
+      t_start_ratio: Prisma.Decimal | null
+      t_max_ratio: Prisma.Decimal | null
       mass_kg: Prisma.Decimal | null
       price: Prisma.Decimal | null
       is_active: boolean | null
@@ -4038,11 +4076,14 @@ export namespace Prisma {
    */
   interface motorsFieldRefs {
     readonly id: FieldRef<"motors", 'Int'>
+    readonly series: FieldRef<"motors", 'String'>
     readonly code: FieldRef<"motors", 'String'>
     readonly P_dm: FieldRef<"motors", 'Decimal'>
     readonly n_dm: FieldRef<"motors", 'Int'>
+    readonly efficiency: FieldRef<"motors", 'Decimal'>
     readonly cos_phi: FieldRef<"motors", 'Decimal'>
-    readonly eta_motor: FieldRef<"motors", 'Decimal'>
+    readonly t_start_ratio: FieldRef<"motors", 'Decimal'>
+    readonly t_max_ratio: FieldRef<"motors", 'Decimal'>
     readonly mass_kg: FieldRef<"motors", 'Decimal'>
     readonly price: FieldRef<"motors", 'Decimal'>
     readonly is_active: FieldRef<"motors", 'Boolean'>
@@ -6759,11 +6800,14 @@ export namespace Prisma {
 
   export const MotorsScalarFieldEnum: {
     id: 'id',
+    series: 'series',
     code: 'code',
     P_dm: 'P_dm',
     n_dm: 'n_dm',
+    efficiency: 'efficiency',
     cos_phi: 'cos_phi',
-    eta_motor: 'eta_motor',
+    t_start_ratio: 't_start_ratio',
+    t_max_ratio: 't_max_ratio',
     mass_kg: 'mass_kg',
     price: 'price',
     is_active: 'is_active',
@@ -6855,6 +6899,7 @@ export namespace Prisma {
 
 
   export const motorsOrderByRelevanceFieldEnum: {
+    series: 'series',
     code: 'code'
   };
 
@@ -7158,11 +7203,14 @@ export namespace Prisma {
     OR?: motorsWhereInput[]
     NOT?: motorsWhereInput | motorsWhereInput[]
     id?: IntFilter<"motors"> | number
+    series?: StringNullableFilter<"motors"> | string | null
     code?: StringFilter<"motors"> | string
     P_dm?: DecimalFilter<"motors"> | Decimal | DecimalJsLike | number | string
     n_dm?: IntFilter<"motors"> | number
+    efficiency?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     cos_phi?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     mass_kg?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     price?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableFilter<"motors"> | boolean | null
@@ -7176,11 +7224,14 @@ export namespace Prisma {
 
   export type motorsOrderByWithRelationInput = {
     id?: SortOrder
+    series?: SortOrderInput | SortOrder
     code?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrderInput | SortOrder
     cos_phi?: SortOrderInput | SortOrder
-    eta_motor?: SortOrderInput | SortOrder
+    t_start_ratio?: SortOrderInput | SortOrder
+    t_max_ratio?: SortOrderInput | SortOrder
     mass_kg?: SortOrderInput | SortOrder
     price?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
@@ -7199,10 +7250,13 @@ export namespace Prisma {
     AND?: motorsWhereInput | motorsWhereInput[]
     OR?: motorsWhereInput[]
     NOT?: motorsWhereInput | motorsWhereInput[]
+    series?: StringNullableFilter<"motors"> | string | null
     P_dm?: DecimalFilter<"motors"> | Decimal | DecimalJsLike | number | string
     n_dm?: IntFilter<"motors"> | number
+    efficiency?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     cos_phi?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     mass_kg?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     price?: DecimalNullableFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableFilter<"motors"> | boolean | null
@@ -7216,11 +7270,14 @@ export namespace Prisma {
 
   export type motorsOrderByWithAggregationInput = {
     id?: SortOrder
+    series?: SortOrderInput | SortOrder
     code?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrderInput | SortOrder
     cos_phi?: SortOrderInput | SortOrder
-    eta_motor?: SortOrderInput | SortOrder
+    t_start_ratio?: SortOrderInput | SortOrder
+    t_max_ratio?: SortOrderInput | SortOrder
     mass_kg?: SortOrderInput | SortOrder
     price?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
@@ -7241,11 +7298,14 @@ export namespace Prisma {
     OR?: motorsScalarWhereWithAggregatesInput[]
     NOT?: motorsScalarWhereWithAggregatesInput | motorsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"motors"> | number
+    series?: StringNullableWithAggregatesFilter<"motors"> | string | null
     code?: StringWithAggregatesFilter<"motors"> | string
     P_dm?: DecimalWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string
     n_dm?: IntWithAggregatesFilter<"motors"> | number
+    efficiency?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     cos_phi?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     mass_kg?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     price?: DecimalNullableWithAggregatesFilter<"motors"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableWithAggregatesFilter<"motors"> | boolean | null
@@ -7695,11 +7755,14 @@ export namespace Prisma {
   }
 
   export type motorsCreateInput = {
+    series?: string | null
     code: string
     P_dm: Decimal | DecimalJsLike | number | string
     n_dm: number
+    efficiency?: Decimal | DecimalJsLike | number | string | null
     cos_phi?: Decimal | DecimalJsLike | number | string | null
-    eta_motor?: Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: Decimal | DecimalJsLike | number | string | null
     mass_kg?: Decimal | DecimalJsLike | number | string | null
     price?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
@@ -7713,11 +7776,14 @@ export namespace Prisma {
 
   export type motorsUncheckedCreateInput = {
     id?: number
+    series?: string | null
     code: string
     P_dm: Decimal | DecimalJsLike | number | string
     n_dm: number
+    efficiency?: Decimal | DecimalJsLike | number | string | null
     cos_phi?: Decimal | DecimalJsLike | number | string | null
-    eta_motor?: Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: Decimal | DecimalJsLike | number | string | null
     mass_kg?: Decimal | DecimalJsLike | number | string | null
     price?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
@@ -7730,11 +7796,14 @@ export namespace Prisma {
   }
 
   export type motorsUpdateInput = {
+    series?: NullableStringFieldUpdateOperationsInput | string | null
     code?: StringFieldUpdateOperationsInput | string
     P_dm?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     n_dm?: IntFieldUpdateOperationsInput | number
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cos_phi?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     mass_kg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7748,11 +7817,14 @@ export namespace Prisma {
 
   export type motorsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    series?: NullableStringFieldUpdateOperationsInput | string | null
     code?: StringFieldUpdateOperationsInput | string
     P_dm?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     n_dm?: IntFieldUpdateOperationsInput | number
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cos_phi?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     mass_kg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7766,11 +7838,14 @@ export namespace Prisma {
 
   export type motorsCreateManyInput = {
     id?: number
+    series?: string | null
     code: string
     P_dm: Decimal | DecimalJsLike | number | string
     n_dm: number
+    efficiency?: Decimal | DecimalJsLike | number | string | null
     cos_phi?: Decimal | DecimalJsLike | number | string | null
-    eta_motor?: Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: Decimal | DecimalJsLike | number | string | null
     mass_kg?: Decimal | DecimalJsLike | number | string | null
     price?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
@@ -7782,11 +7857,14 @@ export namespace Prisma {
   }
 
   export type motorsUpdateManyMutationInput = {
+    series?: NullableStringFieldUpdateOperationsInput | string | null
     code?: StringFieldUpdateOperationsInput | string
     P_dm?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     n_dm?: IntFieldUpdateOperationsInput | number
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cos_phi?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     mass_kg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -7799,11 +7877,14 @@ export namespace Prisma {
 
   export type motorsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    series?: NullableStringFieldUpdateOperationsInput | string | null
     code?: StringFieldUpdateOperationsInput | string
     P_dm?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     n_dm?: IntFieldUpdateOperationsInput | number
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cos_phi?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     mass_kg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -8456,11 +8537,14 @@ export namespace Prisma {
 
   export type motorsCountOrderByAggregateInput = {
     id?: SortOrder
+    series?: SortOrder
     code?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrder
     cos_phi?: SortOrder
-    eta_motor?: SortOrder
+    t_start_ratio?: SortOrder
+    t_max_ratio?: SortOrder
     mass_kg?: SortOrder
     price?: SortOrder
     is_active?: SortOrder
@@ -8475,8 +8559,10 @@ export namespace Prisma {
     id?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrder
     cos_phi?: SortOrder
-    eta_motor?: SortOrder
+    t_start_ratio?: SortOrder
+    t_max_ratio?: SortOrder
     mass_kg?: SortOrder
     price?: SortOrder
     deletedBy?: SortOrder
@@ -8484,11 +8570,14 @@ export namespace Prisma {
 
   export type motorsMaxOrderByAggregateInput = {
     id?: SortOrder
+    series?: SortOrder
     code?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrder
     cos_phi?: SortOrder
-    eta_motor?: SortOrder
+    t_start_ratio?: SortOrder
+    t_max_ratio?: SortOrder
     mass_kg?: SortOrder
     price?: SortOrder
     is_active?: SortOrder
@@ -8501,11 +8590,14 @@ export namespace Prisma {
 
   export type motorsMinOrderByAggregateInput = {
     id?: SortOrder
+    series?: SortOrder
     code?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrder
     cos_phi?: SortOrder
-    eta_motor?: SortOrder
+    t_start_ratio?: SortOrder
+    t_max_ratio?: SortOrder
     mass_kg?: SortOrder
     price?: SortOrder
     is_active?: SortOrder
@@ -8520,8 +8612,10 @@ export namespace Prisma {
     id?: SortOrder
     P_dm?: SortOrder
     n_dm?: SortOrder
+    efficiency?: SortOrder
     cos_phi?: SortOrder
-    eta_motor?: SortOrder
+    t_start_ratio?: SortOrder
+    t_max_ratio?: SortOrder
     mass_kg?: SortOrder
     price?: SortOrder
     deletedBy?: SortOrder
@@ -9373,11 +9467,14 @@ export namespace Prisma {
   }
 
   export type motorsCreateWithoutProjectsInput = {
+    series?: string | null
     code: string
     P_dm: Decimal | DecimalJsLike | number | string
     n_dm: number
+    efficiency?: Decimal | DecimalJsLike | number | string | null
     cos_phi?: Decimal | DecimalJsLike | number | string | null
-    eta_motor?: Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: Decimal | DecimalJsLike | number | string | null
     mass_kg?: Decimal | DecimalJsLike | number | string | null
     price?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
@@ -9390,11 +9487,14 @@ export namespace Prisma {
 
   export type motorsUncheckedCreateWithoutProjectsInput = {
     id?: number
+    series?: string | null
     code: string
     P_dm: Decimal | DecimalJsLike | number | string
     n_dm: number
+    efficiency?: Decimal | DecimalJsLike | number | string | null
     cos_phi?: Decimal | DecimalJsLike | number | string | null
-    eta_motor?: Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: Decimal | DecimalJsLike | number | string | null
     mass_kg?: Decimal | DecimalJsLike | number | string | null
     price?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
@@ -9462,11 +9562,14 @@ export namespace Prisma {
   }
 
   export type motorsUpdateWithoutProjectsInput = {
+    series?: NullableStringFieldUpdateOperationsInput | string | null
     code?: StringFieldUpdateOperationsInput | string
     P_dm?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     n_dm?: IntFieldUpdateOperationsInput | number
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cos_phi?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     mass_kg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -9479,11 +9582,14 @@ export namespace Prisma {
 
   export type motorsUncheckedUpdateWithoutProjectsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    series?: NullableStringFieldUpdateOperationsInput | string | null
     code?: StringFieldUpdateOperationsInput | string
     P_dm?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     n_dm?: IntFieldUpdateOperationsInput | number
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cos_phi?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    eta_motor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_start_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    t_max_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     mass_kg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null

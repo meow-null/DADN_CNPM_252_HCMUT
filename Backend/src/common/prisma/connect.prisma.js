@@ -1,7 +1,9 @@
 import "dotenv/config";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "./generated/prisma/client.ts";
+import prismaPkg from "./generated/prisma/index.js";
 import { DATABASE_URL } from "../constant/app.constant.js";
+
+const { PrismaClient } = prismaPkg;
 
 const url = new URL(DATABASE_URL);
 // console.log({ url, databaseName: url.pathname.substring(1) });

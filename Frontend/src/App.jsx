@@ -29,12 +29,22 @@ async function appRequest(path, options = {}) {
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentScreen, setCurrentScreen] = useState('workspace');
   const [projects, setProjects] = useState([]);
   const [activeProject, setActiveProject] = useState(null);
   const [kinematics, setKinematics] = useState(null);
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [workspaceError, setWorkspaceError] = useState('');
+
+  const loadCurrentUser = async () => {
+    try {
+      const userInfo = await appRequest('/auth/get-info');
+      setCurrentUser(userInfo || null);
+    } catch {
+      setCurrentUser(null);
+    }
+  };
 
   const loadProjects = async () => {
     setLoadingProjects(true);
@@ -43,10 +53,12 @@ function App() {
       const projectList = await appRequest('/projects');
       setIsAuthenticated(true);
       setProjects(projectList || []);
+      await loadCurrentUser();
     } catch (error) {
       const message = error.message || '';
       if (message.includes('Không có token') || message.includes('Unauthorized')) {
         setIsAuthenticated(false);
+        setCurrentUser(null);
       } else {
         setWorkspaceError(message || 'Không thể tải danh sách dự án.');
       }
@@ -66,6 +78,7 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setCurrentUser(null);
     setActiveProject(null);
     setKinematics(null);
   };
@@ -136,6 +149,7 @@ function App() {
         currentScreen={currentScreen} 
         onNavigate={setCurrentScreen} 
         onLogout={handleLogout}
+        userName={currentUser?.name}
       />
       
       <main className="flex-1 flex flex-col overflow-hidden bg-slate-50">

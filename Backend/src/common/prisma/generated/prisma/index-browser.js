@@ -152,11 +152,14 @@ exports.Prisma.ChainsScalarFieldEnum = {
 
 exports.Prisma.MotorsScalarFieldEnum = {
   id: 'id',
+  series: 'series',
   code: 'code',
   P_dm: 'P_dm',
   n_dm: 'n_dm',
+  efficiency: 'efficiency',
   cos_phi: 'cos_phi',
-  eta_motor: 'eta_motor',
+  t_start_ratio: 't_start_ratio',
+  t_max_ratio: 't_max_ratio',
   mass_kg: 'mass_kg',
   price: 'price',
   is_active: 'is_active',
@@ -227,6 +230,7 @@ exports.Prisma.bearingsOrderByRelevanceFieldEnum = {
 };
 
 exports.Prisma.motorsOrderByRelevanceFieldEnum = {
+  series: 'series',
   code: 'code'
 };
 

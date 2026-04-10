@@ -1,4 +1,4 @@
-export default function Sidebar({ currentScreen, onNavigate, onLogout }) {
+export default function Sidebar({ currentScreen, onNavigate, onLogout, userName }) {
   // Hàm phụ trợ để đổi màu nút active
   const getNavClass = (screenName) => {
     const baseClass = "flex items-center gap-3 w-full p-3 rounded-lg font-medium transition-colors ";
@@ -32,10 +32,10 @@ export default function Sidebar({ currentScreen, onNavigate, onLogout }) {
       <div className="p-4 border-t border-slate-100">
         <div className="flex items-center gap-3 p-2 bg-slate-50 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors" onClick={onLogout}>
           <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm bg-primary text-white flex items-center justify-center font-bold">
-            U
+            {(userName || 'Người dùng').trim().charAt(0).toUpperCase()}
           </div>
           <div className="overflow-hidden">
-            <p className="text-sm font-semibold truncate">Nguyễn Văn A</p>
+            <p className="text-sm font-semibold truncate">{userName || 'Người dùng'}</p>
             <p className="text-[10px] text-red-500 font-bold uppercase hover:underline">ĐĂNG XUẤT</p>
           </div>
         </div>

@@ -471,6 +471,9 @@ CLOUDINARY_API_SECRET=your_api_secret
 | GET | `/api/projects/:id` | Lấy thông tin project | ✅ JWT |
 | POST | `/api/projects/:id/kinematics` | Tính toán động học | ✅ JWT |
 | GET | `/api/projects/:id/kinematics` | Lấy kết quả động học | ✅ JWT |
+| GET | `/api/projects/:projectId/motors/suggestions` | Gợi ý top 3 động cơ phù hợp theo project | ✅ JWT |
+| GET | `/api/projects/:projectId/motors/candidates` | Lấy danh sách động cơ phù hợp theo project | ✅ JWT |
+| POST | `/api/projects/:projectId/motors/select` | Lưu động cơ đã chọn vào project | ✅ JWT |
 
 > 📖 Xem đầy đủ tại: **http://localhost:3069/api-docs**
 
@@ -492,6 +495,7 @@ projects
  ├── efficiency, Pct, total_ratio    (kết quả động học)
  ├── transmission, shafts (JSON)     (kết quả chi tiết)
  ├── selected_motor_id → motors
+ ├── selected_motor_snapshot (JSON)
  ├── step: created → inputs → kinematics → motor_selected → design_done
  └── isDeleted (soft delete)
 
