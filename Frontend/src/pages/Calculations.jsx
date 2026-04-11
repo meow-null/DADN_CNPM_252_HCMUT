@@ -93,14 +93,21 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
         input_n_ct: Number(form.input_n_ct),
         input_L: Number(form.input_L),
       };
+      
+      // 1. Lưu thông số đầu vào
       const savedProject = activeProject
         ? await calcRequest(`/projects/${activeProject.id}`, { method: 'PUT', body: payload })
         : await calcRequest('/projects', { method: 'POST', body: payload });
       
-      onProjectSaved(savedProject);
+      // 2. Tự động gọi tính toán Động học dựa trên input mới
+      const result = await calcRequest(`/projects/${savedProject.id}/kinematics`, { method: 'POST' });
+      
+      // 3. Cập nhật state toàn cục và chuyển tab
+      onProjectSaved(result.project);
+      onKinematicsSaved(result);
       setStep(2); 
     } catch (error) {
-      setErrorMessage(error.message || 'Không thể lưu dữ liệu đầu vào.');
+      setErrorMessage(error.message || 'Lỗi khi lưu dữ liệu hoặc tính toán tự động.');
     } finally {
       setIsSubmitting(false);
     }
