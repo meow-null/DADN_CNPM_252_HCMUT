@@ -97,10 +97,28 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
   const sortedAll = useMemo(() => {
     const list = [...allMotors];
     list.sort((a, b) => {
-      let va = a[sortField] ?? 0;
-      let vb = b[sortField] ?? 0;
-      if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
-      return sortDir === 'asc' ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+      let va = a[sortField];
+      let vb = b[sortField];
+
+      // Đưa các giá trị null/undefined xuống cuối
+      if (va === null || va === undefined) return 1;
+      if (vb === null || vb === undefined) return -1;
+
+      // Nếu là số thì so sánh kiểu số, nếu không thì so sánh chuỗi
+      const numA = Number(va);
+      const numB = Number(vb);
+
+      if (!isNaN(numA) && !isNaN(numB)) {
+        va = numA;
+        vb = numB;
+      } else {
+        va = String(va).toLowerCase();
+        vb = String(vb).toLowerCase();
+      }
+
+      if (va === vb) return 0;
+      const compare = va > vb ? 1 : -1;
+      return sortDir === 'asc' ? compare : -compare;
     });
     return list;
   }, [allMotors, sortField, sortDir]);
@@ -371,7 +389,7 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
                     <th className="px-5 py-3.5 cursor-pointer hover:text-primary text-right" onClick={() => handleSort('P_dm')}>P<sub>dm</sub> (kW) <SortIcon field="P_dm" /></th>
                     <th className="px-5 py-3.5 cursor-pointer hover:text-primary text-right" onClick={() => handleSort('n_dm')}>n<sub>dm</sub> (rpm) <SortIcon field="n_dm" /></th>
                     <th className="px-5 py-3.5 cursor-pointer hover:text-primary text-right" onClick={() => handleSort('efficiency')}>η (%) <SortIcon field="efficiency" /></th>
-                    <th className="px-5 py-3.5 text-right">cos φ</th>
+                    <th className="px-5 py-3.5 cursor-pointer hover:text-primary text-right" onClick={() => handleSort('cos_phi')}>cos φ <SortIcon field="cos_phi" /></th>
                     <th className="px-5 py-3.5 cursor-pointer hover:text-primary text-right" onClick={() => handleSort('delta_n')}>Δn <SortIcon field="delta_n" /></th>
                     <th className="px-5 py-3.5 cursor-pointer hover:text-primary text-right" onClick={() => handleSort('delta_P')}>ΔP <SortIcon field="delta_P" /></th>
                     <th className="px-5 py-3.5 text-center">Thao tác</th>
