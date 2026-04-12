@@ -155,10 +155,3 @@ Luu y:
 4. Chay Backend: npm run dev
 5. Chay Frontend: npm run dev
 6. Mo http://localhost:5173
-
-## 10. Patch Notes
-
-### [v1.4] - 2026-04-12
-- **Fix (UC-06)**: Sửa lỗi crash trắng màn hình khi sắp xếp (sort) cột hiệu suất H(%) do lỗi kiểu dữ liệu.
-- **Feature (UC-06)**: Bổ sung chức năng sắp xếp cho cột hệ số cos φ trong danh sách động cơ.
-- **Improvement**: Cập nhật logic sắp xếp thông minh, tự động nhận diện dữ liệu số để so sánh chính xác hơn.

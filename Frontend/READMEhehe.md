@@ -104,3 +104,21 @@ Tinh chỉnh UI & Cải thiện trải nghiệm người dùng
 * **Sửa gì:** Gỡ bỏ nút "Tính toán lại" khỏi giao diện kết quả động học.
 * **Ở file nào:** `src/pages/Calculations.jsx`
 * **Để làm gì:** Tránh việc người dùng thao tác nhầm gây gọi lại API không cần thiết hoặc phá vỡ luồng dữ liệu hiện tại, đồng thời làm giao diện gọn gàng, tập trung hơn vào việc chuyển sang bước tiếp theo (Chi tiết máy).
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.4 (12/04)
+Fix Sorting Bugs (UC-06) — Sửa lỗi crash và bổ sung tính năng sort
+
+### 1. Sửa logic sắp xếp (Sorting Logic Fix)
+* **Sửa gì:** Nâng cấp hàm `sortedAll` để xử lý an toàn dữ liệu kiểu số và giá trị `null`. Ngăn chặn crash khi gọi `.toLowerCase()` trên dữ liệu không phải chuỗi.
+* **Ở file nào:** `src/pages/MotorRecommendation.jsx`
+* **Để làm gì:** Giải quyết triệt để lỗi trắng màn hình khi người dùng nhấn vào cột Hiệu suất H(%) trong modal danh sách động cơ.
+
+### 2. Bổ sung tính năng sắp xếp cho cột cos φ
+* **Sửa gì:** Thêm sự kiện `onClick` và biểu tượng `SortIcon` cho tiêu đề cột **cos φ**.
+* **Ở file nào:** `src/pages/MotorRecommendation.jsx` (Table header)
+* **Để làm gì:** Đáp ứng đầy đủ nhu cầu so sánh thông số kỹ thuật giữa các động cơ, giúp người dùng dễ dàng chọn lựa thiết bị tối ưu.
+
+### 3. Cập nhật so sánh số thông minh
+* **Sửa gì:** Tự động chuyển đổi và so sánh kiểu số nếu dữ liệu trong cột có thể convert sang Number.
+* **Để làm gì:** Đảm bảo thứ tự sắp xếp các cột số (Power, RPM, Efficiency...) chính xác theo giá trị số thay vì theo bảng chữ cái.
