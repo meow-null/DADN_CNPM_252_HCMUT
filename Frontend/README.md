@@ -121,4 +121,21 @@ Fix Sorting Bugs (UC-06) — Sửa lỗi crash và bổ sung tính năng sort
 
 ### 3. Cập nhật so sánh số thông minh
 * **Sửa gì:** Tự động chuyển đổi và so sánh kiểu số nếu dữ liệu trong cột có thể convert sang Number.
-* **Để làm gì:** Đảm bảo thứ tự sắp xếp các cột số (Power, RPM, Efficiency...) chính xác theo giá trị số thay vì theo bảng chữ cái.
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.5 (07/05)
+Hoàn thiện Standalone UI & Nâng cấp Pipeline UC-05 (Thiết kế chi tiết máy)
+
+### 1. Hoàn thiện Pipeline UC-05 (Module A → F)
+* **Sửa gì:** Tích hợp logic tính toán cơ khí cho toàn bộ chuỗi: Xích (A), Bánh răng Côn (B), Bánh răng Trụ (C), Trục (D), Then (E) và Ổ lăn (F).
+* **Fix Bug:** Sửa lỗi Engine tự động ghi đè Module tiêu chuẩn. Hiện tại hệ thống đã ưu tiên sử dụng Module do người dùng chọn từ UI để tính toán ứng suất tiếp xúc $\sigma_H$.
+* **Ở file nào:** `src/utils/uc05Engine.js`, `src/pages/UC05Detail.jsx`.
+
+### 2. Cấu hình CORS & Kết nối Backend
+* **Sửa gì:** Cập nhật cấu hình CORS cho phép các origin phổ biến (`127.0.0.1`, `localhost`) và các cổng dev (`5173`, `5174`).
+* **Mục đích:** Giải quyết triệt để lỗi "Failed to fetch" khi đăng ký/đăng nhập tài khoản ở môi trường phát triển cục bộ.
+* **Ở file nào:** `Backend/server.js`.
+
+### 3. Cập nhật Engine tính toán tiêu chuẩn
+* **Sửa gì:** Bổ sung bảng tra tiêu chuẩn cho Then (TCVN) và Ổ lăn (ISO), tích hợp công thức tính ứng suất tiếp xúc $\sigma_H$ cho bánh răng.
+* **Để làm gì:** Đảm bảo kết quả thiết kế chính xác theo tiêu chuẩn kỹ thuật cơ khí.

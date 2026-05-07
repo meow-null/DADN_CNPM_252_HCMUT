@@ -1,7 +1,42 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import MotorRecommendation from './MotorRecommendation';
+import UC05Detail from './UC05Detail';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
+
+// --- DATA TIÊU CHUẨN TRÍCH XUẤT TỪ DATABASE ---
+const MATERIAL_GRADES = [
+  { name: 'Thép 45', HB: 215, sigma_b: 750, sigma_ch: 450, sigma_Hlim: 500, sigma_Flim: 387 },
+  { name: 'Thép 40X', HB: 245, sigma_b: 850, sigma_ch: 550, sigma_Hlim: 560, sigma_Flim: 441 },
+  { name: 'Thép 40XH', HB: 265, sigma_b: 800, sigma_ch: 600, sigma_Hlim: 600, sigma_Flim: 477 },
+  { name: 'Thép 35XM', HB: 241, sigma_b: 900, sigma_ch: 800, sigma_Hlim: 552, sigma_Flim: 433 },
+  { name: 'Thép 20X', HB: 480, sigma_b: 650, sigma_ch: 400, sigma_Hlim: 1150, sigma_Flim: 750 },
+];
+
+const CHAIN_STEPS = [
+  { p: 12.7, Q: 18.2, q: 0.65, A: 39.6, s_allow: 7.8, n_ref: 200 },
+  { p: 15.875, Q: 22.7, q: 0.8, A: 51.5, s_allow: 7.8, n_ref: 200 },
+  { p: 19.05, Q: 31.8, q: 1.9, A: 106, s_allow: 8.2, n_ref: 200 },
+  { p: 25.4, Q: 56.7, q: 2.6, A: 180, s_allow: 8.2, n_ref: 200 },
+  { p: 31.75, Q: 88.5, q: 3.8, A: 262, s_allow: 8.5, n_ref: 200 },
+  { p: 38.1, Q: 127.0, q: 5.5, A: 395, s_allow: 8.5, n_ref: 200 },
+  { p: 44.45, Q: 172.4, q: 7.5, A: 473, s_allow: 8.5, n_ref: 200 },
+  { p: 50.8, Q: 226.8, q: 9.7, A: 645, s_allow: 8.5, n_ref: 200 },
+];
+
+const STANDARD_MODULES = [1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
+const STANDARD_CENTER_DISTANCES = [80, 100, 125, 140, 160, 180, 200, 225, 250, 280, 315];
+const STANDARD_SHAFT_DIAMS = [10, 12, 14, 16, 18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100];
+
+// Dữ liệu tra cứu Then (Key) - Mockup based on TCVN
+const KEY_TABLE = [
+  { d_min: 22, d_max: 30, b: 8, h: 7, t1: 4.0 },
+  { d_min: 30, d_max: 38, b: 10, h: 8, t1: 5.0 },
+  { d_min: 38, d_max: 44, b: 12, h: 8, t1: 5.0 },
+  { d_min: 44, d_max: 50, b: 14, h: 9, t1: 5.5 },
+  { d_min: 50, d_max: 58, b: 16, h: 10, t1: 6.0 },
+  { d_min: 58, d_max: 65, b: 18, h: 11, t1: 7.0 },
+];
 
 async function calcRequest(path, options = {}) {
   const { method = 'GET', body } = options;
@@ -27,33 +62,75 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   const [selectedMotor, setSelectedMotor] = useState(null);
 
   // --- LOGIC GIẢ LẬP API CHO UC-05 ---
-  const [isCalculatingGear, setIsCalculatingGear] = useState(false);
-  const [gearData, setGearData] = useState({
-    status: 'error',
-    m_te: 2.5,
-    d_e1: 50,
-    R_e: 103.5,
-    sigma_H: 540,
-    allowable_sigma_H: 500,
-    message: 'Cảnh báo: Ứng suất tiếp xúc tính toán đang vượt quá ứng suất cho phép (σ<sub>H</sub> > [σ<sub>H</sub>] = 500 MPa). Vui lòng đổi mác thép hoặc nhiệt luyện.'
+  // --- PIPELINE CALCULATIONS (UC-05) ---
+  const [chainResults, setChainResults] = useState({
+    z1: 21, z2: 67, p: 25.4, Pt: 4.2, x: 120, a: 650, s: 10.5, sigmaH: 450, status: 'success'
   });
 
-  const handleRecalculateGear = () => {
-    setIsCalculatingGear(true);
-    // Giả lập Backend xử lý 1s
+  const [bevelResults, setBevelResults] = useState({
+    z1: 16, z2: 40, Re: 120, de1: 50, b: 30, sigmaH: 480, sigmaF: 150,
+    Ft: 1200, Fr: 450, Fa: 200, status: 'success'
+  });
+
+  const [spurResults, setSpurResults] = useState({
+    aw: 160, m: 2.5, z1: 24, z2: 76, bw: 50, sigmaH: 520,
+    Ft: 3200, Fr: 1160, Fa: 0, status: 'success'
+  });
+
+  const [shaftResults, setShaftResults] = useState({
+    I: { dsb: 25, dtc: 30, Mtd: 45000, s: 2.1 },
+    II: { dsb: 35, dtc: 40, Mtd: 142000, s: 1.8 },
+    III: { dsb: 45, dtc: 50, Mtd: 450000, s: 1.6 }
+  });
+
+  const [keyResults, setKeyResults] = useState({
+    status: 'success',
+    data: [
+      { shaft: 'I', b: 8, h: 7, lt: 40, sigma_d: 45.2, tau_c: 12.5 },
+      { shaft: 'II', b: 10, h: 8, lt: 50, sigma_d: 62.8, tau_c: 18.4 },
+      { shaft: 'III', b: 14, h: 9, lt: 65, sigma_d: 88.5, tau_c: 25.6 }
+    ]
+  });
+
+  const [bearingResults, setBearingResults] = useState({
+    status: 'success',
+    data: [
+      { shaft: 'I', code: '6206', Cd: 12.5, C_cat: 19.5, check: true },
+      { shaft: 'II', code: '6308', Cd: 28.4, C_cat: 41.0, check: true },
+      { shaft: 'III', code: '6310', Cd: 42.1, C_cat: 62.0, check: true }
+    ]
+  });
+
+  const handleRecalculatePipeline = () => {
+    setIsSubmitting(true);
     setTimeout(() => {
-      setGearData({
-        status: 'success',
-        m_te: 2.5,
-        d_e1: 50,
-        R_e: 103.5,
-        sigma_H: 480,
-        allowable_sigma_H: 600,
-        message: 'Tuyệt vời! Cặp bánh răng côn đã thỏa mãn điều kiện bền (σ<sub>H</sub> < [σ<sub>H</sub>]). Bạn có thể tiếp tục.'
+      // 1. Tính Xích (Module A)
+      const ux = data?.u_x_sb || 3.15;
+      let z1 = Math.floor(29 - 2 * ux);
+      if (z1 % 2 === 0) z1 -= 1; // Làm tròn xuống số lẻ
+      if (z1 < 17) z1 = 17;
+      
+      // 2. Tính Bánh răng côn (Module B)
+      const u1 = data?.u_1 || 2.5;
+      const Ft_bevel = 1250; // Mockup từ momen xoắn
+      
+      // 3. Tính Bánh răng trụ (Module C)
+      const u2 = data?.u_2 || 3.2;
+      const aw = 160;
+      
+      // 4. Tính Trục (Module D) - Sử dụng Ft từ bước trước
+      const Ft_total = Ft_bevel + 3200; // Tổng hợp lực từ B & C
+
+      setShaftResults({
+        I: { dsb: 25, dtc: 30, Mtd: 45000, s: 2.1 },
+        II: { dsb: 38, dtc: 45, Mtd: 155000, s: 1.9 },
+        III: { dsb: 48, dtc: 55, Mtd: 480000, s: 1.7 }
       });
-      setIsCalculatingGear(false);
-    }, 1000);
+
+      setIsSubmitting(false);
+    }, 1500);
   };
+
   // ----------------------------------
 
   const [form, setForm] = useState({
@@ -324,197 +401,10 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
           )}
         </div>
       )}
-
-      {/* STEP 3: CHI TIẾT MÁY (UC-05) */}
+      {/* STEP 3: CHI TIẾT MÁY (UC-05) - Pipeline A→F */}
       {step === 3 && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 animate-fade-in">
-          {/* Menu điều hướng phụ cho UC-05 */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden p-2 sticky top-6 shadow-sm">
-              <div className="p-3 text-[11px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 mb-2">
-                Quy trình thiết kế
-              </div>
-              <button 
-                onClick={() => setSubStep(1)} 
-                className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm transition-all ${subStep === 1 ? 'bg-primary-light text-primary font-bold shadow-inner' : 'text-slate-500 hover:bg-slate-50 font-medium'}`}
-              >
-                1. Vật liệu & Xích
-              </button>
-              <button 
-                onClick={() => setSubStep(2)} 
-                className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm transition-all ${subStep === 2 ? 'bg-primary-light text-primary font-bold shadow-inner' : 'text-slate-500 hover:bg-slate-50 font-medium'}`}
-              >
-                2. Bánh răng côn
-              </button>
-              <button 
-                onClick={() => setSubStep(3)} 
-                className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm transition-all ${subStep === 3 ? 'bg-primary-light text-primary font-bold shadow-inner' : 'text-slate-500 hover:bg-slate-50 font-medium'}`}
-              >
-                3. Bánh răng trụ
-              </button>
-              <button 
-                onClick={() => setSubStep(4)} 
-                className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm transition-all ${subStep === 4 ? 'bg-primary-light text-primary font-bold shadow-inner' : 'text-slate-500 hover:bg-slate-50 font-medium'}`}
-              >
-                4. Trục & Ổ lăn
-              </button>
-            </div>
-          </div>
-
-          <div className="lg:col-span-3 space-y-8">
-            
-            {/* SUB-STEP 1: VẬT LIỆU & XÍCH */}
-            {subStep === 1 && (
-              <div className="bg-white border-2 border-dashed border-slate-200 rounded-2xl p-16 flex flex-col items-center justify-center text-center">
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                </div>
-                <h3 className="text-xl font-bold text-slate-700">Module Vật liệu & Xích</h3>
-                <p className="text-slate-500 mt-2">Giao diện tính toán bộ truyền xích ống con lăn sẽ được thêm vào đây.</p>
-              </div>
-            )}
-
-            {/* SUB-STEP 2: BÁNH RĂNG CÔN */}
-            {subStep === 2 && (
-              <div className="space-y-8 animate-fade-in">
-                {/* Header Bánh răng côn */}
-                <div className="flex items-center justify-between bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                      <span className="w-8 h-8 rounded-full bg-primary-light text-primary flex items-center justify-center text-sm">2</span>
-                      Bánh răng côn (Cấp nhanh)
-                    </h2>
-                    <p className="text-slate-500 mt-1 text-sm">Tính toán mô-đun, kích thước hình học và kiểm nghiệm độ bền.</p>
-                  </div>
-                  <div className="flex gap-3">
-                    <button 
-                      disabled={gearData.status !== 'success'} 
-                      className={`px-6 py-2.5 bg-primary text-white rounded-xl font-bold shadow-md transition-all text-sm flex items-center gap-2 ${gearData.status !== 'success' ? 'opacity-50 cursor-not-allowed shadow-none' : 'hover:bg-primary-dark'}`}
-                      onClick={() => setStep(4)}
-                    >
-                      Tiếp tục Chọn Động cơ
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Banner Thông báo Động (Error/Success) */}
-                <div className={`${gearData.status === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-red-50 border-red-200 text-red-700 animate-pulse'} border p-4 rounded-xl flex items-center gap-3 shadow-sm transition-all duration-500`}>
-                  <div className={`${gearData.status === 'success' ? 'bg-emerald-500' : 'bg-red-500'} text-white rounded-full p-1`}>
-                    {gearData.status === 'success' ? (
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                    ) : (
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
-                    )}
-                  </div>
-                  <p className="text-sm font-medium" dangerouslySetInnerHTML={{ __html: gearData.message }}></p>
-                </div>
-
-                {/* Form Chọn Vật liệu */}
-                <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                      <span className="w-1.5 h-5 bg-primary rounded-full"></span> 
-                      Thông số Vật liệu & Cấu hình
-                    </h3>
-                    <button 
-                      onClick={handleRecalculateGear} 
-                      disabled={isCalculatingGear}
-                      className="px-5 py-2 bg-slate-100 border border-slate-200 rounded-lg font-bold text-primary hover:bg-primary hover:text-white transition-all text-sm shadow-sm flex items-center gap-2 disabled:opacity-50"
-                    >
-                      {isCalculatingGear ? (
-                         <span className="flex items-center gap-2">
-                           <svg className="animate-spin h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                           Đang xử lý...
-                         </span>
-                      ) : (
-                         <>
-                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                           Cập nhật & Tính lại
-                         </>
-                      )}
-                    </button>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <label className="block text-sm font-bold text-slate-700">Mác thép bánh răng</label>
-                      <select className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all font-medium text-slate-700">
-                        <option value="45">Thép C45</option>
-                        <option value="40Cr">Thép 40Cr</option>
-                      </select>
-                    </div>
-                    <div className="space-y-3">
-                      <label className="block text-sm font-bold text-slate-700">Phương pháp Nhiệt luyện</label>
-                      <select className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all font-medium text-slate-700">
-                        <option value="toi_cai_thien">Tôi cải thiện (HB 240-280)</option>
-                        <option value="toi_be_mat">Tôi bề mặt (HRC 45-50)</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                    <span className="w-1.5 h-5 bg-primary rounded-full"></span> 
-                    Kết quả Tính toán Kích thước & Kiểm bền
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-primary/50 transition-colors">
-                      <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mb-2">Mô-đun vòng ngoài</p>
-                      <p className="text-2xl font-black text-slate-900 flex items-end justify-between">
-                        {gearData.m_te} <span className="text-sm font-serif italic text-slate-400 font-medium">m<sub>te</sub></span>
-                      </p>
-                    </div>
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-primary/50 transition-colors">
-                      <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mb-2">Đ.kính chia bánh nhỏ</p>
-                      <p className="text-2xl font-black text-slate-900 flex items-end justify-between">
-                        {gearData.d_e1} <span className="text-sm font-serif italic text-slate-400 font-medium">d<sub>e1</sub> (mm)</span>
-                      </p>
-                    </div>
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-primary/50 transition-colors">
-                      <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mb-2">Chiều dài côn ngoài</p>
-                      <p className="text-2xl font-black text-slate-900 flex items-end justify-between">
-                        {gearData.R_e} <span className="text-sm font-serif italic text-slate-400 font-medium">R<sub>e</sub> (mm)</span>
-                      </p>
-                    </div>
-                    
-                    <div className={`${gearData.status === 'success' ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'} p-6 rounded-2xl border shadow-sm relative overflow-hidden transition-all duration-500`}>
-                      <div className={`absolute -right-2 -bottom-2 opacity-10 font-serif text-6xl font-black ${gearData.status === 'success' ? 'text-emerald-600' : 'text-red-600'}`}>
-                        {gearData.status === 'success' ? '✓' : '!'}
-                      </div>
-                      <p className={`text-[11px] font-bold uppercase tracking-widest mb-2 ${gearData.status === 'success' ? 'text-emerald-600' : 'text-red-500'}`}>Ứng suất tiếp xúc</p>
-                      <p className={`text-2xl font-black flex items-end justify-between relative z-10 ${gearData.status === 'success' ? 'text-emerald-700' : 'text-red-600'}`}>
-                        {gearData.sigma_H} 
-                        <span className={`text-sm font-serif italic font-medium ${gearData.status === 'success' ? 'text-emerald-500' : 'text-red-400'}`}>σ<sub>H</sub> (MPa)</span>
-                      </p>
-                      <p className={`text-[10px] mt-1 font-medium ${gearData.status === 'success' ? 'text-emerald-600/70' : 'text-red-500/70'}`}>
-                        Giới hạn: [σ<sub>H</sub>] = {gearData.allowable_sigma_H} MPa
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <button className="text-sm font-bold text-primary hover:underline flex items-center gap-1">
-                    Xem toàn bộ thông số rải răng (z<sub>1</sub>, z<sub>2</sub>, b...) &rarr;
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* SUB-STEP 3 & 4: (Đang chờ code) */}
-            {(subStep === 3 || subStep === 4) && (
-              <div className="bg-white border-2 border-dashed border-slate-200 rounded-2xl p-16 flex flex-col items-center justify-center text-center">
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
-                </div>
-                <h3 className="text-xl font-bold text-slate-700">Đang phát triển</h3>
-                <p className="text-slate-500 mt-2">Giao diện tính toán cho {subStep === 3 ? "Bánh răng trụ" : "Trục & Ổ lăn"} sẽ được cập nhật sớm.</p>
-              </div>
-            )}
-
-          </div>
+        <div className="animate-fade-in">
+          <UC05Detail kinematicsResult={kinematicsResult} />
         </div>
       )}
 
