@@ -20,7 +20,17 @@ const app = express();
 //     res.setHeader("access-control-allow-origin", "*")
 //     next();
 // });
-app.use(cors({ origin: ["http://localhost:3000", "http://localhost:5173"], credentials: true }));
+app.use(cors({ 
+    origin: [
+        "http://localhost:3000", 
+        "http://localhost:5173", 
+        "http://localhost:5174",
+        "http://127.0.0.1:5173", 
+        "http://127.0.0.1:5174"
+    ], 
+    credentials: true 
+}));
+
 
 // để lấy được body (đảm bảo trước "/api")
 app.use(express.json());
