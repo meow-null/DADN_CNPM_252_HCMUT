@@ -68,6 +68,16 @@ export type key_dimensions = $Result.DefaultSelection<Prisma.$key_dimensionsPayl
  * 
  */
 export type standard_key_lengths = $Result.DefaultSelection<Prisma.$standard_key_lengthsPayload>
+/**
+ * Model shaft_allowable_stress
+ * 
+ */
+export type shaft_allowable_stress = $Result.DefaultSelection<Prisma.$shaft_allowable_stressPayload>
+/**
+ * Model kx_ksigma_coefficients
+ * 
+ */
+export type kx_ksigma_coefficients = $Result.DefaultSelection<Prisma.$kx_ksigma_coefficientsPayload>
 
 /**
  * Enums
@@ -332,6 +342,26 @@ export class PrismaClient<
     * ```
     */
   get standard_key_lengths(): Prisma.standard_key_lengthsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.shaft_allowable_stress`: Exposes CRUD operations for the **shaft_allowable_stress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Shaft_allowable_stresses
+    * const shaft_allowable_stresses = await prisma.shaft_allowable_stress.findMany()
+    * ```
+    */
+  get shaft_allowable_stress(): Prisma.shaft_allowable_stressDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kx_ksigma_coefficients`: Exposes CRUD operations for the **kx_ksigma_coefficients** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Kx_ksigma_coefficients
+    * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findMany()
+    * ```
+    */
+  get kx_ksigma_coefficients(): Prisma.kx_ksigma_coefficientsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -776,7 +806,9 @@ export namespace Prisma {
     standard_center_distances: 'standard_center_distances',
     standard_shaft_diameters: 'standard_shaft_diameters',
     key_dimensions: 'key_dimensions',
-    standard_key_lengths: 'standard_key_lengths'
+    standard_key_lengths: 'standard_key_lengths',
+    shaft_allowable_stress: 'shaft_allowable_stress',
+    kx_ksigma_coefficients: 'kx_ksigma_coefficients'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -792,7 +824,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "bearings" | "chains" | "motors" | "projects" | "users" | "material_grades" | "standard_modules" | "standard_center_distances" | "standard_shaft_diameters" | "key_dimensions" | "standard_key_lengths"
+      modelProps: "bearings" | "chains" | "motors" | "projects" | "users" | "material_grades" | "standard_modules" | "standard_center_distances" | "standard_shaft_diameters" | "key_dimensions" | "standard_key_lengths" | "shaft_allowable_stress" | "kx_ksigma_coefficients"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1522,6 +1554,138 @@ export namespace Prisma {
           }
         }
       }
+      shaft_allowable_stress: {
+        payload: Prisma.$shaft_allowable_stressPayload<ExtArgs>
+        fields: Prisma.shaft_allowable_stressFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.shaft_allowable_stressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.shaft_allowable_stressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>
+          }
+          findFirst: {
+            args: Prisma.shaft_allowable_stressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.shaft_allowable_stressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>
+          }
+          findMany: {
+            args: Prisma.shaft_allowable_stressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>[]
+          }
+          create: {
+            args: Prisma.shaft_allowable_stressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>
+          }
+          createMany: {
+            args: Prisma.shaft_allowable_stressCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.shaft_allowable_stressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>
+          }
+          update: {
+            args: Prisma.shaft_allowable_stressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>
+          }
+          deleteMany: {
+            args: Prisma.shaft_allowable_stressDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.shaft_allowable_stressUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.shaft_allowable_stressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$shaft_allowable_stressPayload>
+          }
+          aggregate: {
+            args: Prisma.Shaft_allowable_stressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateShaft_allowable_stress>
+          }
+          groupBy: {
+            args: Prisma.shaft_allowable_stressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Shaft_allowable_stressGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.shaft_allowable_stressCountArgs<ExtArgs>
+            result: $Utils.Optional<Shaft_allowable_stressCountAggregateOutputType> | number
+          }
+        }
+      }
+      kx_ksigma_coefficients: {
+        payload: Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>
+        fields: Prisma.kx_ksigma_coefficientsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.kx_ksigma_coefficientsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.kx_ksigma_coefficientsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>
+          }
+          findFirst: {
+            args: Prisma.kx_ksigma_coefficientsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.kx_ksigma_coefficientsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>
+          }
+          findMany: {
+            args: Prisma.kx_ksigma_coefficientsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>[]
+          }
+          create: {
+            args: Prisma.kx_ksigma_coefficientsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>
+          }
+          createMany: {
+            args: Prisma.kx_ksigma_coefficientsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.kx_ksigma_coefficientsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>
+          }
+          update: {
+            args: Prisma.kx_ksigma_coefficientsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>
+          }
+          deleteMany: {
+            args: Prisma.kx_ksigma_coefficientsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.kx_ksigma_coefficientsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.kx_ksigma_coefficientsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$kx_ksigma_coefficientsPayload>
+          }
+          aggregate: {
+            args: Prisma.Kx_ksigma_coefficientsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKx_ksigma_coefficients>
+          }
+          groupBy: {
+            args: Prisma.kx_ksigma_coefficientsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Kx_ksigma_coefficientsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.kx_ksigma_coefficientsCountArgs<ExtArgs>
+            result: $Utils.Optional<Kx_ksigma_coefficientsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1641,6 +1805,8 @@ export namespace Prisma {
     standard_shaft_diameters?: standard_shaft_diametersOmit
     key_dimensions?: key_dimensionsOmit
     standard_key_lengths?: standard_key_lengthsOmit
+    shaft_allowable_stress?: shaft_allowable_stressOmit
+    kx_ksigma_coefficients?: kx_ksigma_coefficientsOmit
   }
 
   /* Types for Logging */
@@ -2827,6 +2993,7 @@ export namespace Prisma {
   export type ChainsAvgAggregateOutputType = {
     id: number | null
     pitch: number | null
+    P_allow: number | null
     breaking_load: number | null
     mass_per_m: number | null
     A_mm2: number | null
@@ -2837,6 +3004,7 @@ export namespace Prisma {
   export type ChainsSumAggregateOutputType = {
     id: number | null
     pitch: number | null
+    P_allow: number | null
     breaking_load: number | null
     mass_per_m: number | null
     A_mm2: number | null
@@ -2847,6 +3015,7 @@ export namespace Prisma {
   export type ChainsMinAggregateOutputType = {
     id: number | null
     pitch: number | null
+    P_allow: number | null
     breaking_load: number | null
     mass_per_m: number | null
     A_mm2: number | null
@@ -2858,6 +3027,7 @@ export namespace Prisma {
   export type ChainsMaxAggregateOutputType = {
     id: number | null
     pitch: number | null
+    P_allow: number | null
     breaking_load: number | null
     mass_per_m: number | null
     A_mm2: number | null
@@ -2869,6 +3039,7 @@ export namespace Prisma {
   export type ChainsCountAggregateOutputType = {
     id: number
     pitch: number
+    P_allow: number
     breaking_load: number
     mass_per_m: number
     A_mm2: number
@@ -2882,6 +3053,7 @@ export namespace Prisma {
   export type ChainsAvgAggregateInputType = {
     id?: true
     pitch?: true
+    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
     A_mm2?: true
@@ -2892,6 +3064,7 @@ export namespace Prisma {
   export type ChainsSumAggregateInputType = {
     id?: true
     pitch?: true
+    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
     A_mm2?: true
@@ -2902,6 +3075,7 @@ export namespace Prisma {
   export type ChainsMinAggregateInputType = {
     id?: true
     pitch?: true
+    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
     A_mm2?: true
@@ -2913,6 +3087,7 @@ export namespace Prisma {
   export type ChainsMaxAggregateInputType = {
     id?: true
     pitch?: true
+    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
     A_mm2?: true
@@ -2924,6 +3099,7 @@ export namespace Prisma {
   export type ChainsCountAggregateInputType = {
     id?: true
     pitch?: true
+    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
     A_mm2?: true
@@ -3022,6 +3198,7 @@ export namespace Prisma {
   export type ChainsGroupByOutputType = {
     id: number
     pitch: number
+    P_allow: number | null
     breaking_load: number | null
     mass_per_m: number | null
     A_mm2: number | null
@@ -3052,6 +3229,7 @@ export namespace Prisma {
   export type chainsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pitch?: boolean
+    P_allow?: boolean
     breaking_load?: boolean
     mass_per_m?: boolean
     A_mm2?: boolean
@@ -3065,6 +3243,7 @@ export namespace Prisma {
   export type chainsSelectScalar = {
     id?: boolean
     pitch?: boolean
+    P_allow?: boolean
     breaking_load?: boolean
     mass_per_m?: boolean
     A_mm2?: boolean
@@ -3073,7 +3252,7 @@ export namespace Prisma {
     is_active?: boolean
   }
 
-  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "breaking_load" | "mass_per_m" | "A_mm2" | "s_allow" | "n_ref" | "is_active", ExtArgs["result"]["chains"]>
+  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "P_allow" | "breaking_load" | "mass_per_m" | "A_mm2" | "s_allow" | "n_ref" | "is_active", ExtArgs["result"]["chains"]>
 
   export type $chainsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "chains"
@@ -3081,6 +3260,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       pitch: number
+      P_allow: number | null
       breaking_load: number | null
       mass_per_m: number | null
       A_mm2: number | null
@@ -3458,6 +3638,7 @@ export namespace Prisma {
   interface chainsFieldRefs {
     readonly id: FieldRef<"chains", 'Int'>
     readonly pitch: FieldRef<"chains", 'Float'>
+    readonly P_allow: FieldRef<"chains", 'Float'>
     readonly breaking_load: FieldRef<"chains", 'Float'>
     readonly mass_per_m: FieldRef<"chains", 'Float'>
     readonly A_mm2: FieldRef<"chains", 'Float'>
@@ -12717,6 +12898,1906 @@ export namespace Prisma {
 
 
   /**
+   * Model shaft_allowable_stress
+   */
+
+  export type AggregateShaft_allowable_stress = {
+    _count: Shaft_allowable_stressCountAggregateOutputType | null
+    _avg: Shaft_allowable_stressAvgAggregateOutputType | null
+    _sum: Shaft_allowable_stressSumAggregateOutputType | null
+    _min: Shaft_allowable_stressMinAggregateOutputType | null
+    _max: Shaft_allowable_stressMaxAggregateOutputType | null
+  }
+
+  export type Shaft_allowable_stressAvgAggregateOutputType = {
+    id: number | null
+    d_range_min: number | null
+    d_range_max: number | null
+    sigma_b: number | null
+    sigma_allow: number | null
+  }
+
+  export type Shaft_allowable_stressSumAggregateOutputType = {
+    id: number | null
+    d_range_min: number | null
+    d_range_max: number | null
+    sigma_b: number | null
+    sigma_allow: number | null
+  }
+
+  export type Shaft_allowable_stressMinAggregateOutputType = {
+    id: number | null
+    d_range_min: number | null
+    d_range_max: number | null
+    sigma_b: number | null
+    sigma_allow: number | null
+  }
+
+  export type Shaft_allowable_stressMaxAggregateOutputType = {
+    id: number | null
+    d_range_min: number | null
+    d_range_max: number | null
+    sigma_b: number | null
+    sigma_allow: number | null
+  }
+
+  export type Shaft_allowable_stressCountAggregateOutputType = {
+    id: number
+    d_range_min: number
+    d_range_max: number
+    sigma_b: number
+    sigma_allow: number
+    _all: number
+  }
+
+
+  export type Shaft_allowable_stressAvgAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    sigma_b?: true
+    sigma_allow?: true
+  }
+
+  export type Shaft_allowable_stressSumAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    sigma_b?: true
+    sigma_allow?: true
+  }
+
+  export type Shaft_allowable_stressMinAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    sigma_b?: true
+    sigma_allow?: true
+  }
+
+  export type Shaft_allowable_stressMaxAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    sigma_b?: true
+    sigma_allow?: true
+  }
+
+  export type Shaft_allowable_stressCountAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    sigma_b?: true
+    sigma_allow?: true
+    _all?: true
+  }
+
+  export type Shaft_allowable_stressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which shaft_allowable_stress to aggregate.
+     */
+    where?: shaft_allowable_stressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of shaft_allowable_stresses to fetch.
+     */
+    orderBy?: shaft_allowable_stressOrderByWithRelationInput | shaft_allowable_stressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: shaft_allowable_stressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` shaft_allowable_stresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` shaft_allowable_stresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned shaft_allowable_stresses
+    **/
+    _count?: true | Shaft_allowable_stressCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Shaft_allowable_stressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Shaft_allowable_stressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Shaft_allowable_stressMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Shaft_allowable_stressMaxAggregateInputType
+  }
+
+  export type GetShaft_allowable_stressAggregateType<T extends Shaft_allowable_stressAggregateArgs> = {
+        [P in keyof T & keyof AggregateShaft_allowable_stress]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateShaft_allowable_stress[P]>
+      : GetScalarType<T[P], AggregateShaft_allowable_stress[P]>
+  }
+
+
+
+
+  export type shaft_allowable_stressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: shaft_allowable_stressWhereInput
+    orderBy?: shaft_allowable_stressOrderByWithAggregationInput | shaft_allowable_stressOrderByWithAggregationInput[]
+    by: Shaft_allowable_stressScalarFieldEnum[] | Shaft_allowable_stressScalarFieldEnum
+    having?: shaft_allowable_stressScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Shaft_allowable_stressCountAggregateInputType | true
+    _avg?: Shaft_allowable_stressAvgAggregateInputType
+    _sum?: Shaft_allowable_stressSumAggregateInputType
+    _min?: Shaft_allowable_stressMinAggregateInputType
+    _max?: Shaft_allowable_stressMaxAggregateInputType
+  }
+
+  export type Shaft_allowable_stressGroupByOutputType = {
+    id: number
+    d_range_min: number
+    d_range_max: number
+    sigma_b: number
+    sigma_allow: number
+    _count: Shaft_allowable_stressCountAggregateOutputType | null
+    _avg: Shaft_allowable_stressAvgAggregateOutputType | null
+    _sum: Shaft_allowable_stressSumAggregateOutputType | null
+    _min: Shaft_allowable_stressMinAggregateOutputType | null
+    _max: Shaft_allowable_stressMaxAggregateOutputType | null
+  }
+
+  type GetShaft_allowable_stressGroupByPayload<T extends shaft_allowable_stressGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Shaft_allowable_stressGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Shaft_allowable_stressGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Shaft_allowable_stressGroupByOutputType[P]>
+            : GetScalarType<T[P], Shaft_allowable_stressGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type shaft_allowable_stressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    d_range_min?: boolean
+    d_range_max?: boolean
+    sigma_b?: boolean
+    sigma_allow?: boolean
+  }, ExtArgs["result"]["shaft_allowable_stress"]>
+
+
+
+  export type shaft_allowable_stressSelectScalar = {
+    id?: boolean
+    d_range_min?: boolean
+    d_range_max?: boolean
+    sigma_b?: boolean
+    sigma_allow?: boolean
+  }
+
+  export type shaft_allowable_stressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "d_range_min" | "d_range_max" | "sigma_b" | "sigma_allow", ExtArgs["result"]["shaft_allowable_stress"]>
+
+  export type $shaft_allowable_stressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "shaft_allowable_stress"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      d_range_min: number
+      d_range_max: number
+      sigma_b: number
+      sigma_allow: number
+    }, ExtArgs["result"]["shaft_allowable_stress"]>
+    composites: {}
+  }
+
+  type shaft_allowable_stressGetPayload<S extends boolean | null | undefined | shaft_allowable_stressDefaultArgs> = $Result.GetResult<Prisma.$shaft_allowable_stressPayload, S>
+
+  type shaft_allowable_stressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<shaft_allowable_stressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Shaft_allowable_stressCountAggregateInputType | true
+    }
+
+  export interface shaft_allowable_stressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['shaft_allowable_stress'], meta: { name: 'shaft_allowable_stress' } }
+    /**
+     * Find zero or one Shaft_allowable_stress that matches the filter.
+     * @param {shaft_allowable_stressFindUniqueArgs} args - Arguments to find a Shaft_allowable_stress
+     * @example
+     * // Get one Shaft_allowable_stress
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends shaft_allowable_stressFindUniqueArgs>(args: SelectSubset<T, shaft_allowable_stressFindUniqueArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Shaft_allowable_stress that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {shaft_allowable_stressFindUniqueOrThrowArgs} args - Arguments to find a Shaft_allowable_stress
+     * @example
+     * // Get one Shaft_allowable_stress
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends shaft_allowable_stressFindUniqueOrThrowArgs>(args: SelectSubset<T, shaft_allowable_stressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Shaft_allowable_stress that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {shaft_allowable_stressFindFirstArgs} args - Arguments to find a Shaft_allowable_stress
+     * @example
+     * // Get one Shaft_allowable_stress
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends shaft_allowable_stressFindFirstArgs>(args?: SelectSubset<T, shaft_allowable_stressFindFirstArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Shaft_allowable_stress that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {shaft_allowable_stressFindFirstOrThrowArgs} args - Arguments to find a Shaft_allowable_stress
+     * @example
+     * // Get one Shaft_allowable_stress
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends shaft_allowable_stressFindFirstOrThrowArgs>(args?: SelectSubset<T, shaft_allowable_stressFindFirstOrThrowArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Shaft_allowable_stresses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {shaft_allowable_stressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Shaft_allowable_stresses
+     * const shaft_allowable_stresses = await prisma.shaft_allowable_stress.findMany()
+     * 
+     * // Get first 10 Shaft_allowable_stresses
+     * const shaft_allowable_stresses = await prisma.shaft_allowable_stress.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const shaft_allowable_stressWithIdOnly = await prisma.shaft_allowable_stress.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends shaft_allowable_stressFindManyArgs>(args?: SelectSubset<T, shaft_allowable_stressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Shaft_allowable_stress.
+     * @param {shaft_allowable_stressCreateArgs} args - Arguments to create a Shaft_allowable_stress.
+     * @example
+     * // Create one Shaft_allowable_stress
+     * const Shaft_allowable_stress = await prisma.shaft_allowable_stress.create({
+     *   data: {
+     *     // ... data to create a Shaft_allowable_stress
+     *   }
+     * })
+     * 
+     */
+    create<T extends shaft_allowable_stressCreateArgs>(args: SelectSubset<T, shaft_allowable_stressCreateArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Shaft_allowable_stresses.
+     * @param {shaft_allowable_stressCreateManyArgs} args - Arguments to create many Shaft_allowable_stresses.
+     * @example
+     * // Create many Shaft_allowable_stresses
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends shaft_allowable_stressCreateManyArgs>(args?: SelectSubset<T, shaft_allowable_stressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Shaft_allowable_stress.
+     * @param {shaft_allowable_stressDeleteArgs} args - Arguments to delete one Shaft_allowable_stress.
+     * @example
+     * // Delete one Shaft_allowable_stress
+     * const Shaft_allowable_stress = await prisma.shaft_allowable_stress.delete({
+     *   where: {
+     *     // ... filter to delete one Shaft_allowable_stress
+     *   }
+     * })
+     * 
+     */
+    delete<T extends shaft_allowable_stressDeleteArgs>(args: SelectSubset<T, shaft_allowable_stressDeleteArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Shaft_allowable_stress.
+     * @param {shaft_allowable_stressUpdateArgs} args - Arguments to update one Shaft_allowable_stress.
+     * @example
+     * // Update one Shaft_allowable_stress
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends shaft_allowable_stressUpdateArgs>(args: SelectSubset<T, shaft_allowable_stressUpdateArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Shaft_allowable_stresses.
+     * @param {shaft_allowable_stressDeleteManyArgs} args - Arguments to filter Shaft_allowable_stresses to delete.
+     * @example
+     * // Delete a few Shaft_allowable_stresses
+     * const { count } = await prisma.shaft_allowable_stress.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends shaft_allowable_stressDeleteManyArgs>(args?: SelectSubset<T, shaft_allowable_stressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Shaft_allowable_stresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {shaft_allowable_stressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Shaft_allowable_stresses
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends shaft_allowable_stressUpdateManyArgs>(args: SelectSubset<T, shaft_allowable_stressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Shaft_allowable_stress.
+     * @param {shaft_allowable_stressUpsertArgs} args - Arguments to update or create a Shaft_allowable_stress.
+     * @example
+     * // Update or create a Shaft_allowable_stress
+     * const shaft_allowable_stress = await prisma.shaft_allowable_stress.upsert({
+     *   create: {
+     *     // ... data to create a Shaft_allowable_stress
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Shaft_allowable_stress we want to update
+     *   }
+     * })
+     */
+    upsert<T extends shaft_allowable_stressUpsertArgs>(args: SelectSubset<T, shaft_allowable_stressUpsertArgs<ExtArgs>>): Prisma__shaft_allowable_stressClient<$Result.GetResult<Prisma.$shaft_allowable_stressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Shaft_allowable_stresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {shaft_allowable_stressCountArgs} args - Arguments to filter Shaft_allowable_stresses to count.
+     * @example
+     * // Count the number of Shaft_allowable_stresses
+     * const count = await prisma.shaft_allowable_stress.count({
+     *   where: {
+     *     // ... the filter for the Shaft_allowable_stresses we want to count
+     *   }
+     * })
+    **/
+    count<T extends shaft_allowable_stressCountArgs>(
+      args?: Subset<T, shaft_allowable_stressCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Shaft_allowable_stressCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Shaft_allowable_stress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Shaft_allowable_stressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Shaft_allowable_stressAggregateArgs>(args: Subset<T, Shaft_allowable_stressAggregateArgs>): Prisma.PrismaPromise<GetShaft_allowable_stressAggregateType<T>>
+
+    /**
+     * Group by Shaft_allowable_stress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {shaft_allowable_stressGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends shaft_allowable_stressGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: shaft_allowable_stressGroupByArgs['orderBy'] }
+        : { orderBy?: shaft_allowable_stressGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, shaft_allowable_stressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetShaft_allowable_stressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the shaft_allowable_stress model
+   */
+  readonly fields: shaft_allowable_stressFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for shaft_allowable_stress.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__shaft_allowable_stressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the shaft_allowable_stress model
+   */
+  interface shaft_allowable_stressFieldRefs {
+    readonly id: FieldRef<"shaft_allowable_stress", 'Int'>
+    readonly d_range_min: FieldRef<"shaft_allowable_stress", 'Float'>
+    readonly d_range_max: FieldRef<"shaft_allowable_stress", 'Float'>
+    readonly sigma_b: FieldRef<"shaft_allowable_stress", 'Float'>
+    readonly sigma_allow: FieldRef<"shaft_allowable_stress", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * shaft_allowable_stress findUnique
+   */
+  export type shaft_allowable_stressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * Filter, which shaft_allowable_stress to fetch.
+     */
+    where: shaft_allowable_stressWhereUniqueInput
+  }
+
+  /**
+   * shaft_allowable_stress findUniqueOrThrow
+   */
+  export type shaft_allowable_stressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * Filter, which shaft_allowable_stress to fetch.
+     */
+    where: shaft_allowable_stressWhereUniqueInput
+  }
+
+  /**
+   * shaft_allowable_stress findFirst
+   */
+  export type shaft_allowable_stressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * Filter, which shaft_allowable_stress to fetch.
+     */
+    where?: shaft_allowable_stressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of shaft_allowable_stresses to fetch.
+     */
+    orderBy?: shaft_allowable_stressOrderByWithRelationInput | shaft_allowable_stressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for shaft_allowable_stresses.
+     */
+    cursor?: shaft_allowable_stressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` shaft_allowable_stresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` shaft_allowable_stresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of shaft_allowable_stresses.
+     */
+    distinct?: Shaft_allowable_stressScalarFieldEnum | Shaft_allowable_stressScalarFieldEnum[]
+  }
+
+  /**
+   * shaft_allowable_stress findFirstOrThrow
+   */
+  export type shaft_allowable_stressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * Filter, which shaft_allowable_stress to fetch.
+     */
+    where?: shaft_allowable_stressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of shaft_allowable_stresses to fetch.
+     */
+    orderBy?: shaft_allowable_stressOrderByWithRelationInput | shaft_allowable_stressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for shaft_allowable_stresses.
+     */
+    cursor?: shaft_allowable_stressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` shaft_allowable_stresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` shaft_allowable_stresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of shaft_allowable_stresses.
+     */
+    distinct?: Shaft_allowable_stressScalarFieldEnum | Shaft_allowable_stressScalarFieldEnum[]
+  }
+
+  /**
+   * shaft_allowable_stress findMany
+   */
+  export type shaft_allowable_stressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * Filter, which shaft_allowable_stresses to fetch.
+     */
+    where?: shaft_allowable_stressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of shaft_allowable_stresses to fetch.
+     */
+    orderBy?: shaft_allowable_stressOrderByWithRelationInput | shaft_allowable_stressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing shaft_allowable_stresses.
+     */
+    cursor?: shaft_allowable_stressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` shaft_allowable_stresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` shaft_allowable_stresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of shaft_allowable_stresses.
+     */
+    distinct?: Shaft_allowable_stressScalarFieldEnum | Shaft_allowable_stressScalarFieldEnum[]
+  }
+
+  /**
+   * shaft_allowable_stress create
+   */
+  export type shaft_allowable_stressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * The data needed to create a shaft_allowable_stress.
+     */
+    data: XOR<shaft_allowable_stressCreateInput, shaft_allowable_stressUncheckedCreateInput>
+  }
+
+  /**
+   * shaft_allowable_stress createMany
+   */
+  export type shaft_allowable_stressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many shaft_allowable_stresses.
+     */
+    data: shaft_allowable_stressCreateManyInput | shaft_allowable_stressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * shaft_allowable_stress update
+   */
+  export type shaft_allowable_stressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * The data needed to update a shaft_allowable_stress.
+     */
+    data: XOR<shaft_allowable_stressUpdateInput, shaft_allowable_stressUncheckedUpdateInput>
+    /**
+     * Choose, which shaft_allowable_stress to update.
+     */
+    where: shaft_allowable_stressWhereUniqueInput
+  }
+
+  /**
+   * shaft_allowable_stress updateMany
+   */
+  export type shaft_allowable_stressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update shaft_allowable_stresses.
+     */
+    data: XOR<shaft_allowable_stressUpdateManyMutationInput, shaft_allowable_stressUncheckedUpdateManyInput>
+    /**
+     * Filter which shaft_allowable_stresses to update
+     */
+    where?: shaft_allowable_stressWhereInput
+    /**
+     * Limit how many shaft_allowable_stresses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * shaft_allowable_stress upsert
+   */
+  export type shaft_allowable_stressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * The filter to search for the shaft_allowable_stress to update in case it exists.
+     */
+    where: shaft_allowable_stressWhereUniqueInput
+    /**
+     * In case the shaft_allowable_stress found by the `where` argument doesn't exist, create a new shaft_allowable_stress with this data.
+     */
+    create: XOR<shaft_allowable_stressCreateInput, shaft_allowable_stressUncheckedCreateInput>
+    /**
+     * In case the shaft_allowable_stress was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<shaft_allowable_stressUpdateInput, shaft_allowable_stressUncheckedUpdateInput>
+  }
+
+  /**
+   * shaft_allowable_stress delete
+   */
+  export type shaft_allowable_stressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+    /**
+     * Filter which shaft_allowable_stress to delete.
+     */
+    where: shaft_allowable_stressWhereUniqueInput
+  }
+
+  /**
+   * shaft_allowable_stress deleteMany
+   */
+  export type shaft_allowable_stressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which shaft_allowable_stresses to delete
+     */
+    where?: shaft_allowable_stressWhereInput
+    /**
+     * Limit how many shaft_allowable_stresses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * shaft_allowable_stress without action
+   */
+  export type shaft_allowable_stressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the shaft_allowable_stress
+     */
+    select?: shaft_allowable_stressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the shaft_allowable_stress
+     */
+    omit?: shaft_allowable_stressOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model kx_ksigma_coefficients
+   */
+
+  export type AggregateKx_ksigma_coefficients = {
+    _count: Kx_ksigma_coefficientsCountAggregateOutputType | null
+    _avg: Kx_ksigma_coefficientsAvgAggregateOutputType | null
+    _sum: Kx_ksigma_coefficientsSumAggregateOutputType | null
+    _min: Kx_ksigma_coefficientsMinAggregateOutputType | null
+    _max: Kx_ksigma_coefficientsMaxAggregateOutputType | null
+  }
+
+  export type Kx_ksigma_coefficientsAvgAggregateOutputType = {
+    id: number | null
+    d_range_min: number | null
+    d_range_max: number | null
+    K_sigma: number | null
+    eps_sigma: number | null
+    beta_sigma: number | null
+  }
+
+  export type Kx_ksigma_coefficientsSumAggregateOutputType = {
+    id: number | null
+    d_range_min: number | null
+    d_range_max: number | null
+    K_sigma: number | null
+    eps_sigma: number | null
+    beta_sigma: number | null
+  }
+
+  export type Kx_ksigma_coefficientsMinAggregateOutputType = {
+    id: number | null
+    fit_type: string | null
+    d_range_min: number | null
+    d_range_max: number | null
+    K_sigma: number | null
+    eps_sigma: number | null
+    beta_sigma: number | null
+  }
+
+  export type Kx_ksigma_coefficientsMaxAggregateOutputType = {
+    id: number | null
+    fit_type: string | null
+    d_range_min: number | null
+    d_range_max: number | null
+    K_sigma: number | null
+    eps_sigma: number | null
+    beta_sigma: number | null
+  }
+
+  export type Kx_ksigma_coefficientsCountAggregateOutputType = {
+    id: number
+    fit_type: number
+    d_range_min: number
+    d_range_max: number
+    K_sigma: number
+    eps_sigma: number
+    beta_sigma: number
+    _all: number
+  }
+
+
+  export type Kx_ksigma_coefficientsAvgAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    K_sigma?: true
+    eps_sigma?: true
+    beta_sigma?: true
+  }
+
+  export type Kx_ksigma_coefficientsSumAggregateInputType = {
+    id?: true
+    d_range_min?: true
+    d_range_max?: true
+    K_sigma?: true
+    eps_sigma?: true
+    beta_sigma?: true
+  }
+
+  export type Kx_ksigma_coefficientsMinAggregateInputType = {
+    id?: true
+    fit_type?: true
+    d_range_min?: true
+    d_range_max?: true
+    K_sigma?: true
+    eps_sigma?: true
+    beta_sigma?: true
+  }
+
+  export type Kx_ksigma_coefficientsMaxAggregateInputType = {
+    id?: true
+    fit_type?: true
+    d_range_min?: true
+    d_range_max?: true
+    K_sigma?: true
+    eps_sigma?: true
+    beta_sigma?: true
+  }
+
+  export type Kx_ksigma_coefficientsCountAggregateInputType = {
+    id?: true
+    fit_type?: true
+    d_range_min?: true
+    d_range_max?: true
+    K_sigma?: true
+    eps_sigma?: true
+    beta_sigma?: true
+    _all?: true
+  }
+
+  export type Kx_ksigma_coefficientsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kx_ksigma_coefficients to aggregate.
+     */
+    where?: kx_ksigma_coefficientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kx_ksigma_coefficients to fetch.
+     */
+    orderBy?: kx_ksigma_coefficientsOrderByWithRelationInput | kx_ksigma_coefficientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: kx_ksigma_coefficientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kx_ksigma_coefficients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kx_ksigma_coefficients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned kx_ksigma_coefficients
+    **/
+    _count?: true | Kx_ksigma_coefficientsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Kx_ksigma_coefficientsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Kx_ksigma_coefficientsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Kx_ksigma_coefficientsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Kx_ksigma_coefficientsMaxAggregateInputType
+  }
+
+  export type GetKx_ksigma_coefficientsAggregateType<T extends Kx_ksigma_coefficientsAggregateArgs> = {
+        [P in keyof T & keyof AggregateKx_ksigma_coefficients]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKx_ksigma_coefficients[P]>
+      : GetScalarType<T[P], AggregateKx_ksigma_coefficients[P]>
+  }
+
+
+
+
+  export type kx_ksigma_coefficientsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: kx_ksigma_coefficientsWhereInput
+    orderBy?: kx_ksigma_coefficientsOrderByWithAggregationInput | kx_ksigma_coefficientsOrderByWithAggregationInput[]
+    by: Kx_ksigma_coefficientsScalarFieldEnum[] | Kx_ksigma_coefficientsScalarFieldEnum
+    having?: kx_ksigma_coefficientsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Kx_ksigma_coefficientsCountAggregateInputType | true
+    _avg?: Kx_ksigma_coefficientsAvgAggregateInputType
+    _sum?: Kx_ksigma_coefficientsSumAggregateInputType
+    _min?: Kx_ksigma_coefficientsMinAggregateInputType
+    _max?: Kx_ksigma_coefficientsMaxAggregateInputType
+  }
+
+  export type Kx_ksigma_coefficientsGroupByOutputType = {
+    id: number
+    fit_type: string
+    d_range_min: number
+    d_range_max: number
+    K_sigma: number
+    eps_sigma: number
+    beta_sigma: number
+    _count: Kx_ksigma_coefficientsCountAggregateOutputType | null
+    _avg: Kx_ksigma_coefficientsAvgAggregateOutputType | null
+    _sum: Kx_ksigma_coefficientsSumAggregateOutputType | null
+    _min: Kx_ksigma_coefficientsMinAggregateOutputType | null
+    _max: Kx_ksigma_coefficientsMaxAggregateOutputType | null
+  }
+
+  type GetKx_ksigma_coefficientsGroupByPayload<T extends kx_ksigma_coefficientsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Kx_ksigma_coefficientsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Kx_ksigma_coefficientsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Kx_ksigma_coefficientsGroupByOutputType[P]>
+            : GetScalarType<T[P], Kx_ksigma_coefficientsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type kx_ksigma_coefficientsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fit_type?: boolean
+    d_range_min?: boolean
+    d_range_max?: boolean
+    K_sigma?: boolean
+    eps_sigma?: boolean
+    beta_sigma?: boolean
+  }, ExtArgs["result"]["kx_ksigma_coefficients"]>
+
+
+
+  export type kx_ksigma_coefficientsSelectScalar = {
+    id?: boolean
+    fit_type?: boolean
+    d_range_min?: boolean
+    d_range_max?: boolean
+    K_sigma?: boolean
+    eps_sigma?: boolean
+    beta_sigma?: boolean
+  }
+
+  export type kx_ksigma_coefficientsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fit_type" | "d_range_min" | "d_range_max" | "K_sigma" | "eps_sigma" | "beta_sigma", ExtArgs["result"]["kx_ksigma_coefficients"]>
+
+  export type $kx_ksigma_coefficientsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "kx_ksigma_coefficients"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      fit_type: string
+      d_range_min: number
+      d_range_max: number
+      K_sigma: number
+      eps_sigma: number
+      beta_sigma: number
+    }, ExtArgs["result"]["kx_ksigma_coefficients"]>
+    composites: {}
+  }
+
+  type kx_ksigma_coefficientsGetPayload<S extends boolean | null | undefined | kx_ksigma_coefficientsDefaultArgs> = $Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload, S>
+
+  type kx_ksigma_coefficientsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<kx_ksigma_coefficientsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Kx_ksigma_coefficientsCountAggregateInputType | true
+    }
+
+  export interface kx_ksigma_coefficientsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kx_ksigma_coefficients'], meta: { name: 'kx_ksigma_coefficients' } }
+    /**
+     * Find zero or one Kx_ksigma_coefficients that matches the filter.
+     * @param {kx_ksigma_coefficientsFindUniqueArgs} args - Arguments to find a Kx_ksigma_coefficients
+     * @example
+     * // Get one Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends kx_ksigma_coefficientsFindUniqueArgs>(args: SelectSubset<T, kx_ksigma_coefficientsFindUniqueArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Kx_ksigma_coefficients that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {kx_ksigma_coefficientsFindUniqueOrThrowArgs} args - Arguments to find a Kx_ksigma_coefficients
+     * @example
+     * // Get one Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends kx_ksigma_coefficientsFindUniqueOrThrowArgs>(args: SelectSubset<T, kx_ksigma_coefficientsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kx_ksigma_coefficients that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kx_ksigma_coefficientsFindFirstArgs} args - Arguments to find a Kx_ksigma_coefficients
+     * @example
+     * // Get one Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends kx_ksigma_coefficientsFindFirstArgs>(args?: SelectSubset<T, kx_ksigma_coefficientsFindFirstArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Kx_ksigma_coefficients that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kx_ksigma_coefficientsFindFirstOrThrowArgs} args - Arguments to find a Kx_ksigma_coefficients
+     * @example
+     * // Get one Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends kx_ksigma_coefficientsFindFirstOrThrowArgs>(args?: SelectSubset<T, kx_ksigma_coefficientsFindFirstOrThrowArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Kx_ksigma_coefficients that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kx_ksigma_coefficientsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findMany()
+     * 
+     * // Get first 10 Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kx_ksigma_coefficientsWithIdOnly = await prisma.kx_ksigma_coefficients.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends kx_ksigma_coefficientsFindManyArgs>(args?: SelectSubset<T, kx_ksigma_coefficientsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Kx_ksigma_coefficients.
+     * @param {kx_ksigma_coefficientsCreateArgs} args - Arguments to create a Kx_ksigma_coefficients.
+     * @example
+     * // Create one Kx_ksigma_coefficients
+     * const Kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.create({
+     *   data: {
+     *     // ... data to create a Kx_ksigma_coefficients
+     *   }
+     * })
+     * 
+     */
+    create<T extends kx_ksigma_coefficientsCreateArgs>(args: SelectSubset<T, kx_ksigma_coefficientsCreateArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Kx_ksigma_coefficients.
+     * @param {kx_ksigma_coefficientsCreateManyArgs} args - Arguments to create many Kx_ksigma_coefficients.
+     * @example
+     * // Create many Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends kx_ksigma_coefficientsCreateManyArgs>(args?: SelectSubset<T, kx_ksigma_coefficientsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Kx_ksigma_coefficients.
+     * @param {kx_ksigma_coefficientsDeleteArgs} args - Arguments to delete one Kx_ksigma_coefficients.
+     * @example
+     * // Delete one Kx_ksigma_coefficients
+     * const Kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.delete({
+     *   where: {
+     *     // ... filter to delete one Kx_ksigma_coefficients
+     *   }
+     * })
+     * 
+     */
+    delete<T extends kx_ksigma_coefficientsDeleteArgs>(args: SelectSubset<T, kx_ksigma_coefficientsDeleteArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Kx_ksigma_coefficients.
+     * @param {kx_ksigma_coefficientsUpdateArgs} args - Arguments to update one Kx_ksigma_coefficients.
+     * @example
+     * // Update one Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends kx_ksigma_coefficientsUpdateArgs>(args: SelectSubset<T, kx_ksigma_coefficientsUpdateArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Kx_ksigma_coefficients.
+     * @param {kx_ksigma_coefficientsDeleteManyArgs} args - Arguments to filter Kx_ksigma_coefficients to delete.
+     * @example
+     * // Delete a few Kx_ksigma_coefficients
+     * const { count } = await prisma.kx_ksigma_coefficients.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends kx_ksigma_coefficientsDeleteManyArgs>(args?: SelectSubset<T, kx_ksigma_coefficientsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Kx_ksigma_coefficients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kx_ksigma_coefficientsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends kx_ksigma_coefficientsUpdateManyArgs>(args: SelectSubset<T, kx_ksigma_coefficientsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Kx_ksigma_coefficients.
+     * @param {kx_ksigma_coefficientsUpsertArgs} args - Arguments to update or create a Kx_ksigma_coefficients.
+     * @example
+     * // Update or create a Kx_ksigma_coefficients
+     * const kx_ksigma_coefficients = await prisma.kx_ksigma_coefficients.upsert({
+     *   create: {
+     *     // ... data to create a Kx_ksigma_coefficients
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Kx_ksigma_coefficients we want to update
+     *   }
+     * })
+     */
+    upsert<T extends kx_ksigma_coefficientsUpsertArgs>(args: SelectSubset<T, kx_ksigma_coefficientsUpsertArgs<ExtArgs>>): Prisma__kx_ksigma_coefficientsClient<$Result.GetResult<Prisma.$kx_ksigma_coefficientsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Kx_ksigma_coefficients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kx_ksigma_coefficientsCountArgs} args - Arguments to filter Kx_ksigma_coefficients to count.
+     * @example
+     * // Count the number of Kx_ksigma_coefficients
+     * const count = await prisma.kx_ksigma_coefficients.count({
+     *   where: {
+     *     // ... the filter for the Kx_ksigma_coefficients we want to count
+     *   }
+     * })
+    **/
+    count<T extends kx_ksigma_coefficientsCountArgs>(
+      args?: Subset<T, kx_ksigma_coefficientsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Kx_ksigma_coefficientsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Kx_ksigma_coefficients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Kx_ksigma_coefficientsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Kx_ksigma_coefficientsAggregateArgs>(args: Subset<T, Kx_ksigma_coefficientsAggregateArgs>): Prisma.PrismaPromise<GetKx_ksigma_coefficientsAggregateType<T>>
+
+    /**
+     * Group by Kx_ksigma_coefficients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {kx_ksigma_coefficientsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends kx_ksigma_coefficientsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: kx_ksigma_coefficientsGroupByArgs['orderBy'] }
+        : { orderBy?: kx_ksigma_coefficientsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, kx_ksigma_coefficientsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKx_ksigma_coefficientsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the kx_ksigma_coefficients model
+   */
+  readonly fields: kx_ksigma_coefficientsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for kx_ksigma_coefficients.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__kx_ksigma_coefficientsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the kx_ksigma_coefficients model
+   */
+  interface kx_ksigma_coefficientsFieldRefs {
+    readonly id: FieldRef<"kx_ksigma_coefficients", 'Int'>
+    readonly fit_type: FieldRef<"kx_ksigma_coefficients", 'String'>
+    readonly d_range_min: FieldRef<"kx_ksigma_coefficients", 'Float'>
+    readonly d_range_max: FieldRef<"kx_ksigma_coefficients", 'Float'>
+    readonly K_sigma: FieldRef<"kx_ksigma_coefficients", 'Float'>
+    readonly eps_sigma: FieldRef<"kx_ksigma_coefficients", 'Float'>
+    readonly beta_sigma: FieldRef<"kx_ksigma_coefficients", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * kx_ksigma_coefficients findUnique
+   */
+  export type kx_ksigma_coefficientsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * Filter, which kx_ksigma_coefficients to fetch.
+     */
+    where: kx_ksigma_coefficientsWhereUniqueInput
+  }
+
+  /**
+   * kx_ksigma_coefficients findUniqueOrThrow
+   */
+  export type kx_ksigma_coefficientsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * Filter, which kx_ksigma_coefficients to fetch.
+     */
+    where: kx_ksigma_coefficientsWhereUniqueInput
+  }
+
+  /**
+   * kx_ksigma_coefficients findFirst
+   */
+  export type kx_ksigma_coefficientsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * Filter, which kx_ksigma_coefficients to fetch.
+     */
+    where?: kx_ksigma_coefficientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kx_ksigma_coefficients to fetch.
+     */
+    orderBy?: kx_ksigma_coefficientsOrderByWithRelationInput | kx_ksigma_coefficientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kx_ksigma_coefficients.
+     */
+    cursor?: kx_ksigma_coefficientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kx_ksigma_coefficients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kx_ksigma_coefficients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kx_ksigma_coefficients.
+     */
+    distinct?: Kx_ksigma_coefficientsScalarFieldEnum | Kx_ksigma_coefficientsScalarFieldEnum[]
+  }
+
+  /**
+   * kx_ksigma_coefficients findFirstOrThrow
+   */
+  export type kx_ksigma_coefficientsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * Filter, which kx_ksigma_coefficients to fetch.
+     */
+    where?: kx_ksigma_coefficientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kx_ksigma_coefficients to fetch.
+     */
+    orderBy?: kx_ksigma_coefficientsOrderByWithRelationInput | kx_ksigma_coefficientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for kx_ksigma_coefficients.
+     */
+    cursor?: kx_ksigma_coefficientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kx_ksigma_coefficients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kx_ksigma_coefficients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kx_ksigma_coefficients.
+     */
+    distinct?: Kx_ksigma_coefficientsScalarFieldEnum | Kx_ksigma_coefficientsScalarFieldEnum[]
+  }
+
+  /**
+   * kx_ksigma_coefficients findMany
+   */
+  export type kx_ksigma_coefficientsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * Filter, which kx_ksigma_coefficients to fetch.
+     */
+    where?: kx_ksigma_coefficientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of kx_ksigma_coefficients to fetch.
+     */
+    orderBy?: kx_ksigma_coefficientsOrderByWithRelationInput | kx_ksigma_coefficientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing kx_ksigma_coefficients.
+     */
+    cursor?: kx_ksigma_coefficientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` kx_ksigma_coefficients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` kx_ksigma_coefficients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of kx_ksigma_coefficients.
+     */
+    distinct?: Kx_ksigma_coefficientsScalarFieldEnum | Kx_ksigma_coefficientsScalarFieldEnum[]
+  }
+
+  /**
+   * kx_ksigma_coefficients create
+   */
+  export type kx_ksigma_coefficientsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a kx_ksigma_coefficients.
+     */
+    data: XOR<kx_ksigma_coefficientsCreateInput, kx_ksigma_coefficientsUncheckedCreateInput>
+  }
+
+  /**
+   * kx_ksigma_coefficients createMany
+   */
+  export type kx_ksigma_coefficientsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many kx_ksigma_coefficients.
+     */
+    data: kx_ksigma_coefficientsCreateManyInput | kx_ksigma_coefficientsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * kx_ksigma_coefficients update
+   */
+  export type kx_ksigma_coefficientsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a kx_ksigma_coefficients.
+     */
+    data: XOR<kx_ksigma_coefficientsUpdateInput, kx_ksigma_coefficientsUncheckedUpdateInput>
+    /**
+     * Choose, which kx_ksigma_coefficients to update.
+     */
+    where: kx_ksigma_coefficientsWhereUniqueInput
+  }
+
+  /**
+   * kx_ksigma_coefficients updateMany
+   */
+  export type kx_ksigma_coefficientsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update kx_ksigma_coefficients.
+     */
+    data: XOR<kx_ksigma_coefficientsUpdateManyMutationInput, kx_ksigma_coefficientsUncheckedUpdateManyInput>
+    /**
+     * Filter which kx_ksigma_coefficients to update
+     */
+    where?: kx_ksigma_coefficientsWhereInput
+    /**
+     * Limit how many kx_ksigma_coefficients to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * kx_ksigma_coefficients upsert
+   */
+  export type kx_ksigma_coefficientsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the kx_ksigma_coefficients to update in case it exists.
+     */
+    where: kx_ksigma_coefficientsWhereUniqueInput
+    /**
+     * In case the kx_ksigma_coefficients found by the `where` argument doesn't exist, create a new kx_ksigma_coefficients with this data.
+     */
+    create: XOR<kx_ksigma_coefficientsCreateInput, kx_ksigma_coefficientsUncheckedCreateInput>
+    /**
+     * In case the kx_ksigma_coefficients was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<kx_ksigma_coefficientsUpdateInput, kx_ksigma_coefficientsUncheckedUpdateInput>
+  }
+
+  /**
+   * kx_ksigma_coefficients delete
+   */
+  export type kx_ksigma_coefficientsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+    /**
+     * Filter which kx_ksigma_coefficients to delete.
+     */
+    where: kx_ksigma_coefficientsWhereUniqueInput
+  }
+
+  /**
+   * kx_ksigma_coefficients deleteMany
+   */
+  export type kx_ksigma_coefficientsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which kx_ksigma_coefficients to delete
+     */
+    where?: kx_ksigma_coefficientsWhereInput
+    /**
+     * Limit how many kx_ksigma_coefficients to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * kx_ksigma_coefficients without action
+   */
+  export type kx_ksigma_coefficientsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the kx_ksigma_coefficients
+     */
+    select?: kx_ksigma_coefficientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the kx_ksigma_coefficients
+     */
+    omit?: kx_ksigma_coefficientsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12751,6 +14832,7 @@ export namespace Prisma {
   export const ChainsScalarFieldEnum: {
     id: 'id',
     pitch: 'pitch',
+    P_allow: 'P_allow',
     breaking_load: 'breaking_load',
     mass_per_m: 'mass_per_m',
     A_mm2: 'A_mm2',
@@ -12888,6 +14970,30 @@ export namespace Prisma {
   export type Standard_key_lengthsScalarFieldEnum = (typeof Standard_key_lengthsScalarFieldEnum)[keyof typeof Standard_key_lengthsScalarFieldEnum]
 
 
+  export const Shaft_allowable_stressScalarFieldEnum: {
+    id: 'id',
+    d_range_min: 'd_range_min',
+    d_range_max: 'd_range_max',
+    sigma_b: 'sigma_b',
+    sigma_allow: 'sigma_allow'
+  };
+
+  export type Shaft_allowable_stressScalarFieldEnum = (typeof Shaft_allowable_stressScalarFieldEnum)[keyof typeof Shaft_allowable_stressScalarFieldEnum]
+
+
+  export const Kx_ksigma_coefficientsScalarFieldEnum: {
+    id: 'id',
+    fit_type: 'fit_type',
+    d_range_min: 'd_range_min',
+    d_range_max: 'd_range_max',
+    K_sigma: 'K_sigma',
+    eps_sigma: 'eps_sigma',
+    beta_sigma: 'beta_sigma'
+  };
+
+  export type Kx_ksigma_coefficientsScalarFieldEnum = (typeof Kx_ksigma_coefficientsScalarFieldEnum)[keyof typeof Kx_ksigma_coefficientsScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -12967,6 +15073,13 @@ export namespace Prisma {
   };
 
   export type material_gradesOrderByRelevanceFieldEnum = (typeof material_gradesOrderByRelevanceFieldEnum)[keyof typeof material_gradesOrderByRelevanceFieldEnum]
+
+
+  export const kx_ksigma_coefficientsOrderByRelevanceFieldEnum: {
+    fit_type: 'fit_type'
+  };
+
+  export type kx_ksigma_coefficientsOrderByRelevanceFieldEnum = (typeof kx_ksigma_coefficientsOrderByRelevanceFieldEnum)[keyof typeof kx_ksigma_coefficientsOrderByRelevanceFieldEnum]
 
 
   /**
@@ -13143,6 +15256,7 @@ export namespace Prisma {
     NOT?: chainsWhereInput | chainsWhereInput[]
     id?: IntFilter<"chains"> | number
     pitch?: FloatFilter<"chains"> | number
+    P_allow?: FloatNullableFilter<"chains"> | number | null
     breaking_load?: FloatNullableFilter<"chains"> | number | null
     mass_per_m?: FloatNullableFilter<"chains"> | number | null
     A_mm2?: FloatNullableFilter<"chains"> | number | null
@@ -13154,6 +15268,7 @@ export namespace Prisma {
   export type chainsOrderByWithRelationInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrderInput | SortOrder
     breaking_load?: SortOrderInput | SortOrder
     mass_per_m?: SortOrderInput | SortOrder
     A_mm2?: SortOrderInput | SortOrder
@@ -13168,6 +15283,7 @@ export namespace Prisma {
     AND?: chainsWhereInput | chainsWhereInput[]
     OR?: chainsWhereInput[]
     NOT?: chainsWhereInput | chainsWhereInput[]
+    P_allow?: FloatNullableFilter<"chains"> | number | null
     breaking_load?: FloatNullableFilter<"chains"> | number | null
     mass_per_m?: FloatNullableFilter<"chains"> | number | null
     A_mm2?: FloatNullableFilter<"chains"> | number | null
@@ -13179,6 +15295,7 @@ export namespace Prisma {
   export type chainsOrderByWithAggregationInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrderInput | SortOrder
     breaking_load?: SortOrderInput | SortOrder
     mass_per_m?: SortOrderInput | SortOrder
     A_mm2?: SortOrderInput | SortOrder
@@ -13198,6 +15315,7 @@ export namespace Prisma {
     NOT?: chainsScalarWhereWithAggregatesInput | chainsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"chains"> | number
     pitch?: FloatWithAggregatesFilter<"chains"> | number
+    P_allow?: FloatNullableWithAggregatesFilter<"chains"> | number | null
     breaking_load?: FloatNullableWithAggregatesFilter<"chains"> | number | null
     mass_per_m?: FloatNullableWithAggregatesFilter<"chains"> | number | null
     A_mm2?: FloatNullableWithAggregatesFilter<"chains"> | number | null
@@ -13843,6 +15961,125 @@ export namespace Prisma {
     value?: IntWithAggregatesFilter<"standard_key_lengths"> | number
   }
 
+  export type shaft_allowable_stressWhereInput = {
+    AND?: shaft_allowable_stressWhereInput | shaft_allowable_stressWhereInput[]
+    OR?: shaft_allowable_stressWhereInput[]
+    NOT?: shaft_allowable_stressWhereInput | shaft_allowable_stressWhereInput[]
+    id?: IntFilter<"shaft_allowable_stress"> | number
+    d_range_min?: FloatFilter<"shaft_allowable_stress"> | number
+    d_range_max?: FloatFilter<"shaft_allowable_stress"> | number
+    sigma_b?: FloatFilter<"shaft_allowable_stress"> | number
+    sigma_allow?: FloatFilter<"shaft_allowable_stress"> | number
+  }
+
+  export type shaft_allowable_stressOrderByWithRelationInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+  }
+
+  export type shaft_allowable_stressWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: shaft_allowable_stressWhereInput | shaft_allowable_stressWhereInput[]
+    OR?: shaft_allowable_stressWhereInput[]
+    NOT?: shaft_allowable_stressWhereInput | shaft_allowable_stressWhereInput[]
+    d_range_min?: FloatFilter<"shaft_allowable_stress"> | number
+    d_range_max?: FloatFilter<"shaft_allowable_stress"> | number
+    sigma_b?: FloatFilter<"shaft_allowable_stress"> | number
+    sigma_allow?: FloatFilter<"shaft_allowable_stress"> | number
+  }, "id">
+
+  export type shaft_allowable_stressOrderByWithAggregationInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+    _count?: shaft_allowable_stressCountOrderByAggregateInput
+    _avg?: shaft_allowable_stressAvgOrderByAggregateInput
+    _max?: shaft_allowable_stressMaxOrderByAggregateInput
+    _min?: shaft_allowable_stressMinOrderByAggregateInput
+    _sum?: shaft_allowable_stressSumOrderByAggregateInput
+  }
+
+  export type shaft_allowable_stressScalarWhereWithAggregatesInput = {
+    AND?: shaft_allowable_stressScalarWhereWithAggregatesInput | shaft_allowable_stressScalarWhereWithAggregatesInput[]
+    OR?: shaft_allowable_stressScalarWhereWithAggregatesInput[]
+    NOT?: shaft_allowable_stressScalarWhereWithAggregatesInput | shaft_allowable_stressScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"shaft_allowable_stress"> | number
+    d_range_min?: FloatWithAggregatesFilter<"shaft_allowable_stress"> | number
+    d_range_max?: FloatWithAggregatesFilter<"shaft_allowable_stress"> | number
+    sigma_b?: FloatWithAggregatesFilter<"shaft_allowable_stress"> | number
+    sigma_allow?: FloatWithAggregatesFilter<"shaft_allowable_stress"> | number
+  }
+
+  export type kx_ksigma_coefficientsWhereInput = {
+    AND?: kx_ksigma_coefficientsWhereInput | kx_ksigma_coefficientsWhereInput[]
+    OR?: kx_ksigma_coefficientsWhereInput[]
+    NOT?: kx_ksigma_coefficientsWhereInput | kx_ksigma_coefficientsWhereInput[]
+    id?: IntFilter<"kx_ksigma_coefficients"> | number
+    fit_type?: StringFilter<"kx_ksigma_coefficients"> | string
+    d_range_min?: FloatFilter<"kx_ksigma_coefficients"> | number
+    d_range_max?: FloatFilter<"kx_ksigma_coefficients"> | number
+    K_sigma?: FloatFilter<"kx_ksigma_coefficients"> | number
+    eps_sigma?: FloatFilter<"kx_ksigma_coefficients"> | number
+    beta_sigma?: FloatFilter<"kx_ksigma_coefficients"> | number
+  }
+
+  export type kx_ksigma_coefficientsOrderByWithRelationInput = {
+    id?: SortOrder
+    fit_type?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
+    _relevance?: kx_ksigma_coefficientsOrderByRelevanceInput
+  }
+
+  export type kx_ksigma_coefficientsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: kx_ksigma_coefficientsWhereInput | kx_ksigma_coefficientsWhereInput[]
+    OR?: kx_ksigma_coefficientsWhereInput[]
+    NOT?: kx_ksigma_coefficientsWhereInput | kx_ksigma_coefficientsWhereInput[]
+    fit_type?: StringFilter<"kx_ksigma_coefficients"> | string
+    d_range_min?: FloatFilter<"kx_ksigma_coefficients"> | number
+    d_range_max?: FloatFilter<"kx_ksigma_coefficients"> | number
+    K_sigma?: FloatFilter<"kx_ksigma_coefficients"> | number
+    eps_sigma?: FloatFilter<"kx_ksigma_coefficients"> | number
+    beta_sigma?: FloatFilter<"kx_ksigma_coefficients"> | number
+  }, "id">
+
+  export type kx_ksigma_coefficientsOrderByWithAggregationInput = {
+    id?: SortOrder
+    fit_type?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
+    _count?: kx_ksigma_coefficientsCountOrderByAggregateInput
+    _avg?: kx_ksigma_coefficientsAvgOrderByAggregateInput
+    _max?: kx_ksigma_coefficientsMaxOrderByAggregateInput
+    _min?: kx_ksigma_coefficientsMinOrderByAggregateInput
+    _sum?: kx_ksigma_coefficientsSumOrderByAggregateInput
+  }
+
+  export type kx_ksigma_coefficientsScalarWhereWithAggregatesInput = {
+    AND?: kx_ksigma_coefficientsScalarWhereWithAggregatesInput | kx_ksigma_coefficientsScalarWhereWithAggregatesInput[]
+    OR?: kx_ksigma_coefficientsScalarWhereWithAggregatesInput[]
+    NOT?: kx_ksigma_coefficientsScalarWhereWithAggregatesInput | kx_ksigma_coefficientsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"kx_ksigma_coefficients"> | number
+    fit_type?: StringWithAggregatesFilter<"kx_ksigma_coefficients"> | string
+    d_range_min?: FloatWithAggregatesFilter<"kx_ksigma_coefficients"> | number
+    d_range_max?: FloatWithAggregatesFilter<"kx_ksigma_coefficients"> | number
+    K_sigma?: FloatWithAggregatesFilter<"kx_ksigma_coefficients"> | number
+    eps_sigma?: FloatWithAggregatesFilter<"kx_ksigma_coefficients"> | number
+    beta_sigma?: FloatWithAggregatesFilter<"kx_ksigma_coefficients"> | number
+  }
+
   export type bearingsCreateInput = {
     code: string
     type?: string | null
@@ -13947,6 +16184,7 @@ export namespace Prisma {
 
   export type chainsCreateInput = {
     pitch: number
+    P_allow?: number | null
     breaking_load?: number | null
     mass_per_m?: number | null
     A_mm2?: number | null
@@ -13958,6 +16196,7 @@ export namespace Prisma {
   export type chainsUncheckedCreateInput = {
     id?: number
     pitch: number
+    P_allow?: number | null
     breaking_load?: number | null
     mass_per_m?: number | null
     A_mm2?: number | null
@@ -13968,6 +16207,7 @@ export namespace Prisma {
 
   export type chainsUpdateInput = {
     pitch?: FloatFieldUpdateOperationsInput | number
+    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
     breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
     mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
     A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -13979,6 +16219,7 @@ export namespace Prisma {
   export type chainsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     pitch?: FloatFieldUpdateOperationsInput | number
+    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
     breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
     mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
     A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -13990,6 +16231,7 @@ export namespace Prisma {
   export type chainsCreateManyInput = {
     id?: number
     pitch: number
+    P_allow?: number | null
     breaking_load?: number | null
     mass_per_m?: number | null
     A_mm2?: number | null
@@ -14000,6 +16242,7 @@ export namespace Prisma {
 
   export type chainsUpdateManyMutationInput = {
     pitch?: FloatFieldUpdateOperationsInput | number
+    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
     breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
     mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
     A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -14011,6 +16254,7 @@ export namespace Prisma {
   export type chainsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     pitch?: FloatFieldUpdateOperationsInput | number
+    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
     breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
     mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
     A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -14691,6 +16935,126 @@ export namespace Prisma {
     value?: IntFieldUpdateOperationsInput | number
   }
 
+  export type shaft_allowable_stressCreateInput = {
+    d_range_min: number
+    d_range_max: number
+    sigma_b: number
+    sigma_allow: number
+  }
+
+  export type shaft_allowable_stressUncheckedCreateInput = {
+    id?: number
+    d_range_min: number
+    d_range_max: number
+    sigma_b: number
+    sigma_allow: number
+  }
+
+  export type shaft_allowable_stressUpdateInput = {
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_allow?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type shaft_allowable_stressUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_allow?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type shaft_allowable_stressCreateManyInput = {
+    id?: number
+    d_range_min: number
+    d_range_max: number
+    sigma_b: number
+    sigma_allow: number
+  }
+
+  export type shaft_allowable_stressUpdateManyMutationInput = {
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_allow?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type shaft_allowable_stressUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_allow?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kx_ksigma_coefficientsCreateInput = {
+    fit_type: string
+    d_range_min: number
+    d_range_max: number
+    K_sigma: number
+    eps_sigma: number
+    beta_sigma: number
+  }
+
+  export type kx_ksigma_coefficientsUncheckedCreateInput = {
+    id?: number
+    fit_type: string
+    d_range_min: number
+    d_range_max: number
+    K_sigma: number
+    eps_sigma: number
+    beta_sigma: number
+  }
+
+  export type kx_ksigma_coefficientsUpdateInput = {
+    fit_type?: StringFieldUpdateOperationsInput | string
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    K_sigma?: FloatFieldUpdateOperationsInput | number
+    eps_sigma?: FloatFieldUpdateOperationsInput | number
+    beta_sigma?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kx_ksigma_coefficientsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fit_type?: StringFieldUpdateOperationsInput | string
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    K_sigma?: FloatFieldUpdateOperationsInput | number
+    eps_sigma?: FloatFieldUpdateOperationsInput | number
+    beta_sigma?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kx_ksigma_coefficientsCreateManyInput = {
+    id?: number
+    fit_type: string
+    d_range_min: number
+    d_range_max: number
+    K_sigma: number
+    eps_sigma: number
+    beta_sigma: number
+  }
+
+  export type kx_ksigma_coefficientsUpdateManyMutationInput = {
+    fit_type?: StringFieldUpdateOperationsInput | string
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    K_sigma?: FloatFieldUpdateOperationsInput | number
+    eps_sigma?: FloatFieldUpdateOperationsInput | number
+    beta_sigma?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type kx_ksigma_coefficientsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fit_type?: StringFieldUpdateOperationsInput | string
+    d_range_min?: FloatFieldUpdateOperationsInput | number
+    d_range_max?: FloatFieldUpdateOperationsInput | number
+    K_sigma?: FloatFieldUpdateOperationsInput | number
+    eps_sigma?: FloatFieldUpdateOperationsInput | number
+    beta_sigma?: FloatFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -14945,6 +17309,7 @@ export namespace Prisma {
   export type chainsCountOrderByAggregateInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrder
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     A_mm2?: SortOrder
@@ -14956,6 +17321,7 @@ export namespace Prisma {
   export type chainsAvgOrderByAggregateInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrder
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     A_mm2?: SortOrder
@@ -14966,6 +17332,7 @@ export namespace Prisma {
   export type chainsMaxOrderByAggregateInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrder
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     A_mm2?: SortOrder
@@ -14977,6 +17344,7 @@ export namespace Prisma {
   export type chainsMinOrderByAggregateInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrder
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     A_mm2?: SortOrder
@@ -14988,6 +17356,7 @@ export namespace Prisma {
   export type chainsSumOrderByAggregateInput = {
     id?: SortOrder
     pitch?: SortOrder
+    P_allow?: SortOrder
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     A_mm2?: SortOrder
@@ -15646,6 +18015,100 @@ export namespace Prisma {
   export type standard_key_lengthsSumOrderByAggregateInput = {
     id?: SortOrder
     value?: SortOrder
+  }
+
+  export type shaft_allowable_stressCountOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+  }
+
+  export type shaft_allowable_stressAvgOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+  }
+
+  export type shaft_allowable_stressMaxOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+  }
+
+  export type shaft_allowable_stressMinOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+  }
+
+  export type shaft_allowable_stressSumOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    sigma_b?: SortOrder
+    sigma_allow?: SortOrder
+  }
+
+  export type kx_ksigma_coefficientsOrderByRelevanceInput = {
+    fields: kx_ksigma_coefficientsOrderByRelevanceFieldEnum | kx_ksigma_coefficientsOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type kx_ksigma_coefficientsCountOrderByAggregateInput = {
+    id?: SortOrder
+    fit_type?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
+  }
+
+  export type kx_ksigma_coefficientsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
+  }
+
+  export type kx_ksigma_coefficientsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fit_type?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
+  }
+
+  export type kx_ksigma_coefficientsMinOrderByAggregateInput = {
+    id?: SortOrder
+    fit_type?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
+  }
+
+  export type kx_ksigma_coefficientsSumOrderByAggregateInput = {
+    id?: SortOrder
+    d_range_min?: SortOrder
+    d_range_max?: SortOrder
+    K_sigma?: SortOrder
+    eps_sigma?: SortOrder
+    beta_sigma?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

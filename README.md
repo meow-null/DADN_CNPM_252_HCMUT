@@ -2,6 +2,10 @@
 
 Tai lieu nay huong dan chay toan bo project (Backend + Frontend) tren may local.
 
+> 📚 **Chi tiết thêm:**
+> - Xem **[Tài liệu Frontend](./Frontend/README.md)**
+> - Xem **[Tài liệu Backend](./Backend/README.md)**
+
 ## 1. Yeu cau moi truong
 
 - Node.js 18+ (khuyen dung LTS)
@@ -126,15 +130,29 @@ npm start
 
 ## 8. API dang dung trong frontend
 
+Tat ca endpoint deu co prefix `/api`.
+
 Auth:
 
 - POST /api/auth/register
 - POST /api/auth/login
+- GET /api/auth/get-info
+- POST /api/auth/refresh-token
+- GET /api/auth/google
+- GET /api/auth/google/callback
+
+User:
+
+- GET /api/user
+- GET /api/user/:id
+- POST /api/user/avatar-local
+- POST /api/user/avatar-cloud
 
 Projects:
 
-- GET /api/projects
 - POST /api/projects
+- GET /api/projects
+- GET /api/projects/:projectId
 - PUT /api/projects/:projectId
 - DELETE /api/projects/:projectId
 
@@ -155,8 +173,10 @@ Motors:
 
 Luu y:
 
-- Cac API motor nay doc P_ct va n_sb tu project da tinh dong hoc trong database.
+- Cac API `projects`, `kinematics`, `design`, `motors` su dung cookie JWT de xac thuc trong backend.
+- API `design` hien tai duoc goi qua endpoint: `/api/projects/:projectId/design/calculate`.
 - Truoc khi goi API motor, can hoan thanh buoc kinematics cho project do.
+- Swagger day du: http://localhost:3069/api-docs
 
 ## 9. Quy trinh chay nhanh (tom tat)
 

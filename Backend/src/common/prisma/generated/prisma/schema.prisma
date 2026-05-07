@@ -25,6 +25,7 @@ model bearings {
 model chains {
   id            Int      @id @default(autoincrement())
   pitch         Float    @unique
+  P_allow       Float?
   breaking_load Float?
   mass_per_m    Float?
   A_mm2         Float?
@@ -156,4 +157,26 @@ model key_dimensions {
 model standard_key_lengths {
   id    Int @id @default(autoincrement())
   value Int @unique
+}
+
+// Bảng tra cứu ứng suất cho phép của trục theo đường kính và giới hạn bền
+// Dùng cho Module D (Bước D13)
+model shaft_allowable_stress {
+  id          Int   @id @default(autoincrement())
+  d_range_min Float // Giới hạn dưới của đường kính 
+  d_range_max Float // Giới hạn trên của đường kính 
+  sigma_b     Float // Giới hạn bền của vật liệu 
+  sigma_allow Float // Ứng suất cho phép [sigma] 
+}
+
+// Bảng tra cứu các hệ số K_sigma, epsilon_sigma, beta
+// Dùng cho Module D (Bước D21 - Kiểm nghiệm mỏi)
+model kx_ksigma_coefficients {
+  id          Int    @id @default(autoincrement())
+  fit_type    String @db.VarChar(50)
+  d_range_min Float
+  d_range_max Float
+  K_sigma     Float
+  eps_sigma   Float
+  beta_sigma  Float
 }

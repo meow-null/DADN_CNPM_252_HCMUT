@@ -138,6 +138,7 @@ exports.Prisma.BearingsScalarFieldEnum = {
 exports.Prisma.ChainsScalarFieldEnum = {
   id: 'id',
   pitch: 'pitch',
+  P_allow: 'P_allow',
   breaking_load: 'breaking_load',
   mass_per_m: 'mass_per_m',
   A_mm2: 'A_mm2',
@@ -245,6 +246,24 @@ exports.Prisma.Standard_key_lengthsScalarFieldEnum = {
   value: 'value'
 };
 
+exports.Prisma.Shaft_allowable_stressScalarFieldEnum = {
+  id: 'id',
+  d_range_min: 'd_range_min',
+  d_range_max: 'd_range_max',
+  sigma_b: 'sigma_b',
+  sigma_allow: 'sigma_allow'
+};
+
+exports.Prisma.Kx_ksigma_coefficientsScalarFieldEnum = {
+  id: 'id',
+  fit_type: 'fit_type',
+  d_range_min: 'd_range_min',
+  d_range_max: 'd_range_max',
+  K_sigma: 'K_sigma',
+  eps_sigma: 'eps_sigma',
+  beta_sigma: 'beta_sigma'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -295,6 +314,10 @@ exports.Prisma.usersOrderByRelevanceFieldEnum = {
 exports.Prisma.material_gradesOrderByRelevanceFieldEnum = {
   grade_name: 'grade_name'
 };
+
+exports.Prisma.kx_ksigma_coefficientsOrderByRelevanceFieldEnum = {
+  fit_type: 'fit_type'
+};
 exports.projects_step = exports.$Enums.projects_step = {
   created: 'created',
   inputs: 'inputs',
@@ -320,7 +343,9 @@ exports.Prisma.ModelName = {
   standard_center_distances: 'standard_center_distances',
   standard_shaft_diameters: 'standard_shaft_diameters',
   key_dimensions: 'key_dimensions',
-  standard_key_lengths: 'standard_key_lengths'
+  standard_key_lengths: 'standard_key_lengths',
+  shaft_allowable_stress: 'shaft_allowable_stress',
+  kx_ksigma_coefficients: 'kx_ksigma_coefficients'
 };
 
 /**

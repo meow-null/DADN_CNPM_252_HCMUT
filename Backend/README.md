@@ -317,15 +317,18 @@ await prisma.projects.update({
 ```javascript
 // root.router.js
 const rootRouter = express.Router();
-rootRouter.use("/auth",     authRouter);
-rootRouter.use("/user",     userRouter);
+rootRouter.use("/auth", authRouter);
+rootRouter.use("/user", userRouter);
 rootRouter.use("/projects", inputRouter);
 rootRouter.use("/projects", kinematicsRouter);
+rootRouter.use("/motors", motorRouter);
+rootRouter.use("/projects/:projectId/motors", motorRouter);
+rootRouter.use("/projects/:projectId/design", designRouter);
 export default rootRouter;
 
 // server.js
 app.use("/api", rootRouter);
-// → /api/auth/login, /api/user/profile, /api/projects/:id/kinematics
+// → /api/auth/login, /api/user/:id, /api/projects/:projectId/kinematics, /api/projects/:projectId/design
 ```
 
 ---
@@ -493,12 +496,19 @@ CLOUDINARY_API_SECRET=your_api_secret
 |--------|----------|-------|------|
 | POST | `/api/auth/register` | Đăng ký tài khoản | ❌ |
 | POST | `/api/auth/login` | Đăng nhập | ❌ |
+| GET | `/api/auth/get-info` | Lấy thông tin người dùng hiện tại | ✅ JWT |
 | POST | `/api/auth/refresh-token` | Làm mới Access Token | ❌ |
-| GET | `/api/auth/google` | Đăng nhập qua Google | ❌ |
-| GET | `/api/auth/me` | Lấy thông tin người dùng hiện tại | ✅ JWT |
-| GET | `/api/user/profile` | Xem profile | ✅ JWT |
+| GET | `/api/auth/google` | Khởi tạo đăng nhập Google | ❌ |
+| GET | `/api/auth/google/callback` | Callback sau khi xác thực Google | ❌ |
+| GET | `/api/user` | Lấy danh sách user | ❌ |
+| GET | `/api/user/:id` | Lấy chi tiết user | ❌ |
+| POST | `/api/user/avatar-local` | Upload avatar xuống local storage | ✅ JWT |
+| POST | `/api/user/avatar-cloud` | Upload avatar lên Cloudinary | ✅ JWT |
 | POST | `/api/projects` | Tạo project mới | ✅ JWT |
+| GET | `/api/projects` | Lấy danh sách project | ✅ JWT |
 | GET | `/api/projects/:id` | Lấy thông tin project | ✅ JWT |
+| PUT | `/api/projects/:id` | Cập nhật project | ✅ JWT |
+| DELETE | `/api/projects/:id` | Xoá project | ✅ JWT |
 | POST | `/api/projects/:id/kinematics` | Tính toán động học | ✅ JWT |
 | GET | `/api/projects/:id/kinematics` | Lấy kết quả động học | ✅ JWT |
 | POST | `/api/projects/:projectId/design/calculate` | Tính toán thiết kế hộp giảm tốc | ❌ |
