@@ -85,7 +85,6 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
         body: { motorId: motor.id },
       });
       setSelectedMotor(motor);
-      onMotorSelected?.(result);
     } catch (err) {
       setErrorMessage(err.message);
     } finally {
@@ -239,8 +238,11 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
             <button className="flex-1 py-4 text-slate-600 font-bold hover:bg-slate-50 transition-all text-sm" onClick={() => setSelectedMotor(null)}>
               ← Chọn lại
             </button>
-            <button className="flex-[2] py-4 bg-primary text-white font-bold hover:bg-primary-dark transition-all text-sm flex items-center justify-center gap-2" onClick={() => onNavigate('summary')}>
-              Hoàn tất & Xem tóm tắt
+            <button 
+              className="flex-[2] py-4 bg-primary text-white font-bold hover:bg-primary-dark transition-all text-sm flex items-center justify-center gap-2" 
+              onClick={() => onMotorSelected?.(selectedMotor)} // Gọi callback để Calculations chuyển bước
+            >
+              Tiếp tục thiết kế Chi tiết máy
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
           </div>

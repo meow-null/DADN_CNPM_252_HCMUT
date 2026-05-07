@@ -29,7 +29,7 @@ const ResultCard = ({ label, value, unit, highlight }) => (
 );
 
 // ============================================================
-export default function UC05Detail({ kinematicsResult }) {
+export default function UC05Detail({ kinematicsResult, onNavigate }) {
   const data = kinematicsResult?.kinematics ?? null;
 
   const [material, setMaterial] = useState(MATERIAL_GRADES[1]); // Thép 40X
@@ -38,6 +38,7 @@ export default function UC05Detail({ kinematicsResult }) {
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState(null);
   const [activeModule, setActiveModule] = useState('A');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleRun = () => {
     setIsRunning(true);
@@ -45,6 +46,7 @@ export default function UC05Detail({ kinematicsResult }) {
       const res = runPipeline({ kinematics: data, material, bevelModule, spurModule });
       setResults(res);
       setIsRunning(false);
+      setShowSuccess(false);
     }, 900);
   };
 
@@ -57,6 +59,35 @@ export default function UC05Detail({ kinematicsResult }) {
     E: 'Kiểm nghiệm Then',
     F: 'Kiểm nghiệm Ổ lăn',
   };
+
+  if (showSuccess) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 animate-fade-in text-center space-y-6">
+        <div className="w-24 h-24 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center animate-bounce-in shadow-lg shadow-emerald-500/20">
+          <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <div>
+          <h2 className="text-4xl font-black text-slate-900">Thiết kế hoàn tất!</h2>
+          <p className="text-slate-500 mt-2 text-lg">Tất cả các chi tiết máy đã đạt tiêu chuẩn kỹ thuật và sẵn sàng xuất báo cáo.</p>
+        </div>
+        <div className="flex gap-4 pt-4">
+          <button 
+            onClick={() => setShowSuccess(false)}
+            className="px-8 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-50 transition-all"
+          >
+            ← Quay lại kiểm tra
+          </button>
+          <button 
+            onClick={() => onNavigate('summary')}
+            className="px-10 py-4 bg-primary text-white font-bold rounded-2xl hover:bg-primary-dark shadow-xl shadow-primary/30 transition-all flex items-center gap-2"
+          >
+            Xem báo cáo & Xuất file
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -120,42 +151,73 @@ export default function UC05Detail({ kinematicsResult }) {
       )}
 
       {results && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Module Tabs */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-2 h-fit sticky top-4">
-            {modules.map(m => {
-              const moduleResult = m === 'A' ? results.chain
-                : m === 'B' ? results.bevel
-                : m === 'C' ? results.spur
-                : m === 'D' ? results.shafts.I
-                : m === 'E' ? results.keys.I
-                : results.bearings.I;
-              const ok = moduleResult?.status === 'success';
-              return (
-                <button
-                  key={m}
-                  onClick={() => setActiveModule(m)}
-                  className={`w-full flex items-center justify-between gap-2 p-3 rounded-lg text-sm transition-all mb-1 ${
-                    activeModule === m ? 'bg-primary-light text-primary font-bold' : 'text-slate-500 hover:bg-slate-50'
-                  }`}
-                >
-                  <span>Module {m}: {moduleLabels[m]}</span>
-                  <StatusBadge ok={ok} />
-                </button>
-              );
-            })}
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Module Tabs */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-2 h-fit sticky top-4">
+              {modules.map(m => {
+                let ok = false;
+                if (m === 'A') ok = results.chain.status === 'success';
+                else if (m === 'B') ok = results.bevel.status === 'success';
+                else if (m === 'C') ok = results.spur.status === 'success';
+                else if (m === 'D') ok = ['I','II','III'].every(id => results.shafts[id].status === 'success');
+                else if (m === 'E') ok = ['I','II','III'].every(id => results.keys[id].status === 'success');
+                else if (m === 'F') ok = ['I','II','III'].every(id => results.bearings[id].status === 'success');
+
+                return (
+                  <button
+                    key={m}
+                    onClick={() => setActiveModule(m)}
+                    className={`w-full flex items-center justify-between gap-2 p-3 rounded-lg text-sm transition-all mb-1 ${activeModule === m ? 'bg-primary-light text-primary font-bold' : 'text-slate-500 hover:bg-slate-50'
+                      }`}
+                  >
+                    <span>Module {m}: {moduleLabels[m]}</span>
+                    <StatusBadge ok={ok} />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Module Content */}
+            <div className="lg:col-span-3 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+              {activeModule === 'A' && <ModuleA r={results.chain} />}
+              {activeModule === 'B' && <ModuleB r={results.bevel} />}
+              {activeModule === 'C' && <ModuleC r={results.spur} />}
+              {activeModule === 'D' && <ModuleD shafts={results.shafts} />}
+              {activeModule === 'E' && <ModuleE keys={results.keys} />}
+              {activeModule === 'F' && <ModuleF bearings={results.bearings} />}
+            </div>
           </div>
 
-          {/* Module Content */}
-          <div className="lg:col-span-3 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-            {activeModule === 'A' && <ModuleA r={results.chain} />}
-            {activeModule === 'B' && <ModuleB r={results.bevel} />}
-            {activeModule === 'C' && <ModuleC r={results.spur} />}
-            {activeModule === 'D' && <ModuleD shafts={results.shafts} />}
-            {activeModule === 'E' && <ModuleE keys={results.keys} />}
-            {activeModule === 'F' && <ModuleF bearings={results.bearings} />}
+          {/* Nút Hoàn tất - Chỉ sáng lên khi tất cả module đều Đạt */}
+          <div className="flex justify-center pt-8 animate-bounce-in">
+            {(() => {
+              const isAllOk =
+                results.chain.status === 'success' &&
+                results.bevel.status === 'success' &&
+                results.spur.status === 'success' &&
+                ['I', 'II', 'III'].every(id => results.shafts[id].status === 'success') &&
+                ['I', 'II', 'III'].every(id => results.keys[id].status === 'success') &&
+                ['I', 'II', 'III'].every(id => results.bearings[id].status === 'success');
+
+              return (
+                <button
+                  disabled={!isAllOk}
+                  onClick={() => setShowSuccess(true)}
+                  className={`
+                    px-12 py-4 rounded-2xl font-black text-lg shadow-2xl transition-all flex items-center gap-3
+                    ${isAllOk
+                      ? 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-500/40 cursor-pointer scale-105'
+                      : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-50'}
+                  `}
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  XÁC NHẬN & HOÀN TẤT THIẾT KẾ
+                </button>
+              );
+            })()}
           </div>
-        </div>
+        </>
       )}
     </div>
   );

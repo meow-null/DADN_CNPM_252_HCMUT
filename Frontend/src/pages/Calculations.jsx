@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MotorRecommendation from './MotorRecommendation';
 import UC05Detail from './UC05Detail';
 
@@ -210,15 +210,15 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Navigation Wizard - Đã sửa lại thứ tự */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10">
-        <button className={getNavClass(1)} onClick={() => setStep(1)}>1. Nhập liệu</button>
+      {/* Navigation Wizard - Đã sửa: Không cho phép nhấn để nhảy bước tự do */}
+      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10 pointer-events-none">
+        <div className={getNavClass(1)}>1. Nhập liệu</div>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button className={getNavClass(2)} onClick={() => setStep(2)}>2. Động học</button>
+        <div className={getNavClass(2)}>2. Động học</div>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button className={getNavClass(3)} onClick={() => setStep(3)}>3. Chi tiết máy</button>
+        <div className={getNavClass(3)}>3. Chọn Động cơ</div>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button className={getNavClass(4)} onClick={() => setStep(4)}>4. Chọn Động cơ</button>
+        <div className={getNavClass(4)}>4. Chi tiết máy</div>
       </div>
 
       {errorMessage && (
@@ -315,9 +315,9 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                   </button>
                   <button 
                     className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-dark shadow-lg shadow-primary/20 transition-all flex items-center gap-2" 
-                    onClick={() => setStep(3)} // Đã đổi: Nhảy sang Chi tiết máy
+                    onClick={() => setStep(3)} // Chuyển sang Bước 3: Chọn động cơ
                   >
-                    Sang bước Chi tiết máy
+                    Sang bước Chọn Động cơ
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                   </button>
                 </>
@@ -401,21 +401,27 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
           )}
         </div>
       )}
-      {/* STEP 3: CHI TIẾT MÁY (UC-05) - Pipeline A→F */}
+      {/* STEP 3: CHỌN ĐỘNG CƠ (UC-06) */}
       {step === 3 && (
-        <div className="animate-fade-in">
-          <UC05Detail kinematicsResult={kinematicsResult} />
-        </div>
-      )}
-
-      {/* STEP 4: CHỌN ĐỘNG CƠ (UC-06) */}
-      {step === 4 && (
         <MotorRecommendation
           activeProject={activeProject}
           kinematicsResult={kinematicsResult}
-          onMotorSelected={setSelectedMotor}
+          onMotorSelected={(res) => {
+            setSelectedMotor(res); // Lưu động cơ đã chọn vào state của Calculations
+            setStep(4); // Chuyển sang bước 4 (Chi tiết máy)
+          }}
           onNavigate={onNavigate}
         />
+      )}
+
+      {/* STEP 4: CHI TIẾT MÁY (UC-05) - Pipeline A→F */}
+      {step === 4 && (
+        <div className="animate-fade-in">
+          <UC05Detail 
+            kinematicsResult={kinematicsResult} 
+            onNavigate={onNavigate}
+          />
+        </div>
       )}
 
       {/* MODAL CÔNG THỨC */}

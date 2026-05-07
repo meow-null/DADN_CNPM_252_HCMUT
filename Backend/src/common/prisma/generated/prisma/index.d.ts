@@ -1962,56 +1962,56 @@ export namespace Prisma {
 
   export type BearingsAvgAggregateOutputType = {
     id: number | null
-    inner_d: number | null
-    outer_D: number | null
-    width_B: number | null
-    C: number | null
-    C0: number | null
-    e: number | null
-    Y: number | null
-    alpha_deg: number | null
+    inner_d: Decimal | null
+    outer_D: Decimal | null
+    width_B: Decimal | null
+    C: Decimal | null
+    C0: Decimal | null
+    deletedBy: number | null
   }
 
   export type BearingsSumAggregateOutputType = {
     id: number | null
-    inner_d: number | null
-    outer_D: number | null
-    width_B: number | null
-    C: number | null
-    C0: number | null
-    e: number | null
-    Y: number | null
-    alpha_deg: number | null
+    inner_d: Decimal | null
+    outer_D: Decimal | null
+    width_B: Decimal | null
+    C: Decimal | null
+    C0: Decimal | null
+    deletedBy: number | null
   }
 
   export type BearingsMinAggregateOutputType = {
     id: number | null
     code: string | null
     type: string | null
-    inner_d: number | null
-    outer_D: number | null
-    width_B: number | null
-    C: number | null
-    C0: number | null
-    e: number | null
-    Y: number | null
-    alpha_deg: number | null
+    inner_d: Decimal | null
+    outer_D: Decimal | null
+    width_B: Decimal | null
+    C: Decimal | null
+    C0: Decimal | null
     is_active: boolean | null
+    deletedBy: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type BearingsMaxAggregateOutputType = {
     id: number | null
     code: string | null
     type: string | null
-    inner_d: number | null
-    outer_D: number | null
-    width_B: number | null
-    C: number | null
-    C0: number | null
-    e: number | null
-    Y: number | null
-    alpha_deg: number | null
+    inner_d: Decimal | null
+    outer_D: Decimal | null
+    width_B: Decimal | null
+    C: Decimal | null
+    C0: Decimal | null
     is_active: boolean | null
+    deletedBy: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type BearingsCountAggregateOutputType = {
@@ -2023,10 +2023,12 @@ export namespace Prisma {
     width_B: number
     C: number
     C0: number
-    e: number
-    Y: number
-    alpha_deg: number
     is_active: number
+    deletedBy: number
+    isDeleted: number
+    deletedAt: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -2038,9 +2040,7 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    e?: true
-    Y?: true
-    alpha_deg?: true
+    deletedBy?: true
   }
 
   export type BearingsSumAggregateInputType = {
@@ -2050,9 +2050,7 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    e?: true
-    Y?: true
-    alpha_deg?: true
+    deletedBy?: true
   }
 
   export type BearingsMinAggregateInputType = {
@@ -2064,10 +2062,12 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    e?: true
-    Y?: true
-    alpha_deg?: true
     is_active?: true
+    deletedBy?: true
+    isDeleted?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type BearingsMaxAggregateInputType = {
@@ -2079,10 +2079,12 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    e?: true
-    Y?: true
-    alpha_deg?: true
     is_active?: true
+    deletedBy?: true
+    isDeleted?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type BearingsCountAggregateInputType = {
@@ -2094,10 +2096,12 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    e?: true
-    Y?: true
-    alpha_deg?: true
     is_active?: true
+    deletedBy?: true
+    isDeleted?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -2191,15 +2195,17 @@ export namespace Prisma {
     id: number
     code: string
     type: string | null
-    inner_d: number
-    outer_D: number
-    width_B: number
-    C: number | null
-    C0: number | null
-    e: number | null
-    Y: number | null
-    alpha_deg: number | null
+    inner_d: Decimal
+    outer_D: Decimal
+    width_B: Decimal
+    C: Decimal | null
+    C0: Decimal | null
     is_active: boolean | null
+    deletedBy: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
     _count: BearingsCountAggregateOutputType | null
     _avg: BearingsAvgAggregateOutputType | null
     _sum: BearingsSumAggregateOutputType | null
@@ -2230,10 +2236,12 @@ export namespace Prisma {
     width_B?: boolean
     C?: boolean
     C0?: boolean
-    e?: boolean
-    Y?: boolean
-    alpha_deg?: boolean
     is_active?: boolean
+    deletedBy?: boolean
+    isDeleted?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["bearings"]>
 
 
@@ -2247,13 +2255,15 @@ export namespace Prisma {
     width_B?: boolean
     C?: boolean
     C0?: boolean
-    e?: boolean
-    Y?: boolean
-    alpha_deg?: boolean
     is_active?: boolean
+    deletedBy?: boolean
+    isDeleted?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type bearingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "type" | "inner_d" | "outer_D" | "width_B" | "C" | "C0" | "e" | "Y" | "alpha_deg" | "is_active", ExtArgs["result"]["bearings"]>
+  export type bearingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "type" | "inner_d" | "outer_D" | "width_B" | "C" | "C0" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["bearings"]>
 
   export type $bearingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "bearings"
@@ -2262,15 +2272,17 @@ export namespace Prisma {
       id: number
       code: string
       type: string | null
-      inner_d: number
-      outer_D: number
-      width_B: number
-      C: number | null
-      C0: number | null
-      e: number | null
-      Y: number | null
-      alpha_deg: number | null
+      inner_d: Prisma.Decimal
+      outer_D: Prisma.Decimal
+      width_B: Prisma.Decimal
+      C: Prisma.Decimal | null
+      C0: Prisma.Decimal | null
       is_active: boolean | null
+      deletedBy: number | null
+      isDeleted: boolean | null
+      deletedAt: Date | null
+      createdAt: Date | null
+      updatedAt: Date | null
     }, ExtArgs["result"]["bearings"]>
     composites: {}
   }
@@ -2643,15 +2655,17 @@ export namespace Prisma {
     readonly id: FieldRef<"bearings", 'Int'>
     readonly code: FieldRef<"bearings", 'String'>
     readonly type: FieldRef<"bearings", 'String'>
-    readonly inner_d: FieldRef<"bearings", 'Float'>
-    readonly outer_D: FieldRef<"bearings", 'Float'>
-    readonly width_B: FieldRef<"bearings", 'Float'>
-    readonly C: FieldRef<"bearings", 'Float'>
-    readonly C0: FieldRef<"bearings", 'Float'>
-    readonly e: FieldRef<"bearings", 'Float'>
-    readonly Y: FieldRef<"bearings", 'Float'>
-    readonly alpha_deg: FieldRef<"bearings", 'Float'>
+    readonly inner_d: FieldRef<"bearings", 'Decimal'>
+    readonly outer_D: FieldRef<"bearings", 'Decimal'>
+    readonly width_B: FieldRef<"bearings", 'Decimal'>
+    readonly C: FieldRef<"bearings", 'Decimal'>
+    readonly C0: FieldRef<"bearings", 'Decimal'>
     readonly is_active: FieldRef<"bearings", 'Boolean'>
+    readonly deletedBy: FieldRef<"bearings", 'Int'>
+    readonly isDeleted: FieldRef<"bearings", 'Boolean'>
+    readonly deletedAt: FieldRef<"bearings", 'DateTime'>
+    readonly createdAt: FieldRef<"bearings", 'DateTime'>
+    readonly updatedAt: FieldRef<"bearings", 'DateTime'>
   }
     
 
@@ -2992,60 +3006,57 @@ export namespace Prisma {
 
   export type ChainsAvgAggregateOutputType = {
     id: number | null
-    pitch: number | null
-    P_allow: number | null
-    breaking_load: number | null
-    mass_per_m: number | null
-    A_mm2: number | null
-    s_allow: number | null
-    n_ref: number | null
+    pitch: Decimal | null
+    breaking_load: Decimal | null
+    mass_per_m: Decimal | null
+    deletedBy: number | null
   }
 
   export type ChainsSumAggregateOutputType = {
     id: number | null
-    pitch: number | null
-    P_allow: number | null
-    breaking_load: number | null
-    mass_per_m: number | null
-    A_mm2: number | null
-    s_allow: number | null
-    n_ref: number | null
+    pitch: Decimal | null
+    breaking_load: Decimal | null
+    mass_per_m: Decimal | null
+    deletedBy: number | null
   }
 
   export type ChainsMinAggregateOutputType = {
     id: number | null
-    pitch: number | null
-    P_allow: number | null
-    breaking_load: number | null
-    mass_per_m: number | null
-    A_mm2: number | null
-    s_allow: number | null
-    n_ref: number | null
+    pitch: Decimal | null
+    breaking_load: Decimal | null
+    mass_per_m: Decimal | null
     is_active: boolean | null
+    deletedBy: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ChainsMaxAggregateOutputType = {
     id: number | null
-    pitch: number | null
-    P_allow: number | null
-    breaking_load: number | null
-    mass_per_m: number | null
-    A_mm2: number | null
-    s_allow: number | null
-    n_ref: number | null
+    pitch: Decimal | null
+    breaking_load: Decimal | null
+    mass_per_m: Decimal | null
     is_active: boolean | null
+    deletedBy: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ChainsCountAggregateOutputType = {
     id: number
     pitch: number
-    P_allow: number
     breaking_load: number
     mass_per_m: number
-    A_mm2: number
-    s_allow: number
-    n_ref: number
     is_active: number
+    deletedBy: number
+    isDeleted: number
+    deletedAt: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -3053,59 +3064,56 @@ export namespace Prisma {
   export type ChainsAvgAggregateInputType = {
     id?: true
     pitch?: true
-    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
-    A_mm2?: true
-    s_allow?: true
-    n_ref?: true
+    deletedBy?: true
   }
 
   export type ChainsSumAggregateInputType = {
     id?: true
     pitch?: true
-    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
-    A_mm2?: true
-    s_allow?: true
-    n_ref?: true
+    deletedBy?: true
   }
 
   export type ChainsMinAggregateInputType = {
     id?: true
     pitch?: true
-    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
-    A_mm2?: true
-    s_allow?: true
-    n_ref?: true
     is_active?: true
+    deletedBy?: true
+    isDeleted?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type ChainsMaxAggregateInputType = {
     id?: true
     pitch?: true
-    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
-    A_mm2?: true
-    s_allow?: true
-    n_ref?: true
     is_active?: true
+    deletedBy?: true
+    isDeleted?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type ChainsCountAggregateInputType = {
     id?: true
     pitch?: true
-    P_allow?: true
     breaking_load?: true
     mass_per_m?: true
-    A_mm2?: true
-    s_allow?: true
-    n_ref?: true
     is_active?: true
+    deletedBy?: true
+    isDeleted?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -3197,14 +3205,15 @@ export namespace Prisma {
 
   export type ChainsGroupByOutputType = {
     id: number
-    pitch: number
-    P_allow: number | null
-    breaking_load: number | null
-    mass_per_m: number | null
-    A_mm2: number | null
-    s_allow: number | null
-    n_ref: number | null
+    pitch: Decimal
+    breaking_load: Decimal | null
+    mass_per_m: Decimal | null
     is_active: boolean | null
+    deletedBy: number | null
+    isDeleted: boolean | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
     _count: ChainsCountAggregateOutputType | null
     _avg: ChainsAvgAggregateOutputType | null
     _sum: ChainsSumAggregateOutputType | null
@@ -3229,13 +3238,14 @@ export namespace Prisma {
   export type chainsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pitch?: boolean
-    P_allow?: boolean
     breaking_load?: boolean
     mass_per_m?: boolean
-    A_mm2?: boolean
-    s_allow?: boolean
-    n_ref?: boolean
     is_active?: boolean
+    deletedBy?: boolean
+    isDeleted?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["chains"]>
 
 
@@ -3243,30 +3253,32 @@ export namespace Prisma {
   export type chainsSelectScalar = {
     id?: boolean
     pitch?: boolean
-    P_allow?: boolean
     breaking_load?: boolean
     mass_per_m?: boolean
-    A_mm2?: boolean
-    s_allow?: boolean
-    n_ref?: boolean
     is_active?: boolean
+    deletedBy?: boolean
+    isDeleted?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "P_allow" | "breaking_load" | "mass_per_m" | "A_mm2" | "s_allow" | "n_ref" | "is_active", ExtArgs["result"]["chains"]>
+  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "breaking_load" | "mass_per_m" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["chains"]>
 
   export type $chainsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "chains"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      pitch: number
-      P_allow: number | null
-      breaking_load: number | null
-      mass_per_m: number | null
-      A_mm2: number | null
-      s_allow: number | null
-      n_ref: number | null
+      pitch: Prisma.Decimal
+      breaking_load: Prisma.Decimal | null
+      mass_per_m: Prisma.Decimal | null
       is_active: boolean | null
+      deletedBy: number | null
+      isDeleted: boolean | null
+      deletedAt: Date | null
+      createdAt: Date | null
+      updatedAt: Date | null
     }, ExtArgs["result"]["chains"]>
     composites: {}
   }
@@ -3637,14 +3649,15 @@ export namespace Prisma {
    */
   interface chainsFieldRefs {
     readonly id: FieldRef<"chains", 'Int'>
-    readonly pitch: FieldRef<"chains", 'Float'>
-    readonly P_allow: FieldRef<"chains", 'Float'>
-    readonly breaking_load: FieldRef<"chains", 'Float'>
-    readonly mass_per_m: FieldRef<"chains", 'Float'>
-    readonly A_mm2: FieldRef<"chains", 'Float'>
-    readonly s_allow: FieldRef<"chains", 'Float'>
-    readonly n_ref: FieldRef<"chains", 'Int'>
+    readonly pitch: FieldRef<"chains", 'Decimal'>
+    readonly breaking_load: FieldRef<"chains", 'Decimal'>
+    readonly mass_per_m: FieldRef<"chains", 'Decimal'>
     readonly is_active: FieldRef<"chains", 'Boolean'>
+    readonly deletedBy: FieldRef<"chains", 'Int'>
+    readonly isDeleted: FieldRef<"chains", 'Boolean'>
+    readonly deletedAt: FieldRef<"chains", 'DateTime'>
+    readonly createdAt: FieldRef<"chains", 'DateTime'>
+    readonly updatedAt: FieldRef<"chains", 'DateTime'>
   }
     
 
@@ -14820,10 +14833,12 @@ export namespace Prisma {
     width_B: 'width_B',
     C: 'C',
     C0: 'C0',
-    e: 'e',
-    Y: 'Y',
-    alpha_deg: 'alpha_deg',
-    is_active: 'is_active'
+    is_active: 'is_active',
+    deletedBy: 'deletedBy',
+    isDeleted: 'isDeleted',
+    deletedAt: 'deletedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type BearingsScalarFieldEnum = (typeof BearingsScalarFieldEnum)[keyof typeof BearingsScalarFieldEnum]
@@ -14832,13 +14847,14 @@ export namespace Prisma {
   export const ChainsScalarFieldEnum: {
     id: 'id',
     pitch: 'pitch',
-    P_allow: 'P_allow',
     breaking_load: 'breaking_load',
     mass_per_m: 'mass_per_m',
-    A_mm2: 'A_mm2',
-    s_allow: 's_allow',
-    n_ref: 'n_ref',
-    is_active: 'is_active'
+    is_active: 'is_active',
+    deletedBy: 'deletedBy',
+    isDeleted: 'isDeleted',
+    deletedAt: 'deletedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type ChainsScalarFieldEnum = (typeof ChainsScalarFieldEnum)[keyof typeof ChainsScalarFieldEnum]
@@ -15102,9 +15118,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Decimal'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
@@ -15112,13 +15128,6 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal'
-   */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
@@ -15155,6 +15164,13 @@ export namespace Prisma {
    */
   export type Enumusers_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'users_role'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
   /**
    * Deep Input Types
    */
@@ -15167,15 +15183,17 @@ export namespace Prisma {
     id?: IntFilter<"bearings"> | number
     code?: StringFilter<"bearings"> | string
     type?: StringNullableFilter<"bearings"> | string | null
-    inner_d?: FloatFilter<"bearings"> | number
-    outer_D?: FloatFilter<"bearings"> | number
-    width_B?: FloatFilter<"bearings"> | number
-    C?: FloatNullableFilter<"bearings"> | number | null
-    C0?: FloatNullableFilter<"bearings"> | number | null
-    e?: FloatNullableFilter<"bearings"> | number | null
-    Y?: FloatNullableFilter<"bearings"> | number | null
-    alpha_deg?: FloatNullableFilter<"bearings"> | number | null
+    inner_d?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    C?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    C0?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableFilter<"bearings"> | boolean | null
+    deletedBy?: IntNullableFilter<"bearings"> | number | null
+    isDeleted?: BoolNullableFilter<"bearings"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
+    createdAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
   }
 
   export type bearingsOrderByWithRelationInput = {
@@ -15187,30 +15205,35 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrderInput | SortOrder
     C0?: SortOrderInput | SortOrder
-    e?: SortOrderInput | SortOrder
-    Y?: SortOrderInput | SortOrder
-    alpha_deg?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
+    deletedBy?: SortOrderInput | SortOrder
+    isDeleted?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _relevance?: bearingsOrderByRelevanceInput
   }
 
   export type bearingsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     code?: string
+    inner_d_outer_D_width_B?: bearingsInner_dOuter_DWidth_BCompoundUniqueInput
     AND?: bearingsWhereInput | bearingsWhereInput[]
     OR?: bearingsWhereInput[]
     NOT?: bearingsWhereInput | bearingsWhereInput[]
     type?: StringNullableFilter<"bearings"> | string | null
-    inner_d?: FloatFilter<"bearings"> | number
-    outer_D?: FloatFilter<"bearings"> | number
-    width_B?: FloatFilter<"bearings"> | number
-    C?: FloatNullableFilter<"bearings"> | number | null
-    C0?: FloatNullableFilter<"bearings"> | number | null
-    e?: FloatNullableFilter<"bearings"> | number | null
-    Y?: FloatNullableFilter<"bearings"> | number | null
-    alpha_deg?: FloatNullableFilter<"bearings"> | number | null
+    inner_d?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    C?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    C0?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableFilter<"bearings"> | boolean | null
-  }, "id" | "code">
+    deletedBy?: IntNullableFilter<"bearings"> | number | null
+    isDeleted?: BoolNullableFilter<"bearings"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
+    createdAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
+  }, "id" | "code" | "inner_d_outer_D_width_B">
 
   export type bearingsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -15221,10 +15244,12 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrderInput | SortOrder
     C0?: SortOrderInput | SortOrder
-    e?: SortOrderInput | SortOrder
-    Y?: SortOrderInput | SortOrder
-    alpha_deg?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
+    deletedBy?: SortOrderInput | SortOrder
+    isDeleted?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: bearingsCountOrderByAggregateInput
     _avg?: bearingsAvgOrderByAggregateInput
     _max?: bearingsMaxOrderByAggregateInput
@@ -15239,15 +15264,17 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"bearings"> | number
     code?: StringWithAggregatesFilter<"bearings"> | string
     type?: StringNullableWithAggregatesFilter<"bearings"> | string | null
-    inner_d?: FloatWithAggregatesFilter<"bearings"> | number
-    outer_D?: FloatWithAggregatesFilter<"bearings"> | number
-    width_B?: FloatWithAggregatesFilter<"bearings"> | number
-    C?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
-    C0?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
-    e?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
-    Y?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
-    alpha_deg?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
+    inner_d?: DecimalWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string
+    C?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    C0?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableWithAggregatesFilter<"bearings"> | boolean | null
+    deletedBy?: IntNullableWithAggregatesFilter<"bearings"> | number | null
+    isDeleted?: BoolNullableWithAggregatesFilter<"bearings"> | boolean | null
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
+    createdAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
   }
 
   export type chainsWhereInput = {
@@ -15255,53 +15282,57 @@ export namespace Prisma {
     OR?: chainsWhereInput[]
     NOT?: chainsWhereInput | chainsWhereInput[]
     id?: IntFilter<"chains"> | number
-    pitch?: FloatFilter<"chains"> | number
-    P_allow?: FloatNullableFilter<"chains"> | number | null
-    breaking_load?: FloatNullableFilter<"chains"> | number | null
-    mass_per_m?: FloatNullableFilter<"chains"> | number | null
-    A_mm2?: FloatNullableFilter<"chains"> | number | null
-    s_allow?: FloatNullableFilter<"chains"> | number | null
-    n_ref?: IntNullableFilter<"chains"> | number | null
+    pitch?: DecimalFilter<"chains"> | Decimal | DecimalJsLike | number | string
+    breaking_load?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableFilter<"chains"> | boolean | null
+    deletedBy?: IntNullableFilter<"chains"> | number | null
+    isDeleted?: BoolNullableFilter<"chains"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
+    createdAt?: DateTimeNullableFilter<"chains"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
   }
 
   export type chainsOrderByWithRelationInput = {
     id?: SortOrder
     pitch?: SortOrder
-    P_allow?: SortOrderInput | SortOrder
     breaking_load?: SortOrderInput | SortOrder
     mass_per_m?: SortOrderInput | SortOrder
-    A_mm2?: SortOrderInput | SortOrder
-    s_allow?: SortOrderInput | SortOrder
-    n_ref?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
+    deletedBy?: SortOrderInput | SortOrder
+    isDeleted?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
   }
 
   export type chainsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    pitch?: number
+    pitch?: Decimal | DecimalJsLike | number | string
     AND?: chainsWhereInput | chainsWhereInput[]
     OR?: chainsWhereInput[]
     NOT?: chainsWhereInput | chainsWhereInput[]
-    P_allow?: FloatNullableFilter<"chains"> | number | null
-    breaking_load?: FloatNullableFilter<"chains"> | number | null
-    mass_per_m?: FloatNullableFilter<"chains"> | number | null
-    A_mm2?: FloatNullableFilter<"chains"> | number | null
-    s_allow?: FloatNullableFilter<"chains"> | number | null
-    n_ref?: IntNullableFilter<"chains"> | number | null
+    breaking_load?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableFilter<"chains"> | boolean | null
+    deletedBy?: IntNullableFilter<"chains"> | number | null
+    isDeleted?: BoolNullableFilter<"chains"> | boolean | null
+    deletedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
+    createdAt?: DateTimeNullableFilter<"chains"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
   }, "id" | "pitch">
 
   export type chainsOrderByWithAggregationInput = {
     id?: SortOrder
     pitch?: SortOrder
-    P_allow?: SortOrderInput | SortOrder
     breaking_load?: SortOrderInput | SortOrder
     mass_per_m?: SortOrderInput | SortOrder
-    A_mm2?: SortOrderInput | SortOrder
-    s_allow?: SortOrderInput | SortOrder
-    n_ref?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
+    deletedBy?: SortOrderInput | SortOrder
+    isDeleted?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: chainsCountOrderByAggregateInput
     _avg?: chainsAvgOrderByAggregateInput
     _max?: chainsMaxOrderByAggregateInput
@@ -15314,14 +15345,15 @@ export namespace Prisma {
     OR?: chainsScalarWhereWithAggregatesInput[]
     NOT?: chainsScalarWhereWithAggregatesInput | chainsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"chains"> | number
-    pitch?: FloatWithAggregatesFilter<"chains"> | number
-    P_allow?: FloatNullableWithAggregatesFilter<"chains"> | number | null
-    breaking_load?: FloatNullableWithAggregatesFilter<"chains"> | number | null
-    mass_per_m?: FloatNullableWithAggregatesFilter<"chains"> | number | null
-    A_mm2?: FloatNullableWithAggregatesFilter<"chains"> | number | null
-    s_allow?: FloatNullableWithAggregatesFilter<"chains"> | number | null
-    n_ref?: IntNullableWithAggregatesFilter<"chains"> | number | null
+    pitch?: DecimalWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string
+    breaking_load?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
     is_active?: BoolNullableWithAggregatesFilter<"chains"> | boolean | null
+    deletedBy?: IntNullableWithAggregatesFilter<"chains"> | number | null
+    isDeleted?: BoolNullableWithAggregatesFilter<"chains"> | boolean | null
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
+    createdAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
   }
 
   export type motorsWhereInput = {
@@ -16083,184 +16115,205 @@ export namespace Prisma {
   export type bearingsCreateInput = {
     code: string
     type?: string | null
-    inner_d: number
-    outer_D: number
-    width_B: number
-    C?: number | null
-    C0?: number | null
-    e?: number | null
-    Y?: number | null
-    alpha_deg?: number | null
+    inner_d: Decimal | DecimalJsLike | number | string
+    outer_D: Decimal | DecimalJsLike | number | string
+    width_B: Decimal | DecimalJsLike | number | string
+    C?: Decimal | DecimalJsLike | number | string | null
+    C0?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
   }
 
   export type bearingsUncheckedCreateInput = {
     id?: number
     code: string
     type?: string | null
-    inner_d: number
-    outer_D: number
-    width_B: number
-    C?: number | null
-    C0?: number | null
-    e?: number | null
-    Y?: number | null
-    alpha_deg?: number | null
+    inner_d: Decimal | DecimalJsLike | number | string
+    outer_D: Decimal | DecimalJsLike | number | string
+    width_B: Decimal | DecimalJsLike | number | string
+    C?: Decimal | DecimalJsLike | number | string | null
+    C0?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
   }
 
   export type bearingsUpdateInput = {
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: FloatFieldUpdateOperationsInput | number
-    outer_D?: FloatFieldUpdateOperationsInput | number
-    width_B?: FloatFieldUpdateOperationsInput | number
-    C?: NullableFloatFieldUpdateOperationsInput | number | null
-    C0?: NullableFloatFieldUpdateOperationsInput | number | null
-    e?: NullableFloatFieldUpdateOperationsInput | number | null
-    Y?: NullableFloatFieldUpdateOperationsInput | number | null
-    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
+    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type bearingsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: FloatFieldUpdateOperationsInput | number
-    outer_D?: FloatFieldUpdateOperationsInput | number
-    width_B?: FloatFieldUpdateOperationsInput | number
-    C?: NullableFloatFieldUpdateOperationsInput | number | null
-    C0?: NullableFloatFieldUpdateOperationsInput | number | null
-    e?: NullableFloatFieldUpdateOperationsInput | number | null
-    Y?: NullableFloatFieldUpdateOperationsInput | number | null
-    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
+    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type bearingsCreateManyInput = {
     id?: number
     code: string
     type?: string | null
-    inner_d: number
-    outer_D: number
-    width_B: number
-    C?: number | null
-    C0?: number | null
-    e?: number | null
-    Y?: number | null
-    alpha_deg?: number | null
+    inner_d: Decimal | DecimalJsLike | number | string
+    outer_D: Decimal | DecimalJsLike | number | string
+    width_B: Decimal | DecimalJsLike | number | string
+    C?: Decimal | DecimalJsLike | number | string | null
+    C0?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
   }
 
   export type bearingsUpdateManyMutationInput = {
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: FloatFieldUpdateOperationsInput | number
-    outer_D?: FloatFieldUpdateOperationsInput | number
-    width_B?: FloatFieldUpdateOperationsInput | number
-    C?: NullableFloatFieldUpdateOperationsInput | number | null
-    C0?: NullableFloatFieldUpdateOperationsInput | number | null
-    e?: NullableFloatFieldUpdateOperationsInput | number | null
-    Y?: NullableFloatFieldUpdateOperationsInput | number | null
-    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
+    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type bearingsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: FloatFieldUpdateOperationsInput | number
-    outer_D?: FloatFieldUpdateOperationsInput | number
-    width_B?: FloatFieldUpdateOperationsInput | number
-    C?: NullableFloatFieldUpdateOperationsInput | number | null
-    C0?: NullableFloatFieldUpdateOperationsInput | number | null
-    e?: NullableFloatFieldUpdateOperationsInput | number | null
-    Y?: NullableFloatFieldUpdateOperationsInput | number | null
-    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
+    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsCreateInput = {
-    pitch: number
-    P_allow?: number | null
-    breaking_load?: number | null
-    mass_per_m?: number | null
-    A_mm2?: number | null
-    s_allow?: number | null
-    n_ref?: number | null
+    pitch: Decimal | DecimalJsLike | number | string
+    breaking_load?: Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
   }
 
   export type chainsUncheckedCreateInput = {
     id?: number
-    pitch: number
-    P_allow?: number | null
-    breaking_load?: number | null
-    mass_per_m?: number | null
-    A_mm2?: number | null
-    s_allow?: number | null
-    n_ref?: number | null
+    pitch: Decimal | DecimalJsLike | number | string
+    breaking_load?: Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
   }
 
   export type chainsUpdateInput = {
-    pitch?: FloatFieldUpdateOperationsInput | number
-    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
-    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
-    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
-    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    pitch?: FloatFieldUpdateOperationsInput | number
-    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
-    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
-    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
-    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsCreateManyInput = {
     id?: number
-    pitch: number
-    P_allow?: number | null
-    breaking_load?: number | null
-    mass_per_m?: number | null
-    A_mm2?: number | null
-    s_allow?: number | null
-    n_ref?: number | null
+    pitch: Decimal | DecimalJsLike | number | string
+    breaking_load?: Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: Decimal | DecimalJsLike | number | string | null
     is_active?: boolean | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
   }
 
   export type chainsUpdateManyMutationInput = {
-    pitch?: FloatFieldUpdateOperationsInput | number
-    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
-    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
-    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
-    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    pitch?: FloatFieldUpdateOperationsInput | number
-    P_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
-    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
-    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
-    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
-    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type motorsCreateInput = {
@@ -17096,31 +17149,53 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type SortOrderInput = {
@@ -17134,6 +17209,12 @@ export namespace Prisma {
     search: string
   }
 
+  export type bearingsInner_dOuter_DWidth_BCompoundUniqueInput = {
+    inner_d: Decimal | DecimalJsLike | number | string
+    outer_D: Decimal | DecimalJsLike | number | string
+    width_B: Decimal | DecimalJsLike | number | string
+  }
+
   export type bearingsCountOrderByAggregateInput = {
     id?: SortOrder
     code?: SortOrder
@@ -17143,10 +17224,12 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    e?: SortOrder
-    Y?: SortOrder
-    alpha_deg?: SortOrder
     is_active?: SortOrder
+    deletedBy?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type bearingsAvgOrderByAggregateInput = {
@@ -17156,9 +17239,7 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    e?: SortOrder
-    Y?: SortOrder
-    alpha_deg?: SortOrder
+    deletedBy?: SortOrder
   }
 
   export type bearingsMaxOrderByAggregateInput = {
@@ -17170,10 +17251,12 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    e?: SortOrder
-    Y?: SortOrder
-    alpha_deg?: SortOrder
     is_active?: SortOrder
+    deletedBy?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type bearingsMinOrderByAggregateInput = {
@@ -17185,10 +17268,12 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    e?: SortOrder
-    Y?: SortOrder
-    alpha_deg?: SortOrder
     is_active?: SortOrder
+    deletedBy?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type bearingsSumOrderByAggregateInput = {
@@ -17198,9 +17283,7 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    e?: SortOrder
-    Y?: SortOrder
-    alpha_deg?: SortOrder
+    deletedBy?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -17255,36 +17338,36 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17293,75 +17376,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type chainsCountOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    P_allow?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    A_mm2?: SortOrder
-    s_allow?: SortOrder
-    n_ref?: SortOrder
-    is_active?: SortOrder
-  }
-
-  export type chainsAvgOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    P_allow?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    A_mm2?: SortOrder
-    s_allow?: SortOrder
-    n_ref?: SortOrder
-  }
-
-  export type chainsMaxOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    P_allow?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    A_mm2?: SortOrder
-    s_allow?: SortOrder
-    n_ref?: SortOrder
-    is_active?: SortOrder
-  }
-
-  export type chainsMinOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    P_allow?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    A_mm2?: SortOrder
-    s_allow?: SortOrder
-    n_ref?: SortOrder
-    is_active?: SortOrder
-  }
-
-  export type chainsSumOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    P_allow?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    A_mm2?: SortOrder
-    s_allow?: SortOrder
-    n_ref?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17380,29 +17394,7 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type DecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
     notIn?: Date[] | string[] | null
@@ -17410,7 +17402,65 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type chainsCountOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    is_active?: SortOrder
+    deletedBy?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type chainsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    deletedBy?: SortOrder
+  }
+
+  export type chainsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    is_active?: SortOrder
+    deletedBy?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type chainsMinOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    is_active?: SortOrder
+    deletedBy?: SortOrder
+    isDeleted?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type chainsSumOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    deletedBy?: SortOrder
   }
 
   export type ProjectsListRelationFilter = {
@@ -17513,52 +17563,6 @@ export namespace Prisma {
     mass_kg?: SortOrder
     price?: SortOrder
     deletedBy?: SortOrder
-  }
-
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
-  }
-
-  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -17813,6 +17817,17 @@ export namespace Prisma {
     _max?: NestedEnumusers_roleNullableFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type material_gradesOrderByRelevanceInput = {
     fields: material_gradesOrderByRelevanceFieldEnum | material_gradesOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -17865,6 +17880,22 @@ export namespace Prisma {
     sigma_ch?: SortOrder
     sigma_Hlim?: SortOrder
     sigma_Flim?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type standard_modulesCountOrderByAggregateInput = {
@@ -18119,36 +18150,40 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
     set?: boolean | null
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
     increment?: number
     decrement?: number
     multiply?: number
@@ -18167,26 +18202,6 @@ export namespace Prisma {
     connectOrCreate?: projectsCreateOrConnectWithoutMotorsInput | projectsCreateOrConnectWithoutMotorsInput[]
     createMany?: projectsCreateManyMotorsInputEnvelope
     connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-  }
-
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type NullableDecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string | null
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type projectsUpdateManyWithoutMotorsNestedInput = {
@@ -18297,6 +18312,14 @@ export namespace Prisma {
     deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -18338,31 +18361,53 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -18379,6 +18424,17 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -18417,106 +18473,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -18547,6 +18503,41 @@ export namespace Prisma {
     _sum?: NestedDecimalNullableFilter<$PrismaModel>
     _min?: NestedDecimalNullableFilter<$PrismaModel>
     _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18618,6 +18609,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumusers_roleNullableFilter<$PrismaModel>
     _max?: NestedEnumusers_roleNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type projectsCreateWithoutMotorsInput = {

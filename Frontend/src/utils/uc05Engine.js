@@ -8,53 +8,53 @@
 // LOOKUP DATA (Tiêu chuẩn cơ khí)
 // ============================================================
 export const MATERIAL_GRADES = [
-  { name: 'Thép 45',  HB: 215, sigma_b: 750, sigma_ch: 450, sigma_Hlim: 500, sigma_Flim: 387 },
+  { name: 'Thép 45', HB: 215, sigma_b: 750, sigma_ch: 450, sigma_Hlim: 500, sigma_Flim: 387 },
   { name: 'Thép 40X', HB: 245, sigma_b: 850, sigma_ch: 550, sigma_Hlim: 560, sigma_Flim: 441 },
-  { name: 'Thép 40XH',HB: 265, sigma_b: 800, sigma_ch: 600, sigma_Hlim: 600, sigma_Flim: 477 },
-  { name: 'Thép 35XM',HB: 241, sigma_b: 900, sigma_ch: 800, sigma_Hlim: 552, sigma_Flim: 433 },
+  { name: 'Thép 40XH', HB: 265, sigma_b: 800, sigma_ch: 600, sigma_Hlim: 600, sigma_Flim: 477 },
+  { name: 'Thép 35XM', HB: 241, sigma_b: 900, sigma_ch: 800, sigma_Hlim: 552, sigma_Flim: 433 },
   { name: 'Thép 20X', HB: 480, sigma_b: 650, sigma_ch: 400, sigma_Hlim: 1150, sigma_Flim: 750 },
 ];
 
 export const CHAIN_PARAMS = [
-  { p: 12.70, Q: 18.2, q: 0.65, A: 39.6,  s_allow: 7.8, n_ref: 200 },
-  { p: 15.875,Q: 22.7, q: 0.80, A: 51.5,  s_allow: 7.8, n_ref: 200 },
-  { p: 19.05, Q: 31.8, q: 1.90, A: 106,   s_allow: 8.2, n_ref: 200 },
-  { p: 25.40, Q: 56.7, q: 2.60, A: 180,   s_allow: 8.2, n_ref: 200 },
-  { p: 31.75, Q: 88.5, q: 3.80, A: 262,   s_allow: 8.5, n_ref: 200 },
-  { p: 38.10, Q: 127.0,q: 5.50, A: 395,   s_allow: 8.5, n_ref: 200 },
-  { p: 44.45, Q: 172.4,q: 7.50, A: 473,   s_allow: 8.5, n_ref: 200 },
-  { p: 50.80, Q: 226.8,q: 9.70, A: 645,   s_allow: 8.5, n_ref: 200 },
+  { p: 12.70, Q: 18.2, q: 0.65, A: 39.6, s_allow: 7.8, n_ref: 200 },
+  { p: 15.875, Q: 22.7, q: 0.80, A: 51.5, s_allow: 7.8, n_ref: 200 },
+  { p: 19.05, Q: 31.8, q: 1.90, A: 106, s_allow: 8.2, n_ref: 200 },
+  { p: 25.40, Q: 56.7, q: 2.60, A: 180, s_allow: 8.2, n_ref: 200 },
+  { p: 31.75, Q: 88.5, q: 3.80, A: 262, s_allow: 8.5, n_ref: 200 },
+  { p: 38.10, Q: 127.0, q: 5.50, A: 395, s_allow: 8.5, n_ref: 200 },
+  { p: 44.45, Q: 172.4, q: 7.50, A: 473, s_allow: 8.5, n_ref: 200 },
+  { p: 50.80, Q: 226.8, q: 9.70, A: 645, s_allow: 8.5, n_ref: 200 },
 ];
 
 export const STANDARD_MODULES = [1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
 export const STANDARD_CENTER_DISTANCES = [80, 100, 125, 140, 160, 180, 200, 225, 250, 280, 315];
-export const STANDARD_SHAFT_DIAMS = [10,12,14,16,18,20,22,25,28,30,32,35,38,40,45,50,55,60,65,70,75,80,90,100,110,120];
+export const STANDARD_SHAFT_DIAMS = [10, 12, 14, 16, 18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 110, 120];
 
 // Bảng then tiêu chuẩn TCVN
 export const KEY_TABLE = [
-  { d_min: 17, d_max: 22, b: 6,  h: 6,  t1: 3.5 },
-  { d_min: 22, d_max: 30, b: 8,  h: 7,  t1: 4.0 },
-  { d_min: 30, d_max: 38, b: 10, h: 8,  t1: 5.0 },
-  { d_min: 38, d_max: 44, b: 12, h: 8,  t1: 5.0 },
-  { d_min: 44, d_max: 50, b: 14, h: 9,  t1: 5.5 },
+  { d_min: 17, d_max: 22, b: 6, h: 6, t1: 3.5 },
+  { d_min: 22, d_max: 30, b: 8, h: 7, t1: 4.0 },
+  { d_min: 30, d_max: 38, b: 10, h: 8, t1: 5.0 },
+  { d_min: 38, d_max: 44, b: 12, h: 8, t1: 5.0 },
+  { d_min: 44, d_max: 50, b: 14, h: 9, t1: 5.5 },
   { d_min: 50, d_max: 58, b: 16, h: 10, t1: 6.0 },
   { d_min: 58, d_max: 65, b: 18, h: 11, t1: 7.0 },
   { d_min: 65, d_max: 75, b: 20, h: 12, t1: 7.5 },
   { d_min: 75, d_max: 85, b: 22, h: 14, t1: 9.0 },
-  { d_min: 85, d_max:95,  b: 25, h: 14, t1: 9.0 },
+  { d_min: 85, d_max: 95, b: 25, h: 14, t1: 9.0 },
 ];
 
 // Catalog ổ lăn đơn giản hóa (ổ bi đỡ một dãy)
 export const BEARING_CATALOG = [
-  { code: '6204', d: 20, D: 47,  B: 14, C: 12.8, C0: 7.35 },
-  { code: '6205', d: 25, D: 52,  B: 15, C: 14.0, C0: 8.50 },
-  { code: '6206', d: 30, D: 62,  B: 16, C: 19.5, C0: 11.2 },
-  { code: '6207', d: 35, D: 72,  B: 17, C: 25.5, C0: 15.3 },
-  { code: '6208', d: 40, D: 80,  B: 18, C: 29.0, C0: 18.0 },
-  { code: '6308', d: 40, D: 90,  B: 23, C: 41.0, C0: 22.4 },
-  { code: '6209', d: 45, D: 85,  B: 19, C: 32.5, C0: 21.2 },
+  { code: '6204', d: 20, D: 47, B: 14, C: 12.8, C0: 7.35 },
+  { code: '6205', d: 25, D: 52, B: 15, C: 14.0, C0: 8.50 },
+  { code: '6206', d: 30, D: 62, B: 16, C: 19.5, C0: 11.2 },
+  { code: '6207', d: 35, D: 72, B: 17, C: 25.5, C0: 15.3 },
+  { code: '6208', d: 40, D: 80, B: 18, C: 29.0, C0: 18.0 },
+  { code: '6308', d: 40, D: 90, B: 23, C: 41.0, C0: 22.4 },
+  { code: '6209', d: 45, D: 85, B: 19, C: 32.5, C0: 21.2 },
   { code: '6309', d: 45, D: 100, B: 25, C: 52.7, C0: 30.0 },
-  { code: '6210', d: 50, D: 90,  B: 20, C: 35.0, C0: 23.2 },
+  { code: '6210', d: 50, D: 90, B: 20, C: 35.0, C0: 23.2 },
   { code: '6310', d: 50, D: 110, B: 27, C: 62.0, C0: 36.0 },
   { code: '6211', d: 55, D: 100, B: 21, C: 43.5, C0: 29.0 },
   { code: '6311', d: 55, D: 120, B: 29, C: 71.5, C0: 44.0 },
@@ -182,7 +182,7 @@ export function calcSpurGear({ T2, n2, u2, Lh, material, module: m_tc }) {
   const aw_calc = 49.5 * (u2 + 1) * Math.cbrt(
     (T2 * K_Hbeta) / (sigma_H_allow * sigma_H_allow * u2 * psi_ba)
   );
-  const aw = m_tc 
+  const aw = m_tc
     ? (m_tc * (Math.floor((2 * aw_calc) / (m_tc * (u2 + 1))) + Math.round(u2 * Math.floor((2 * aw_calc) / (m_tc * (u2 + 1)))))) / 2
     : nextStandard(STANDARD_CENTER_DISTANCES, aw_calc);
 
@@ -258,11 +258,16 @@ export function calcShaft({ T, tau_allow = 25 }) {
 // ============================================================
 // MODULE E – KIỂM NGHIỆM THEN
 // ============================================================
-export function calcKey({ d_tc, T, l_mayo = null }) {
+export function calcKey({ d_tc, T, material, l_mayo = null }) {
   const key = KEY_TABLE.find(k => d_tc >= k.d_min && d_tc < k.d_max);
   if (!key) return { status: 'error', message: 'Không tìm thấy then tiêu chuẩn cho đường kính này.' };
 
   const lt = l_mayo ? Math.max(Math.round(0.85 * l_mayo), key.b * 2) : Math.round(d_tc * 0.8);
+
+  // Ứng suất dập cho phép (Tính dựa trên vật liệu đã chọn)
+  // Thường lấy [sigma_d] = (0.25 - 0.4) * sigma_ch
+  const sigma_d_allow = Math.round(0.25 * (material?.sigma_ch ?? 450));
+  const tau_c_allow = Math.round(0.15 * (material?.sigma_ch ?? 450));
 
   // Ứng suất dập
   const sigma_d = (2 * T) / (d_tc * lt * (key.h - key.t1));
@@ -272,11 +277,11 @@ export function calcKey({ d_tc, T, l_mayo = null }) {
   return {
     b: key.b, h: key.h, t1: key.t1, lt,
     sigma_d: sigma_d.toFixed(1), tau_c: tau_c.toFixed(1),
-    sigma_d_allow: 100, tau_c_allow: 60,
-    status: sigma_d <= 100 && tau_c <= 60 ? 'success' : 'error',
-    message: sigma_d <= 100 && tau_c <= 60
+    sigma_d_allow, tau_c_allow,
+    status: sigma_d <= sigma_d_allow && tau_c <= tau_c_allow ? 'success' : 'error',
+    message: sigma_d <= sigma_d_allow && tau_c <= tau_c_allow
       ? `Đạt bền dập và cắt`
-      : `KHÔNG ĐẠT: ${sigma_d > 100 ? `σd=${sigma_d.toFixed(0)}MPa>100` : ''} ${tau_c > 60 ? `τc=${tau_c.toFixed(0)}MPa>60` : ''}`,
+      : `KHÔNG ĐẠT: ${sigma_d > sigma_d_allow ? `σd=${sigma_d.toFixed(0)}MPa>${sigma_d_allow}` : ''} ${tau_c > tau_c_allow ? `τc=${tau_c.toFixed(0)}MPa>${tau_c_allow}` : ''}`,
   };
 }
 
@@ -350,29 +355,33 @@ export function runPipeline({ kinematics, material, bevelModule, spurModule }) {
   });
 
   // ---- MODULE D ----
-  const shaftI   = calcShaft({ T: data?.T_I   ?? 45000,  tau_allow: 20 });
-  const shaftII  = calcShaft({ T: data?.T_II  ?? 142000, tau_allow: 20 });
+  const shaftI = calcShaft({ T: data?.T_I ?? 45000, tau_allow: 20 });
+  const shaftII = calcShaft({ T: data?.T_II ?? 142000, tau_allow: 20 });
   const shaftIII = calcShaft({ T: data?.T_III ?? 450000, tau_allow: 20 });
 
   // ---- MODULE E ----
-  const keyI   = calcKey({ d_tc: shaftI.dtc,   T: data?.T_I   ?? 45000  });
-  const keyII  = calcKey({ d_tc: shaftII.dtc,  T: data?.T_II  ?? 142000 });
-  const keyIII = calcKey({ d_tc: shaftIII.dtc, T: data?.T_III ?? 450000 });
+  const keyI = calcKey({ d_tc: shaftI.dtc, T: data?.T_I ?? 45000, material });
+  const keyII = calcKey({ d_tc: shaftII.dtc, T: data?.T_II ?? 142000, material });
+  const keyIII = calcKey({ d_tc: shaftIII.dtc, T: data?.T_III ?? 450000, material });
 
   // ---- MODULE F ----
-  const bearI   = calcBearing({ d_tc: shaftI.dtc,   Fr: bevelRes.Fr, n: data?.n_I   ?? 900,  Lh });
-  const bearII  = calcBearing({ d_tc: shaftII.dtc,  Fr: spurRes.Fr,  n: data?.n_II  ?? 360,  Lh });
-  const bearIII = calcBearing({ d_tc: shaftIII.dtc, Fr: chainRes.Fr, n: data?.n_III ?? 100,  Lh });
+  const bearI = calcBearing({ d_tc: shaftI.dtc, Fr: bevelRes.Fr, n: data?.n_I ?? 900, Lh });
+  const bearII = calcBearing({ d_tc: shaftII.dtc, Fr: spurRes.Fr, n: data?.n_II ?? 360, Lh });
+  const bearIII = calcBearing({ d_tc: shaftIII.dtc, Fr: chainRes.Fr, n: data?.n_III ?? 100, Lh });
 
   return {
     chain: chainRes,
     bevel: bevelRes,
-    spur:  spurRes,
+    spur: spurRes,
     shafts: { I: shaftI, II: shaftII, III: shaftIII },
-    keys:   { I: keyI,   II: keyII,   III: keyIII   },
-    bearings: { I: bearI, II: bearII, III: bearIII  },
-    allPassed: [chainRes, bevelRes, spurRes]
-      .every(r => r.status === 'success') &&
-      [shaftI, shaftII, shaftIII].every(r => r.status === 'success'),
+    keys: { I: keyI, II: keyII, III: keyIII },
+    bearings: { I: bearI, II: bearII, III: bearIII },
+    allPassed: 
+      chainRes.status === 'success' &&
+      bevelRes.status === 'success' &&
+      spurRes.status === 'success' &&
+      [shaftI, shaftII, shaftIII].every(r => r.status === 'success') &&
+      [keyI, keyII, keyIII].every(r => r.status === 'success') &&
+      [bearI, bearII, bearIII].every(r => r.status === 'success'),
   };
 }

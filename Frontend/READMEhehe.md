@@ -123,19 +123,23 @@ Fix Sorting Bugs (UC-06) — Sửa lỗi crash và bổ sung tính năng sort
 * **Sửa gì:** Tự động chuyển đổi và so sánh kiểu số nếu dữ liệu trong cột có thể convert sang Number.
 
 -----------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.5 (07/05)
-Hoàn thiện Standalone UI & Nâng cấp Pipeline UC-05 (Thiết kế chi tiết máy)
+## 🚀 Patch Notes - Update 1.6 (08/05)
+Tối ưu hóa Workflow & Đồng bộ Logic Kiểm nghiệm (UC-05)
 
-### 1. Hoàn thiện Pipeline UC-05 (Module A → F)
-* **Sửa gì:** Tích hợp logic tính toán cơ khí cho toàn bộ chuỗi: Xích (A), Bánh răng Côn (B), Bánh răng Trụ (C), Trục (D), Then (E) và Ổ lăn (F).
-* **Fix Bug:** Sửa lỗi Engine tự động ghi đè Module tiêu chuẩn. Hiện tại hệ thống đã ưu tiên sử dụng Module do người dùng chọn từ UI để tính toán ứng suất tiếp xúc $\sigma_H$.
-* **Ở file nào:** `src/utils/uc05Engine.js`, `src/pages/UC05Detail.jsx`.
+### 1. Tối ưu hóa Luồng thiết kế (UI/UX)
+* **Sửa gì:** Đảo lại thứ tự các bước thiết kế: `Chọn Động cơ` (Bước 3) hiện tại sẽ nằm trước `Chi tiết máy` (Bước 4) để đảm bảo tính logic (phải có thông số động cơ mới tính được chi tiết máy).
+* **Cải tiến:** Vô hiệu hóa việc nhấn trực tiếp trên thanh điều hướng để ép người dùng đi theo quy trình tuyến tính, tránh nhảy bước gây lỗi dữ liệu.
+* **Ở file nào:** `src/pages/Calculations.jsx`.
 
-### 2. Cấu hình CORS & Kết nối Backend
-* **Sửa gì:** Cập nhật cấu hình CORS cho phép các origin phổ biến (`127.0.0.1`, `localhost`) và các cổng dev (`5173`, `5174`).
-* **Mục đích:** Giải quyết triệt để lỗi "Failed to fetch" khi đăng ký/đăng nhập tài khoản ở môi trường phát triển cục bộ.
-* **Ở file nào:** `Backend/server.js`.
+### 2. Nâng cấp Giao diện Xác nhận & Logic Validation (UC-05)
+* **Sửa gì:** 
+    * Thêm màn hình "Thiết kế hoàn tất" với dấu tích xanh sau khi tất cả 6 module đạt chuẩn.
+    * Đồng bộ hóa thanh Sidebar: Hiện tại Sidebar sẽ báo "Không đạt" nếu bất kỳ trục nào (I, II, III) trong module đó lỗi, thay vì chỉ kiểm tra trục I như trước.
+    * Cập nhật logic Then: Ứng suất cho phép của Then hiện tại đã phụ thuộc vào loại vật liệu người dùng chọn (Input-driven).
+* **Ở file nào:** `src/pages/UC05Detail.jsx`, `src/utils/uc05Engine.js`.
 
-### 3. Cập nhật Engine tính toán tiêu chuẩn
-* **Sửa gì:** Bổ sung bảng tra tiêu chuẩn cho Then (TCVN) và Ổ lăn (ISO), tích hợp công thức tính ứng suất tiếp xúc $\sigma_H$ cho bánh răng.
-* **Để làm gì:** Đảm bảo kết quả thiết kế chính xác theo tiêu chuẩn kỹ thuật cơ khí.
+### 3. Fix Bug Điều hướng & Environment
+* **Sửa gì:** 
+    * Sửa lỗi nút "Xác nhận" không nhảy trang do thiếu prop `onNavigate`.
+    * Fix lỗi Backend crash do thiếu file `.env` (DATABASE_URL).
+* **Ở file nào:** `src/pages/UC05Detail.jsx`, `Backend/.env`.
