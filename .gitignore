@@ -46,3 +46,10 @@ lerna-debug.log*
 *.rar
 hs_err_pid*
 replay_pid*
+
+# Temporary and Research files
+scratch/
+UIbeta.html
+*.docx
+*.xlsx
+Backend/test_*.js
