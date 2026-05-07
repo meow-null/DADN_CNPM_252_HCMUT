@@ -8,35 +8,29 @@ datasource db {
 }
 
 model bearings {
-  id        Int       @id @default(autoincrement())
-  code      String    @unique(map: "code") @db.VarChar(50)
-  type      String?   @db.VarChar(50)
-  inner_d   Decimal   @db.Decimal(10, 2)
-  outer_D   Decimal   @db.Decimal(10, 2)
-  width_B   Decimal   @db.Decimal(10, 2)
-  C         Decimal?  @db.Decimal(12, 2)
-  C0        Decimal?  @db.Decimal(12, 2)
-  is_active Boolean?  @default(true)
-  deletedBy Int?      @default(0)
-  isDeleted Boolean?  @default(false)
-  deletedAt DateTime? @db.Timestamp(0)
-  createdAt DateTime? @default(now()) @db.Timestamp(0)
-  updatedAt DateTime? @default(now()) @db.Timestamp(0)
-
-  @@unique([inner_d, outer_D, width_B], map: "inner_d_unique")
+  id          Int       @id @default(autoincrement())
+  code        String    @unique @db.VarChar(50)
+  type        String?   @db.VarChar(50)
+  inner_d     Float     
+  outer_D     Float
+  width_B     Float
+  C           Float?
+  C0          Float?
+  e           Float?   
+  Y           Float?    
+  alpha_deg   Float?    
+  is_active   Boolean?  @default(true)
 }
 
 model chains {
   id            Int       @id @default(autoincrement())
-  pitch         Decimal   @unique(map: "pitch") @db.Decimal(10, 2)
-  breaking_load Decimal?  @db.Decimal(12, 2)
-  mass_per_m    Decimal?  @db.Decimal(10, 2)
+  pitch         Float     @unique
+  breaking_load Float?
+  mass_per_m    Float?
+  A_mm2         Float?    
+  s_allow       Float?    
+  n_ref         Int?      
   is_active     Boolean?  @default(true)
-  deletedBy     Int?      @default(0)
-  isDeleted     Boolean?  @default(false)
-  deletedAt     DateTime? @db.Timestamp(0)
-  createdAt     DateTime? @default(now()) @db.Timestamp(0)
-  updatedAt     DateTime? @default(now()) @db.Timestamp(0)
 }
 
 model motors {
@@ -117,4 +111,49 @@ enum projects_step {
   motor_selected
   design_partial
   design_done
+}
+
+// Bảng tra cứu thông số cơ tính vật liệu (Dùng cho Module B, C, D)
+model material_grades {
+  id           Int     @id @default(autoincrement())
+  grade_name   String  @unique @db.VarChar(50)
+  HB           Int
+  sigma_b      Float
+  sigma_ch     Float
+  sigma_Hlim   Float
+  sigma_Flim   Float
+}
+
+// Dãy mô đun tiêu chuẩn
+model standard_modules {
+  id    Int   @id @default(autoincrement())
+  value Float @unique
+}
+
+// Dãy khoảng cách trục tiêu chuẩn
+model standard_center_distances {
+  id    Int   @id @default(autoincrement())
+  value Int   @unique
+}
+
+// Dãy đường kính trục tiêu chuẩn
+model standard_shaft_diameters {
+  id    Int   @id @default(autoincrement())
+  value Int   @unique
+}
+
+// Kích thước then tiêu chuẩn theo đường kính
+model key_dimensions {
+  id    Int   @id @default(autoincrement())
+  d_min Int
+  d_max Int
+  b     Int
+  h     Int
+  t1    Float // T_brc
+  t2    Float // T_brt
+}
+
+model standard_key_lengths {
+  id    Int   @id @default(autoincrement())
+  value Int   @unique
 }

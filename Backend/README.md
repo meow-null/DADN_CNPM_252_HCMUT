@@ -12,6 +12,7 @@
 - [Cấu Trúc Thư Mục](#-cấu-trúc-thư-mục)
 - [Cài Đặt & Chạy](#-cài-đặt--chạy)
 - [Biến Môi Trường](#-biến-môi-trường)
+- [Dữ Liệu Mẫu](#-dữ-liệu-mẫu)
 - [API Endpoints](#-api-endpoints)
 - [Cơ Sở Dữ Liệu](#-cơ-sở-dữ-liệu)
 
@@ -342,6 +343,8 @@ DADN252/
     ├── .env                         # Biến môi trường
     ├── prisma/
     │   └── schema.prisma            # Định nghĩa schema database
+    │   ├── seed.js                  # Nạp dữ liệu mẫu từ CSV vào Prisma
+    │   └── data/                    # Dữ liệu CSV cho seed
     └── src/
         ├── routers/                 # Định tuyến HTTP
         │   ├── root.router.js
@@ -424,12 +427,39 @@ mysql -u root -p < ../DADN_252.sql
 # 6. Kéo schema từ database và generate Prisma Client
 npm run prisma
 
-# 7. Chạy server ở chế độ development
+# 7. Nạp dữ liệu tra cứu mẫu từ CSV
+node prisma/seed.js
+
+# 8. Chạy server ở chế độ development
 npm run dev
 ```
 
 > Server sẽ chạy tại: **http://localhost:3069**  
 > Tài liệu API Swagger: **http://localhost:3069/api-docs**
+
+---
+
+## 🌱 Dữ Liệu Mẫu
+
+File `prisma/seed.js` dùng để nạp lại các bảng tra cứu từ CSV trong `prisma/data/`.
+
+Script hiện tại import các nhóm dữ liệu sau:
+
+- `material_grades`
+- `standard_modules`
+- `standard_center_distances`
+- `standard_shaft_diameters`
+- `standard_key_lengths`
+- `key_dimensions`
+- `chains`
+- `bearings`
+- `motors`
+
+Chạy lại seed khi:
+
+- Database vừa được tạo mới
+- Cần đồng bộ lại dữ liệu tra cứu sau khi thay đổi file CSV
+- Muốn nạp thêm danh sách động cơ, bạc đạn hoặc xích mới
 
 ---
 
@@ -471,6 +501,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 | GET | `/api/projects/:id` | Lấy thông tin project | ✅ JWT |
 | POST | `/api/projects/:id/kinematics` | Tính toán động học | ✅ JWT |
 | GET | `/api/projects/:id/kinematics` | Lấy kết quả động học | ✅ JWT |
+| POST | `/api/projects/:projectId/design/calculate` | Tính toán thiết kế hộp giảm tốc | ❌ |
 | GET | `/api/projects/:projectId/motors/suggestions` | Gợi ý top 3 động cơ phù hợp theo project | ✅ JWT |
 | GET | `/api/projects/:projectId/motors/candidates` | Lấy danh sách động cơ phù hợp theo project | ✅ JWT |
 | POST | `/api/projects/:projectId/motors/select` | Lưu động cơ đã chọn vào project | ✅ JWT |
@@ -496,12 +527,19 @@ projects
  ├── transmission, shafts (JSON)     (kết quả chi tiết)
  ├── selected_motor_id → motors
  ├── selected_motor_snapshot (JSON)
+ ├── design_result (JSON)
  ├── step: created → inputs → kinematics → motor_selected → design_done
  └── isDeleted (soft delete)
 
-motors     — bảng tra cứu động cơ điện
-bearings   — bảng tra cứu ổ lăn
-chains     — bảng tra cứu xích truyền động
+material_grades          — bảng tra cứu cơ tính vật liệu
+standard_modules         — dãy mô đun tiêu chuẩn
+standard_center_distances — dãy khoảng cách trục tiêu chuẩn
+standard_shaft_diameters — dãy đường kính trục tiêu chuẩn
+standard_key_lengths     — dãy chiều dài then tiêu chuẩn
+key_dimensions           — bảng tra cứu kích thước then
+motors                   — bảng tra cứu động cơ điện
+bearings                 — bảng tra cứu ổ lăn
+chains                   — bảng tra cứu xích truyền động
 ```
 
 ---

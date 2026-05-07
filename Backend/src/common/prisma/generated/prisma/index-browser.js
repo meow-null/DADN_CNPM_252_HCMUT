@@ -129,12 +129,10 @@ exports.Prisma.BearingsScalarFieldEnum = {
   width_B: 'width_B',
   C: 'C',
   C0: 'C0',
-  is_active: 'is_active',
-  deletedBy: 'deletedBy',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  e: 'e',
+  Y: 'Y',
+  alpha_deg: 'alpha_deg',
+  is_active: 'is_active'
 };
 
 exports.Prisma.ChainsScalarFieldEnum = {
@@ -142,12 +140,10 @@ exports.Prisma.ChainsScalarFieldEnum = {
   pitch: 'pitch',
   breaking_load: 'breaking_load',
   mass_per_m: 'mass_per_m',
-  is_active: 'is_active',
-  deletedBy: 'deletedBy',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  A_mm2: 'A_mm2',
+  s_allow: 's_allow',
+  n_ref: 'n_ref',
+  is_active: 'is_active'
 };
 
 exports.Prisma.MotorsScalarFieldEnum = {
@@ -209,6 +205,46 @@ exports.Prisma.UsersScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.Material_gradesScalarFieldEnum = {
+  id: 'id',
+  grade_name: 'grade_name',
+  HB: 'HB',
+  sigma_b: 'sigma_b',
+  sigma_ch: 'sigma_ch',
+  sigma_Hlim: 'sigma_Hlim',
+  sigma_Flim: 'sigma_Flim'
+};
+
+exports.Prisma.Standard_modulesScalarFieldEnum = {
+  id: 'id',
+  value: 'value'
+};
+
+exports.Prisma.Standard_center_distancesScalarFieldEnum = {
+  id: 'id',
+  value: 'value'
+};
+
+exports.Prisma.Standard_shaft_diametersScalarFieldEnum = {
+  id: 'id',
+  value: 'value'
+};
+
+exports.Prisma.Key_dimensionsScalarFieldEnum = {
+  id: 'id',
+  d_min: 'd_min',
+  d_max: 'd_max',
+  b: 'b',
+  h: 'h',
+  t1: 't1',
+  t2: 't2'
+};
+
+exports.Prisma.Standard_key_lengthsScalarFieldEnum = {
+  id: 'id',
+  value: 'value'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -255,6 +291,10 @@ exports.Prisma.usersOrderByRelevanceFieldEnum = {
   password: 'password',
   reset_token: 'reset_token'
 };
+
+exports.Prisma.material_gradesOrderByRelevanceFieldEnum = {
+  grade_name: 'grade_name'
+};
 exports.projects_step = exports.$Enums.projects_step = {
   created: 'created',
   inputs: 'inputs',
@@ -274,7 +314,13 @@ exports.Prisma.ModelName = {
   chains: 'chains',
   motors: 'motors',
   projects: 'projects',
-  users: 'users'
+  users: 'users',
+  material_grades: 'material_grades',
+  standard_modules: 'standard_modules',
+  standard_center_distances: 'standard_center_distances',
+  standard_shaft_diameters: 'standard_shaft_diameters',
+  key_dimensions: 'key_dimensions',
+  standard_key_lengths: 'standard_key_lengths'
 };
 
 /**

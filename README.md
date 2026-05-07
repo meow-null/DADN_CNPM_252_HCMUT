@@ -43,6 +43,13 @@ Neu ban thay doi schema trong Backend/prisma/schema.prisma thi chay lai trong th
 npm run prisma
 ```
 
+Sau do nap du lieu tra cuu tu CSV bang seed:
+
+```bash
+cd Backend
+node prisma/seed.js
+```
+
 ## 4. Cau hinh Backend .env
 
 Tao file Backend/.env voi noi dung mau:
@@ -136,6 +143,10 @@ Kinematics:
 - POST /api/projects/:projectId/kinematics
 - GET /api/projects/:projectId/kinematics
 
+Design:
+
+- POST /api/projects/:projectId/design/calculate
+
 Motors:
 
 - GET /api/projects/:projectId/motors/suggestions
@@ -152,6 +163,7 @@ Luu y:
 1. Import DADN_252.sql vao MySQL
 2. Tao Backend/.env
 3. npm install trong Backend va Frontend
-4. Chay Backend: npm run dev
-5. Chay Frontend: npm run dev
-6. Mo http://localhost:5173
+4. Chay seed du lieu: cd Backend && node prisma/seed.js
+5. Chay Backend: npm run dev
+6. Chay Frontend: npm run dev
+7. Mo http://localhost:5173

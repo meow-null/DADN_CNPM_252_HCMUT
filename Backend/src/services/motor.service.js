@@ -22,6 +22,7 @@ const normalizeMotor = (motor, P_ct, n_sb) => {
   const price_val = toNumber(motor.price);
   const mass_val = toNumber(motor.mass_kg);
   const delta_n = Math.abs((toNumber(motor.n_dm) ?? 0) - n_sb);
+  
 
   return {
     ...motor,

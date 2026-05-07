@@ -38,6 +38,36 @@ export type projects = $Result.DefaultSelection<Prisma.$projectsPayload>
  * 
  */
 export type users = $Result.DefaultSelection<Prisma.$usersPayload>
+/**
+ * Model material_grades
+ * 
+ */
+export type material_grades = $Result.DefaultSelection<Prisma.$material_gradesPayload>
+/**
+ * Model standard_modules
+ * 
+ */
+export type standard_modules = $Result.DefaultSelection<Prisma.$standard_modulesPayload>
+/**
+ * Model standard_center_distances
+ * 
+ */
+export type standard_center_distances = $Result.DefaultSelection<Prisma.$standard_center_distancesPayload>
+/**
+ * Model standard_shaft_diameters
+ * 
+ */
+export type standard_shaft_diameters = $Result.DefaultSelection<Prisma.$standard_shaft_diametersPayload>
+/**
+ * Model key_dimensions
+ * 
+ */
+export type key_dimensions = $Result.DefaultSelection<Prisma.$key_dimensionsPayload>
+/**
+ * Model standard_key_lengths
+ * 
+ */
+export type standard_key_lengths = $Result.DefaultSelection<Prisma.$standard_key_lengthsPayload>
 
 /**
  * Enums
@@ -242,6 +272,66 @@ export class PrismaClient<
     * ```
     */
   get users(): Prisma.usersDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.material_grades`: Exposes CRUD operations for the **material_grades** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Material_grades
+    * const material_grades = await prisma.material_grades.findMany()
+    * ```
+    */
+  get material_grades(): Prisma.material_gradesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.standard_modules`: Exposes CRUD operations for the **standard_modules** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Standard_modules
+    * const standard_modules = await prisma.standard_modules.findMany()
+    * ```
+    */
+  get standard_modules(): Prisma.standard_modulesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.standard_center_distances`: Exposes CRUD operations for the **standard_center_distances** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Standard_center_distances
+    * const standard_center_distances = await prisma.standard_center_distances.findMany()
+    * ```
+    */
+  get standard_center_distances(): Prisma.standard_center_distancesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.standard_shaft_diameters`: Exposes CRUD operations for the **standard_shaft_diameters** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Standard_shaft_diameters
+    * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findMany()
+    * ```
+    */
+  get standard_shaft_diameters(): Prisma.standard_shaft_diametersDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.key_dimensions`: Exposes CRUD operations for the **key_dimensions** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Key_dimensions
+    * const key_dimensions = await prisma.key_dimensions.findMany()
+    * ```
+    */
+  get key_dimensions(): Prisma.key_dimensionsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.standard_key_lengths`: Exposes CRUD operations for the **standard_key_lengths** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Standard_key_lengths
+    * const standard_key_lengths = await prisma.standard_key_lengths.findMany()
+    * ```
+    */
+  get standard_key_lengths(): Prisma.standard_key_lengthsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -680,7 +770,13 @@ export namespace Prisma {
     chains: 'chains',
     motors: 'motors',
     projects: 'projects',
-    users: 'users'
+    users: 'users',
+    material_grades: 'material_grades',
+    standard_modules: 'standard_modules',
+    standard_center_distances: 'standard_center_distances',
+    standard_shaft_diameters: 'standard_shaft_diameters',
+    key_dimensions: 'key_dimensions',
+    standard_key_lengths: 'standard_key_lengths'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -696,7 +792,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "bearings" | "chains" | "motors" | "projects" | "users"
+      modelProps: "bearings" | "chains" | "motors" | "projects" | "users" | "material_grades" | "standard_modules" | "standard_center_distances" | "standard_shaft_diameters" | "key_dimensions" | "standard_key_lengths"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1030,6 +1126,402 @@ export namespace Prisma {
           }
         }
       }
+      material_grades: {
+        payload: Prisma.$material_gradesPayload<ExtArgs>
+        fields: Prisma.material_gradesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.material_gradesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.material_gradesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>
+          }
+          findFirst: {
+            args: Prisma.material_gradesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.material_gradesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>
+          }
+          findMany: {
+            args: Prisma.material_gradesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>[]
+          }
+          create: {
+            args: Prisma.material_gradesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>
+          }
+          createMany: {
+            args: Prisma.material_gradesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.material_gradesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>
+          }
+          update: {
+            args: Prisma.material_gradesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>
+          }
+          deleteMany: {
+            args: Prisma.material_gradesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.material_gradesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.material_gradesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$material_gradesPayload>
+          }
+          aggregate: {
+            args: Prisma.Material_gradesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMaterial_grades>
+          }
+          groupBy: {
+            args: Prisma.material_gradesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Material_gradesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.material_gradesCountArgs<ExtArgs>
+            result: $Utils.Optional<Material_gradesCountAggregateOutputType> | number
+          }
+        }
+      }
+      standard_modules: {
+        payload: Prisma.$standard_modulesPayload<ExtArgs>
+        fields: Prisma.standard_modulesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.standard_modulesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.standard_modulesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>
+          }
+          findFirst: {
+            args: Prisma.standard_modulesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.standard_modulesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>
+          }
+          findMany: {
+            args: Prisma.standard_modulesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>[]
+          }
+          create: {
+            args: Prisma.standard_modulesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>
+          }
+          createMany: {
+            args: Prisma.standard_modulesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.standard_modulesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>
+          }
+          update: {
+            args: Prisma.standard_modulesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>
+          }
+          deleteMany: {
+            args: Prisma.standard_modulesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.standard_modulesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.standard_modulesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_modulesPayload>
+          }
+          aggregate: {
+            args: Prisma.Standard_modulesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStandard_modules>
+          }
+          groupBy: {
+            args: Prisma.standard_modulesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Standard_modulesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.standard_modulesCountArgs<ExtArgs>
+            result: $Utils.Optional<Standard_modulesCountAggregateOutputType> | number
+          }
+        }
+      }
+      standard_center_distances: {
+        payload: Prisma.$standard_center_distancesPayload<ExtArgs>
+        fields: Prisma.standard_center_distancesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.standard_center_distancesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.standard_center_distancesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>
+          }
+          findFirst: {
+            args: Prisma.standard_center_distancesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.standard_center_distancesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>
+          }
+          findMany: {
+            args: Prisma.standard_center_distancesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>[]
+          }
+          create: {
+            args: Prisma.standard_center_distancesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>
+          }
+          createMany: {
+            args: Prisma.standard_center_distancesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.standard_center_distancesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>
+          }
+          update: {
+            args: Prisma.standard_center_distancesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>
+          }
+          deleteMany: {
+            args: Prisma.standard_center_distancesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.standard_center_distancesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.standard_center_distancesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_center_distancesPayload>
+          }
+          aggregate: {
+            args: Prisma.Standard_center_distancesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStandard_center_distances>
+          }
+          groupBy: {
+            args: Prisma.standard_center_distancesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Standard_center_distancesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.standard_center_distancesCountArgs<ExtArgs>
+            result: $Utils.Optional<Standard_center_distancesCountAggregateOutputType> | number
+          }
+        }
+      }
+      standard_shaft_diameters: {
+        payload: Prisma.$standard_shaft_diametersPayload<ExtArgs>
+        fields: Prisma.standard_shaft_diametersFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.standard_shaft_diametersFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.standard_shaft_diametersFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>
+          }
+          findFirst: {
+            args: Prisma.standard_shaft_diametersFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.standard_shaft_diametersFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>
+          }
+          findMany: {
+            args: Prisma.standard_shaft_diametersFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>[]
+          }
+          create: {
+            args: Prisma.standard_shaft_diametersCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>
+          }
+          createMany: {
+            args: Prisma.standard_shaft_diametersCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.standard_shaft_diametersDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>
+          }
+          update: {
+            args: Prisma.standard_shaft_diametersUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>
+          }
+          deleteMany: {
+            args: Prisma.standard_shaft_diametersDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.standard_shaft_diametersUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.standard_shaft_diametersUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_shaft_diametersPayload>
+          }
+          aggregate: {
+            args: Prisma.Standard_shaft_diametersAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStandard_shaft_diameters>
+          }
+          groupBy: {
+            args: Prisma.standard_shaft_diametersGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Standard_shaft_diametersGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.standard_shaft_diametersCountArgs<ExtArgs>
+            result: $Utils.Optional<Standard_shaft_diametersCountAggregateOutputType> | number
+          }
+        }
+      }
+      key_dimensions: {
+        payload: Prisma.$key_dimensionsPayload<ExtArgs>
+        fields: Prisma.key_dimensionsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.key_dimensionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.key_dimensionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>
+          }
+          findFirst: {
+            args: Prisma.key_dimensionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.key_dimensionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>
+          }
+          findMany: {
+            args: Prisma.key_dimensionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>[]
+          }
+          create: {
+            args: Prisma.key_dimensionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>
+          }
+          createMany: {
+            args: Prisma.key_dimensionsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.key_dimensionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>
+          }
+          update: {
+            args: Prisma.key_dimensionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>
+          }
+          deleteMany: {
+            args: Prisma.key_dimensionsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.key_dimensionsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.key_dimensionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$key_dimensionsPayload>
+          }
+          aggregate: {
+            args: Prisma.Key_dimensionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKey_dimensions>
+          }
+          groupBy: {
+            args: Prisma.key_dimensionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Key_dimensionsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.key_dimensionsCountArgs<ExtArgs>
+            result: $Utils.Optional<Key_dimensionsCountAggregateOutputType> | number
+          }
+        }
+      }
+      standard_key_lengths: {
+        payload: Prisma.$standard_key_lengthsPayload<ExtArgs>
+        fields: Prisma.standard_key_lengthsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.standard_key_lengthsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.standard_key_lengthsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>
+          }
+          findFirst: {
+            args: Prisma.standard_key_lengthsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.standard_key_lengthsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>
+          }
+          findMany: {
+            args: Prisma.standard_key_lengthsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>[]
+          }
+          create: {
+            args: Prisma.standard_key_lengthsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>
+          }
+          createMany: {
+            args: Prisma.standard_key_lengthsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.standard_key_lengthsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>
+          }
+          update: {
+            args: Prisma.standard_key_lengthsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>
+          }
+          deleteMany: {
+            args: Prisma.standard_key_lengthsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.standard_key_lengthsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.standard_key_lengthsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$standard_key_lengthsPayload>
+          }
+          aggregate: {
+            args: Prisma.Standard_key_lengthsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStandard_key_lengths>
+          }
+          groupBy: {
+            args: Prisma.standard_key_lengthsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Standard_key_lengthsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.standard_key_lengthsCountArgs<ExtArgs>
+            result: $Utils.Optional<Standard_key_lengthsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1143,6 +1635,12 @@ export namespace Prisma {
     motors?: motorsOmit
     projects?: projectsOmit
     users?: usersOmit
+    material_grades?: material_gradesOmit
+    standard_modules?: standard_modulesOmit
+    standard_center_distances?: standard_center_distancesOmit
+    standard_shaft_diameters?: standard_shaft_diametersOmit
+    key_dimensions?: key_dimensionsOmit
+    standard_key_lengths?: standard_key_lengthsOmit
   }
 
   /* Types for Logging */
@@ -1298,56 +1796,56 @@ export namespace Prisma {
 
   export type BearingsAvgAggregateOutputType = {
     id: number | null
-    inner_d: Decimal | null
-    outer_D: Decimal | null
-    width_B: Decimal | null
-    C: Decimal | null
-    C0: Decimal | null
-    deletedBy: number | null
+    inner_d: number | null
+    outer_D: number | null
+    width_B: number | null
+    C: number | null
+    C0: number | null
+    e: number | null
+    Y: number | null
+    alpha_deg: number | null
   }
 
   export type BearingsSumAggregateOutputType = {
     id: number | null
-    inner_d: Decimal | null
-    outer_D: Decimal | null
-    width_B: Decimal | null
-    C: Decimal | null
-    C0: Decimal | null
-    deletedBy: number | null
+    inner_d: number | null
+    outer_D: number | null
+    width_B: number | null
+    C: number | null
+    C0: number | null
+    e: number | null
+    Y: number | null
+    alpha_deg: number | null
   }
 
   export type BearingsMinAggregateOutputType = {
     id: number | null
     code: string | null
     type: string | null
-    inner_d: Decimal | null
-    outer_D: Decimal | null
-    width_B: Decimal | null
-    C: Decimal | null
-    C0: Decimal | null
+    inner_d: number | null
+    outer_D: number | null
+    width_B: number | null
+    C: number | null
+    C0: number | null
+    e: number | null
+    Y: number | null
+    alpha_deg: number | null
     is_active: boolean | null
-    deletedBy: number | null
-    isDeleted: boolean | null
-    deletedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type BearingsMaxAggregateOutputType = {
     id: number | null
     code: string | null
     type: string | null
-    inner_d: Decimal | null
-    outer_D: Decimal | null
-    width_B: Decimal | null
-    C: Decimal | null
-    C0: Decimal | null
+    inner_d: number | null
+    outer_D: number | null
+    width_B: number | null
+    C: number | null
+    C0: number | null
+    e: number | null
+    Y: number | null
+    alpha_deg: number | null
     is_active: boolean | null
-    deletedBy: number | null
-    isDeleted: boolean | null
-    deletedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type BearingsCountAggregateOutputType = {
@@ -1359,12 +1857,10 @@ export namespace Prisma {
     width_B: number
     C: number
     C0: number
+    e: number
+    Y: number
+    alpha_deg: number
     is_active: number
-    deletedBy: number
-    isDeleted: number
-    deletedAt: number
-    createdAt: number
-    updatedAt: number
     _all: number
   }
 
@@ -1376,7 +1872,9 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    deletedBy?: true
+    e?: true
+    Y?: true
+    alpha_deg?: true
   }
 
   export type BearingsSumAggregateInputType = {
@@ -1386,7 +1884,9 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
-    deletedBy?: true
+    e?: true
+    Y?: true
+    alpha_deg?: true
   }
 
   export type BearingsMinAggregateInputType = {
@@ -1398,12 +1898,10 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
+    e?: true
+    Y?: true
+    alpha_deg?: true
     is_active?: true
-    deletedBy?: true
-    isDeleted?: true
-    deletedAt?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type BearingsMaxAggregateInputType = {
@@ -1415,12 +1913,10 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
+    e?: true
+    Y?: true
+    alpha_deg?: true
     is_active?: true
-    deletedBy?: true
-    isDeleted?: true
-    deletedAt?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type BearingsCountAggregateInputType = {
@@ -1432,12 +1928,10 @@ export namespace Prisma {
     width_B?: true
     C?: true
     C0?: true
+    e?: true
+    Y?: true
+    alpha_deg?: true
     is_active?: true
-    deletedBy?: true
-    isDeleted?: true
-    deletedAt?: true
-    createdAt?: true
-    updatedAt?: true
     _all?: true
   }
 
@@ -1531,17 +2025,15 @@ export namespace Prisma {
     id: number
     code: string
     type: string | null
-    inner_d: Decimal
-    outer_D: Decimal
-    width_B: Decimal
-    C: Decimal | null
-    C0: Decimal | null
+    inner_d: number
+    outer_D: number
+    width_B: number
+    C: number | null
+    C0: number | null
+    e: number | null
+    Y: number | null
+    alpha_deg: number | null
     is_active: boolean | null
-    deletedBy: number | null
-    isDeleted: boolean | null
-    deletedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
     _count: BearingsCountAggregateOutputType | null
     _avg: BearingsAvgAggregateOutputType | null
     _sum: BearingsSumAggregateOutputType | null
@@ -1572,12 +2064,10 @@ export namespace Prisma {
     width_B?: boolean
     C?: boolean
     C0?: boolean
+    e?: boolean
+    Y?: boolean
+    alpha_deg?: boolean
     is_active?: boolean
-    deletedBy?: boolean
-    isDeleted?: boolean
-    deletedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }, ExtArgs["result"]["bearings"]>
 
 
@@ -1591,15 +2081,13 @@ export namespace Prisma {
     width_B?: boolean
     C?: boolean
     C0?: boolean
+    e?: boolean
+    Y?: boolean
+    alpha_deg?: boolean
     is_active?: boolean
-    deletedBy?: boolean
-    isDeleted?: boolean
-    deletedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }
 
-  export type bearingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "type" | "inner_d" | "outer_D" | "width_B" | "C" | "C0" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["bearings"]>
+  export type bearingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "type" | "inner_d" | "outer_D" | "width_B" | "C" | "C0" | "e" | "Y" | "alpha_deg" | "is_active", ExtArgs["result"]["bearings"]>
 
   export type $bearingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "bearings"
@@ -1608,17 +2096,15 @@ export namespace Prisma {
       id: number
       code: string
       type: string | null
-      inner_d: Prisma.Decimal
-      outer_D: Prisma.Decimal
-      width_B: Prisma.Decimal
-      C: Prisma.Decimal | null
-      C0: Prisma.Decimal | null
+      inner_d: number
+      outer_D: number
+      width_B: number
+      C: number | null
+      C0: number | null
+      e: number | null
+      Y: number | null
+      alpha_deg: number | null
       is_active: boolean | null
-      deletedBy: number | null
-      isDeleted: boolean | null
-      deletedAt: Date | null
-      createdAt: Date | null
-      updatedAt: Date | null
     }, ExtArgs["result"]["bearings"]>
     composites: {}
   }
@@ -1991,17 +2477,15 @@ export namespace Prisma {
     readonly id: FieldRef<"bearings", 'Int'>
     readonly code: FieldRef<"bearings", 'String'>
     readonly type: FieldRef<"bearings", 'String'>
-    readonly inner_d: FieldRef<"bearings", 'Decimal'>
-    readonly outer_D: FieldRef<"bearings", 'Decimal'>
-    readonly width_B: FieldRef<"bearings", 'Decimal'>
-    readonly C: FieldRef<"bearings", 'Decimal'>
-    readonly C0: FieldRef<"bearings", 'Decimal'>
+    readonly inner_d: FieldRef<"bearings", 'Float'>
+    readonly outer_D: FieldRef<"bearings", 'Float'>
+    readonly width_B: FieldRef<"bearings", 'Float'>
+    readonly C: FieldRef<"bearings", 'Float'>
+    readonly C0: FieldRef<"bearings", 'Float'>
+    readonly e: FieldRef<"bearings", 'Float'>
+    readonly Y: FieldRef<"bearings", 'Float'>
+    readonly alpha_deg: FieldRef<"bearings", 'Float'>
     readonly is_active: FieldRef<"bearings", 'Boolean'>
-    readonly deletedBy: FieldRef<"bearings", 'Int'>
-    readonly isDeleted: FieldRef<"bearings", 'Boolean'>
-    readonly deletedAt: FieldRef<"bearings", 'DateTime'>
-    readonly createdAt: FieldRef<"bearings", 'DateTime'>
-    readonly updatedAt: FieldRef<"bearings", 'DateTime'>
   }
     
 
@@ -2342,44 +2826,44 @@ export namespace Prisma {
 
   export type ChainsAvgAggregateOutputType = {
     id: number | null
-    pitch: Decimal | null
-    breaking_load: Decimal | null
-    mass_per_m: Decimal | null
-    deletedBy: number | null
+    pitch: number | null
+    breaking_load: number | null
+    mass_per_m: number | null
+    A_mm2: number | null
+    s_allow: number | null
+    n_ref: number | null
   }
 
   export type ChainsSumAggregateOutputType = {
     id: number | null
-    pitch: Decimal | null
-    breaking_load: Decimal | null
-    mass_per_m: Decimal | null
-    deletedBy: number | null
+    pitch: number | null
+    breaking_load: number | null
+    mass_per_m: number | null
+    A_mm2: number | null
+    s_allow: number | null
+    n_ref: number | null
   }
 
   export type ChainsMinAggregateOutputType = {
     id: number | null
-    pitch: Decimal | null
-    breaking_load: Decimal | null
-    mass_per_m: Decimal | null
+    pitch: number | null
+    breaking_load: number | null
+    mass_per_m: number | null
+    A_mm2: number | null
+    s_allow: number | null
+    n_ref: number | null
     is_active: boolean | null
-    deletedBy: number | null
-    isDeleted: boolean | null
-    deletedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type ChainsMaxAggregateOutputType = {
     id: number | null
-    pitch: Decimal | null
-    breaking_load: Decimal | null
-    mass_per_m: Decimal | null
+    pitch: number | null
+    breaking_load: number | null
+    mass_per_m: number | null
+    A_mm2: number | null
+    s_allow: number | null
+    n_ref: number | null
     is_active: boolean | null
-    deletedBy: number | null
-    isDeleted: boolean | null
-    deletedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type ChainsCountAggregateOutputType = {
@@ -2387,12 +2871,10 @@ export namespace Prisma {
     pitch: number
     breaking_load: number
     mass_per_m: number
+    A_mm2: number
+    s_allow: number
+    n_ref: number
     is_active: number
-    deletedBy: number
-    isDeleted: number
-    deletedAt: number
-    createdAt: number
-    updatedAt: number
     _all: number
   }
 
@@ -2402,7 +2884,9 @@ export namespace Prisma {
     pitch?: true
     breaking_load?: true
     mass_per_m?: true
-    deletedBy?: true
+    A_mm2?: true
+    s_allow?: true
+    n_ref?: true
   }
 
   export type ChainsSumAggregateInputType = {
@@ -2410,7 +2894,9 @@ export namespace Prisma {
     pitch?: true
     breaking_load?: true
     mass_per_m?: true
-    deletedBy?: true
+    A_mm2?: true
+    s_allow?: true
+    n_ref?: true
   }
 
   export type ChainsMinAggregateInputType = {
@@ -2418,12 +2904,10 @@ export namespace Prisma {
     pitch?: true
     breaking_load?: true
     mass_per_m?: true
+    A_mm2?: true
+    s_allow?: true
+    n_ref?: true
     is_active?: true
-    deletedBy?: true
-    isDeleted?: true
-    deletedAt?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type ChainsMaxAggregateInputType = {
@@ -2431,12 +2915,10 @@ export namespace Prisma {
     pitch?: true
     breaking_load?: true
     mass_per_m?: true
+    A_mm2?: true
+    s_allow?: true
+    n_ref?: true
     is_active?: true
-    deletedBy?: true
-    isDeleted?: true
-    deletedAt?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type ChainsCountAggregateInputType = {
@@ -2444,12 +2926,10 @@ export namespace Prisma {
     pitch?: true
     breaking_load?: true
     mass_per_m?: true
+    A_mm2?: true
+    s_allow?: true
+    n_ref?: true
     is_active?: true
-    deletedBy?: true
-    isDeleted?: true
-    deletedAt?: true
-    createdAt?: true
-    updatedAt?: true
     _all?: true
   }
 
@@ -2541,15 +3021,13 @@ export namespace Prisma {
 
   export type ChainsGroupByOutputType = {
     id: number
-    pitch: Decimal
-    breaking_load: Decimal | null
-    mass_per_m: Decimal | null
+    pitch: number
+    breaking_load: number | null
+    mass_per_m: number | null
+    A_mm2: number | null
+    s_allow: number | null
+    n_ref: number | null
     is_active: boolean | null
-    deletedBy: number | null
-    isDeleted: boolean | null
-    deletedAt: Date | null
-    createdAt: Date | null
-    updatedAt: Date | null
     _count: ChainsCountAggregateOutputType | null
     _avg: ChainsAvgAggregateOutputType | null
     _sum: ChainsSumAggregateOutputType | null
@@ -2576,12 +3054,10 @@ export namespace Prisma {
     pitch?: boolean
     breaking_load?: boolean
     mass_per_m?: boolean
+    A_mm2?: boolean
+    s_allow?: boolean
+    n_ref?: boolean
     is_active?: boolean
-    deletedBy?: boolean
-    isDeleted?: boolean
-    deletedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }, ExtArgs["result"]["chains"]>
 
 
@@ -2591,30 +3067,26 @@ export namespace Prisma {
     pitch?: boolean
     breaking_load?: boolean
     mass_per_m?: boolean
+    A_mm2?: boolean
+    s_allow?: boolean
+    n_ref?: boolean
     is_active?: boolean
-    deletedBy?: boolean
-    isDeleted?: boolean
-    deletedAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }
 
-  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "breaking_load" | "mass_per_m" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["chains"]>
+  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "breaking_load" | "mass_per_m" | "A_mm2" | "s_allow" | "n_ref" | "is_active", ExtArgs["result"]["chains"]>
 
   export type $chainsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "chains"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      pitch: Prisma.Decimal
-      breaking_load: Prisma.Decimal | null
-      mass_per_m: Prisma.Decimal | null
+      pitch: number
+      breaking_load: number | null
+      mass_per_m: number | null
+      A_mm2: number | null
+      s_allow: number | null
+      n_ref: number | null
       is_active: boolean | null
-      deletedBy: number | null
-      isDeleted: boolean | null
-      deletedAt: Date | null
-      createdAt: Date | null
-      updatedAt: Date | null
     }, ExtArgs["result"]["chains"]>
     composites: {}
   }
@@ -2985,15 +3457,13 @@ export namespace Prisma {
    */
   interface chainsFieldRefs {
     readonly id: FieldRef<"chains", 'Int'>
-    readonly pitch: FieldRef<"chains", 'Decimal'>
-    readonly breaking_load: FieldRef<"chains", 'Decimal'>
-    readonly mass_per_m: FieldRef<"chains", 'Decimal'>
+    readonly pitch: FieldRef<"chains", 'Float'>
+    readonly breaking_load: FieldRef<"chains", 'Float'>
+    readonly mass_per_m: FieldRef<"chains", 'Float'>
+    readonly A_mm2: FieldRef<"chains", 'Float'>
+    readonly s_allow: FieldRef<"chains", 'Float'>
+    readonly n_ref: FieldRef<"chains", 'Int'>
     readonly is_active: FieldRef<"chains", 'Boolean'>
-    readonly deletedBy: FieldRef<"chains", 'Int'>
-    readonly isDeleted: FieldRef<"chains", 'Boolean'>
-    readonly deletedAt: FieldRef<"chains", 'DateTime'>
-    readonly createdAt: FieldRef<"chains", 'DateTime'>
-    readonly updatedAt: FieldRef<"chains", 'DateTime'>
   }
     
 
@@ -6749,6 +7219,5504 @@ export namespace Prisma {
 
 
   /**
+   * Model material_grades
+   */
+
+  export type AggregateMaterial_grades = {
+    _count: Material_gradesCountAggregateOutputType | null
+    _avg: Material_gradesAvgAggregateOutputType | null
+    _sum: Material_gradesSumAggregateOutputType | null
+    _min: Material_gradesMinAggregateOutputType | null
+    _max: Material_gradesMaxAggregateOutputType | null
+  }
+
+  export type Material_gradesAvgAggregateOutputType = {
+    id: number | null
+    HB: number | null
+    sigma_b: number | null
+    sigma_ch: number | null
+    sigma_Hlim: number | null
+    sigma_Flim: number | null
+  }
+
+  export type Material_gradesSumAggregateOutputType = {
+    id: number | null
+    HB: number | null
+    sigma_b: number | null
+    sigma_ch: number | null
+    sigma_Hlim: number | null
+    sigma_Flim: number | null
+  }
+
+  export type Material_gradesMinAggregateOutputType = {
+    id: number | null
+    grade_name: string | null
+    HB: number | null
+    sigma_b: number | null
+    sigma_ch: number | null
+    sigma_Hlim: number | null
+    sigma_Flim: number | null
+  }
+
+  export type Material_gradesMaxAggregateOutputType = {
+    id: number | null
+    grade_name: string | null
+    HB: number | null
+    sigma_b: number | null
+    sigma_ch: number | null
+    sigma_Hlim: number | null
+    sigma_Flim: number | null
+  }
+
+  export type Material_gradesCountAggregateOutputType = {
+    id: number
+    grade_name: number
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+    _all: number
+  }
+
+
+  export type Material_gradesAvgAggregateInputType = {
+    id?: true
+    HB?: true
+    sigma_b?: true
+    sigma_ch?: true
+    sigma_Hlim?: true
+    sigma_Flim?: true
+  }
+
+  export type Material_gradesSumAggregateInputType = {
+    id?: true
+    HB?: true
+    sigma_b?: true
+    sigma_ch?: true
+    sigma_Hlim?: true
+    sigma_Flim?: true
+  }
+
+  export type Material_gradesMinAggregateInputType = {
+    id?: true
+    grade_name?: true
+    HB?: true
+    sigma_b?: true
+    sigma_ch?: true
+    sigma_Hlim?: true
+    sigma_Flim?: true
+  }
+
+  export type Material_gradesMaxAggregateInputType = {
+    id?: true
+    grade_name?: true
+    HB?: true
+    sigma_b?: true
+    sigma_ch?: true
+    sigma_Hlim?: true
+    sigma_Flim?: true
+  }
+
+  export type Material_gradesCountAggregateInputType = {
+    id?: true
+    grade_name?: true
+    HB?: true
+    sigma_b?: true
+    sigma_ch?: true
+    sigma_Hlim?: true
+    sigma_Flim?: true
+    _all?: true
+  }
+
+  export type Material_gradesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which material_grades to aggregate.
+     */
+    where?: material_gradesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of material_grades to fetch.
+     */
+    orderBy?: material_gradesOrderByWithRelationInput | material_gradesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: material_gradesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` material_grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` material_grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned material_grades
+    **/
+    _count?: true | Material_gradesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Material_gradesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Material_gradesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Material_gradesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Material_gradesMaxAggregateInputType
+  }
+
+  export type GetMaterial_gradesAggregateType<T extends Material_gradesAggregateArgs> = {
+        [P in keyof T & keyof AggregateMaterial_grades]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMaterial_grades[P]>
+      : GetScalarType<T[P], AggregateMaterial_grades[P]>
+  }
+
+
+
+
+  export type material_gradesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: material_gradesWhereInput
+    orderBy?: material_gradesOrderByWithAggregationInput | material_gradesOrderByWithAggregationInput[]
+    by: Material_gradesScalarFieldEnum[] | Material_gradesScalarFieldEnum
+    having?: material_gradesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Material_gradesCountAggregateInputType | true
+    _avg?: Material_gradesAvgAggregateInputType
+    _sum?: Material_gradesSumAggregateInputType
+    _min?: Material_gradesMinAggregateInputType
+    _max?: Material_gradesMaxAggregateInputType
+  }
+
+  export type Material_gradesGroupByOutputType = {
+    id: number
+    grade_name: string
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+    _count: Material_gradesCountAggregateOutputType | null
+    _avg: Material_gradesAvgAggregateOutputType | null
+    _sum: Material_gradesSumAggregateOutputType | null
+    _min: Material_gradesMinAggregateOutputType | null
+    _max: Material_gradesMaxAggregateOutputType | null
+  }
+
+  type GetMaterial_gradesGroupByPayload<T extends material_gradesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Material_gradesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Material_gradesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Material_gradesGroupByOutputType[P]>
+            : GetScalarType<T[P], Material_gradesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type material_gradesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    grade_name?: boolean
+    HB?: boolean
+    sigma_b?: boolean
+    sigma_ch?: boolean
+    sigma_Hlim?: boolean
+    sigma_Flim?: boolean
+  }, ExtArgs["result"]["material_grades"]>
+
+
+
+  export type material_gradesSelectScalar = {
+    id?: boolean
+    grade_name?: boolean
+    HB?: boolean
+    sigma_b?: boolean
+    sigma_ch?: boolean
+    sigma_Hlim?: boolean
+    sigma_Flim?: boolean
+  }
+
+  export type material_gradesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "grade_name" | "HB" | "sigma_b" | "sigma_ch" | "sigma_Hlim" | "sigma_Flim", ExtArgs["result"]["material_grades"]>
+
+  export type $material_gradesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "material_grades"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      grade_name: string
+      HB: number
+      sigma_b: number
+      sigma_ch: number
+      sigma_Hlim: number
+      sigma_Flim: number
+    }, ExtArgs["result"]["material_grades"]>
+    composites: {}
+  }
+
+  type material_gradesGetPayload<S extends boolean | null | undefined | material_gradesDefaultArgs> = $Result.GetResult<Prisma.$material_gradesPayload, S>
+
+  type material_gradesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<material_gradesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Material_gradesCountAggregateInputType | true
+    }
+
+  export interface material_gradesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['material_grades'], meta: { name: 'material_grades' } }
+    /**
+     * Find zero or one Material_grades that matches the filter.
+     * @param {material_gradesFindUniqueArgs} args - Arguments to find a Material_grades
+     * @example
+     * // Get one Material_grades
+     * const material_grades = await prisma.material_grades.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends material_gradesFindUniqueArgs>(args: SelectSubset<T, material_gradesFindUniqueArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Material_grades that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {material_gradesFindUniqueOrThrowArgs} args - Arguments to find a Material_grades
+     * @example
+     * // Get one Material_grades
+     * const material_grades = await prisma.material_grades.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends material_gradesFindUniqueOrThrowArgs>(args: SelectSubset<T, material_gradesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Material_grades that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {material_gradesFindFirstArgs} args - Arguments to find a Material_grades
+     * @example
+     * // Get one Material_grades
+     * const material_grades = await prisma.material_grades.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends material_gradesFindFirstArgs>(args?: SelectSubset<T, material_gradesFindFirstArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Material_grades that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {material_gradesFindFirstOrThrowArgs} args - Arguments to find a Material_grades
+     * @example
+     * // Get one Material_grades
+     * const material_grades = await prisma.material_grades.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends material_gradesFindFirstOrThrowArgs>(args?: SelectSubset<T, material_gradesFindFirstOrThrowArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Material_grades that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {material_gradesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Material_grades
+     * const material_grades = await prisma.material_grades.findMany()
+     * 
+     * // Get first 10 Material_grades
+     * const material_grades = await prisma.material_grades.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const material_gradesWithIdOnly = await prisma.material_grades.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends material_gradesFindManyArgs>(args?: SelectSubset<T, material_gradesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Material_grades.
+     * @param {material_gradesCreateArgs} args - Arguments to create a Material_grades.
+     * @example
+     * // Create one Material_grades
+     * const Material_grades = await prisma.material_grades.create({
+     *   data: {
+     *     // ... data to create a Material_grades
+     *   }
+     * })
+     * 
+     */
+    create<T extends material_gradesCreateArgs>(args: SelectSubset<T, material_gradesCreateArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Material_grades.
+     * @param {material_gradesCreateManyArgs} args - Arguments to create many Material_grades.
+     * @example
+     * // Create many Material_grades
+     * const material_grades = await prisma.material_grades.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends material_gradesCreateManyArgs>(args?: SelectSubset<T, material_gradesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Material_grades.
+     * @param {material_gradesDeleteArgs} args - Arguments to delete one Material_grades.
+     * @example
+     * // Delete one Material_grades
+     * const Material_grades = await prisma.material_grades.delete({
+     *   where: {
+     *     // ... filter to delete one Material_grades
+     *   }
+     * })
+     * 
+     */
+    delete<T extends material_gradesDeleteArgs>(args: SelectSubset<T, material_gradesDeleteArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Material_grades.
+     * @param {material_gradesUpdateArgs} args - Arguments to update one Material_grades.
+     * @example
+     * // Update one Material_grades
+     * const material_grades = await prisma.material_grades.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends material_gradesUpdateArgs>(args: SelectSubset<T, material_gradesUpdateArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Material_grades.
+     * @param {material_gradesDeleteManyArgs} args - Arguments to filter Material_grades to delete.
+     * @example
+     * // Delete a few Material_grades
+     * const { count } = await prisma.material_grades.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends material_gradesDeleteManyArgs>(args?: SelectSubset<T, material_gradesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Material_grades.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {material_gradesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Material_grades
+     * const material_grades = await prisma.material_grades.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends material_gradesUpdateManyArgs>(args: SelectSubset<T, material_gradesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Material_grades.
+     * @param {material_gradesUpsertArgs} args - Arguments to update or create a Material_grades.
+     * @example
+     * // Update or create a Material_grades
+     * const material_grades = await prisma.material_grades.upsert({
+     *   create: {
+     *     // ... data to create a Material_grades
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Material_grades we want to update
+     *   }
+     * })
+     */
+    upsert<T extends material_gradesUpsertArgs>(args: SelectSubset<T, material_gradesUpsertArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Material_grades.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {material_gradesCountArgs} args - Arguments to filter Material_grades to count.
+     * @example
+     * // Count the number of Material_grades
+     * const count = await prisma.material_grades.count({
+     *   where: {
+     *     // ... the filter for the Material_grades we want to count
+     *   }
+     * })
+    **/
+    count<T extends material_gradesCountArgs>(
+      args?: Subset<T, material_gradesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Material_gradesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Material_grades.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Material_gradesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Material_gradesAggregateArgs>(args: Subset<T, Material_gradesAggregateArgs>): Prisma.PrismaPromise<GetMaterial_gradesAggregateType<T>>
+
+    /**
+     * Group by Material_grades.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {material_gradesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends material_gradesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: material_gradesGroupByArgs['orderBy'] }
+        : { orderBy?: material_gradesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, material_gradesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMaterial_gradesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the material_grades model
+   */
+  readonly fields: material_gradesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for material_grades.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__material_gradesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the material_grades model
+   */
+  interface material_gradesFieldRefs {
+    readonly id: FieldRef<"material_grades", 'Int'>
+    readonly grade_name: FieldRef<"material_grades", 'String'>
+    readonly HB: FieldRef<"material_grades", 'Int'>
+    readonly sigma_b: FieldRef<"material_grades", 'Float'>
+    readonly sigma_ch: FieldRef<"material_grades", 'Float'>
+    readonly sigma_Hlim: FieldRef<"material_grades", 'Float'>
+    readonly sigma_Flim: FieldRef<"material_grades", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * material_grades findUnique
+   */
+  export type material_gradesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Filter, which material_grades to fetch.
+     */
+    where: material_gradesWhereUniqueInput
+  }
+
+  /**
+   * material_grades findUniqueOrThrow
+   */
+  export type material_gradesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Filter, which material_grades to fetch.
+     */
+    where: material_gradesWhereUniqueInput
+  }
+
+  /**
+   * material_grades findFirst
+   */
+  export type material_gradesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Filter, which material_grades to fetch.
+     */
+    where?: material_gradesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of material_grades to fetch.
+     */
+    orderBy?: material_gradesOrderByWithRelationInput | material_gradesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for material_grades.
+     */
+    cursor?: material_gradesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` material_grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` material_grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of material_grades.
+     */
+    distinct?: Material_gradesScalarFieldEnum | Material_gradesScalarFieldEnum[]
+  }
+
+  /**
+   * material_grades findFirstOrThrow
+   */
+  export type material_gradesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Filter, which material_grades to fetch.
+     */
+    where?: material_gradesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of material_grades to fetch.
+     */
+    orderBy?: material_gradesOrderByWithRelationInput | material_gradesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for material_grades.
+     */
+    cursor?: material_gradesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` material_grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` material_grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of material_grades.
+     */
+    distinct?: Material_gradesScalarFieldEnum | Material_gradesScalarFieldEnum[]
+  }
+
+  /**
+   * material_grades findMany
+   */
+  export type material_gradesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Filter, which material_grades to fetch.
+     */
+    where?: material_gradesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of material_grades to fetch.
+     */
+    orderBy?: material_gradesOrderByWithRelationInput | material_gradesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing material_grades.
+     */
+    cursor?: material_gradesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` material_grades from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` material_grades.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of material_grades.
+     */
+    distinct?: Material_gradesScalarFieldEnum | Material_gradesScalarFieldEnum[]
+  }
+
+  /**
+   * material_grades create
+   */
+  export type material_gradesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * The data needed to create a material_grades.
+     */
+    data: XOR<material_gradesCreateInput, material_gradesUncheckedCreateInput>
+  }
+
+  /**
+   * material_grades createMany
+   */
+  export type material_gradesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many material_grades.
+     */
+    data: material_gradesCreateManyInput | material_gradesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * material_grades update
+   */
+  export type material_gradesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * The data needed to update a material_grades.
+     */
+    data: XOR<material_gradesUpdateInput, material_gradesUncheckedUpdateInput>
+    /**
+     * Choose, which material_grades to update.
+     */
+    where: material_gradesWhereUniqueInput
+  }
+
+  /**
+   * material_grades updateMany
+   */
+  export type material_gradesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update material_grades.
+     */
+    data: XOR<material_gradesUpdateManyMutationInput, material_gradesUncheckedUpdateManyInput>
+    /**
+     * Filter which material_grades to update
+     */
+    where?: material_gradesWhereInput
+    /**
+     * Limit how many material_grades to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * material_grades upsert
+   */
+  export type material_gradesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * The filter to search for the material_grades to update in case it exists.
+     */
+    where: material_gradesWhereUniqueInput
+    /**
+     * In case the material_grades found by the `where` argument doesn't exist, create a new material_grades with this data.
+     */
+    create: XOR<material_gradesCreateInput, material_gradesUncheckedCreateInput>
+    /**
+     * In case the material_grades was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<material_gradesUpdateInput, material_gradesUncheckedUpdateInput>
+  }
+
+  /**
+   * material_grades delete
+   */
+  export type material_gradesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Filter which material_grades to delete.
+     */
+    where: material_gradesWhereUniqueInput
+  }
+
+  /**
+   * material_grades deleteMany
+   */
+  export type material_gradesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which material_grades to delete
+     */
+    where?: material_gradesWhereInput
+    /**
+     * Limit how many material_grades to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * material_grades without action
+   */
+  export type material_gradesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model standard_modules
+   */
+
+  export type AggregateStandard_modules = {
+    _count: Standard_modulesCountAggregateOutputType | null
+    _avg: Standard_modulesAvgAggregateOutputType | null
+    _sum: Standard_modulesSumAggregateOutputType | null
+    _min: Standard_modulesMinAggregateOutputType | null
+    _max: Standard_modulesMaxAggregateOutputType | null
+  }
+
+  export type Standard_modulesAvgAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_modulesSumAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_modulesMinAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_modulesMaxAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_modulesCountAggregateOutputType = {
+    id: number
+    value: number
+    _all: number
+  }
+
+
+  export type Standard_modulesAvgAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_modulesSumAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_modulesMinAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_modulesMaxAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_modulesCountAggregateInputType = {
+    id?: true
+    value?: true
+    _all?: true
+  }
+
+  export type Standard_modulesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_modules to aggregate.
+     */
+    where?: standard_modulesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_modules to fetch.
+     */
+    orderBy?: standard_modulesOrderByWithRelationInput | standard_modulesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: standard_modulesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned standard_modules
+    **/
+    _count?: true | Standard_modulesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Standard_modulesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Standard_modulesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Standard_modulesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Standard_modulesMaxAggregateInputType
+  }
+
+  export type GetStandard_modulesAggregateType<T extends Standard_modulesAggregateArgs> = {
+        [P in keyof T & keyof AggregateStandard_modules]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStandard_modules[P]>
+      : GetScalarType<T[P], AggregateStandard_modules[P]>
+  }
+
+
+
+
+  export type standard_modulesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: standard_modulesWhereInput
+    orderBy?: standard_modulesOrderByWithAggregationInput | standard_modulesOrderByWithAggregationInput[]
+    by: Standard_modulesScalarFieldEnum[] | Standard_modulesScalarFieldEnum
+    having?: standard_modulesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Standard_modulesCountAggregateInputType | true
+    _avg?: Standard_modulesAvgAggregateInputType
+    _sum?: Standard_modulesSumAggregateInputType
+    _min?: Standard_modulesMinAggregateInputType
+    _max?: Standard_modulesMaxAggregateInputType
+  }
+
+  export type Standard_modulesGroupByOutputType = {
+    id: number
+    value: number
+    _count: Standard_modulesCountAggregateOutputType | null
+    _avg: Standard_modulesAvgAggregateOutputType | null
+    _sum: Standard_modulesSumAggregateOutputType | null
+    _min: Standard_modulesMinAggregateOutputType | null
+    _max: Standard_modulesMaxAggregateOutputType | null
+  }
+
+  type GetStandard_modulesGroupByPayload<T extends standard_modulesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Standard_modulesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Standard_modulesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Standard_modulesGroupByOutputType[P]>
+            : GetScalarType<T[P], Standard_modulesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type standard_modulesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["standard_modules"]>
+
+
+
+  export type standard_modulesSelectScalar = {
+    id?: boolean
+    value?: boolean
+  }
+
+  export type standard_modulesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value", ExtArgs["result"]["standard_modules"]>
+
+  export type $standard_modulesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "standard_modules"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      value: number
+    }, ExtArgs["result"]["standard_modules"]>
+    composites: {}
+  }
+
+  type standard_modulesGetPayload<S extends boolean | null | undefined | standard_modulesDefaultArgs> = $Result.GetResult<Prisma.$standard_modulesPayload, S>
+
+  type standard_modulesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<standard_modulesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Standard_modulesCountAggregateInputType | true
+    }
+
+  export interface standard_modulesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['standard_modules'], meta: { name: 'standard_modules' } }
+    /**
+     * Find zero or one Standard_modules that matches the filter.
+     * @param {standard_modulesFindUniqueArgs} args - Arguments to find a Standard_modules
+     * @example
+     * // Get one Standard_modules
+     * const standard_modules = await prisma.standard_modules.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends standard_modulesFindUniqueArgs>(args: SelectSubset<T, standard_modulesFindUniqueArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Standard_modules that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {standard_modulesFindUniqueOrThrowArgs} args - Arguments to find a Standard_modules
+     * @example
+     * // Get one Standard_modules
+     * const standard_modules = await prisma.standard_modules.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends standard_modulesFindUniqueOrThrowArgs>(args: SelectSubset<T, standard_modulesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_modules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_modulesFindFirstArgs} args - Arguments to find a Standard_modules
+     * @example
+     * // Get one Standard_modules
+     * const standard_modules = await prisma.standard_modules.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends standard_modulesFindFirstArgs>(args?: SelectSubset<T, standard_modulesFindFirstArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_modules that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_modulesFindFirstOrThrowArgs} args - Arguments to find a Standard_modules
+     * @example
+     * // Get one Standard_modules
+     * const standard_modules = await prisma.standard_modules.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends standard_modulesFindFirstOrThrowArgs>(args?: SelectSubset<T, standard_modulesFindFirstOrThrowArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Standard_modules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_modulesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Standard_modules
+     * const standard_modules = await prisma.standard_modules.findMany()
+     * 
+     * // Get first 10 Standard_modules
+     * const standard_modules = await prisma.standard_modules.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const standard_modulesWithIdOnly = await prisma.standard_modules.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends standard_modulesFindManyArgs>(args?: SelectSubset<T, standard_modulesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Standard_modules.
+     * @param {standard_modulesCreateArgs} args - Arguments to create a Standard_modules.
+     * @example
+     * // Create one Standard_modules
+     * const Standard_modules = await prisma.standard_modules.create({
+     *   data: {
+     *     // ... data to create a Standard_modules
+     *   }
+     * })
+     * 
+     */
+    create<T extends standard_modulesCreateArgs>(args: SelectSubset<T, standard_modulesCreateArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Standard_modules.
+     * @param {standard_modulesCreateManyArgs} args - Arguments to create many Standard_modules.
+     * @example
+     * // Create many Standard_modules
+     * const standard_modules = await prisma.standard_modules.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends standard_modulesCreateManyArgs>(args?: SelectSubset<T, standard_modulesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Standard_modules.
+     * @param {standard_modulesDeleteArgs} args - Arguments to delete one Standard_modules.
+     * @example
+     * // Delete one Standard_modules
+     * const Standard_modules = await prisma.standard_modules.delete({
+     *   where: {
+     *     // ... filter to delete one Standard_modules
+     *   }
+     * })
+     * 
+     */
+    delete<T extends standard_modulesDeleteArgs>(args: SelectSubset<T, standard_modulesDeleteArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Standard_modules.
+     * @param {standard_modulesUpdateArgs} args - Arguments to update one Standard_modules.
+     * @example
+     * // Update one Standard_modules
+     * const standard_modules = await prisma.standard_modules.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends standard_modulesUpdateArgs>(args: SelectSubset<T, standard_modulesUpdateArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Standard_modules.
+     * @param {standard_modulesDeleteManyArgs} args - Arguments to filter Standard_modules to delete.
+     * @example
+     * // Delete a few Standard_modules
+     * const { count } = await prisma.standard_modules.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends standard_modulesDeleteManyArgs>(args?: SelectSubset<T, standard_modulesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Standard_modules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_modulesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Standard_modules
+     * const standard_modules = await prisma.standard_modules.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends standard_modulesUpdateManyArgs>(args: SelectSubset<T, standard_modulesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Standard_modules.
+     * @param {standard_modulesUpsertArgs} args - Arguments to update or create a Standard_modules.
+     * @example
+     * // Update or create a Standard_modules
+     * const standard_modules = await prisma.standard_modules.upsert({
+     *   create: {
+     *     // ... data to create a Standard_modules
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Standard_modules we want to update
+     *   }
+     * })
+     */
+    upsert<T extends standard_modulesUpsertArgs>(args: SelectSubset<T, standard_modulesUpsertArgs<ExtArgs>>): Prisma__standard_modulesClient<$Result.GetResult<Prisma.$standard_modulesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Standard_modules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_modulesCountArgs} args - Arguments to filter Standard_modules to count.
+     * @example
+     * // Count the number of Standard_modules
+     * const count = await prisma.standard_modules.count({
+     *   where: {
+     *     // ... the filter for the Standard_modules we want to count
+     *   }
+     * })
+    **/
+    count<T extends standard_modulesCountArgs>(
+      args?: Subset<T, standard_modulesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Standard_modulesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Standard_modules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Standard_modulesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Standard_modulesAggregateArgs>(args: Subset<T, Standard_modulesAggregateArgs>): Prisma.PrismaPromise<GetStandard_modulesAggregateType<T>>
+
+    /**
+     * Group by Standard_modules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_modulesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends standard_modulesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: standard_modulesGroupByArgs['orderBy'] }
+        : { orderBy?: standard_modulesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, standard_modulesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStandard_modulesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the standard_modules model
+   */
+  readonly fields: standard_modulesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for standard_modules.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__standard_modulesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the standard_modules model
+   */
+  interface standard_modulesFieldRefs {
+    readonly id: FieldRef<"standard_modules", 'Int'>
+    readonly value: FieldRef<"standard_modules", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * standard_modules findUnique
+   */
+  export type standard_modulesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_modules to fetch.
+     */
+    where: standard_modulesWhereUniqueInput
+  }
+
+  /**
+   * standard_modules findUniqueOrThrow
+   */
+  export type standard_modulesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_modules to fetch.
+     */
+    where: standard_modulesWhereUniqueInput
+  }
+
+  /**
+   * standard_modules findFirst
+   */
+  export type standard_modulesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_modules to fetch.
+     */
+    where?: standard_modulesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_modules to fetch.
+     */
+    orderBy?: standard_modulesOrderByWithRelationInput | standard_modulesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_modules.
+     */
+    cursor?: standard_modulesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_modules.
+     */
+    distinct?: Standard_modulesScalarFieldEnum | Standard_modulesScalarFieldEnum[]
+  }
+
+  /**
+   * standard_modules findFirstOrThrow
+   */
+  export type standard_modulesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_modules to fetch.
+     */
+    where?: standard_modulesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_modules to fetch.
+     */
+    orderBy?: standard_modulesOrderByWithRelationInput | standard_modulesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_modules.
+     */
+    cursor?: standard_modulesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_modules.
+     */
+    distinct?: Standard_modulesScalarFieldEnum | Standard_modulesScalarFieldEnum[]
+  }
+
+  /**
+   * standard_modules findMany
+   */
+  export type standard_modulesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_modules to fetch.
+     */
+    where?: standard_modulesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_modules to fetch.
+     */
+    orderBy?: standard_modulesOrderByWithRelationInput | standard_modulesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing standard_modules.
+     */
+    cursor?: standard_modulesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_modules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_modules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_modules.
+     */
+    distinct?: Standard_modulesScalarFieldEnum | Standard_modulesScalarFieldEnum[]
+  }
+
+  /**
+   * standard_modules create
+   */
+  export type standard_modulesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * The data needed to create a standard_modules.
+     */
+    data: XOR<standard_modulesCreateInput, standard_modulesUncheckedCreateInput>
+  }
+
+  /**
+   * standard_modules createMany
+   */
+  export type standard_modulesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many standard_modules.
+     */
+    data: standard_modulesCreateManyInput | standard_modulesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * standard_modules update
+   */
+  export type standard_modulesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * The data needed to update a standard_modules.
+     */
+    data: XOR<standard_modulesUpdateInput, standard_modulesUncheckedUpdateInput>
+    /**
+     * Choose, which standard_modules to update.
+     */
+    where: standard_modulesWhereUniqueInput
+  }
+
+  /**
+   * standard_modules updateMany
+   */
+  export type standard_modulesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update standard_modules.
+     */
+    data: XOR<standard_modulesUpdateManyMutationInput, standard_modulesUncheckedUpdateManyInput>
+    /**
+     * Filter which standard_modules to update
+     */
+    where?: standard_modulesWhereInput
+    /**
+     * Limit how many standard_modules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_modules upsert
+   */
+  export type standard_modulesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * The filter to search for the standard_modules to update in case it exists.
+     */
+    where: standard_modulesWhereUniqueInput
+    /**
+     * In case the standard_modules found by the `where` argument doesn't exist, create a new standard_modules with this data.
+     */
+    create: XOR<standard_modulesCreateInput, standard_modulesUncheckedCreateInput>
+    /**
+     * In case the standard_modules was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<standard_modulesUpdateInput, standard_modulesUncheckedUpdateInput>
+  }
+
+  /**
+   * standard_modules delete
+   */
+  export type standard_modulesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+    /**
+     * Filter which standard_modules to delete.
+     */
+    where: standard_modulesWhereUniqueInput
+  }
+
+  /**
+   * standard_modules deleteMany
+   */
+  export type standard_modulesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_modules to delete
+     */
+    where?: standard_modulesWhereInput
+    /**
+     * Limit how many standard_modules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_modules without action
+   */
+  export type standard_modulesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_modules
+     */
+    select?: standard_modulesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_modules
+     */
+    omit?: standard_modulesOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model standard_center_distances
+   */
+
+  export type AggregateStandard_center_distances = {
+    _count: Standard_center_distancesCountAggregateOutputType | null
+    _avg: Standard_center_distancesAvgAggregateOutputType | null
+    _sum: Standard_center_distancesSumAggregateOutputType | null
+    _min: Standard_center_distancesMinAggregateOutputType | null
+    _max: Standard_center_distancesMaxAggregateOutputType | null
+  }
+
+  export type Standard_center_distancesAvgAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_center_distancesSumAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_center_distancesMinAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_center_distancesMaxAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_center_distancesCountAggregateOutputType = {
+    id: number
+    value: number
+    _all: number
+  }
+
+
+  export type Standard_center_distancesAvgAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_center_distancesSumAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_center_distancesMinAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_center_distancesMaxAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_center_distancesCountAggregateInputType = {
+    id?: true
+    value?: true
+    _all?: true
+  }
+
+  export type Standard_center_distancesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_center_distances to aggregate.
+     */
+    where?: standard_center_distancesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_center_distances to fetch.
+     */
+    orderBy?: standard_center_distancesOrderByWithRelationInput | standard_center_distancesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: standard_center_distancesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_center_distances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_center_distances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned standard_center_distances
+    **/
+    _count?: true | Standard_center_distancesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Standard_center_distancesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Standard_center_distancesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Standard_center_distancesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Standard_center_distancesMaxAggregateInputType
+  }
+
+  export type GetStandard_center_distancesAggregateType<T extends Standard_center_distancesAggregateArgs> = {
+        [P in keyof T & keyof AggregateStandard_center_distances]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStandard_center_distances[P]>
+      : GetScalarType<T[P], AggregateStandard_center_distances[P]>
+  }
+
+
+
+
+  export type standard_center_distancesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: standard_center_distancesWhereInput
+    orderBy?: standard_center_distancesOrderByWithAggregationInput | standard_center_distancesOrderByWithAggregationInput[]
+    by: Standard_center_distancesScalarFieldEnum[] | Standard_center_distancesScalarFieldEnum
+    having?: standard_center_distancesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Standard_center_distancesCountAggregateInputType | true
+    _avg?: Standard_center_distancesAvgAggregateInputType
+    _sum?: Standard_center_distancesSumAggregateInputType
+    _min?: Standard_center_distancesMinAggregateInputType
+    _max?: Standard_center_distancesMaxAggregateInputType
+  }
+
+  export type Standard_center_distancesGroupByOutputType = {
+    id: number
+    value: number
+    _count: Standard_center_distancesCountAggregateOutputType | null
+    _avg: Standard_center_distancesAvgAggregateOutputType | null
+    _sum: Standard_center_distancesSumAggregateOutputType | null
+    _min: Standard_center_distancesMinAggregateOutputType | null
+    _max: Standard_center_distancesMaxAggregateOutputType | null
+  }
+
+  type GetStandard_center_distancesGroupByPayload<T extends standard_center_distancesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Standard_center_distancesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Standard_center_distancesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Standard_center_distancesGroupByOutputType[P]>
+            : GetScalarType<T[P], Standard_center_distancesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type standard_center_distancesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["standard_center_distances"]>
+
+
+
+  export type standard_center_distancesSelectScalar = {
+    id?: boolean
+    value?: boolean
+  }
+
+  export type standard_center_distancesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value", ExtArgs["result"]["standard_center_distances"]>
+
+  export type $standard_center_distancesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "standard_center_distances"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      value: number
+    }, ExtArgs["result"]["standard_center_distances"]>
+    composites: {}
+  }
+
+  type standard_center_distancesGetPayload<S extends boolean | null | undefined | standard_center_distancesDefaultArgs> = $Result.GetResult<Prisma.$standard_center_distancesPayload, S>
+
+  type standard_center_distancesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<standard_center_distancesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Standard_center_distancesCountAggregateInputType | true
+    }
+
+  export interface standard_center_distancesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['standard_center_distances'], meta: { name: 'standard_center_distances' } }
+    /**
+     * Find zero or one Standard_center_distances that matches the filter.
+     * @param {standard_center_distancesFindUniqueArgs} args - Arguments to find a Standard_center_distances
+     * @example
+     * // Get one Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends standard_center_distancesFindUniqueArgs>(args: SelectSubset<T, standard_center_distancesFindUniqueArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Standard_center_distances that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {standard_center_distancesFindUniqueOrThrowArgs} args - Arguments to find a Standard_center_distances
+     * @example
+     * // Get one Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends standard_center_distancesFindUniqueOrThrowArgs>(args: SelectSubset<T, standard_center_distancesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_center_distances that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_center_distancesFindFirstArgs} args - Arguments to find a Standard_center_distances
+     * @example
+     * // Get one Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends standard_center_distancesFindFirstArgs>(args?: SelectSubset<T, standard_center_distancesFindFirstArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_center_distances that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_center_distancesFindFirstOrThrowArgs} args - Arguments to find a Standard_center_distances
+     * @example
+     * // Get one Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends standard_center_distancesFindFirstOrThrowArgs>(args?: SelectSubset<T, standard_center_distancesFindFirstOrThrowArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Standard_center_distances that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_center_distancesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.findMany()
+     * 
+     * // Get first 10 Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const standard_center_distancesWithIdOnly = await prisma.standard_center_distances.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends standard_center_distancesFindManyArgs>(args?: SelectSubset<T, standard_center_distancesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Standard_center_distances.
+     * @param {standard_center_distancesCreateArgs} args - Arguments to create a Standard_center_distances.
+     * @example
+     * // Create one Standard_center_distances
+     * const Standard_center_distances = await prisma.standard_center_distances.create({
+     *   data: {
+     *     // ... data to create a Standard_center_distances
+     *   }
+     * })
+     * 
+     */
+    create<T extends standard_center_distancesCreateArgs>(args: SelectSubset<T, standard_center_distancesCreateArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Standard_center_distances.
+     * @param {standard_center_distancesCreateManyArgs} args - Arguments to create many Standard_center_distances.
+     * @example
+     * // Create many Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends standard_center_distancesCreateManyArgs>(args?: SelectSubset<T, standard_center_distancesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Standard_center_distances.
+     * @param {standard_center_distancesDeleteArgs} args - Arguments to delete one Standard_center_distances.
+     * @example
+     * // Delete one Standard_center_distances
+     * const Standard_center_distances = await prisma.standard_center_distances.delete({
+     *   where: {
+     *     // ... filter to delete one Standard_center_distances
+     *   }
+     * })
+     * 
+     */
+    delete<T extends standard_center_distancesDeleteArgs>(args: SelectSubset<T, standard_center_distancesDeleteArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Standard_center_distances.
+     * @param {standard_center_distancesUpdateArgs} args - Arguments to update one Standard_center_distances.
+     * @example
+     * // Update one Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends standard_center_distancesUpdateArgs>(args: SelectSubset<T, standard_center_distancesUpdateArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Standard_center_distances.
+     * @param {standard_center_distancesDeleteManyArgs} args - Arguments to filter Standard_center_distances to delete.
+     * @example
+     * // Delete a few Standard_center_distances
+     * const { count } = await prisma.standard_center_distances.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends standard_center_distancesDeleteManyArgs>(args?: SelectSubset<T, standard_center_distancesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Standard_center_distances.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_center_distancesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends standard_center_distancesUpdateManyArgs>(args: SelectSubset<T, standard_center_distancesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Standard_center_distances.
+     * @param {standard_center_distancesUpsertArgs} args - Arguments to update or create a Standard_center_distances.
+     * @example
+     * // Update or create a Standard_center_distances
+     * const standard_center_distances = await prisma.standard_center_distances.upsert({
+     *   create: {
+     *     // ... data to create a Standard_center_distances
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Standard_center_distances we want to update
+     *   }
+     * })
+     */
+    upsert<T extends standard_center_distancesUpsertArgs>(args: SelectSubset<T, standard_center_distancesUpsertArgs<ExtArgs>>): Prisma__standard_center_distancesClient<$Result.GetResult<Prisma.$standard_center_distancesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Standard_center_distances.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_center_distancesCountArgs} args - Arguments to filter Standard_center_distances to count.
+     * @example
+     * // Count the number of Standard_center_distances
+     * const count = await prisma.standard_center_distances.count({
+     *   where: {
+     *     // ... the filter for the Standard_center_distances we want to count
+     *   }
+     * })
+    **/
+    count<T extends standard_center_distancesCountArgs>(
+      args?: Subset<T, standard_center_distancesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Standard_center_distancesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Standard_center_distances.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Standard_center_distancesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Standard_center_distancesAggregateArgs>(args: Subset<T, Standard_center_distancesAggregateArgs>): Prisma.PrismaPromise<GetStandard_center_distancesAggregateType<T>>
+
+    /**
+     * Group by Standard_center_distances.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_center_distancesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends standard_center_distancesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: standard_center_distancesGroupByArgs['orderBy'] }
+        : { orderBy?: standard_center_distancesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, standard_center_distancesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStandard_center_distancesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the standard_center_distances model
+   */
+  readonly fields: standard_center_distancesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for standard_center_distances.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__standard_center_distancesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the standard_center_distances model
+   */
+  interface standard_center_distancesFieldRefs {
+    readonly id: FieldRef<"standard_center_distances", 'Int'>
+    readonly value: FieldRef<"standard_center_distances", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * standard_center_distances findUnique
+   */
+  export type standard_center_distancesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_center_distances to fetch.
+     */
+    where: standard_center_distancesWhereUniqueInput
+  }
+
+  /**
+   * standard_center_distances findUniqueOrThrow
+   */
+  export type standard_center_distancesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_center_distances to fetch.
+     */
+    where: standard_center_distancesWhereUniqueInput
+  }
+
+  /**
+   * standard_center_distances findFirst
+   */
+  export type standard_center_distancesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_center_distances to fetch.
+     */
+    where?: standard_center_distancesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_center_distances to fetch.
+     */
+    orderBy?: standard_center_distancesOrderByWithRelationInput | standard_center_distancesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_center_distances.
+     */
+    cursor?: standard_center_distancesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_center_distances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_center_distances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_center_distances.
+     */
+    distinct?: Standard_center_distancesScalarFieldEnum | Standard_center_distancesScalarFieldEnum[]
+  }
+
+  /**
+   * standard_center_distances findFirstOrThrow
+   */
+  export type standard_center_distancesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_center_distances to fetch.
+     */
+    where?: standard_center_distancesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_center_distances to fetch.
+     */
+    orderBy?: standard_center_distancesOrderByWithRelationInput | standard_center_distancesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_center_distances.
+     */
+    cursor?: standard_center_distancesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_center_distances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_center_distances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_center_distances.
+     */
+    distinct?: Standard_center_distancesScalarFieldEnum | Standard_center_distancesScalarFieldEnum[]
+  }
+
+  /**
+   * standard_center_distances findMany
+   */
+  export type standard_center_distancesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_center_distances to fetch.
+     */
+    where?: standard_center_distancesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_center_distances to fetch.
+     */
+    orderBy?: standard_center_distancesOrderByWithRelationInput | standard_center_distancesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing standard_center_distances.
+     */
+    cursor?: standard_center_distancesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_center_distances from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_center_distances.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_center_distances.
+     */
+    distinct?: Standard_center_distancesScalarFieldEnum | Standard_center_distancesScalarFieldEnum[]
+  }
+
+  /**
+   * standard_center_distances create
+   */
+  export type standard_center_distancesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * The data needed to create a standard_center_distances.
+     */
+    data: XOR<standard_center_distancesCreateInput, standard_center_distancesUncheckedCreateInput>
+  }
+
+  /**
+   * standard_center_distances createMany
+   */
+  export type standard_center_distancesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many standard_center_distances.
+     */
+    data: standard_center_distancesCreateManyInput | standard_center_distancesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * standard_center_distances update
+   */
+  export type standard_center_distancesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * The data needed to update a standard_center_distances.
+     */
+    data: XOR<standard_center_distancesUpdateInput, standard_center_distancesUncheckedUpdateInput>
+    /**
+     * Choose, which standard_center_distances to update.
+     */
+    where: standard_center_distancesWhereUniqueInput
+  }
+
+  /**
+   * standard_center_distances updateMany
+   */
+  export type standard_center_distancesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update standard_center_distances.
+     */
+    data: XOR<standard_center_distancesUpdateManyMutationInput, standard_center_distancesUncheckedUpdateManyInput>
+    /**
+     * Filter which standard_center_distances to update
+     */
+    where?: standard_center_distancesWhereInput
+    /**
+     * Limit how many standard_center_distances to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_center_distances upsert
+   */
+  export type standard_center_distancesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * The filter to search for the standard_center_distances to update in case it exists.
+     */
+    where: standard_center_distancesWhereUniqueInput
+    /**
+     * In case the standard_center_distances found by the `where` argument doesn't exist, create a new standard_center_distances with this data.
+     */
+    create: XOR<standard_center_distancesCreateInput, standard_center_distancesUncheckedCreateInput>
+    /**
+     * In case the standard_center_distances was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<standard_center_distancesUpdateInput, standard_center_distancesUncheckedUpdateInput>
+  }
+
+  /**
+   * standard_center_distances delete
+   */
+  export type standard_center_distancesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+    /**
+     * Filter which standard_center_distances to delete.
+     */
+    where: standard_center_distancesWhereUniqueInput
+  }
+
+  /**
+   * standard_center_distances deleteMany
+   */
+  export type standard_center_distancesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_center_distances to delete
+     */
+    where?: standard_center_distancesWhereInput
+    /**
+     * Limit how many standard_center_distances to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_center_distances without action
+   */
+  export type standard_center_distancesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_center_distances
+     */
+    select?: standard_center_distancesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_center_distances
+     */
+    omit?: standard_center_distancesOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model standard_shaft_diameters
+   */
+
+  export type AggregateStandard_shaft_diameters = {
+    _count: Standard_shaft_diametersCountAggregateOutputType | null
+    _avg: Standard_shaft_diametersAvgAggregateOutputType | null
+    _sum: Standard_shaft_diametersSumAggregateOutputType | null
+    _min: Standard_shaft_diametersMinAggregateOutputType | null
+    _max: Standard_shaft_diametersMaxAggregateOutputType | null
+  }
+
+  export type Standard_shaft_diametersAvgAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_shaft_diametersSumAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_shaft_diametersMinAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_shaft_diametersMaxAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_shaft_diametersCountAggregateOutputType = {
+    id: number
+    value: number
+    _all: number
+  }
+
+
+  export type Standard_shaft_diametersAvgAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_shaft_diametersSumAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_shaft_diametersMinAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_shaft_diametersMaxAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_shaft_diametersCountAggregateInputType = {
+    id?: true
+    value?: true
+    _all?: true
+  }
+
+  export type Standard_shaft_diametersAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_shaft_diameters to aggregate.
+     */
+    where?: standard_shaft_diametersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_shaft_diameters to fetch.
+     */
+    orderBy?: standard_shaft_diametersOrderByWithRelationInput | standard_shaft_diametersOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: standard_shaft_diametersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_shaft_diameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_shaft_diameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned standard_shaft_diameters
+    **/
+    _count?: true | Standard_shaft_diametersCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Standard_shaft_diametersAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Standard_shaft_diametersSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Standard_shaft_diametersMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Standard_shaft_diametersMaxAggregateInputType
+  }
+
+  export type GetStandard_shaft_diametersAggregateType<T extends Standard_shaft_diametersAggregateArgs> = {
+        [P in keyof T & keyof AggregateStandard_shaft_diameters]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStandard_shaft_diameters[P]>
+      : GetScalarType<T[P], AggregateStandard_shaft_diameters[P]>
+  }
+
+
+
+
+  export type standard_shaft_diametersGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: standard_shaft_diametersWhereInput
+    orderBy?: standard_shaft_diametersOrderByWithAggregationInput | standard_shaft_diametersOrderByWithAggregationInput[]
+    by: Standard_shaft_diametersScalarFieldEnum[] | Standard_shaft_diametersScalarFieldEnum
+    having?: standard_shaft_diametersScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Standard_shaft_diametersCountAggregateInputType | true
+    _avg?: Standard_shaft_diametersAvgAggregateInputType
+    _sum?: Standard_shaft_diametersSumAggregateInputType
+    _min?: Standard_shaft_diametersMinAggregateInputType
+    _max?: Standard_shaft_diametersMaxAggregateInputType
+  }
+
+  export type Standard_shaft_diametersGroupByOutputType = {
+    id: number
+    value: number
+    _count: Standard_shaft_diametersCountAggregateOutputType | null
+    _avg: Standard_shaft_diametersAvgAggregateOutputType | null
+    _sum: Standard_shaft_diametersSumAggregateOutputType | null
+    _min: Standard_shaft_diametersMinAggregateOutputType | null
+    _max: Standard_shaft_diametersMaxAggregateOutputType | null
+  }
+
+  type GetStandard_shaft_diametersGroupByPayload<T extends standard_shaft_diametersGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Standard_shaft_diametersGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Standard_shaft_diametersGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Standard_shaft_diametersGroupByOutputType[P]>
+            : GetScalarType<T[P], Standard_shaft_diametersGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type standard_shaft_diametersSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["standard_shaft_diameters"]>
+
+
+
+  export type standard_shaft_diametersSelectScalar = {
+    id?: boolean
+    value?: boolean
+  }
+
+  export type standard_shaft_diametersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value", ExtArgs["result"]["standard_shaft_diameters"]>
+
+  export type $standard_shaft_diametersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "standard_shaft_diameters"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      value: number
+    }, ExtArgs["result"]["standard_shaft_diameters"]>
+    composites: {}
+  }
+
+  type standard_shaft_diametersGetPayload<S extends boolean | null | undefined | standard_shaft_diametersDefaultArgs> = $Result.GetResult<Prisma.$standard_shaft_diametersPayload, S>
+
+  type standard_shaft_diametersCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<standard_shaft_diametersFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Standard_shaft_diametersCountAggregateInputType | true
+    }
+
+  export interface standard_shaft_diametersDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['standard_shaft_diameters'], meta: { name: 'standard_shaft_diameters' } }
+    /**
+     * Find zero or one Standard_shaft_diameters that matches the filter.
+     * @param {standard_shaft_diametersFindUniqueArgs} args - Arguments to find a Standard_shaft_diameters
+     * @example
+     * // Get one Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends standard_shaft_diametersFindUniqueArgs>(args: SelectSubset<T, standard_shaft_diametersFindUniqueArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Standard_shaft_diameters that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {standard_shaft_diametersFindUniqueOrThrowArgs} args - Arguments to find a Standard_shaft_diameters
+     * @example
+     * // Get one Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends standard_shaft_diametersFindUniqueOrThrowArgs>(args: SelectSubset<T, standard_shaft_diametersFindUniqueOrThrowArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_shaft_diameters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_shaft_diametersFindFirstArgs} args - Arguments to find a Standard_shaft_diameters
+     * @example
+     * // Get one Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends standard_shaft_diametersFindFirstArgs>(args?: SelectSubset<T, standard_shaft_diametersFindFirstArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_shaft_diameters that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_shaft_diametersFindFirstOrThrowArgs} args - Arguments to find a Standard_shaft_diameters
+     * @example
+     * // Get one Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends standard_shaft_diametersFindFirstOrThrowArgs>(args?: SelectSubset<T, standard_shaft_diametersFindFirstOrThrowArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Standard_shaft_diameters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_shaft_diametersFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findMany()
+     * 
+     * // Get first 10 Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const standard_shaft_diametersWithIdOnly = await prisma.standard_shaft_diameters.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends standard_shaft_diametersFindManyArgs>(args?: SelectSubset<T, standard_shaft_diametersFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Standard_shaft_diameters.
+     * @param {standard_shaft_diametersCreateArgs} args - Arguments to create a Standard_shaft_diameters.
+     * @example
+     * // Create one Standard_shaft_diameters
+     * const Standard_shaft_diameters = await prisma.standard_shaft_diameters.create({
+     *   data: {
+     *     // ... data to create a Standard_shaft_diameters
+     *   }
+     * })
+     * 
+     */
+    create<T extends standard_shaft_diametersCreateArgs>(args: SelectSubset<T, standard_shaft_diametersCreateArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Standard_shaft_diameters.
+     * @param {standard_shaft_diametersCreateManyArgs} args - Arguments to create many Standard_shaft_diameters.
+     * @example
+     * // Create many Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends standard_shaft_diametersCreateManyArgs>(args?: SelectSubset<T, standard_shaft_diametersCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Standard_shaft_diameters.
+     * @param {standard_shaft_diametersDeleteArgs} args - Arguments to delete one Standard_shaft_diameters.
+     * @example
+     * // Delete one Standard_shaft_diameters
+     * const Standard_shaft_diameters = await prisma.standard_shaft_diameters.delete({
+     *   where: {
+     *     // ... filter to delete one Standard_shaft_diameters
+     *   }
+     * })
+     * 
+     */
+    delete<T extends standard_shaft_diametersDeleteArgs>(args: SelectSubset<T, standard_shaft_diametersDeleteArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Standard_shaft_diameters.
+     * @param {standard_shaft_diametersUpdateArgs} args - Arguments to update one Standard_shaft_diameters.
+     * @example
+     * // Update one Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends standard_shaft_diametersUpdateArgs>(args: SelectSubset<T, standard_shaft_diametersUpdateArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Standard_shaft_diameters.
+     * @param {standard_shaft_diametersDeleteManyArgs} args - Arguments to filter Standard_shaft_diameters to delete.
+     * @example
+     * // Delete a few Standard_shaft_diameters
+     * const { count } = await prisma.standard_shaft_diameters.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends standard_shaft_diametersDeleteManyArgs>(args?: SelectSubset<T, standard_shaft_diametersDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Standard_shaft_diameters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_shaft_diametersUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends standard_shaft_diametersUpdateManyArgs>(args: SelectSubset<T, standard_shaft_diametersUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Standard_shaft_diameters.
+     * @param {standard_shaft_diametersUpsertArgs} args - Arguments to update or create a Standard_shaft_diameters.
+     * @example
+     * // Update or create a Standard_shaft_diameters
+     * const standard_shaft_diameters = await prisma.standard_shaft_diameters.upsert({
+     *   create: {
+     *     // ... data to create a Standard_shaft_diameters
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Standard_shaft_diameters we want to update
+     *   }
+     * })
+     */
+    upsert<T extends standard_shaft_diametersUpsertArgs>(args: SelectSubset<T, standard_shaft_diametersUpsertArgs<ExtArgs>>): Prisma__standard_shaft_diametersClient<$Result.GetResult<Prisma.$standard_shaft_diametersPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Standard_shaft_diameters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_shaft_diametersCountArgs} args - Arguments to filter Standard_shaft_diameters to count.
+     * @example
+     * // Count the number of Standard_shaft_diameters
+     * const count = await prisma.standard_shaft_diameters.count({
+     *   where: {
+     *     // ... the filter for the Standard_shaft_diameters we want to count
+     *   }
+     * })
+    **/
+    count<T extends standard_shaft_diametersCountArgs>(
+      args?: Subset<T, standard_shaft_diametersCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Standard_shaft_diametersCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Standard_shaft_diameters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Standard_shaft_diametersAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Standard_shaft_diametersAggregateArgs>(args: Subset<T, Standard_shaft_diametersAggregateArgs>): Prisma.PrismaPromise<GetStandard_shaft_diametersAggregateType<T>>
+
+    /**
+     * Group by Standard_shaft_diameters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_shaft_diametersGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends standard_shaft_diametersGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: standard_shaft_diametersGroupByArgs['orderBy'] }
+        : { orderBy?: standard_shaft_diametersGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, standard_shaft_diametersGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStandard_shaft_diametersGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the standard_shaft_diameters model
+   */
+  readonly fields: standard_shaft_diametersFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for standard_shaft_diameters.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__standard_shaft_diametersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the standard_shaft_diameters model
+   */
+  interface standard_shaft_diametersFieldRefs {
+    readonly id: FieldRef<"standard_shaft_diameters", 'Int'>
+    readonly value: FieldRef<"standard_shaft_diameters", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * standard_shaft_diameters findUnique
+   */
+  export type standard_shaft_diametersFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_shaft_diameters to fetch.
+     */
+    where: standard_shaft_diametersWhereUniqueInput
+  }
+
+  /**
+   * standard_shaft_diameters findUniqueOrThrow
+   */
+  export type standard_shaft_diametersFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_shaft_diameters to fetch.
+     */
+    where: standard_shaft_diametersWhereUniqueInput
+  }
+
+  /**
+   * standard_shaft_diameters findFirst
+   */
+  export type standard_shaft_diametersFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_shaft_diameters to fetch.
+     */
+    where?: standard_shaft_diametersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_shaft_diameters to fetch.
+     */
+    orderBy?: standard_shaft_diametersOrderByWithRelationInput | standard_shaft_diametersOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_shaft_diameters.
+     */
+    cursor?: standard_shaft_diametersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_shaft_diameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_shaft_diameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_shaft_diameters.
+     */
+    distinct?: Standard_shaft_diametersScalarFieldEnum | Standard_shaft_diametersScalarFieldEnum[]
+  }
+
+  /**
+   * standard_shaft_diameters findFirstOrThrow
+   */
+  export type standard_shaft_diametersFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_shaft_diameters to fetch.
+     */
+    where?: standard_shaft_diametersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_shaft_diameters to fetch.
+     */
+    orderBy?: standard_shaft_diametersOrderByWithRelationInput | standard_shaft_diametersOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_shaft_diameters.
+     */
+    cursor?: standard_shaft_diametersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_shaft_diameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_shaft_diameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_shaft_diameters.
+     */
+    distinct?: Standard_shaft_diametersScalarFieldEnum | Standard_shaft_diametersScalarFieldEnum[]
+  }
+
+  /**
+   * standard_shaft_diameters findMany
+   */
+  export type standard_shaft_diametersFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_shaft_diameters to fetch.
+     */
+    where?: standard_shaft_diametersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_shaft_diameters to fetch.
+     */
+    orderBy?: standard_shaft_diametersOrderByWithRelationInput | standard_shaft_diametersOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing standard_shaft_diameters.
+     */
+    cursor?: standard_shaft_diametersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_shaft_diameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_shaft_diameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_shaft_diameters.
+     */
+    distinct?: Standard_shaft_diametersScalarFieldEnum | Standard_shaft_diametersScalarFieldEnum[]
+  }
+
+  /**
+   * standard_shaft_diameters create
+   */
+  export type standard_shaft_diametersCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * The data needed to create a standard_shaft_diameters.
+     */
+    data: XOR<standard_shaft_diametersCreateInput, standard_shaft_diametersUncheckedCreateInput>
+  }
+
+  /**
+   * standard_shaft_diameters createMany
+   */
+  export type standard_shaft_diametersCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many standard_shaft_diameters.
+     */
+    data: standard_shaft_diametersCreateManyInput | standard_shaft_diametersCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * standard_shaft_diameters update
+   */
+  export type standard_shaft_diametersUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * The data needed to update a standard_shaft_diameters.
+     */
+    data: XOR<standard_shaft_diametersUpdateInput, standard_shaft_diametersUncheckedUpdateInput>
+    /**
+     * Choose, which standard_shaft_diameters to update.
+     */
+    where: standard_shaft_diametersWhereUniqueInput
+  }
+
+  /**
+   * standard_shaft_diameters updateMany
+   */
+  export type standard_shaft_diametersUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update standard_shaft_diameters.
+     */
+    data: XOR<standard_shaft_diametersUpdateManyMutationInput, standard_shaft_diametersUncheckedUpdateManyInput>
+    /**
+     * Filter which standard_shaft_diameters to update
+     */
+    where?: standard_shaft_diametersWhereInput
+    /**
+     * Limit how many standard_shaft_diameters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_shaft_diameters upsert
+   */
+  export type standard_shaft_diametersUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * The filter to search for the standard_shaft_diameters to update in case it exists.
+     */
+    where: standard_shaft_diametersWhereUniqueInput
+    /**
+     * In case the standard_shaft_diameters found by the `where` argument doesn't exist, create a new standard_shaft_diameters with this data.
+     */
+    create: XOR<standard_shaft_diametersCreateInput, standard_shaft_diametersUncheckedCreateInput>
+    /**
+     * In case the standard_shaft_diameters was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<standard_shaft_diametersUpdateInput, standard_shaft_diametersUncheckedUpdateInput>
+  }
+
+  /**
+   * standard_shaft_diameters delete
+   */
+  export type standard_shaft_diametersDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+    /**
+     * Filter which standard_shaft_diameters to delete.
+     */
+    where: standard_shaft_diametersWhereUniqueInput
+  }
+
+  /**
+   * standard_shaft_diameters deleteMany
+   */
+  export type standard_shaft_diametersDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_shaft_diameters to delete
+     */
+    where?: standard_shaft_diametersWhereInput
+    /**
+     * Limit how many standard_shaft_diameters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_shaft_diameters without action
+   */
+  export type standard_shaft_diametersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_shaft_diameters
+     */
+    select?: standard_shaft_diametersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_shaft_diameters
+     */
+    omit?: standard_shaft_diametersOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model key_dimensions
+   */
+
+  export type AggregateKey_dimensions = {
+    _count: Key_dimensionsCountAggregateOutputType | null
+    _avg: Key_dimensionsAvgAggregateOutputType | null
+    _sum: Key_dimensionsSumAggregateOutputType | null
+    _min: Key_dimensionsMinAggregateOutputType | null
+    _max: Key_dimensionsMaxAggregateOutputType | null
+  }
+
+  export type Key_dimensionsAvgAggregateOutputType = {
+    id: number | null
+    d_min: number | null
+    d_max: number | null
+    b: number | null
+    h: number | null
+    t1: number | null
+    t2: number | null
+  }
+
+  export type Key_dimensionsSumAggregateOutputType = {
+    id: number | null
+    d_min: number | null
+    d_max: number | null
+    b: number | null
+    h: number | null
+    t1: number | null
+    t2: number | null
+  }
+
+  export type Key_dimensionsMinAggregateOutputType = {
+    id: number | null
+    d_min: number | null
+    d_max: number | null
+    b: number | null
+    h: number | null
+    t1: number | null
+    t2: number | null
+  }
+
+  export type Key_dimensionsMaxAggregateOutputType = {
+    id: number | null
+    d_min: number | null
+    d_max: number | null
+    b: number | null
+    h: number | null
+    t1: number | null
+    t2: number | null
+  }
+
+  export type Key_dimensionsCountAggregateOutputType = {
+    id: number
+    d_min: number
+    d_max: number
+    b: number
+    h: number
+    t1: number
+    t2: number
+    _all: number
+  }
+
+
+  export type Key_dimensionsAvgAggregateInputType = {
+    id?: true
+    d_min?: true
+    d_max?: true
+    b?: true
+    h?: true
+    t1?: true
+    t2?: true
+  }
+
+  export type Key_dimensionsSumAggregateInputType = {
+    id?: true
+    d_min?: true
+    d_max?: true
+    b?: true
+    h?: true
+    t1?: true
+    t2?: true
+  }
+
+  export type Key_dimensionsMinAggregateInputType = {
+    id?: true
+    d_min?: true
+    d_max?: true
+    b?: true
+    h?: true
+    t1?: true
+    t2?: true
+  }
+
+  export type Key_dimensionsMaxAggregateInputType = {
+    id?: true
+    d_min?: true
+    d_max?: true
+    b?: true
+    h?: true
+    t1?: true
+    t2?: true
+  }
+
+  export type Key_dimensionsCountAggregateInputType = {
+    id?: true
+    d_min?: true
+    d_max?: true
+    b?: true
+    h?: true
+    t1?: true
+    t2?: true
+    _all?: true
+  }
+
+  export type Key_dimensionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which key_dimensions to aggregate.
+     */
+    where?: key_dimensionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of key_dimensions to fetch.
+     */
+    orderBy?: key_dimensionsOrderByWithRelationInput | key_dimensionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: key_dimensionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` key_dimensions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` key_dimensions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned key_dimensions
+    **/
+    _count?: true | Key_dimensionsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Key_dimensionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Key_dimensionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Key_dimensionsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Key_dimensionsMaxAggregateInputType
+  }
+
+  export type GetKey_dimensionsAggregateType<T extends Key_dimensionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateKey_dimensions]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKey_dimensions[P]>
+      : GetScalarType<T[P], AggregateKey_dimensions[P]>
+  }
+
+
+
+
+  export type key_dimensionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: key_dimensionsWhereInput
+    orderBy?: key_dimensionsOrderByWithAggregationInput | key_dimensionsOrderByWithAggregationInput[]
+    by: Key_dimensionsScalarFieldEnum[] | Key_dimensionsScalarFieldEnum
+    having?: key_dimensionsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Key_dimensionsCountAggregateInputType | true
+    _avg?: Key_dimensionsAvgAggregateInputType
+    _sum?: Key_dimensionsSumAggregateInputType
+    _min?: Key_dimensionsMinAggregateInputType
+    _max?: Key_dimensionsMaxAggregateInputType
+  }
+
+  export type Key_dimensionsGroupByOutputType = {
+    id: number
+    d_min: number
+    d_max: number
+    b: number
+    h: number
+    t1: number
+    t2: number
+    _count: Key_dimensionsCountAggregateOutputType | null
+    _avg: Key_dimensionsAvgAggregateOutputType | null
+    _sum: Key_dimensionsSumAggregateOutputType | null
+    _min: Key_dimensionsMinAggregateOutputType | null
+    _max: Key_dimensionsMaxAggregateOutputType | null
+  }
+
+  type GetKey_dimensionsGroupByPayload<T extends key_dimensionsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Key_dimensionsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Key_dimensionsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Key_dimensionsGroupByOutputType[P]>
+            : GetScalarType<T[P], Key_dimensionsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type key_dimensionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    d_min?: boolean
+    d_max?: boolean
+    b?: boolean
+    h?: boolean
+    t1?: boolean
+    t2?: boolean
+  }, ExtArgs["result"]["key_dimensions"]>
+
+
+
+  export type key_dimensionsSelectScalar = {
+    id?: boolean
+    d_min?: boolean
+    d_max?: boolean
+    b?: boolean
+    h?: boolean
+    t1?: boolean
+    t2?: boolean
+  }
+
+  export type key_dimensionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "d_min" | "d_max" | "b" | "h" | "t1" | "t2", ExtArgs["result"]["key_dimensions"]>
+
+  export type $key_dimensionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "key_dimensions"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      d_min: number
+      d_max: number
+      b: number
+      h: number
+      t1: number
+      t2: number
+    }, ExtArgs["result"]["key_dimensions"]>
+    composites: {}
+  }
+
+  type key_dimensionsGetPayload<S extends boolean | null | undefined | key_dimensionsDefaultArgs> = $Result.GetResult<Prisma.$key_dimensionsPayload, S>
+
+  type key_dimensionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<key_dimensionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Key_dimensionsCountAggregateInputType | true
+    }
+
+  export interface key_dimensionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['key_dimensions'], meta: { name: 'key_dimensions' } }
+    /**
+     * Find zero or one Key_dimensions that matches the filter.
+     * @param {key_dimensionsFindUniqueArgs} args - Arguments to find a Key_dimensions
+     * @example
+     * // Get one Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends key_dimensionsFindUniqueArgs>(args: SelectSubset<T, key_dimensionsFindUniqueArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Key_dimensions that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {key_dimensionsFindUniqueOrThrowArgs} args - Arguments to find a Key_dimensions
+     * @example
+     * // Get one Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends key_dimensionsFindUniqueOrThrowArgs>(args: SelectSubset<T, key_dimensionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Key_dimensions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {key_dimensionsFindFirstArgs} args - Arguments to find a Key_dimensions
+     * @example
+     * // Get one Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends key_dimensionsFindFirstArgs>(args?: SelectSubset<T, key_dimensionsFindFirstArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Key_dimensions that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {key_dimensionsFindFirstOrThrowArgs} args - Arguments to find a Key_dimensions
+     * @example
+     * // Get one Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends key_dimensionsFindFirstOrThrowArgs>(args?: SelectSubset<T, key_dimensionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Key_dimensions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {key_dimensionsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.findMany()
+     * 
+     * // Get first 10 Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const key_dimensionsWithIdOnly = await prisma.key_dimensions.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends key_dimensionsFindManyArgs>(args?: SelectSubset<T, key_dimensionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Key_dimensions.
+     * @param {key_dimensionsCreateArgs} args - Arguments to create a Key_dimensions.
+     * @example
+     * // Create one Key_dimensions
+     * const Key_dimensions = await prisma.key_dimensions.create({
+     *   data: {
+     *     // ... data to create a Key_dimensions
+     *   }
+     * })
+     * 
+     */
+    create<T extends key_dimensionsCreateArgs>(args: SelectSubset<T, key_dimensionsCreateArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Key_dimensions.
+     * @param {key_dimensionsCreateManyArgs} args - Arguments to create many Key_dimensions.
+     * @example
+     * // Create many Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends key_dimensionsCreateManyArgs>(args?: SelectSubset<T, key_dimensionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Key_dimensions.
+     * @param {key_dimensionsDeleteArgs} args - Arguments to delete one Key_dimensions.
+     * @example
+     * // Delete one Key_dimensions
+     * const Key_dimensions = await prisma.key_dimensions.delete({
+     *   where: {
+     *     // ... filter to delete one Key_dimensions
+     *   }
+     * })
+     * 
+     */
+    delete<T extends key_dimensionsDeleteArgs>(args: SelectSubset<T, key_dimensionsDeleteArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Key_dimensions.
+     * @param {key_dimensionsUpdateArgs} args - Arguments to update one Key_dimensions.
+     * @example
+     * // Update one Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends key_dimensionsUpdateArgs>(args: SelectSubset<T, key_dimensionsUpdateArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Key_dimensions.
+     * @param {key_dimensionsDeleteManyArgs} args - Arguments to filter Key_dimensions to delete.
+     * @example
+     * // Delete a few Key_dimensions
+     * const { count } = await prisma.key_dimensions.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends key_dimensionsDeleteManyArgs>(args?: SelectSubset<T, key_dimensionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Key_dimensions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {key_dimensionsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends key_dimensionsUpdateManyArgs>(args: SelectSubset<T, key_dimensionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Key_dimensions.
+     * @param {key_dimensionsUpsertArgs} args - Arguments to update or create a Key_dimensions.
+     * @example
+     * // Update or create a Key_dimensions
+     * const key_dimensions = await prisma.key_dimensions.upsert({
+     *   create: {
+     *     // ... data to create a Key_dimensions
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Key_dimensions we want to update
+     *   }
+     * })
+     */
+    upsert<T extends key_dimensionsUpsertArgs>(args: SelectSubset<T, key_dimensionsUpsertArgs<ExtArgs>>): Prisma__key_dimensionsClient<$Result.GetResult<Prisma.$key_dimensionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Key_dimensions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {key_dimensionsCountArgs} args - Arguments to filter Key_dimensions to count.
+     * @example
+     * // Count the number of Key_dimensions
+     * const count = await prisma.key_dimensions.count({
+     *   where: {
+     *     // ... the filter for the Key_dimensions we want to count
+     *   }
+     * })
+    **/
+    count<T extends key_dimensionsCountArgs>(
+      args?: Subset<T, key_dimensionsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Key_dimensionsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Key_dimensions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Key_dimensionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Key_dimensionsAggregateArgs>(args: Subset<T, Key_dimensionsAggregateArgs>): Prisma.PrismaPromise<GetKey_dimensionsAggregateType<T>>
+
+    /**
+     * Group by Key_dimensions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {key_dimensionsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends key_dimensionsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: key_dimensionsGroupByArgs['orderBy'] }
+        : { orderBy?: key_dimensionsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, key_dimensionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKey_dimensionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the key_dimensions model
+   */
+  readonly fields: key_dimensionsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for key_dimensions.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__key_dimensionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the key_dimensions model
+   */
+  interface key_dimensionsFieldRefs {
+    readonly id: FieldRef<"key_dimensions", 'Int'>
+    readonly d_min: FieldRef<"key_dimensions", 'Int'>
+    readonly d_max: FieldRef<"key_dimensions", 'Int'>
+    readonly b: FieldRef<"key_dimensions", 'Int'>
+    readonly h: FieldRef<"key_dimensions", 'Int'>
+    readonly t1: FieldRef<"key_dimensions", 'Float'>
+    readonly t2: FieldRef<"key_dimensions", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * key_dimensions findUnique
+   */
+  export type key_dimensionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * Filter, which key_dimensions to fetch.
+     */
+    where: key_dimensionsWhereUniqueInput
+  }
+
+  /**
+   * key_dimensions findUniqueOrThrow
+   */
+  export type key_dimensionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * Filter, which key_dimensions to fetch.
+     */
+    where: key_dimensionsWhereUniqueInput
+  }
+
+  /**
+   * key_dimensions findFirst
+   */
+  export type key_dimensionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * Filter, which key_dimensions to fetch.
+     */
+    where?: key_dimensionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of key_dimensions to fetch.
+     */
+    orderBy?: key_dimensionsOrderByWithRelationInput | key_dimensionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for key_dimensions.
+     */
+    cursor?: key_dimensionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` key_dimensions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` key_dimensions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of key_dimensions.
+     */
+    distinct?: Key_dimensionsScalarFieldEnum | Key_dimensionsScalarFieldEnum[]
+  }
+
+  /**
+   * key_dimensions findFirstOrThrow
+   */
+  export type key_dimensionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * Filter, which key_dimensions to fetch.
+     */
+    where?: key_dimensionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of key_dimensions to fetch.
+     */
+    orderBy?: key_dimensionsOrderByWithRelationInput | key_dimensionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for key_dimensions.
+     */
+    cursor?: key_dimensionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` key_dimensions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` key_dimensions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of key_dimensions.
+     */
+    distinct?: Key_dimensionsScalarFieldEnum | Key_dimensionsScalarFieldEnum[]
+  }
+
+  /**
+   * key_dimensions findMany
+   */
+  export type key_dimensionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * Filter, which key_dimensions to fetch.
+     */
+    where?: key_dimensionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of key_dimensions to fetch.
+     */
+    orderBy?: key_dimensionsOrderByWithRelationInput | key_dimensionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing key_dimensions.
+     */
+    cursor?: key_dimensionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` key_dimensions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` key_dimensions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of key_dimensions.
+     */
+    distinct?: Key_dimensionsScalarFieldEnum | Key_dimensionsScalarFieldEnum[]
+  }
+
+  /**
+   * key_dimensions create
+   */
+  export type key_dimensionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a key_dimensions.
+     */
+    data: XOR<key_dimensionsCreateInput, key_dimensionsUncheckedCreateInput>
+  }
+
+  /**
+   * key_dimensions createMany
+   */
+  export type key_dimensionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many key_dimensions.
+     */
+    data: key_dimensionsCreateManyInput | key_dimensionsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * key_dimensions update
+   */
+  export type key_dimensionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a key_dimensions.
+     */
+    data: XOR<key_dimensionsUpdateInput, key_dimensionsUncheckedUpdateInput>
+    /**
+     * Choose, which key_dimensions to update.
+     */
+    where: key_dimensionsWhereUniqueInput
+  }
+
+  /**
+   * key_dimensions updateMany
+   */
+  export type key_dimensionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update key_dimensions.
+     */
+    data: XOR<key_dimensionsUpdateManyMutationInput, key_dimensionsUncheckedUpdateManyInput>
+    /**
+     * Filter which key_dimensions to update
+     */
+    where?: key_dimensionsWhereInput
+    /**
+     * Limit how many key_dimensions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * key_dimensions upsert
+   */
+  export type key_dimensionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the key_dimensions to update in case it exists.
+     */
+    where: key_dimensionsWhereUniqueInput
+    /**
+     * In case the key_dimensions found by the `where` argument doesn't exist, create a new key_dimensions with this data.
+     */
+    create: XOR<key_dimensionsCreateInput, key_dimensionsUncheckedCreateInput>
+    /**
+     * In case the key_dimensions was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<key_dimensionsUpdateInput, key_dimensionsUncheckedUpdateInput>
+  }
+
+  /**
+   * key_dimensions delete
+   */
+  export type key_dimensionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+    /**
+     * Filter which key_dimensions to delete.
+     */
+    where: key_dimensionsWhereUniqueInput
+  }
+
+  /**
+   * key_dimensions deleteMany
+   */
+  export type key_dimensionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which key_dimensions to delete
+     */
+    where?: key_dimensionsWhereInput
+    /**
+     * Limit how many key_dimensions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * key_dimensions without action
+   */
+  export type key_dimensionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the key_dimensions
+     */
+    select?: key_dimensionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the key_dimensions
+     */
+    omit?: key_dimensionsOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model standard_key_lengths
+   */
+
+  export type AggregateStandard_key_lengths = {
+    _count: Standard_key_lengthsCountAggregateOutputType | null
+    _avg: Standard_key_lengthsAvgAggregateOutputType | null
+    _sum: Standard_key_lengthsSumAggregateOutputType | null
+    _min: Standard_key_lengthsMinAggregateOutputType | null
+    _max: Standard_key_lengthsMaxAggregateOutputType | null
+  }
+
+  export type Standard_key_lengthsAvgAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_key_lengthsSumAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_key_lengthsMinAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_key_lengthsMaxAggregateOutputType = {
+    id: number | null
+    value: number | null
+  }
+
+  export type Standard_key_lengthsCountAggregateOutputType = {
+    id: number
+    value: number
+    _all: number
+  }
+
+
+  export type Standard_key_lengthsAvgAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_key_lengthsSumAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_key_lengthsMinAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_key_lengthsMaxAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type Standard_key_lengthsCountAggregateInputType = {
+    id?: true
+    value?: true
+    _all?: true
+  }
+
+  export type Standard_key_lengthsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_key_lengths to aggregate.
+     */
+    where?: standard_key_lengthsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_key_lengths to fetch.
+     */
+    orderBy?: standard_key_lengthsOrderByWithRelationInput | standard_key_lengthsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: standard_key_lengthsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_key_lengths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_key_lengths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned standard_key_lengths
+    **/
+    _count?: true | Standard_key_lengthsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Standard_key_lengthsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Standard_key_lengthsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Standard_key_lengthsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Standard_key_lengthsMaxAggregateInputType
+  }
+
+  export type GetStandard_key_lengthsAggregateType<T extends Standard_key_lengthsAggregateArgs> = {
+        [P in keyof T & keyof AggregateStandard_key_lengths]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStandard_key_lengths[P]>
+      : GetScalarType<T[P], AggregateStandard_key_lengths[P]>
+  }
+
+
+
+
+  export type standard_key_lengthsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: standard_key_lengthsWhereInput
+    orderBy?: standard_key_lengthsOrderByWithAggregationInput | standard_key_lengthsOrderByWithAggregationInput[]
+    by: Standard_key_lengthsScalarFieldEnum[] | Standard_key_lengthsScalarFieldEnum
+    having?: standard_key_lengthsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Standard_key_lengthsCountAggregateInputType | true
+    _avg?: Standard_key_lengthsAvgAggregateInputType
+    _sum?: Standard_key_lengthsSumAggregateInputType
+    _min?: Standard_key_lengthsMinAggregateInputType
+    _max?: Standard_key_lengthsMaxAggregateInputType
+  }
+
+  export type Standard_key_lengthsGroupByOutputType = {
+    id: number
+    value: number
+    _count: Standard_key_lengthsCountAggregateOutputType | null
+    _avg: Standard_key_lengthsAvgAggregateOutputType | null
+    _sum: Standard_key_lengthsSumAggregateOutputType | null
+    _min: Standard_key_lengthsMinAggregateOutputType | null
+    _max: Standard_key_lengthsMaxAggregateOutputType | null
+  }
+
+  type GetStandard_key_lengthsGroupByPayload<T extends standard_key_lengthsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Standard_key_lengthsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Standard_key_lengthsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Standard_key_lengthsGroupByOutputType[P]>
+            : GetScalarType<T[P], Standard_key_lengthsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type standard_key_lengthsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["standard_key_lengths"]>
+
+
+
+  export type standard_key_lengthsSelectScalar = {
+    id?: boolean
+    value?: boolean
+  }
+
+  export type standard_key_lengthsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value", ExtArgs["result"]["standard_key_lengths"]>
+
+  export type $standard_key_lengthsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "standard_key_lengths"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      value: number
+    }, ExtArgs["result"]["standard_key_lengths"]>
+    composites: {}
+  }
+
+  type standard_key_lengthsGetPayload<S extends boolean | null | undefined | standard_key_lengthsDefaultArgs> = $Result.GetResult<Prisma.$standard_key_lengthsPayload, S>
+
+  type standard_key_lengthsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<standard_key_lengthsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Standard_key_lengthsCountAggregateInputType | true
+    }
+
+  export interface standard_key_lengthsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['standard_key_lengths'], meta: { name: 'standard_key_lengths' } }
+    /**
+     * Find zero or one Standard_key_lengths that matches the filter.
+     * @param {standard_key_lengthsFindUniqueArgs} args - Arguments to find a Standard_key_lengths
+     * @example
+     * // Get one Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends standard_key_lengthsFindUniqueArgs>(args: SelectSubset<T, standard_key_lengthsFindUniqueArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Standard_key_lengths that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {standard_key_lengthsFindUniqueOrThrowArgs} args - Arguments to find a Standard_key_lengths
+     * @example
+     * // Get one Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends standard_key_lengthsFindUniqueOrThrowArgs>(args: SelectSubset<T, standard_key_lengthsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_key_lengths that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_key_lengthsFindFirstArgs} args - Arguments to find a Standard_key_lengths
+     * @example
+     * // Get one Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends standard_key_lengthsFindFirstArgs>(args?: SelectSubset<T, standard_key_lengthsFindFirstArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Standard_key_lengths that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_key_lengthsFindFirstOrThrowArgs} args - Arguments to find a Standard_key_lengths
+     * @example
+     * // Get one Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends standard_key_lengthsFindFirstOrThrowArgs>(args?: SelectSubset<T, standard_key_lengthsFindFirstOrThrowArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Standard_key_lengths that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_key_lengthsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.findMany()
+     * 
+     * // Get first 10 Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const standard_key_lengthsWithIdOnly = await prisma.standard_key_lengths.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends standard_key_lengthsFindManyArgs>(args?: SelectSubset<T, standard_key_lengthsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Standard_key_lengths.
+     * @param {standard_key_lengthsCreateArgs} args - Arguments to create a Standard_key_lengths.
+     * @example
+     * // Create one Standard_key_lengths
+     * const Standard_key_lengths = await prisma.standard_key_lengths.create({
+     *   data: {
+     *     // ... data to create a Standard_key_lengths
+     *   }
+     * })
+     * 
+     */
+    create<T extends standard_key_lengthsCreateArgs>(args: SelectSubset<T, standard_key_lengthsCreateArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Standard_key_lengths.
+     * @param {standard_key_lengthsCreateManyArgs} args - Arguments to create many Standard_key_lengths.
+     * @example
+     * // Create many Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends standard_key_lengthsCreateManyArgs>(args?: SelectSubset<T, standard_key_lengthsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Standard_key_lengths.
+     * @param {standard_key_lengthsDeleteArgs} args - Arguments to delete one Standard_key_lengths.
+     * @example
+     * // Delete one Standard_key_lengths
+     * const Standard_key_lengths = await prisma.standard_key_lengths.delete({
+     *   where: {
+     *     // ... filter to delete one Standard_key_lengths
+     *   }
+     * })
+     * 
+     */
+    delete<T extends standard_key_lengthsDeleteArgs>(args: SelectSubset<T, standard_key_lengthsDeleteArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Standard_key_lengths.
+     * @param {standard_key_lengthsUpdateArgs} args - Arguments to update one Standard_key_lengths.
+     * @example
+     * // Update one Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends standard_key_lengthsUpdateArgs>(args: SelectSubset<T, standard_key_lengthsUpdateArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Standard_key_lengths.
+     * @param {standard_key_lengthsDeleteManyArgs} args - Arguments to filter Standard_key_lengths to delete.
+     * @example
+     * // Delete a few Standard_key_lengths
+     * const { count } = await prisma.standard_key_lengths.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends standard_key_lengthsDeleteManyArgs>(args?: SelectSubset<T, standard_key_lengthsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Standard_key_lengths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_key_lengthsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends standard_key_lengthsUpdateManyArgs>(args: SelectSubset<T, standard_key_lengthsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Standard_key_lengths.
+     * @param {standard_key_lengthsUpsertArgs} args - Arguments to update or create a Standard_key_lengths.
+     * @example
+     * // Update or create a Standard_key_lengths
+     * const standard_key_lengths = await prisma.standard_key_lengths.upsert({
+     *   create: {
+     *     // ... data to create a Standard_key_lengths
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Standard_key_lengths we want to update
+     *   }
+     * })
+     */
+    upsert<T extends standard_key_lengthsUpsertArgs>(args: SelectSubset<T, standard_key_lengthsUpsertArgs<ExtArgs>>): Prisma__standard_key_lengthsClient<$Result.GetResult<Prisma.$standard_key_lengthsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Standard_key_lengths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_key_lengthsCountArgs} args - Arguments to filter Standard_key_lengths to count.
+     * @example
+     * // Count the number of Standard_key_lengths
+     * const count = await prisma.standard_key_lengths.count({
+     *   where: {
+     *     // ... the filter for the Standard_key_lengths we want to count
+     *   }
+     * })
+    **/
+    count<T extends standard_key_lengthsCountArgs>(
+      args?: Subset<T, standard_key_lengthsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Standard_key_lengthsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Standard_key_lengths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Standard_key_lengthsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Standard_key_lengthsAggregateArgs>(args: Subset<T, Standard_key_lengthsAggregateArgs>): Prisma.PrismaPromise<GetStandard_key_lengthsAggregateType<T>>
+
+    /**
+     * Group by Standard_key_lengths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {standard_key_lengthsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends standard_key_lengthsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: standard_key_lengthsGroupByArgs['orderBy'] }
+        : { orderBy?: standard_key_lengthsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, standard_key_lengthsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStandard_key_lengthsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the standard_key_lengths model
+   */
+  readonly fields: standard_key_lengthsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for standard_key_lengths.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__standard_key_lengthsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the standard_key_lengths model
+   */
+  interface standard_key_lengthsFieldRefs {
+    readonly id: FieldRef<"standard_key_lengths", 'Int'>
+    readonly value: FieldRef<"standard_key_lengths", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * standard_key_lengths findUnique
+   */
+  export type standard_key_lengthsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_key_lengths to fetch.
+     */
+    where: standard_key_lengthsWhereUniqueInput
+  }
+
+  /**
+   * standard_key_lengths findUniqueOrThrow
+   */
+  export type standard_key_lengthsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_key_lengths to fetch.
+     */
+    where: standard_key_lengthsWhereUniqueInput
+  }
+
+  /**
+   * standard_key_lengths findFirst
+   */
+  export type standard_key_lengthsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_key_lengths to fetch.
+     */
+    where?: standard_key_lengthsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_key_lengths to fetch.
+     */
+    orderBy?: standard_key_lengthsOrderByWithRelationInput | standard_key_lengthsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_key_lengths.
+     */
+    cursor?: standard_key_lengthsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_key_lengths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_key_lengths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_key_lengths.
+     */
+    distinct?: Standard_key_lengthsScalarFieldEnum | Standard_key_lengthsScalarFieldEnum[]
+  }
+
+  /**
+   * standard_key_lengths findFirstOrThrow
+   */
+  export type standard_key_lengthsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_key_lengths to fetch.
+     */
+    where?: standard_key_lengthsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_key_lengths to fetch.
+     */
+    orderBy?: standard_key_lengthsOrderByWithRelationInput | standard_key_lengthsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for standard_key_lengths.
+     */
+    cursor?: standard_key_lengthsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_key_lengths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_key_lengths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_key_lengths.
+     */
+    distinct?: Standard_key_lengthsScalarFieldEnum | Standard_key_lengthsScalarFieldEnum[]
+  }
+
+  /**
+   * standard_key_lengths findMany
+   */
+  export type standard_key_lengthsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * Filter, which standard_key_lengths to fetch.
+     */
+    where?: standard_key_lengthsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of standard_key_lengths to fetch.
+     */
+    orderBy?: standard_key_lengthsOrderByWithRelationInput | standard_key_lengthsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing standard_key_lengths.
+     */
+    cursor?: standard_key_lengthsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` standard_key_lengths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` standard_key_lengths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of standard_key_lengths.
+     */
+    distinct?: Standard_key_lengthsScalarFieldEnum | Standard_key_lengthsScalarFieldEnum[]
+  }
+
+  /**
+   * standard_key_lengths create
+   */
+  export type standard_key_lengthsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a standard_key_lengths.
+     */
+    data: XOR<standard_key_lengthsCreateInput, standard_key_lengthsUncheckedCreateInput>
+  }
+
+  /**
+   * standard_key_lengths createMany
+   */
+  export type standard_key_lengthsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many standard_key_lengths.
+     */
+    data: standard_key_lengthsCreateManyInput | standard_key_lengthsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * standard_key_lengths update
+   */
+  export type standard_key_lengthsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a standard_key_lengths.
+     */
+    data: XOR<standard_key_lengthsUpdateInput, standard_key_lengthsUncheckedUpdateInput>
+    /**
+     * Choose, which standard_key_lengths to update.
+     */
+    where: standard_key_lengthsWhereUniqueInput
+  }
+
+  /**
+   * standard_key_lengths updateMany
+   */
+  export type standard_key_lengthsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update standard_key_lengths.
+     */
+    data: XOR<standard_key_lengthsUpdateManyMutationInput, standard_key_lengthsUncheckedUpdateManyInput>
+    /**
+     * Filter which standard_key_lengths to update
+     */
+    where?: standard_key_lengthsWhereInput
+    /**
+     * Limit how many standard_key_lengths to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_key_lengths upsert
+   */
+  export type standard_key_lengthsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the standard_key_lengths to update in case it exists.
+     */
+    where: standard_key_lengthsWhereUniqueInput
+    /**
+     * In case the standard_key_lengths found by the `where` argument doesn't exist, create a new standard_key_lengths with this data.
+     */
+    create: XOR<standard_key_lengthsCreateInput, standard_key_lengthsUncheckedCreateInput>
+    /**
+     * In case the standard_key_lengths was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<standard_key_lengthsUpdateInput, standard_key_lengthsUncheckedUpdateInput>
+  }
+
+  /**
+   * standard_key_lengths delete
+   */
+  export type standard_key_lengthsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+    /**
+     * Filter which standard_key_lengths to delete.
+     */
+    where: standard_key_lengthsWhereUniqueInput
+  }
+
+  /**
+   * standard_key_lengths deleteMany
+   */
+  export type standard_key_lengthsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which standard_key_lengths to delete
+     */
+    where?: standard_key_lengthsWhereInput
+    /**
+     * Limit how many standard_key_lengths to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * standard_key_lengths without action
+   */
+  export type standard_key_lengthsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the standard_key_lengths
+     */
+    select?: standard_key_lengthsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the standard_key_lengths
+     */
+    omit?: standard_key_lengthsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6771,12 +12739,10 @@ export namespace Prisma {
     width_B: 'width_B',
     C: 'C',
     C0: 'C0',
-    is_active: 'is_active',
-    deletedBy: 'deletedBy',
-    isDeleted: 'isDeleted',
-    deletedAt: 'deletedAt',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    e: 'e',
+    Y: 'Y',
+    alpha_deg: 'alpha_deg',
+    is_active: 'is_active'
   };
 
   export type BearingsScalarFieldEnum = (typeof BearingsScalarFieldEnum)[keyof typeof BearingsScalarFieldEnum]
@@ -6787,12 +12753,10 @@ export namespace Prisma {
     pitch: 'pitch',
     breaking_load: 'breaking_load',
     mass_per_m: 'mass_per_m',
-    is_active: 'is_active',
-    deletedBy: 'deletedBy',
-    isDeleted: 'isDeleted',
-    deletedAt: 'deletedAt',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    A_mm2: 'A_mm2',
+    s_allow: 's_allow',
+    n_ref: 'n_ref',
+    is_active: 'is_active'
   };
 
   export type ChainsScalarFieldEnum = (typeof ChainsScalarFieldEnum)[keyof typeof ChainsScalarFieldEnum]
@@ -6864,6 +12828,64 @@ export namespace Prisma {
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
+
+
+  export const Material_gradesScalarFieldEnum: {
+    id: 'id',
+    grade_name: 'grade_name',
+    HB: 'HB',
+    sigma_b: 'sigma_b',
+    sigma_ch: 'sigma_ch',
+    sigma_Hlim: 'sigma_Hlim',
+    sigma_Flim: 'sigma_Flim'
+  };
+
+  export type Material_gradesScalarFieldEnum = (typeof Material_gradesScalarFieldEnum)[keyof typeof Material_gradesScalarFieldEnum]
+
+
+  export const Standard_modulesScalarFieldEnum: {
+    id: 'id',
+    value: 'value'
+  };
+
+  export type Standard_modulesScalarFieldEnum = (typeof Standard_modulesScalarFieldEnum)[keyof typeof Standard_modulesScalarFieldEnum]
+
+
+  export const Standard_center_distancesScalarFieldEnum: {
+    id: 'id',
+    value: 'value'
+  };
+
+  export type Standard_center_distancesScalarFieldEnum = (typeof Standard_center_distancesScalarFieldEnum)[keyof typeof Standard_center_distancesScalarFieldEnum]
+
+
+  export const Standard_shaft_diametersScalarFieldEnum: {
+    id: 'id',
+    value: 'value'
+  };
+
+  export type Standard_shaft_diametersScalarFieldEnum = (typeof Standard_shaft_diametersScalarFieldEnum)[keyof typeof Standard_shaft_diametersScalarFieldEnum]
+
+
+  export const Key_dimensionsScalarFieldEnum: {
+    id: 'id',
+    d_min: 'd_min',
+    d_max: 'd_max',
+    b: 'b',
+    h: 'h',
+    t1: 't1',
+    t2: 't2'
+  };
+
+  export type Key_dimensionsScalarFieldEnum = (typeof Key_dimensionsScalarFieldEnum)[keyof typeof Key_dimensionsScalarFieldEnum]
+
+
+  export const Standard_key_lengthsScalarFieldEnum: {
+    id: 'id',
+    value: 'value'
+  };
+
+  export type Standard_key_lengthsScalarFieldEnum = (typeof Standard_key_lengthsScalarFieldEnum)[keyof typeof Standard_key_lengthsScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6940,6 +12962,13 @@ export namespace Prisma {
   export type usersOrderByRelevanceFieldEnum = (typeof usersOrderByRelevanceFieldEnum)[keyof typeof usersOrderByRelevanceFieldEnum]
 
 
+  export const material_gradesOrderByRelevanceFieldEnum: {
+    grade_name: 'grade_name'
+  };
+
+  export type material_gradesOrderByRelevanceFieldEnum = (typeof material_gradesOrderByRelevanceFieldEnum)[keyof typeof material_gradesOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -6960,9 +12989,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Decimal'
+   * Reference to a field of type 'Float'
    */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
@@ -6970,6 +12999,13 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
@@ -7006,13 +13042,6 @@ export namespace Prisma {
    */
   export type Enumusers_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'users_role'>
     
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
   /**
    * Deep Input Types
    */
@@ -7025,17 +13054,15 @@ export namespace Prisma {
     id?: IntFilter<"bearings"> | number
     code?: StringFilter<"bearings"> | string
     type?: StringNullableFilter<"bearings"> | string | null
-    inner_d?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    C?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
-    C0?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatFilter<"bearings"> | number
+    outer_D?: FloatFilter<"bearings"> | number
+    width_B?: FloatFilter<"bearings"> | number
+    C?: FloatNullableFilter<"bearings"> | number | null
+    C0?: FloatNullableFilter<"bearings"> | number | null
+    e?: FloatNullableFilter<"bearings"> | number | null
+    Y?: FloatNullableFilter<"bearings"> | number | null
+    alpha_deg?: FloatNullableFilter<"bearings"> | number | null
     is_active?: BoolNullableFilter<"bearings"> | boolean | null
-    deletedBy?: IntNullableFilter<"bearings"> | number | null
-    isDeleted?: BoolNullableFilter<"bearings"> | boolean | null
-    deletedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
-    createdAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
-    updatedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
   }
 
   export type bearingsOrderByWithRelationInput = {
@@ -7047,35 +13074,30 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrderInput | SortOrder
     C0?: SortOrderInput | SortOrder
+    e?: SortOrderInput | SortOrder
+    Y?: SortOrderInput | SortOrder
+    alpha_deg?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
-    deletedBy?: SortOrderInput | SortOrder
-    isDeleted?: SortOrderInput | SortOrder
-    deletedAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrderInput | SortOrder
-    updatedAt?: SortOrderInput | SortOrder
     _relevance?: bearingsOrderByRelevanceInput
   }
 
   export type bearingsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     code?: string
-    inner_d_outer_D_width_B?: bearingsInner_dOuter_DWidth_BCompoundUniqueInput
     AND?: bearingsWhereInput | bearingsWhereInput[]
     OR?: bearingsWhereInput[]
     NOT?: bearingsWhereInput | bearingsWhereInput[]
     type?: StringNullableFilter<"bearings"> | string | null
-    inner_d?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    C?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
-    C0?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatFilter<"bearings"> | number
+    outer_D?: FloatFilter<"bearings"> | number
+    width_B?: FloatFilter<"bearings"> | number
+    C?: FloatNullableFilter<"bearings"> | number | null
+    C0?: FloatNullableFilter<"bearings"> | number | null
+    e?: FloatNullableFilter<"bearings"> | number | null
+    Y?: FloatNullableFilter<"bearings"> | number | null
+    alpha_deg?: FloatNullableFilter<"bearings"> | number | null
     is_active?: BoolNullableFilter<"bearings"> | boolean | null
-    deletedBy?: IntNullableFilter<"bearings"> | number | null
-    isDeleted?: BoolNullableFilter<"bearings"> | boolean | null
-    deletedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
-    createdAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
-    updatedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
-  }, "id" | "code" | "inner_d_outer_D_width_B">
+  }, "id" | "code">
 
   export type bearingsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7086,12 +13108,10 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrderInput | SortOrder
     C0?: SortOrderInput | SortOrder
+    e?: SortOrderInput | SortOrder
+    Y?: SortOrderInput | SortOrder
+    alpha_deg?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
-    deletedBy?: SortOrderInput | SortOrder
-    isDeleted?: SortOrderInput | SortOrder
-    deletedAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrderInput | SortOrder
-    updatedAt?: SortOrderInput | SortOrder
     _count?: bearingsCountOrderByAggregateInput
     _avg?: bearingsAvgOrderByAggregateInput
     _max?: bearingsMaxOrderByAggregateInput
@@ -7106,17 +13126,15 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"bearings"> | number
     code?: StringWithAggregatesFilter<"bearings"> | string
     type?: StringNullableWithAggregatesFilter<"bearings"> | string | null
-    inner_d?: DecimalWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string
-    C?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
-    C0?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatWithAggregatesFilter<"bearings"> | number
+    outer_D?: FloatWithAggregatesFilter<"bearings"> | number
+    width_B?: FloatWithAggregatesFilter<"bearings"> | number
+    C?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
+    C0?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
+    e?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
+    Y?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
+    alpha_deg?: FloatNullableWithAggregatesFilter<"bearings"> | number | null
     is_active?: BoolNullableWithAggregatesFilter<"bearings"> | boolean | null
-    deletedBy?: IntNullableWithAggregatesFilter<"bearings"> | number | null
-    isDeleted?: BoolNullableWithAggregatesFilter<"bearings"> | boolean | null
-    deletedAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
-    createdAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
-    updatedAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
   }
 
   export type chainsWhereInput = {
@@ -7124,15 +13142,13 @@ export namespace Prisma {
     OR?: chainsWhereInput[]
     NOT?: chainsWhereInput | chainsWhereInput[]
     id?: IntFilter<"chains"> | number
-    pitch?: DecimalFilter<"chains"> | Decimal | DecimalJsLike | number | string
-    breaking_load?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    pitch?: FloatFilter<"chains"> | number
+    breaking_load?: FloatNullableFilter<"chains"> | number | null
+    mass_per_m?: FloatNullableFilter<"chains"> | number | null
+    A_mm2?: FloatNullableFilter<"chains"> | number | null
+    s_allow?: FloatNullableFilter<"chains"> | number | null
+    n_ref?: IntNullableFilter<"chains"> | number | null
     is_active?: BoolNullableFilter<"chains"> | boolean | null
-    deletedBy?: IntNullableFilter<"chains"> | number | null
-    isDeleted?: BoolNullableFilter<"chains"> | boolean | null
-    deletedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
-    createdAt?: DateTimeNullableFilter<"chains"> | Date | string | null
-    updatedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
   }
 
   export type chainsOrderByWithRelationInput = {
@@ -7140,28 +13156,24 @@ export namespace Prisma {
     pitch?: SortOrder
     breaking_load?: SortOrderInput | SortOrder
     mass_per_m?: SortOrderInput | SortOrder
+    A_mm2?: SortOrderInput | SortOrder
+    s_allow?: SortOrderInput | SortOrder
+    n_ref?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
-    deletedBy?: SortOrderInput | SortOrder
-    isDeleted?: SortOrderInput | SortOrder
-    deletedAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrderInput | SortOrder
-    updatedAt?: SortOrderInput | SortOrder
   }
 
   export type chainsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    pitch?: Decimal | DecimalJsLike | number | string
+    pitch?: number
     AND?: chainsWhereInput | chainsWhereInput[]
     OR?: chainsWhereInput[]
     NOT?: chainsWhereInput | chainsWhereInput[]
-    breaking_load?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    breaking_load?: FloatNullableFilter<"chains"> | number | null
+    mass_per_m?: FloatNullableFilter<"chains"> | number | null
+    A_mm2?: FloatNullableFilter<"chains"> | number | null
+    s_allow?: FloatNullableFilter<"chains"> | number | null
+    n_ref?: IntNullableFilter<"chains"> | number | null
     is_active?: BoolNullableFilter<"chains"> | boolean | null
-    deletedBy?: IntNullableFilter<"chains"> | number | null
-    isDeleted?: BoolNullableFilter<"chains"> | boolean | null
-    deletedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
-    createdAt?: DateTimeNullableFilter<"chains"> | Date | string | null
-    updatedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
   }, "id" | "pitch">
 
   export type chainsOrderByWithAggregationInput = {
@@ -7169,12 +13181,10 @@ export namespace Prisma {
     pitch?: SortOrder
     breaking_load?: SortOrderInput | SortOrder
     mass_per_m?: SortOrderInput | SortOrder
+    A_mm2?: SortOrderInput | SortOrder
+    s_allow?: SortOrderInput | SortOrder
+    n_ref?: SortOrderInput | SortOrder
     is_active?: SortOrderInput | SortOrder
-    deletedBy?: SortOrderInput | SortOrder
-    isDeleted?: SortOrderInput | SortOrder
-    deletedAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrderInput | SortOrder
-    updatedAt?: SortOrderInput | SortOrder
     _count?: chainsCountOrderByAggregateInput
     _avg?: chainsAvgOrderByAggregateInput
     _max?: chainsMaxOrderByAggregateInput
@@ -7187,15 +13197,13 @@ export namespace Prisma {
     OR?: chainsScalarWhereWithAggregatesInput[]
     NOT?: chainsScalarWhereWithAggregatesInput | chainsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"chains"> | number
-    pitch?: DecimalWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string
-    breaking_load?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    pitch?: FloatWithAggregatesFilter<"chains"> | number
+    breaking_load?: FloatNullableWithAggregatesFilter<"chains"> | number | null
+    mass_per_m?: FloatNullableWithAggregatesFilter<"chains"> | number | null
+    A_mm2?: FloatNullableWithAggregatesFilter<"chains"> | number | null
+    s_allow?: FloatNullableWithAggregatesFilter<"chains"> | number | null
+    n_ref?: IntNullableWithAggregatesFilter<"chains"> | number | null
     is_active?: BoolNullableWithAggregatesFilter<"chains"> | boolean | null
-    deletedBy?: IntNullableWithAggregatesFilter<"chains"> | number | null
-    isDeleted?: BoolNullableWithAggregatesFilter<"chains"> | boolean | null
-    deletedAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
-    createdAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
-    updatedAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
   }
 
   export type motorsWhereInput = {
@@ -7550,208 +13558,465 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
   }
 
+  export type material_gradesWhereInput = {
+    AND?: material_gradesWhereInput | material_gradesWhereInput[]
+    OR?: material_gradesWhereInput[]
+    NOT?: material_gradesWhereInput | material_gradesWhereInput[]
+    id?: IntFilter<"material_grades"> | number
+    grade_name?: StringFilter<"material_grades"> | string
+    HB?: IntFilter<"material_grades"> | number
+    sigma_b?: FloatFilter<"material_grades"> | number
+    sigma_ch?: FloatFilter<"material_grades"> | number
+    sigma_Hlim?: FloatFilter<"material_grades"> | number
+    sigma_Flim?: FloatFilter<"material_grades"> | number
+  }
+
+  export type material_gradesOrderByWithRelationInput = {
+    id?: SortOrder
+    grade_name?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+    _relevance?: material_gradesOrderByRelevanceInput
+  }
+
+  export type material_gradesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    grade_name?: string
+    AND?: material_gradesWhereInput | material_gradesWhereInput[]
+    OR?: material_gradesWhereInput[]
+    NOT?: material_gradesWhereInput | material_gradesWhereInput[]
+    HB?: IntFilter<"material_grades"> | number
+    sigma_b?: FloatFilter<"material_grades"> | number
+    sigma_ch?: FloatFilter<"material_grades"> | number
+    sigma_Hlim?: FloatFilter<"material_grades"> | number
+    sigma_Flim?: FloatFilter<"material_grades"> | number
+  }, "id" | "grade_name">
+
+  export type material_gradesOrderByWithAggregationInput = {
+    id?: SortOrder
+    grade_name?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+    _count?: material_gradesCountOrderByAggregateInput
+    _avg?: material_gradesAvgOrderByAggregateInput
+    _max?: material_gradesMaxOrderByAggregateInput
+    _min?: material_gradesMinOrderByAggregateInput
+    _sum?: material_gradesSumOrderByAggregateInput
+  }
+
+  export type material_gradesScalarWhereWithAggregatesInput = {
+    AND?: material_gradesScalarWhereWithAggregatesInput | material_gradesScalarWhereWithAggregatesInput[]
+    OR?: material_gradesScalarWhereWithAggregatesInput[]
+    NOT?: material_gradesScalarWhereWithAggregatesInput | material_gradesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"material_grades"> | number
+    grade_name?: StringWithAggregatesFilter<"material_grades"> | string
+    HB?: IntWithAggregatesFilter<"material_grades"> | number
+    sigma_b?: FloatWithAggregatesFilter<"material_grades"> | number
+    sigma_ch?: FloatWithAggregatesFilter<"material_grades"> | number
+    sigma_Hlim?: FloatWithAggregatesFilter<"material_grades"> | number
+    sigma_Flim?: FloatWithAggregatesFilter<"material_grades"> | number
+  }
+
+  export type standard_modulesWhereInput = {
+    AND?: standard_modulesWhereInput | standard_modulesWhereInput[]
+    OR?: standard_modulesWhereInput[]
+    NOT?: standard_modulesWhereInput | standard_modulesWhereInput[]
+    id?: IntFilter<"standard_modules"> | number
+    value?: FloatFilter<"standard_modules"> | number
+  }
+
+  export type standard_modulesOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_modulesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    value?: number
+    AND?: standard_modulesWhereInput | standard_modulesWhereInput[]
+    OR?: standard_modulesWhereInput[]
+    NOT?: standard_modulesWhereInput | standard_modulesWhereInput[]
+  }, "id" | "value">
+
+  export type standard_modulesOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    _count?: standard_modulesCountOrderByAggregateInput
+    _avg?: standard_modulesAvgOrderByAggregateInput
+    _max?: standard_modulesMaxOrderByAggregateInput
+    _min?: standard_modulesMinOrderByAggregateInput
+    _sum?: standard_modulesSumOrderByAggregateInput
+  }
+
+  export type standard_modulesScalarWhereWithAggregatesInput = {
+    AND?: standard_modulesScalarWhereWithAggregatesInput | standard_modulesScalarWhereWithAggregatesInput[]
+    OR?: standard_modulesScalarWhereWithAggregatesInput[]
+    NOT?: standard_modulesScalarWhereWithAggregatesInput | standard_modulesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"standard_modules"> | number
+    value?: FloatWithAggregatesFilter<"standard_modules"> | number
+  }
+
+  export type standard_center_distancesWhereInput = {
+    AND?: standard_center_distancesWhereInput | standard_center_distancesWhereInput[]
+    OR?: standard_center_distancesWhereInput[]
+    NOT?: standard_center_distancesWhereInput | standard_center_distancesWhereInput[]
+    id?: IntFilter<"standard_center_distances"> | number
+    value?: IntFilter<"standard_center_distances"> | number
+  }
+
+  export type standard_center_distancesOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_center_distancesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    value?: number
+    AND?: standard_center_distancesWhereInput | standard_center_distancesWhereInput[]
+    OR?: standard_center_distancesWhereInput[]
+    NOT?: standard_center_distancesWhereInput | standard_center_distancesWhereInput[]
+  }, "id" | "value">
+
+  export type standard_center_distancesOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    _count?: standard_center_distancesCountOrderByAggregateInput
+    _avg?: standard_center_distancesAvgOrderByAggregateInput
+    _max?: standard_center_distancesMaxOrderByAggregateInput
+    _min?: standard_center_distancesMinOrderByAggregateInput
+    _sum?: standard_center_distancesSumOrderByAggregateInput
+  }
+
+  export type standard_center_distancesScalarWhereWithAggregatesInput = {
+    AND?: standard_center_distancesScalarWhereWithAggregatesInput | standard_center_distancesScalarWhereWithAggregatesInput[]
+    OR?: standard_center_distancesScalarWhereWithAggregatesInput[]
+    NOT?: standard_center_distancesScalarWhereWithAggregatesInput | standard_center_distancesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"standard_center_distances"> | number
+    value?: IntWithAggregatesFilter<"standard_center_distances"> | number
+  }
+
+  export type standard_shaft_diametersWhereInput = {
+    AND?: standard_shaft_diametersWhereInput | standard_shaft_diametersWhereInput[]
+    OR?: standard_shaft_diametersWhereInput[]
+    NOT?: standard_shaft_diametersWhereInput | standard_shaft_diametersWhereInput[]
+    id?: IntFilter<"standard_shaft_diameters"> | number
+    value?: IntFilter<"standard_shaft_diameters"> | number
+  }
+
+  export type standard_shaft_diametersOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_shaft_diametersWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    value?: number
+    AND?: standard_shaft_diametersWhereInput | standard_shaft_diametersWhereInput[]
+    OR?: standard_shaft_diametersWhereInput[]
+    NOT?: standard_shaft_diametersWhereInput | standard_shaft_diametersWhereInput[]
+  }, "id" | "value">
+
+  export type standard_shaft_diametersOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    _count?: standard_shaft_diametersCountOrderByAggregateInput
+    _avg?: standard_shaft_diametersAvgOrderByAggregateInput
+    _max?: standard_shaft_diametersMaxOrderByAggregateInput
+    _min?: standard_shaft_diametersMinOrderByAggregateInput
+    _sum?: standard_shaft_diametersSumOrderByAggregateInput
+  }
+
+  export type standard_shaft_diametersScalarWhereWithAggregatesInput = {
+    AND?: standard_shaft_diametersScalarWhereWithAggregatesInput | standard_shaft_diametersScalarWhereWithAggregatesInput[]
+    OR?: standard_shaft_diametersScalarWhereWithAggregatesInput[]
+    NOT?: standard_shaft_diametersScalarWhereWithAggregatesInput | standard_shaft_diametersScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"standard_shaft_diameters"> | number
+    value?: IntWithAggregatesFilter<"standard_shaft_diameters"> | number
+  }
+
+  export type key_dimensionsWhereInput = {
+    AND?: key_dimensionsWhereInput | key_dimensionsWhereInput[]
+    OR?: key_dimensionsWhereInput[]
+    NOT?: key_dimensionsWhereInput | key_dimensionsWhereInput[]
+    id?: IntFilter<"key_dimensions"> | number
+    d_min?: IntFilter<"key_dimensions"> | number
+    d_max?: IntFilter<"key_dimensions"> | number
+    b?: IntFilter<"key_dimensions"> | number
+    h?: IntFilter<"key_dimensions"> | number
+    t1?: FloatFilter<"key_dimensions"> | number
+    t2?: FloatFilter<"key_dimensions"> | number
+  }
+
+  export type key_dimensionsOrderByWithRelationInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+  }
+
+  export type key_dimensionsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: key_dimensionsWhereInput | key_dimensionsWhereInput[]
+    OR?: key_dimensionsWhereInput[]
+    NOT?: key_dimensionsWhereInput | key_dimensionsWhereInput[]
+    d_min?: IntFilter<"key_dimensions"> | number
+    d_max?: IntFilter<"key_dimensions"> | number
+    b?: IntFilter<"key_dimensions"> | number
+    h?: IntFilter<"key_dimensions"> | number
+    t1?: FloatFilter<"key_dimensions"> | number
+    t2?: FloatFilter<"key_dimensions"> | number
+  }, "id">
+
+  export type key_dimensionsOrderByWithAggregationInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+    _count?: key_dimensionsCountOrderByAggregateInput
+    _avg?: key_dimensionsAvgOrderByAggregateInput
+    _max?: key_dimensionsMaxOrderByAggregateInput
+    _min?: key_dimensionsMinOrderByAggregateInput
+    _sum?: key_dimensionsSumOrderByAggregateInput
+  }
+
+  export type key_dimensionsScalarWhereWithAggregatesInput = {
+    AND?: key_dimensionsScalarWhereWithAggregatesInput | key_dimensionsScalarWhereWithAggregatesInput[]
+    OR?: key_dimensionsScalarWhereWithAggregatesInput[]
+    NOT?: key_dimensionsScalarWhereWithAggregatesInput | key_dimensionsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"key_dimensions"> | number
+    d_min?: IntWithAggregatesFilter<"key_dimensions"> | number
+    d_max?: IntWithAggregatesFilter<"key_dimensions"> | number
+    b?: IntWithAggregatesFilter<"key_dimensions"> | number
+    h?: IntWithAggregatesFilter<"key_dimensions"> | number
+    t1?: FloatWithAggregatesFilter<"key_dimensions"> | number
+    t2?: FloatWithAggregatesFilter<"key_dimensions"> | number
+  }
+
+  export type standard_key_lengthsWhereInput = {
+    AND?: standard_key_lengthsWhereInput | standard_key_lengthsWhereInput[]
+    OR?: standard_key_lengthsWhereInput[]
+    NOT?: standard_key_lengthsWhereInput | standard_key_lengthsWhereInput[]
+    id?: IntFilter<"standard_key_lengths"> | number
+    value?: IntFilter<"standard_key_lengths"> | number
+  }
+
+  export type standard_key_lengthsOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_key_lengthsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    value?: number
+    AND?: standard_key_lengthsWhereInput | standard_key_lengthsWhereInput[]
+    OR?: standard_key_lengthsWhereInput[]
+    NOT?: standard_key_lengthsWhereInput | standard_key_lengthsWhereInput[]
+  }, "id" | "value">
+
+  export type standard_key_lengthsOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    _count?: standard_key_lengthsCountOrderByAggregateInput
+    _avg?: standard_key_lengthsAvgOrderByAggregateInput
+    _max?: standard_key_lengthsMaxOrderByAggregateInput
+    _min?: standard_key_lengthsMinOrderByAggregateInput
+    _sum?: standard_key_lengthsSumOrderByAggregateInput
+  }
+
+  export type standard_key_lengthsScalarWhereWithAggregatesInput = {
+    AND?: standard_key_lengthsScalarWhereWithAggregatesInput | standard_key_lengthsScalarWhereWithAggregatesInput[]
+    OR?: standard_key_lengthsScalarWhereWithAggregatesInput[]
+    NOT?: standard_key_lengthsScalarWhereWithAggregatesInput | standard_key_lengthsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"standard_key_lengths"> | number
+    value?: IntWithAggregatesFilter<"standard_key_lengths"> | number
+  }
+
   export type bearingsCreateInput = {
     code: string
     type?: string | null
-    inner_d: Decimal | DecimalJsLike | number | string
-    outer_D: Decimal | DecimalJsLike | number | string
-    width_B: Decimal | DecimalJsLike | number | string
-    C?: Decimal | DecimalJsLike | number | string | null
-    C0?: Decimal | DecimalJsLike | number | string | null
+    inner_d: number
+    outer_D: number
+    width_B: number
+    C?: number | null
+    C0?: number | null
+    e?: number | null
+    Y?: number | null
+    alpha_deg?: number | null
     is_active?: boolean | null
-    deletedBy?: number | null
-    isDeleted?: boolean | null
-    deletedAt?: Date | string | null
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
   }
 
   export type bearingsUncheckedCreateInput = {
     id?: number
     code: string
     type?: string | null
-    inner_d: Decimal | DecimalJsLike | number | string
-    outer_D: Decimal | DecimalJsLike | number | string
-    width_B: Decimal | DecimalJsLike | number | string
-    C?: Decimal | DecimalJsLike | number | string | null
-    C0?: Decimal | DecimalJsLike | number | string | null
+    inner_d: number
+    outer_D: number
+    width_B: number
+    C?: number | null
+    C0?: number | null
+    e?: number | null
+    Y?: number | null
+    alpha_deg?: number | null
     is_active?: boolean | null
-    deletedBy?: number | null
-    isDeleted?: boolean | null
-    deletedAt?: Date | string | null
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
   }
 
   export type bearingsUpdateInput = {
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatFieldUpdateOperationsInput | number
+    outer_D?: FloatFieldUpdateOperationsInput | number
+    width_B?: FloatFieldUpdateOperationsInput | number
+    C?: NullableFloatFieldUpdateOperationsInput | number | null
+    C0?: NullableFloatFieldUpdateOperationsInput | number | null
+    e?: NullableFloatFieldUpdateOperationsInput | number | null
+    Y?: NullableFloatFieldUpdateOperationsInput | number | null
+    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type bearingsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatFieldUpdateOperationsInput | number
+    outer_D?: FloatFieldUpdateOperationsInput | number
+    width_B?: FloatFieldUpdateOperationsInput | number
+    C?: NullableFloatFieldUpdateOperationsInput | number | null
+    C0?: NullableFloatFieldUpdateOperationsInput | number | null
+    e?: NullableFloatFieldUpdateOperationsInput | number | null
+    Y?: NullableFloatFieldUpdateOperationsInput | number | null
+    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type bearingsCreateManyInput = {
     id?: number
     code: string
     type?: string | null
-    inner_d: Decimal | DecimalJsLike | number | string
-    outer_D: Decimal | DecimalJsLike | number | string
-    width_B: Decimal | DecimalJsLike | number | string
-    C?: Decimal | DecimalJsLike | number | string | null
-    C0?: Decimal | DecimalJsLike | number | string | null
+    inner_d: number
+    outer_D: number
+    width_B: number
+    C?: number | null
+    C0?: number | null
+    e?: number | null
+    Y?: number | null
+    alpha_deg?: number | null
     is_active?: boolean | null
-    deletedBy?: number | null
-    isDeleted?: boolean | null
-    deletedAt?: Date | string | null
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
   }
 
   export type bearingsUpdateManyMutationInput = {
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatFieldUpdateOperationsInput | number
+    outer_D?: FloatFieldUpdateOperationsInput | number
+    width_B?: FloatFieldUpdateOperationsInput | number
+    C?: NullableFloatFieldUpdateOperationsInput | number | null
+    C0?: NullableFloatFieldUpdateOperationsInput | number | null
+    e?: NullableFloatFieldUpdateOperationsInput | number | null
+    Y?: NullableFloatFieldUpdateOperationsInput | number | null
+    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type bearingsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     code?: StringFieldUpdateOperationsInput | string
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    inner_d?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    outer_D?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    width_B?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    C?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    C0?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    inner_d?: FloatFieldUpdateOperationsInput | number
+    outer_D?: FloatFieldUpdateOperationsInput | number
+    width_B?: FloatFieldUpdateOperationsInput | number
+    C?: NullableFloatFieldUpdateOperationsInput | number | null
+    C0?: NullableFloatFieldUpdateOperationsInput | number | null
+    e?: NullableFloatFieldUpdateOperationsInput | number | null
+    Y?: NullableFloatFieldUpdateOperationsInput | number | null
+    alpha_deg?: NullableFloatFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsCreateInput = {
-    pitch: Decimal | DecimalJsLike | number | string
-    breaking_load?: Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: Decimal | DecimalJsLike | number | string | null
+    pitch: number
+    breaking_load?: number | null
+    mass_per_m?: number | null
+    A_mm2?: number | null
+    s_allow?: number | null
+    n_ref?: number | null
     is_active?: boolean | null
-    deletedBy?: number | null
-    isDeleted?: boolean | null
-    deletedAt?: Date | string | null
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
   }
 
   export type chainsUncheckedCreateInput = {
     id?: number
-    pitch: Decimal | DecimalJsLike | number | string
-    breaking_load?: Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: Decimal | DecimalJsLike | number | string | null
+    pitch: number
+    breaking_load?: number | null
+    mass_per_m?: number | null
+    A_mm2?: number | null
+    s_allow?: number | null
+    n_ref?: number | null
     is_active?: boolean | null
-    deletedBy?: number | null
-    isDeleted?: boolean | null
-    deletedAt?: Date | string | null
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
   }
 
   export type chainsUpdateInput = {
-    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pitch?: FloatFieldUpdateOperationsInput | number
+    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
+    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
+    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
+    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pitch?: FloatFieldUpdateOperationsInput | number
+    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
+    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
+    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
+    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsCreateManyInput = {
     id?: number
-    pitch: Decimal | DecimalJsLike | number | string
-    breaking_load?: Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: Decimal | DecimalJsLike | number | string | null
+    pitch: number
+    breaking_load?: number | null
+    mass_per_m?: number | null
+    A_mm2?: number | null
+    s_allow?: number | null
+    n_ref?: number | null
     is_active?: boolean | null
-    deletedBy?: number | null
-    isDeleted?: boolean | null
-    deletedAt?: Date | string | null
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
   }
 
   export type chainsUpdateManyMutationInput = {
-    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pitch?: FloatFieldUpdateOperationsInput | number
+    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
+    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
+    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
+    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type chainsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    pitch?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    breaking_load?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    mass_per_m?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    pitch?: FloatFieldUpdateOperationsInput | number
+    breaking_load?: NullableFloatFieldUpdateOperationsInput | number | null
+    mass_per_m?: NullableFloatFieldUpdateOperationsInput | number | null
+    A_mm2?: NullableFloatFieldUpdateOperationsInput | number | null
+    s_allow?: NullableFloatFieldUpdateOperationsInput | number | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
-    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type motorsCreateInput = {
@@ -8164,6 +14429,268 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type material_gradesCreateInput = {
+    grade_name: string
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+  }
+
+  export type material_gradesUncheckedCreateInput = {
+    id?: number
+    grade_name: string
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+  }
+
+  export type material_gradesUpdateInput = {
+    grade_name?: StringFieldUpdateOperationsInput | string
+    HB?: IntFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_ch?: FloatFieldUpdateOperationsInput | number
+    sigma_Hlim?: FloatFieldUpdateOperationsInput | number
+    sigma_Flim?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type material_gradesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    grade_name?: StringFieldUpdateOperationsInput | string
+    HB?: IntFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_ch?: FloatFieldUpdateOperationsInput | number
+    sigma_Hlim?: FloatFieldUpdateOperationsInput | number
+    sigma_Flim?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type material_gradesCreateManyInput = {
+    id?: number
+    grade_name: string
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+  }
+
+  export type material_gradesUpdateManyMutationInput = {
+    grade_name?: StringFieldUpdateOperationsInput | string
+    HB?: IntFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_ch?: FloatFieldUpdateOperationsInput | number
+    sigma_Hlim?: FloatFieldUpdateOperationsInput | number
+    sigma_Flim?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type material_gradesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    grade_name?: StringFieldUpdateOperationsInput | string
+    HB?: IntFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_ch?: FloatFieldUpdateOperationsInput | number
+    sigma_Hlim?: FloatFieldUpdateOperationsInput | number
+    sigma_Flim?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type standard_modulesCreateInput = {
+    value: number
+  }
+
+  export type standard_modulesUncheckedCreateInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_modulesUpdateInput = {
+    value?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type standard_modulesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type standard_modulesCreateManyInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_modulesUpdateManyMutationInput = {
+    value?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type standard_modulesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type standard_center_distancesCreateInput = {
+    value: number
+  }
+
+  export type standard_center_distancesUncheckedCreateInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_center_distancesUpdateInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_center_distancesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_center_distancesCreateManyInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_center_distancesUpdateManyMutationInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_center_distancesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_shaft_diametersCreateInput = {
+    value: number
+  }
+
+  export type standard_shaft_diametersUncheckedCreateInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_shaft_diametersUpdateInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_shaft_diametersUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_shaft_diametersCreateManyInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_shaft_diametersUpdateManyMutationInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_shaft_diametersUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type key_dimensionsCreateInput = {
+    d_min: number
+    d_max: number
+    b: number
+    h: number
+    t1: number
+    t2: number
+  }
+
+  export type key_dimensionsUncheckedCreateInput = {
+    id?: number
+    d_min: number
+    d_max: number
+    b: number
+    h: number
+    t1: number
+    t2: number
+  }
+
+  export type key_dimensionsUpdateInput = {
+    d_min?: IntFieldUpdateOperationsInput | number
+    d_max?: IntFieldUpdateOperationsInput | number
+    b?: IntFieldUpdateOperationsInput | number
+    h?: IntFieldUpdateOperationsInput | number
+    t1?: FloatFieldUpdateOperationsInput | number
+    t2?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type key_dimensionsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    d_min?: IntFieldUpdateOperationsInput | number
+    d_max?: IntFieldUpdateOperationsInput | number
+    b?: IntFieldUpdateOperationsInput | number
+    h?: IntFieldUpdateOperationsInput | number
+    t1?: FloatFieldUpdateOperationsInput | number
+    t2?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type key_dimensionsCreateManyInput = {
+    id?: number
+    d_min: number
+    d_max: number
+    b: number
+    h: number
+    t1: number
+    t2: number
+  }
+
+  export type key_dimensionsUpdateManyMutationInput = {
+    d_min?: IntFieldUpdateOperationsInput | number
+    d_max?: IntFieldUpdateOperationsInput | number
+    b?: IntFieldUpdateOperationsInput | number
+    h?: IntFieldUpdateOperationsInput | number
+    t1?: FloatFieldUpdateOperationsInput | number
+    t2?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type key_dimensionsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    d_min?: IntFieldUpdateOperationsInput | number
+    d_max?: IntFieldUpdateOperationsInput | number
+    b?: IntFieldUpdateOperationsInput | number
+    h?: IntFieldUpdateOperationsInput | number
+    t1?: FloatFieldUpdateOperationsInput | number
+    t2?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type standard_key_lengthsCreateInput = {
+    value: number
+  }
+
+  export type standard_key_lengthsUncheckedCreateInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_key_lengthsUpdateInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_key_lengthsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_key_lengthsCreateManyInput = {
+    id?: number
+    value: number
+  }
+
+  export type standard_key_lengthsUpdateManyMutationInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type standard_key_lengthsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -8205,53 +14732,31 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type DecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type SortOrderInput = {
@@ -8265,12 +14770,6 @@ export namespace Prisma {
     search: string
   }
 
-  export type bearingsInner_dOuter_DWidth_BCompoundUniqueInput = {
-    inner_d: Decimal | DecimalJsLike | number | string
-    outer_D: Decimal | DecimalJsLike | number | string
-    width_B: Decimal | DecimalJsLike | number | string
-  }
-
   export type bearingsCountOrderByAggregateInput = {
     id?: SortOrder
     code?: SortOrder
@@ -8280,12 +14779,10 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
+    e?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
     is_active?: SortOrder
-    deletedBy?: SortOrder
-    isDeleted?: SortOrder
-    deletedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type bearingsAvgOrderByAggregateInput = {
@@ -8295,7 +14792,9 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    deletedBy?: SortOrder
+    e?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
   }
 
   export type bearingsMaxOrderByAggregateInput = {
@@ -8307,12 +14806,10 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
+    e?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
     is_active?: SortOrder
-    deletedBy?: SortOrder
-    isDeleted?: SortOrder
-    deletedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type bearingsMinOrderByAggregateInput = {
@@ -8324,12 +14821,10 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
+    e?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
     is_active?: SortOrder
-    deletedBy?: SortOrder
-    isDeleted?: SortOrder
-    deletedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type bearingsSumOrderByAggregateInput = {
@@ -8339,7 +14834,9 @@ export namespace Prisma {
     width_B?: SortOrder
     C?: SortOrder
     C0?: SortOrder
-    deletedBy?: SortOrder
+    e?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -8394,36 +14891,36 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedDecimalNullableFilter<$PrismaModel>
-    _sum?: NestedDecimalNullableFilter<$PrismaModel>
-    _min?: NestedDecimalNullableFilter<$PrismaModel>
-    _max?: NestedDecimalNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8432,6 +14929,70 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type chainsCountOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    A_mm2?: SortOrder
+    s_allow?: SortOrder
+    n_ref?: SortOrder
+    is_active?: SortOrder
+  }
+
+  export type chainsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    A_mm2?: SortOrder
+    s_allow?: SortOrder
+    n_ref?: SortOrder
+  }
+
+  export type chainsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    A_mm2?: SortOrder
+    s_allow?: SortOrder
+    n_ref?: SortOrder
+    is_active?: SortOrder
+  }
+
+  export type chainsMinOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    A_mm2?: SortOrder
+    s_allow?: SortOrder
+    n_ref?: SortOrder
+    is_active?: SortOrder
+  }
+
+  export type chainsSumOrderByAggregateInput = {
+    id?: SortOrder
+    pitch?: SortOrder
+    breaking_load?: SortOrder
+    mass_per_m?: SortOrder
+    A_mm2?: SortOrder
+    s_allow?: SortOrder
+    n_ref?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8450,7 +15011,29 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
     notIn?: Date[] | string[] | null
@@ -8458,65 +15041,7 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type chainsCountOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    is_active?: SortOrder
-    deletedBy?: SortOrder
-    isDeleted?: SortOrder
-    deletedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type chainsAvgOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    deletedBy?: SortOrder
-  }
-
-  export type chainsMaxOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    is_active?: SortOrder
-    deletedBy?: SortOrder
-    isDeleted?: SortOrder
-    deletedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type chainsMinOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    is_active?: SortOrder
-    deletedBy?: SortOrder
-    isDeleted?: SortOrder
-    deletedAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type chainsSumOrderByAggregateInput = {
-    id?: SortOrder
-    pitch?: SortOrder
-    breaking_load?: SortOrder
-    mass_per_m?: SortOrder
-    deletedBy?: SortOrder
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type ProjectsListRelationFilter = {
@@ -8619,6 +15144,52 @@ export namespace Prisma {
     mass_kg?: SortOrder
     price?: SortOrder
     deletedBy?: SortOrder
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -8873,6 +15444,210 @@ export namespace Prisma {
     _max?: NestedEnumusers_roleNullableFilter<$PrismaModel>
   }
 
+  export type material_gradesOrderByRelevanceInput = {
+    fields: material_gradesOrderByRelevanceFieldEnum | material_gradesOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type material_gradesCountOrderByAggregateInput = {
+    id?: SortOrder
+    grade_name?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+  }
+
+  export type material_gradesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+  }
+
+  export type material_gradesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    grade_name?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+  }
+
+  export type material_gradesMinOrderByAggregateInput = {
+    id?: SortOrder
+    grade_name?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+  }
+
+  export type material_gradesSumOrderByAggregateInput = {
+    id?: SortOrder
+    HB?: SortOrder
+    sigma_b?: SortOrder
+    sigma_ch?: SortOrder
+    sigma_Hlim?: SortOrder
+    sigma_Flim?: SortOrder
+  }
+
+  export type standard_modulesCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_modulesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_modulesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_modulesMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_modulesSumOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_center_distancesCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_center_distancesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_center_distancesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_center_distancesMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_center_distancesSumOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_shaft_diametersCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_shaft_diametersAvgOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_shaft_diametersMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_shaft_diametersMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_shaft_diametersSumOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type key_dimensionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+  }
+
+  export type key_dimensionsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+  }
+
+  export type key_dimensionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+  }
+
+  export type key_dimensionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+  }
+
+  export type key_dimensionsSumOrderByAggregateInput = {
+    id?: SortOrder
+    d_min?: SortOrder
+    d_max?: SortOrder
+    b?: SortOrder
+    h?: SortOrder
+    t1?: SortOrder
+    t2?: SortOrder
+  }
+
+  export type standard_key_lengthsCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_key_lengthsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_key_lengthsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_key_lengthsMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type standard_key_lengthsSumOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -8881,27 +15656,15 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
-  export type NullableDecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string | null
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
+  export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
@@ -8909,12 +15672,20 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
   }
 
   export type IntFieldUpdateOperationsInput = {
     set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -8933,6 +15704,26 @@ export namespace Prisma {
     connectOrCreate?: projectsCreateOrConnectWithoutMotorsInput | projectsCreateOrConnectWithoutMotorsInput[]
     createMany?: projectsCreateManyMotorsInputEnvelope
     connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type projectsUpdateManyWithoutMotorsNestedInput = {
@@ -9084,53 +15875,31 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -9147,17 +15916,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9196,6 +15954,106 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -9226,41 +16084,6 @@ export namespace Prisma {
     _sum?: NestedDecimalNullableFilter<$PrismaModel>
     _min?: NestedDecimalNullableFilter<$PrismaModel>
     _max?: NestedDecimalNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
