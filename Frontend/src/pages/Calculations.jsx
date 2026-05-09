@@ -53,9 +53,19 @@ async function calcRequest(path, options = {}) {
   return payload?.data;
 }
 
-export default function Calculations({ onNavigate, activeProject, onProjectSaved, onKinematicsSaved, kinematicsResult }) {
-  const [step, setStep] = useState(1);
+export default function Calculations({ onNavigate, activeProject, onProjectSaved, onKinematicsSaved, kinematicsResult, initialStep, onStepChange }) {
+  const [step, setInternalStep] = useState(initialStep || 1);
   const [subStep, setSubStep] = useState(2); // Thêm state quản lý sub-menu, mặc định mở tab 2 (Bánh răng côn)
+
+  // Sync internal step with prop
+  useEffect(() => {
+    if (initialStep) setInternalStep(initialStep);
+  }, [initialStep]);
+
+  const setStep = (newStep) => {
+    setInternalStep(newStep);
+    onStepChange?.(newStep);
+  };
   const [showFormulaModal, setShowFormulaModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -210,15 +220,39 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Navigation Wizard - Đã sửa: Không cho phép nhấn để nhảy bước tự do */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10 pointer-events-none">
-        <div className={getNavClass(1)}>1. Nhập liệu</div>
+      {/* Navigation Wizard - Đã sửa: Cho phép nhấn quay lại các bước cũ */}
+      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10">
+        <button 
+          onClick={() => setStep(1)} 
+          className={`${getNavClass(1)} ${step > 1 ? 'cursor-pointer hover:text-primary' : ''}`}
+          disabled={step === 1}
+        >
+          1. Nhập liệu
+        </button>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <div className={getNavClass(2)}>2. Động học</div>
+        <button 
+          onClick={() => setStep(2)} 
+          className={`${getNavClass(2)} ${step > 2 ? 'cursor-pointer hover:text-primary' : ''}`}
+          disabled={step <= 2}
+        >
+          2. Động học
+        </button>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <div className={getNavClass(3)}>3. Chọn Động cơ</div>
+        <button 
+          onClick={() => setStep(3)} 
+          className={`${getNavClass(3)} ${step > 3 ? 'cursor-pointer hover:text-primary' : ''}`}
+          disabled={step <= 3}
+        >
+          3. Chọn Động cơ
+        </button>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <div className={getNavClass(4)}>4. Chi tiết máy</div>
+        <button 
+          onClick={() => setStep(4)} 
+          className={`${getNavClass(4)} cursor-default`}
+          disabled={true}
+        >
+          4. Chi tiết máy
+        </button>
       </div>
 
       {errorMessage && (
@@ -291,9 +325,18 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
       {step === 2 && (
         <div className="space-y-10 animate-fade-in">
           <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900">Kết quả Tính toán Động học</h2>
-              <p className="text-slate-500 mt-1">Hệ thống phân phối tỷ số truyền và tính toán công suất cần thiết.</p>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setStep(1)}
+                className="flex items-center gap-1 px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-500 font-semibold hover:bg-slate-50 hover:text-slate-700 shadow-sm transition-all"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Nhập liệu
+              </button>
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900">Kết quả Tính toán Động học</h2>
+                <p className="text-slate-500 mt-1">Hệ thống phân phối tỷ số truyền và tính toán công suất cần thiết.</p>
+              </div>
             </div>
             <div className="flex gap-4">
               {!data && (
@@ -411,6 +454,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
             setStep(4); // Chuyển sang bước 4 (Chi tiết máy)
           }}
           onNavigate={onNavigate}
+          onGoBack={() => setStep(2)}
         />
       )}
 
@@ -420,6 +464,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
           <UC05Detail 
             kinematicsResult={kinematicsResult} 
             onNavigate={onNavigate}
+            onGoBack={() => setStep(3)}
           />
         </div>
       )}

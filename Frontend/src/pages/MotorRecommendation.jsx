@@ -34,7 +34,7 @@ function seriesBadge(series) {
  *   GET /projects/:projectId/motors/candidates   → Tất cả
  *   POST /projects/:projectId/motors/select      → Lưu lựa chọn
  */
-export default function MotorRecommendation({ activeProject, kinematicsResult, onMotorSelected, onNavigate }) {
+export default function MotorRecommendation({ activeProject, kinematicsResult, onMotorSelected, onNavigate, onGoBack }) {
   const [topMotors, setTopMotors] = useState([]);
   const [allMotors, setAllMotors] = useState([]);
   const [selectedMotor, setSelectedMotor] = useState(null);
@@ -256,6 +256,16 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
   // ══════════════════════════════════════
   return (
     <div className="space-y-8 animate-fade-in">
+      {/* Back button */}
+      {onGoBack && (
+        <button
+          onClick={onGoBack}
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-500 font-semibold hover:bg-slate-50 hover:text-slate-700 shadow-sm transition-all w-fit"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          ← Động học
+        </button>
+      )}
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-2">
         <h2 className="text-3xl font-bold text-slate-900">Đề xuất Động cơ Tối ưu</h2>

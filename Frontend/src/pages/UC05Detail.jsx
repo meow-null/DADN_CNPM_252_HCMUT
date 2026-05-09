@@ -29,7 +29,7 @@ const ResultCard = ({ label, value, unit, highlight }) => (
 );
 
 // ============================================================
-export default function UC05Detail({ kinematicsResult, onNavigate }) {
+export default function UC05Detail({ kinematicsResult, onNavigate, onGoBack }) {
   const data = kinematicsResult?.kinematics ?? null;
 
   const [material, setMaterial] = useState(MATERIAL_GRADES[1]); // Thép 40X
@@ -70,7 +70,16 @@ export default function UC05Detail({ kinematicsResult, onNavigate }) {
           <h2 className="text-4xl font-black text-slate-900">Thiết kế hoàn tất!</h2>
           <p className="text-slate-500 mt-2 text-lg">Tất cả các chi tiết máy đã đạt tiêu chuẩn kỹ thuật và sẵn sàng xuất báo cáo.</p>
         </div>
-        <div className="flex gap-4 pt-4">
+        <div className="flex gap-4 pt-4 flex-wrap justify-center">
+          {onGoBack && (
+            <button 
+              onClick={onGoBack}
+              className="px-6 py-4 bg-white border border-slate-200 text-slate-500 font-bold rounded-2xl hover:bg-slate-50 transition-all flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              Chọn động cơ
+            </button>
+          )}
           <button 
             onClick={() => setShowSuccess(false)}
             className="px-8 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-50 transition-all"
@@ -81,7 +90,7 @@ export default function UC05Detail({ kinematicsResult, onNavigate }) {
             onClick={() => onNavigate('summary')}
             className="px-10 py-4 bg-primary text-white font-bold rounded-2xl hover:bg-primary-dark shadow-xl shadow-primary/30 transition-all flex items-center gap-2"
           >
-            Xem báo cáo & Xuất file
+            Xem báo cáo &amp; Xuất file
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
@@ -91,6 +100,16 @@ export default function UC05Detail({ kinematicsResult, onNavigate }) {
 
   return (
     <div className="space-y-6">
+      {/* Back button */}
+      {onGoBack && (
+        <button
+          onClick={onGoBack}
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-500 font-semibold hover:bg-slate-50 hover:text-slate-700 shadow-sm transition-all w-fit"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          ← Quay lại Chọn Động cơ
+        </button>
+      )}
       {/* Config Panel */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">

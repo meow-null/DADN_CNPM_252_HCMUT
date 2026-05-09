@@ -14,7 +14,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
             onClick={() => onNavigate('calculations')}
             className="px-6 py-3 bg-white border border-slate-200 rounded-xl font-semibold text-slate-600 flex items-center gap-2 hover:bg-slate-50 transition-colors"
           >
-            Đổi vật liệu
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Quay lại Chi tiết máy
           </button>
           <button 
             onClick={() => onNavigate('reports')}

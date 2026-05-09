@@ -34,6 +34,7 @@ function App() {
   const [projects, setProjects] = useState([]);
   const [activeProject, setActiveProject] = useState(null);
   const [kinematics, setKinematics] = useState(null);
+  const [calcStep, setCalcStep] = useState(1); // persist wizard step across workspace navigation
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [workspaceError, setWorkspaceError] = useState('');
 
@@ -81,6 +82,7 @@ function App() {
     setCurrentUser(null);
     setActiveProject(null);
     setKinematics(null);
+    setCalcStep(1);
   };
 
   const handleProjectSaved = (savedProject) => {
@@ -95,13 +97,20 @@ function App() {
   };
 
   const handleProjectSelected = async (project) => {
+    // If selecting a new project (different from current), reset step
+    if (project?.id !== activeProject?.id) {
+      setCalcStep(1);
+    }
     setActiveProject(project);
-    setCurrentScreen('calculations'); // Nhảy vào phòng dự án
-    setKinematics(null);
+    setCurrentScreen('calculations'); // Jump into project room
 
-    // Bỏ qua load kinematics nếu người dùng bấm "Tạo dự án mới" (project = null)
-    if (!project) return;
+    // Skip kinematics load for new project (project = null)
+    if (!project) {
+      setKinematics(null);
+      return;
+    }
 
+    // If same project, keep existing kinematics and silently refresh in background
     try {
       const data = await appRequest(`/projects/${project.id}/kinematics`);
       if (data?.transmission) {
@@ -122,7 +131,7 @@ function App() {
         });
       }
     } catch {
-      setKinematics(null);
+      // Keep existing kinematics if fetch fails
     }
   };
 
@@ -180,28 +189,31 @@ function App() {
             </div>
           )}
 
-          {currentScreen === 'calculations' && (
+          <div className={currentScreen === 'calculations' ? 'block' : 'hidden'}>
             <Calculations
               onNavigate={setCurrentScreen}
               activeProject={activeProject}
               onProjectSaved={handleProjectSaved}
               onKinematicsSaved={setKinematics}
               kinematicsResult={kinematics}
+              initialStep={calcStep}
+              onStepChange={setCalcStep}
             />
-          )}
-          {currentScreen === 'summary' && (
+          </div>
+          <div className={currentScreen === 'summary' ? 'block' : 'hidden'}>
             <Summary
               onNavigate={setCurrentScreen}
               activeProject={activeProject}
               kinematicsResult={kinematics}
             />
-          )}
-          {currentScreen === 'reports' && (
+          </div>
+          <div className={currentScreen === 'reports' ? 'block' : 'hidden'}>
             <Reports
+              onNavigate={setCurrentScreen}
               activeProject={activeProject}
               kinematicsResult={kinematics}
             />
-          )}
+          </div>
         </div>
       </main>
     </div>

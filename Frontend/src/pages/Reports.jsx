@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Reports({ activeProject, kinematicsResult }) {
+export default function Reports({ onNavigate, activeProject, kinematicsResult }) {
   // Quản lý trạng thái bật/tắt của Modal Preview PDF
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const kinematics = kinematicsResult?.kinematics;
@@ -9,6 +9,13 @@ export default function Reports({ activeProject, kinematicsResult }) {
     <section className="space-y-10 animate-fade-in relative">
       <div className="flex items-center justify-between">
         <div>
+          <button 
+            onClick={() => onNavigate('summary')}
+            className="mb-4 px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-500 font-semibold flex items-center gap-2 hover:bg-slate-50 transition-colors w-fit shadow-sm"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Quay lại Tổng kết
+          </button>
           <h2 className="text-3xl font-bold text-slate-900">Tổng kết Dự án & Xuất báo cáo</h2>
           <p className="text-slate-500">Tóm tắt các thông số chính đã tính toán và xuất báo cáo thuyết minh kỹ thuật.</p>
         </div>
