@@ -4,39 +4,7 @@ import UC05Detail from './UC05Detail';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
-// --- DATA TIÊU CHUẨN TRÍCH XUẤT TỪ DATABASE ---
-const MATERIAL_GRADES = [
-  { name: 'Thép 45', HB: 215, sigma_b: 750, sigma_ch: 450, sigma_Hlim: 500, sigma_Flim: 387 },
-  { name: 'Thép 40X', HB: 245, sigma_b: 850, sigma_ch: 550, sigma_Hlim: 560, sigma_Flim: 441 },
-  { name: 'Thép 40XH', HB: 265, sigma_b: 800, sigma_ch: 600, sigma_Hlim: 600, sigma_Flim: 477 },
-  { name: 'Thép 35XM', HB: 241, sigma_b: 900, sigma_ch: 800, sigma_Hlim: 552, sigma_Flim: 433 },
-  { name: 'Thép 20X', HB: 480, sigma_b: 650, sigma_ch: 400, sigma_Hlim: 1150, sigma_Flim: 750 },
-];
 
-const CHAIN_STEPS = [
-  { p: 12.7, Q: 18.2, q: 0.65, A: 39.6, s_allow: 7.8, n_ref: 200 },
-  { p: 15.875, Q: 22.7, q: 0.8, A: 51.5, s_allow: 7.8, n_ref: 200 },
-  { p: 19.05, Q: 31.8, q: 1.9, A: 106, s_allow: 8.2, n_ref: 200 },
-  { p: 25.4, Q: 56.7, q: 2.6, A: 180, s_allow: 8.2, n_ref: 200 },
-  { p: 31.75, Q: 88.5, q: 3.8, A: 262, s_allow: 8.5, n_ref: 200 },
-  { p: 38.1, Q: 127.0, q: 5.5, A: 395, s_allow: 8.5, n_ref: 200 },
-  { p: 44.45, Q: 172.4, q: 7.5, A: 473, s_allow: 8.5, n_ref: 200 },
-  { p: 50.8, Q: 226.8, q: 9.7, A: 645, s_allow: 8.5, n_ref: 200 },
-];
-
-const STANDARD_MODULES = [1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
-const STANDARD_CENTER_DISTANCES = [80, 100, 125, 140, 160, 180, 200, 225, 250, 280, 315];
-const STANDARD_SHAFT_DIAMS = [10, 12, 14, 16, 18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100];
-
-// Dữ liệu tra cứu Then (Key) - Mockup based on TCVN
-const KEY_TABLE = [
-  { d_min: 22, d_max: 30, b: 8, h: 7, t1: 4.0 },
-  { d_min: 30, d_max: 38, b: 10, h: 8, t1: 5.0 },
-  { d_min: 38, d_max: 44, b: 12, h: 8, t1: 5.0 },
-  { d_min: 44, d_max: 50, b: 14, h: 9, t1: 5.5 },
-  { d_min: 50, d_max: 58, b: 16, h: 10, t1: 6.0 },
-  { d_min: 58, d_max: 65, b: 18, h: 11, t1: 7.0 },
-];
 
 async function calcRequest(path, options = {}) {
   const { method = 'GET', body } = options;
@@ -70,76 +38,6 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedMotor, setSelectedMotor] = useState(null);
-
-  // --- LOGIC GIẢ LẬP API CHO UC-05 ---
-  // --- PIPELINE CALCULATIONS (UC-05) ---
-  const [chainResults, setChainResults] = useState({
-    z1: 21, z2: 67, p: 25.4, Pt: 4.2, x: 120, a: 650, s: 10.5, sigmaH: 450, status: 'success'
-  });
-
-  const [bevelResults, setBevelResults] = useState({
-    z1: 16, z2: 40, Re: 120, de1: 50, b: 30, sigmaH: 480, sigmaF: 150,
-    Ft: 1200, Fr: 450, Fa: 200, status: 'success'
-  });
-
-  const [spurResults, setSpurResults] = useState({
-    aw: 160, m: 2.5, z1: 24, z2: 76, bw: 50, sigmaH: 520,
-    Ft: 3200, Fr: 1160, Fa: 0, status: 'success'
-  });
-
-  const [shaftResults, setShaftResults] = useState({
-    I: { dsb: 25, dtc: 30, Mtd: 45000, s: 2.1 },
-    II: { dsb: 35, dtc: 40, Mtd: 142000, s: 1.8 },
-    III: { dsb: 45, dtc: 50, Mtd: 450000, s: 1.6 }
-  });
-
-  const [keyResults, setKeyResults] = useState({
-    status: 'success',
-    data: [
-      { shaft: 'I', b: 8, h: 7, lt: 40, sigma_d: 45.2, tau_c: 12.5 },
-      { shaft: 'II', b: 10, h: 8, lt: 50, sigma_d: 62.8, tau_c: 18.4 },
-      { shaft: 'III', b: 14, h: 9, lt: 65, sigma_d: 88.5, tau_c: 25.6 }
-    ]
-  });
-
-  const [bearingResults, setBearingResults] = useState({
-    status: 'success',
-    data: [
-      { shaft: 'I', code: '6206', Cd: 12.5, C_cat: 19.5, check: true },
-      { shaft: 'II', code: '6308', Cd: 28.4, C_cat: 41.0, check: true },
-      { shaft: 'III', code: '6310', Cd: 42.1, C_cat: 62.0, check: true }
-    ]
-  });
-
-  const handleRecalculatePipeline = () => {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      // 1. Tính Xích (Module A)
-      const ux = data?.u_x_sb || 3.15;
-      let z1 = Math.floor(29 - 2 * ux);
-      if (z1 % 2 === 0) z1 -= 1; // Làm tròn xuống số lẻ
-      if (z1 < 17) z1 = 17;
-      
-      // 2. Tính Bánh răng côn (Module B)
-      const u1 = data?.u_1 || 2.5;
-      const Ft_bevel = 1250; // Mockup từ momen xoắn
-      
-      // 3. Tính Bánh răng trụ (Module C)
-      const u2 = data?.u_2 || 3.2;
-      const aw = 160;
-      
-      // 4. Tính Trục (Module D) - Sử dụng Ft từ bước trước
-      const Ft_total = Ft_bevel + 3200; // Tổng hợp lực từ B & C
-
-      setShaftResults({
-        I: { dsb: 25, dtc: 30, Mtd: 45000, s: 2.1 },
-        II: { dsb: 38, dtc: 45, Mtd: 155000, s: 1.9 },
-        III: { dsb: 48, dtc: 55, Mtd: 480000, s: 1.7 }
-      });
-
-      setIsSubmitting(false);
-    }, 1500);
-  };
 
   // ----------------------------------
 
@@ -221,31 +119,31 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Navigation Wizard - Đã sửa: Cho phép nhấn quay lại các bước cũ */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10">
+      <div className="bg-white px-8 py-5 rounded-2xl border border-slate-200/60 shadow-sm flex items-center justify-between font-heading">
         <button 
           onClick={() => setStep(1)} 
-          className={`${getNavClass(1)} ${step > 1 ? 'cursor-pointer hover:text-primary' : ''}`}
+          className={`${getNavClass(1)} ${step > 1 ? 'cursor-pointer hover:text-blue-600' : ''}`}
           disabled={step === 1}
         >
           1. Nhập liệu
         </button>
-        <div className="h-px bg-slate-200 flex-1 mx-4"></div>
+        <div className="h-px bg-slate-100 flex-1 mx-6"></div>
         <button 
           onClick={() => setStep(2)} 
-          className={`${getNavClass(2)} ${step > 2 ? 'cursor-pointer hover:text-primary' : ''}`}
+          className={`${getNavClass(2)} ${step > 2 ? 'cursor-pointer hover:text-blue-600' : ''}`}
           disabled={step <= 2}
         >
           2. Động học
         </button>
-        <div className="h-px bg-slate-200 flex-1 mx-4"></div>
+        <div className="h-px bg-slate-100 flex-1 mx-6"></div>
         <button 
           onClick={() => setStep(3)} 
-          className={`${getNavClass(3)} ${step > 3 ? 'cursor-pointer hover:text-primary' : ''}`}
+          className={`${getNavClass(3)} ${step > 3 ? 'cursor-pointer hover:text-blue-600' : ''}`}
           disabled={step <= 3}
         >
           3. Chọn Động cơ
         </button>
-        <div className="h-px bg-slate-200 flex-1 mx-4"></div>
+        <div className="h-px bg-slate-100 flex-1 mx-6"></div>
         <button 
           onClick={() => setStep(4)} 
           className={`${getNavClass(4)} cursor-default`}
@@ -461,10 +359,13 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
       {/* STEP 4: CHI TIẾT MÁY (UC-05) - Pipeline A→F */}
       {step === 4 && (
         <div className="animate-fade-in">
-          <UC05Detail 
-            kinematicsResult={kinematicsResult} 
+          <UC05Detail
+            activeProject={activeProject}
+            kinematicsResult={kinematicsResult}
             onNavigate={onNavigate}
             onGoBack={() => setStep(3)}
+            onProjectSaved={onProjectSaved}
+            onKinematicsSaved={onKinematicsSaved}
           />
         </div>
       )}

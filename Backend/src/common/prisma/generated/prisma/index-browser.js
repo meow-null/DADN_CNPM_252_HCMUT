@@ -129,6 +129,9 @@ exports.Prisma.BearingsScalarFieldEnum = {
   width_B: 'width_B',
   C: 'C',
   C0: 'C0',
+  e: 'e',
+  Y: 'Y',
+  alpha_deg: 'alpha_deg',
   is_active: 'is_active',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
@@ -142,6 +145,10 @@ exports.Prisma.ChainsScalarFieldEnum = {
   pitch: 'pitch',
   breaking_load: 'breaking_load',
   mass_per_m: 'mass_per_m',
+  P_allow: 'P_allow',
+  A_mm2: 'A_mm2',
+  s_allow: 's_allow',
+  n_ref: 'n_ref',
   is_active: 'is_active',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
@@ -191,7 +198,8 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  selected_material_id: 'selected_material_id'
 };
 
 exports.Prisma.UsersScalarFieldEnum = {

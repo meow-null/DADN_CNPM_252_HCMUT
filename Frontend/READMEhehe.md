@@ -161,3 +161,32 @@ Tối ưu hóa Workflow & Đồng bộ Logic Kiểm nghiệm (UC-05)
     * Sửa lỗi nút "Xác nhận" không nhảy trang do thiếu prop `onNavigate`.
     * Fix lỗi Backend crash do thiếu file `.env` (DATABASE_URL).
 * **Ở file nào:** `src/pages/UC05Detail.jsx`, `Backend/.env`.
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.7 (07/06)
+Tích hợp tính năng "⚡ Áp dụng nhanh" (Auto-Apply) & Giải quyết Nghịch lý Thiết kế Cơ khí
+
+### 1. Giải pháp Khắc phục "Nghịch lý Giảm công suất" & Đề xuất Mô-đun tiêu chuẩn
+* **Sửa gì:**
+  * Tại `design.service.js`, nâng cấp giải thuật tính toán ngược khi bánh răng côn (Module B) bị quá tải tiếp xúc. Thay vì đề xuất tăng HB lên quá giới hạn thép thực tế (ví dụ HB >= 678), hệ thống sẽ tự so sánh với độ cứng tối đa trong CSDL (HB=480). Nếu vượt quá giới hạn, hệ thống chuyển sang tính toán và đề xuất ghi đè tăng Mô-đun tiêu chuẩn ($m_e$) lên giá trị lớn hơn tương ứng.
+  * Hỗ trợ ghi đè tham số Mô-đun bánh răng côn `m_e_I` trong API Backend, từ đó bỏ qua bước auto-sizing gây co nhỏ bánh răng.
+* **Ở file nào:** `Backend/src/services/design.service.js`
+
+### 2. Tích hợp tính năng "⚡ Áp dụng nhanh" (Auto-Apply) gợi ý sửa lỗi
+* **Sửa gì:**
+  * Cập nhật logic backend để trả về các trường tham số gợi ý có cấu trúc gồm: `recommended_P` (Xích), `recommended_material_id` và `recommended_m_e` (Bánh răng côn), `recommended_d_tc` (Trục & Ổ lăn), `recommended_l` (Then).
+  * Tích hợp nút bấm **⚡ Áp dụng** tại Modal Khắc phục nhanh trên giao diện frontend. Khi người dùng click nút này, hệ thống sẽ tự động điền các thông số đề xuất vào form (đổi vật liệu phù hợp, cập nhật đường kính trục, chiều dài then hoặc module) và kích hoạt live calculation tính toán kiểm nghiệm thời gian thực để chuyển trạng thái các module sang màu xanh an toàn chỉ với một chạm.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`, `Backend/src/services/design.service.js`
+
+### 3. Bổ sung trường nhập liệu hình học & Tái cấu trúc Layout Modal
+* **Sửa gì:**
+  * Thêm ô nhập liệu **Module bánh răng côn m_e**, **Đường kính trục d_tc**, và các thông số kích thước then tiêu chuẩn (**b, h, t1, l**) vào Modal Khắc phục nhanh.
+  * Tái cấu trúc layout hiển thị bảng trạng thái kiểm nghiệm live A → F và dọn dẹp vị trí thẻ gợi ý tối ưu ra ngoài flex container chính để tránh làm méo layout.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 4. Thiết kế giao diện phong cách Nvidia/Apple & Vá lỗi Logo Bách Khoa
+* **Sửa gì:**
+  * Cập nhật thanh bên (Sidebar) sang màu đen nhám (Dark Mode `bg-[#0a0a0a]/95`) kết hợp kính mờ glassmorphism và dải màu quang phổ gradient công nghệ ở trên cùng.
+  * Bọc logo Bách Khoa (HCMUT) trong khung nền trắng bo góc mềm mại `rounded-2xl` kết hợp đổ bóng phát sáng nhẹ (`glow`) giúp logo luôn nổi bật rõ ràng bất kể màu nền sidebar thay đổi.
+  * Đồng bộ hóa font chữ `Inter` và `Outfit` cho toàn bộ văn bản để tăng độ sắc nét trực quan.
+* **Ở file nào:** `Frontend/src/components/Sidebar.jsx`, `Frontend/src/index.css`

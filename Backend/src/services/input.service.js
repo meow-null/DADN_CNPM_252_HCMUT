@@ -4,7 +4,7 @@ export const inputService = {
 
   async create(req) {
     const userId = req.user.id;
-    const { name, input_P, input_n_ct, input_L } = req.body;
+    const { name, input_P, input_n_ct, input_L, selected_material_id } = req.body;
     const errors = [];
     if (!name) errors.push('Vui lòng nhập tên dự án');
     if (!input_P || input_P <= 0) errors.push('Vui lòng nhập công suất dương hợp lệ');
@@ -22,6 +22,7 @@ export const inputService = {
         input_P:    Number(input_P),
         input_n_ct: Number(input_n_ct),
         input_L:    Number(input_L),
+        selected_material_id: selected_material_id ? Number(selected_material_id) : null,
         step:       'inputs',
       },
       select: {
@@ -30,6 +31,7 @@ export const inputService = {
         input_P:    true,
         input_n_ct: true,
         input_L:    true,
+        selected_material_id: true,
         step:       true,
       },
     });
@@ -41,7 +43,7 @@ export const inputService = {
     const userId = req.user.id;
     const inputs = await prisma.projects.findMany({
       where: { user_id: userId, isDeleted: false },
-      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true },
+      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, selected_material_id: true, step: true },
       orderBy: { createdAt: 'desc' } 
     });
 
@@ -54,7 +56,7 @@ export const inputService = {
 
     const input = await prisma.projects.findFirst({
       where: { id: Number(projectId), user_id: userId, isDeleted: false },
-      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true },
+      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, selected_material_id: true, step: true },
     });
 
     if (!input) throw new NotfoundException('Dự án không tồn tại hoặc không thuộc về bạn');
@@ -64,7 +66,7 @@ export const inputService = {
   async update(req) {
     const { projectId } = req.params;
     const userId = req.user.id;
-    const { input_P, input_n_ct, input_L } = req.body;
+    const { input_P, input_n_ct, input_L, selected_material_id } = req.body;
 
     const errors = [];
     if (input_P && input_P <= 0) errors.push('Công suất phải là số dương');
@@ -86,9 +88,10 @@ export const inputService = {
         ...(input_P && { input_P: Number(input_P) }),
         ...(input_n_ct && { input_n_ct: Number(input_n_ct) }),
         ...(input_L && { input_L: Number(input_L) }),
+        ...(selected_material_id !== undefined && { selected_material_id: selected_material_id ? Number(selected_material_id) : null }),
         updatedAt: new Date(),
       },
-      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true },
+      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, selected_material_id: true, step: true },
     });
 
     return updatedInput;
