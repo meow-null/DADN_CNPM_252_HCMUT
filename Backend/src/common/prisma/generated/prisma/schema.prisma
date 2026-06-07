@@ -22,8 +22,9 @@ model bearings {
   deletedAt DateTime? @db.Timestamp(0)
   createdAt DateTime? @default(now()) @db.Timestamp(0)
   updatedAt DateTime? @default(now()) @db.Timestamp(0)
-
-  @@unique([inner_d, outer_D, width_B], map: "inner_d_unique")
+  Y         Decimal?  @db.Decimal(10, 4)
+  alpha_deg Decimal?  @db.Decimal(10, 2)
+  e         Decimal?  @db.Decimal(10, 4)
 }
 
 model chains {
@@ -37,6 +38,10 @@ model chains {
   deletedAt     DateTime? @db.Timestamp(0)
   createdAt     DateTime? @default(now()) @db.Timestamp(0)
   updatedAt     DateTime? @default(now()) @db.Timestamp(0)
+  A_mm2         Decimal?  @db.Decimal(10, 2)
+  P_allow       Decimal?  @db.Decimal(10, 2)
+  n_ref         Int?
+  s_allow       Decimal?  @db.Decimal(10, 2)
 }
 
 model motors {

@@ -13,7 +13,7 @@ export default function Sidebar({ currentScreen, onNavigate, onLogout, userName 
     <aside className="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0">
       <div className="p-6 border-b border-slate-100 flex items-center gap-3">
         <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png" alt="Logo HCMUT" className="h-10 w-10 object-contain" />
-        <span className="font-bold text-lg tracking-tight text-primary-dark whitespace-nowrap">Hệ Dẫn Động</span>
+        <span className="font-bold text-lg tracking-tight text-primary-dark whitespace-nowrap">Thiết kế dẫn động</span>
       </div>
       
       <nav className="flex-1 p-4 space-y-2">
@@ -22,11 +22,7 @@ export default function Sidebar({ currentScreen, onNavigate, onLogout, userName 
           Dự án của tôi
         </button>
         
-        {/* Nút mới thay thế cho Tính toán & Báo cáo */}
-        <button className={getNavClass('catalog')} onClick={() => onNavigate('catalog')}>
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-          Thư viện Linh kiện
-        </button>
+
       </nav>
 
       <div className="p-4 border-t border-slate-100">

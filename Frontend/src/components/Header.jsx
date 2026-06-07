@@ -15,7 +15,7 @@ export default function Header({ currentScreen, onNavigate, activeProjectName })
         ) : (
           <div className="text-sm text-slate-500">
             Hệ thống › <span className="text-slate-900 font-medium">
-              {currentScreen === 'workspace' ? 'Không gian làm việc' : 'Thư viện Linh kiện'}
+              Dự án của tôi
             </span>
           </div>
         )}

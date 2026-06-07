@@ -30,7 +30,7 @@ export const kinematicsService = {
     if (!project.input_P || !project.input_n_ct || !project.input_L)
       throw new BadRequestException('Dữ liệu đầu vào bị gián đoạn. Vui lòng nhập lại thông số');
 
-    const P = Number(project.input_P);   
+    const P = Number(project.input_P);
     const n = Number(project.input_n_ct);
     const eta_ol4 = Math.pow(ETA.ol, 4);
 
@@ -48,8 +48,8 @@ export const kinematicsService = {
 
     // ⑤ Shaft powers — tính ngược từ trục công tác lên trục động cơ
     const P_out = P;
-    const P_x   = round3(P_out / (ETA.x   * ETA.ol));
-    const P_brt = round3(P_x   / (ETA.brt * ETA.ol));
+    const P_x = round3(P_out / (ETA.x * ETA.ol));
+    const P_brt = round3(P_x / (ETA.brt * ETA.ol));
     const P_brc = round3(P_brt / (ETA.brc * ETA.ol));
     const P_ct2 = round3(P_brc / ETA.ol);
 
@@ -62,13 +62,13 @@ export const kinematicsService = {
     const updated = await prisma.projects.update({
       where: { id: Number(projectId) },
       data: {
-        efficiency:  eta,
-        Pct:         P_ct,
+        efficiency: eta,
+        Pct: P_ct,
         total_ratio: u_ch_sb,
-        step:        'kinematics',
+        step: 'kinematics',
         transmission: { n_sb, u_h: U_SB.u_h, u_x: U_SB.u_x, u_1: U_SB.u_1, u_2 },
-        shafts:       { P_out, P_x, P_brt, P_brc, T_out },
-        updatedAt:   new Date(),
+        shafts: { P_out, P_x, P_brt, P_brc, T_out },
+        updatedAt: new Date(),
       },
       select: {
         id: true, name: true, step: true,
@@ -102,7 +102,7 @@ export const kinematicsService = {
         // Momen trục công tác
         T_out,
 
-        note: 'Bảng momen đầy đủ tính sau khi chọn động cơ ',
+        note: 'Các tỷ số truyền trên chỉ là dự kiến sơ bộ để chọn tốc độ đồng bộ. Tỷ số truyền thực tế sẽ được phần mềm tự động tính toán chính xác lại dựa trên tốc độ thực của Động cơ bạn chọn ở bước sau.',
         unit: { P: 'kW', n: 'rpm', T: 'N.mm', eta: 'không thứ nguyên' },
       },
     };

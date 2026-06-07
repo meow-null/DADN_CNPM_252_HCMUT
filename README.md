@@ -1,6 +1,7 @@
-# Huong Dan Chay Project DADN CNPM 252
+# Hướng Dẫn Chạy Project Đồ Án Dẫn Động Cơ Khí (DADN CNPM 252)
 
-Tai lieu nay huong dan chay toan bo project (Backend + Frontend) tren may local.
+Tài liệu này hướng dẫn chạy toàn bộ project (Backend + Frontend) trên máy local.
+Dự án là Hệ thống tính toán thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn - trụ, bộ truyền xích ngoài, thiết kế trục, chọn động cơ, chọn ổ lăn và then.
 
 > 📚 **Chi tiết thêm:**
 > - Xem **[Tài liệu Frontend](./Frontend/README.md)**

@@ -1,6 +1,6 @@
 # 🚀 DADN252 — Back-end API Server
 
-> Hệ thống back-end phục vụ tính toán thiết kế hệ dẫn động cơ khí (kinematics, chọn động cơ, thiết kế hộp giảm tốc), xây dựng trên nền tảng **Node.js / Express.js** với kiến trúc phân lớp rõ ràng và nhiều cơ chế bảo mật hiện đại.
+> Hệ thống back-end phục vụ tính toán thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn trụ, bộ truyền xích, thiết kế trục, chọn động cơ, chọn ổ lăn, then. Xây dựng trên nền tảng **Node.js / Express.js** với kiến trúc phân lớp rõ ràng và nhiều cơ chế bảo mật hiện đại.
 
 ---
 

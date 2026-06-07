@@ -134,7 +134,10 @@ exports.Prisma.BearingsScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  Y: 'Y',
+  alpha_deg: 'alpha_deg',
+  e: 'e'
 };
 
 exports.Prisma.ChainsScalarFieldEnum = {
@@ -147,7 +150,11 @@ exports.Prisma.ChainsScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  A_mm2: 'A_mm2',
+  P_allow: 'P_allow',
+  n_ref: 'n_ref',
+  s_allow: 's_allow'
 };
 
 exports.Prisma.MotorsScalarFieldEnum = {

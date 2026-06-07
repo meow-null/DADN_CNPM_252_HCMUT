@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { formatNumber } from '../utils/formatUtils';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
@@ -185,7 +186,7 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
           <h2 className="text-3xl font-bold text-slate-900">Chọn Động cơ Tối ưu</h2>
           {P_ct && n_sb && (
             <div className="bg-primary-light/50 text-primary-dark inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium">
-              P<sub>ct</sub> = {P_ct} kW &nbsp;|&nbsp; n<sub>sb</sub> = {n_sb} rpm
+              P<sub>ct</sub> = {formatNumber(P_ct)} kW &nbsp;|&nbsp; n<sub>sb</sub> = {formatNumber(n_sb)} rpm
             </div>
           )}
         </div>
@@ -228,10 +229,10 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
               </span>
             </div>
             <div className="bg-slate-50 rounded-xl p-5 space-y-3">
-              <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-sm text-slate-600">Công suất P<sub>dm</sub></span><span className="font-bold">{Number(selectedMotor.P_dm)} kW</span></div>
-              <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-sm text-slate-600">Vòng quay n<sub>dm</sub></span><span className="font-bold">{selectedMotor.n_dm} rpm</span></div>
-              {selectedMotor.efficiency && <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-sm text-slate-600">Hiệu suất</span><span className="font-bold">{Number(selectedMotor.efficiency)}%</span></div>}
-              {selectedMotor.cos_phi && <div className="flex justify-between"><span className="text-sm text-slate-600">Hệ số cos φ</span><span className="font-bold">{Number(selectedMotor.cos_phi)}</span></div>}
+              <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-sm text-slate-600">Công suất P<sub>dm</sub></span><span className="font-bold">{formatNumber(selectedMotor.P_dm)} kW</span></div>
+              <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-sm text-slate-600">Vòng quay n<sub>dm</sub></span><span className="font-bold">{formatNumber(selectedMotor.n_dm)} rpm</span></div>
+              {selectedMotor.efficiency && <div className="flex justify-between border-b border-slate-200 pb-2"><span className="text-sm text-slate-600">Hiệu suất</span><span className="font-bold">{formatNumber(selectedMotor.efficiency)}%</span></div>}
+              {selectedMotor.cos_phi && <div className="flex justify-between"><span className="text-sm text-slate-600">Hệ số cos φ</span><span className="font-bold">{formatNumber(selectedMotor.cos_phi)}</span></div>}
             </div>
           </div>
           <div className="flex border-t border-slate-200">
@@ -269,11 +270,10 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-2">
         <h2 className="text-3xl font-bold text-slate-900">Đề xuất Động cơ Tối ưu</h2>
-        <p className="text-slate-500">Hệ thống gợi ý dựa trên kết quả tính toán động học (UC-04)</p>
         {P_ct && n_sb && (
           <div className="bg-primary-light/50 text-primary-dark inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
-            Dựa trên: P<sub>ct</sub> = {P_ct} kW &nbsp;|&nbsp; n<sub>sb</sub> = {n_sb} rpm
+            Dựa trên: P<sub>ct</sub> = {formatNumber(P_ct)} kW &nbsp;|&nbsp; n<sub>sb</sub> = {formatNumber(n_sb)} rpm
           </div>
         )}
       </div>
@@ -318,23 +318,23 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
                 <div className="bg-slate-50 rounded-xl p-4 space-y-3 text-sm">
                   <div className="flex justify-between items-center">
                     <span className="text-slate-600">Công suất P<sub>dm</sub></span>
-                    <span className="font-bold text-slate-800">{pDm} kW</span>
+                    <span className="font-bold text-slate-800">{formatNumber(pDm)} kW</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-slate-600">Vòng quay n<sub>dm</sub></span>
-                    <span className="font-bold text-slate-800">{motor.n_dm} rpm</span>
+                    <span className="font-bold text-slate-800">{formatNumber(motor.n_dm)} rpm</span>
                   </div>
                   <div className="border-t border-slate-200 pt-3 space-y-2">
                     {motor.efficiency != null && (
                       <div className="flex justify-between items-center">
                         <span className="text-slate-500 text-xs">Hiệu suất</span>
-                        <span className="font-bold text-xs">{Number(motor.efficiency)}%</span>
+                        <span className="font-bold text-xs">{formatNumber(motor.efficiency)}%</span>
                       </div>
                     )}
                     {motor.cos_phi != null && (
                       <div className="flex justify-between items-center">
                         <span className="text-slate-500 text-xs">cos φ</span>
-                        <span className="font-bold text-xs">{Number(motor.cos_phi)}</span>
+                        <span className="font-bold text-xs">{formatNumber(motor.cos_phi)}</span>
                       </div>
                     )}
                   </div>
@@ -342,10 +342,10 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
 
                 <div className="flex gap-2 text-[10px]">
                   <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">
-                    ΔP = +{deltaP} kW
+                    ΔP = +{formatNumber(deltaP)} kW
                   </span>
                   <span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full font-bold">
-                    Δn = {deltaN} rpm
+                    Δn = {formatNumber(deltaN)} rpm
                   </span>
                 </div>
               </div>
@@ -385,7 +385,7 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
             <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
               <div>
                 <h2 className="text-lg font-bold text-slate-800">Tất cả động cơ thỏa mãn</h2>
-                <p className="text-xs text-slate-400 mt-0.5">{allMotors.length} kết quả — P<sub>dm</sub> ≥ {P_ct} kW</p>
+                <p className="text-xs text-slate-400 mt-0.5">{allMotors.length} kết quả — P<sub>dm</sub> ≥ {formatNumber(P_ct)} kW</p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 text-slate-500 hover:bg-slate-300 hover:text-slate-700 transition-colors" onClick={() => setShowAllModal(false)}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -416,12 +416,12 @@ export default function MotorRecommendation({ activeProject, kinematicsResult, o
                         <td className="px-5 py-3">
                           <span className={`${sc.bg} ${sc.text} text-[10px] font-bold px-2 py-0.5 rounded-full border ${sc.border}`}>{motor.series}</span>
                         </td>
-                        <td className="px-5 py-3 text-right font-mono">{Number(motor.P_dm)}</td>
-                        <td className="px-5 py-3 text-right font-mono">{motor.n_dm}</td>
-                        <td className="px-5 py-3 text-right font-mono">{motor.efficiency ? Number(motor.efficiency) : '—'}</td>
-                        <td className="px-5 py-3 text-right font-mono">{motor.cos_phi ? Number(motor.cos_phi) : '—'}</td>
-                        <td className="px-5 py-3 text-right text-blue-600 font-mono text-xs">{motor.delta_n ?? '—'}</td>
-                        <td className="px-5 py-3 text-right text-emerald-600 font-mono text-xs">+{motor.delta_P != null ? Number(motor.delta_P).toFixed(2) : '—'}</td>
+                        <td className="px-5 py-3 text-right font-mono">{formatNumber(motor.P_dm)}</td>
+                        <td className="px-5 py-3 text-right font-mono">{formatNumber(motor.n_dm)}</td>
+                        <td className="px-5 py-3 text-right font-mono">{motor.efficiency ? formatNumber(motor.efficiency) : '—'}</td>
+                        <td className="px-5 py-3 text-right font-mono">{motor.cos_phi ? formatNumber(motor.cos_phi) : '—'}</td>
+                        <td className="px-5 py-3 text-right text-blue-600 font-mono text-xs">{motor.delta_n != null ? formatNumber(motor.delta_n) : '—'}</td>
+                        <td className="px-5 py-3 text-right text-emerald-600 font-mono text-xs">+{motor.delta_P != null ? formatNumber(motor.delta_P) : '—'}</td>
                         <td className="px-5 py-3 text-center">
                           <button
                             className="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold hover:bg-primary-dark transition-all disabled:opacity-50"

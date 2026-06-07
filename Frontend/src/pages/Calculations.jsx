@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import MotorRecommendation from './MotorRecommendation';
 import UC05Detail from './UC05Detail';
+import { formatNumber } from '../utils/formatUtils';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
@@ -71,83 +72,15 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedMotor, setSelectedMotor] = useState(null);
 
-  // --- LOGIC GIẢ LẬP API CHO UC-05 ---
-  // --- PIPELINE CALCULATIONS (UC-05) ---
-  const [chainResults, setChainResults] = useState({
-    z1: 21, z2: 67, p: 25.4, Pt: 4.2, x: 120, a: 650, s: 10.5, sigmaH: 450, status: 'success'
-  });
-
-  const [bevelResults, setBevelResults] = useState({
-    z1: 16, z2: 40, Re: 120, de1: 50, b: 30, sigmaH: 480, sigmaF: 150,
-    Ft: 1200, Fr: 450, Fa: 200, status: 'success'
-  });
-
-  const [spurResults, setSpurResults] = useState({
-    aw: 160, m: 2.5, z1: 24, z2: 76, bw: 50, sigmaH: 520,
-    Ft: 3200, Fr: 1160, Fa: 0, status: 'success'
-  });
-
-  const [shaftResults, setShaftResults] = useState({
-    I: { dsb: 25, dtc: 30, Mtd: 45000, s: 2.1 },
-    II: { dsb: 35, dtc: 40, Mtd: 142000, s: 1.8 },
-    III: { dsb: 45, dtc: 50, Mtd: 450000, s: 1.6 }
-  });
-
-  const [keyResults, setKeyResults] = useState({
-    status: 'success',
-    data: [
-      { shaft: 'I', b: 8, h: 7, lt: 40, sigma_d: 45.2, tau_c: 12.5 },
-      { shaft: 'II', b: 10, h: 8, lt: 50, sigma_d: 62.8, tau_c: 18.4 },
-      { shaft: 'III', b: 14, h: 9, lt: 65, sigma_d: 88.5, tau_c: 25.6 }
-    ]
-  });
-
-  const [bearingResults, setBearingResults] = useState({
-    status: 'success',
-    data: [
-      { shaft: 'I', code: '6206', Cd: 12.5, C_cat: 19.5, check: true },
-      { shaft: 'II', code: '6308', Cd: 28.4, C_cat: 41.0, check: true },
-      { shaft: 'III', code: '6310', Cd: 42.1, C_cat: 62.0, check: true }
-    ]
-  });
-
-  const handleRecalculatePipeline = () => {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      // 1. Tính Xích (Module A)
-      const ux = data?.u_x_sb || 3.15;
-      let z1 = Math.floor(29 - 2 * ux);
-      if (z1 % 2 === 0) z1 -= 1; // Làm tròn xuống số lẻ
-      if (z1 < 17) z1 = 17;
-      
-      // 2. Tính Bánh răng côn (Module B)
-      const u1 = data?.u_1 || 2.5;
-      const Ft_bevel = 1250; // Mockup từ momen xoắn
-      
-      // 3. Tính Bánh răng trụ (Module C)
-      const u2 = data?.u_2 || 3.2;
-      const aw = 160;
-      
-      // 4. Tính Trục (Module D) - Sử dụng Ft từ bước trước
-      const Ft_total = Ft_bevel + 3200; // Tổng hợp lực từ B & C
-
-      setShaftResults({
-        I: { dsb: 25, dtc: 30, Mtd: 45000, s: 2.1 },
-        II: { dsb: 38, dtc: 45, Mtd: 155000, s: 1.9 },
-        III: { dsb: 48, dtc: 55, Mtd: 480000, s: 1.7 }
-      });
-
-      setIsSubmitting(false);
-    }, 1500);
-  };
+  // ----------------------------------
 
   // ----------------------------------
 
   const [form, setForm] = useState({
     name: '',
-    input_P: '15.5',
-    input_n_ct: '450',
-    input_L: '10',
+    input_P: '',
+    input_n_ct: '',
+    input_L: '',
   });
 
   useEffect(() => {
@@ -157,6 +90,13 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
         input_P: String(activeProject.input_P ?? ''),
         input_n_ct: String(activeProject.input_n_ct ?? ''),
         input_L: String(activeProject.input_L ?? ''),
+      });
+    } else {
+      setForm({
+        name: '',
+        input_P: '',
+        input_n_ct: '',
+        input_L: '',
       });
     }
   }, [activeProject]);
@@ -176,23 +116,23 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
     try {
       const payload = {
         name: form.name,
-        input_P: Number(form.input_P),
-        input_n_ct: Number(form.input_n_ct),
-        input_L: Number(form.input_L),
+        input_P: form.input_P === '' ? '' : Number(form.input_P),
+        input_n_ct: form.input_n_ct === '' ? '' : Number(form.input_n_ct),
+        input_L: form.input_L === '' ? '' : Number(form.input_L),
       };
-      
+
       // 1. Lưu thông số đầu vào
       const savedProject = activeProject
         ? await calcRequest(`/projects/${activeProject.id}`, { method: 'PUT', body: payload })
         : await calcRequest('/projects', { method: 'POST', body: payload });
-      
+
       // 2. Tự động gọi tính toán Động học dựa trên input mới
       const result = await calcRequest(`/projects/${savedProject.id}/kinematics`, { method: 'POST' });
-      
+
       // 3. Cập nhật state toàn cục và chuyển tab
       onProjectSaved(result.project);
       onKinematicsSaved(result);
-      setStep(2); 
+      setStep(2);
     } catch (error) {
       setErrorMessage(error.message || 'Lỗi khi lưu dữ liệu hoặc tính toán tự động.');
     } finally {
@@ -222,32 +162,32 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Navigation Wizard - Đã sửa: Cho phép nhấn quay lại các bước cũ */}
       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10">
-        <button 
-          onClick={() => setStep(1)} 
+        <button
+          onClick={() => setStep(1)}
           className={`${getNavClass(1)} ${step > 1 ? 'cursor-pointer hover:text-primary' : ''}`}
           disabled={step === 1}
         >
           1. Nhập liệu
         </button>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button 
-          onClick={() => setStep(2)} 
+        <button
+          onClick={() => setStep(2)}
           className={`${getNavClass(2)} ${step > 2 ? 'cursor-pointer hover:text-primary' : ''}`}
           disabled={step <= 2}
         >
           2. Động học
         </button>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button 
-          onClick={() => setStep(3)} 
+        <button
+          onClick={() => setStep(3)}
           className={`${getNavClass(3)} ${step > 3 ? 'cursor-pointer hover:text-primary' : ''}`}
           disabled={step <= 3}
         >
           3. Chọn Động cơ
         </button>
         <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button 
-          onClick={() => setStep(4)} 
+        <button
+          onClick={() => setStep(4)}
           className={`${getNavClass(4)} cursor-default`}
           disabled={true}
         >
@@ -297,6 +237,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 type="number"
                 value={form.input_P}
                 onChange={(e) => setForm((prev) => ({ ...prev, input_P: e.target.value }))}
+                placeholder="6.5"
               />
             </div>
             <div className="space-y-2">
@@ -306,6 +247,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 type="number"
                 value={form.input_n_ct}
                 onChange={(e) => setForm((prev) => ({ ...prev, input_n_ct: e.target.value }))}
+                placeholder="75"
               />
             </div>
             <div className="space-y-2 md:col-span-2">
@@ -315,6 +257,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 type="number"
                 value={form.input_L}
                 onChange={(e) => setForm((prev) => ({ ...prev, input_L: e.target.value }))}
+                placeholder="10"
               />
             </div>
           </div>
@@ -356,8 +299,8 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                   >
                     Xem chi tiết công thức
                   </button>
-                  <button 
-                    className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-dark shadow-lg shadow-primary/20 transition-all flex items-center gap-2" 
+                  <button
+                    className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-dark shadow-lg shadow-primary/20 transition-all flex items-center gap-2"
                     onClick={() => setStep(3)} // Chuyển sang Bước 3: Chọn động cơ
                   >
                     Sang bước Chọn Động cơ
@@ -386,19 +329,19 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                     <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd"></path></svg>
                   </div>
                   <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1">Hiệu suất tổng (η)</p>
-                  <p className="text-3xl font-black text-primary">{(data.eta * 100).toFixed(1)}%</p>
+                  <p className="text-3xl font-black text-primary">{formatNumber(data.eta * 100)}%</p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                   <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1">Công suất P<sub>ct</sub></p>
-                  <p className="text-3xl font-black text-slate-900">{data.P_ct} <span className="text-sm font-medium text-slate-400">kW</span></p>
+                  <p className="text-3xl font-black text-slate-900">{formatNumber(data.P_ct)} <span className="text-sm font-medium text-slate-400">kW</span></p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                   <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1">Tỷ số truyền chung</p>
-                  <p className="text-3xl font-black text-slate-900">{data.u_ch_sb}</p>
+                  <p className="text-3xl font-black text-slate-900">{formatNumber(data.u_ch_sb)}</p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                   <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-1">Vòng quay n<sub>sb</sub></p>
-                  <p className="text-3xl font-black text-slate-900">{data.n_sb} <span className="text-sm font-medium text-slate-400">rpm</span></p>
+                  <p className="text-3xl font-black text-slate-900">{formatNumber(data.n_sb)} <span className="text-sm font-medium text-slate-400">rpm</span></p>
                 </div>
               </div>
 
@@ -419,22 +362,22 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4 font-medium text-slate-700">Hộp giảm tốc (Tổng)</td>
                         <td className="px-6 py-4 text-center text-slate-500 font-serif italic text-lg">u<sub>h</sub></td>
-                        <td className="px-6 py-4 text-right font-bold text-slate-900">{data.u_h_sb}</td>
+                        <td className="px-6 py-4 text-right font-bold text-slate-900">{formatNumber(data.u_h_sb)}</td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4 font-medium text-slate-700">Bánh răng côn (Cấp nhanh)</td>
                         <td className="px-6 py-4 text-center text-slate-500 font-serif italic text-lg">u<sub>1</sub></td>
-                        <td className="px-6 py-4 text-right font-bold text-slate-900">{data.u_1}</td>
+                        <td className="px-6 py-4 text-right font-bold text-slate-900">{formatNumber(data.u_1)}</td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4 font-medium text-slate-700">Bánh răng trụ (Cấp chậm)</td>
                         <td className="px-6 py-4 text-center text-slate-500 font-serif italic text-lg">u<sub>2</sub></td>
-                        <td className="px-6 py-4 text-right font-bold text-slate-900">{data.u_2}</td>
+                        <td className="px-6 py-4 text-right font-bold text-slate-900">{formatNumber(data.u_2)}</td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-6 py-4 font-medium text-primary">Bộ truyền xích (Bộ truyền ngoài)</td>
                         <td className="px-6 py-4 text-center text-primary font-serif italic text-lg">u<sub>x</sub></td>
-                        <td className="px-6 py-4 text-right font-bold text-primary">{data.u_x_sb}</td>
+                        <td className="px-6 py-4 text-right font-bold text-primary">{formatNumber(data.u_x_sb)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -450,8 +393,9 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
           activeProject={activeProject}
           kinematicsResult={kinematicsResult}
           onMotorSelected={(res) => {
-            setSelectedMotor(res); // Lưu động cơ đã chọn vào state của Calculations
-            setStep(4); // Chuyển sang bước 4 (Chi tiết máy)
+            setSelectedMotor(res);
+            onProjectSaved({ ...activeProject, motors: res, selected_motor_snapshot: res });
+            setStep(4);
           }}
           onNavigate={onNavigate}
           onGoBack={() => setStep(2)}
@@ -461,10 +405,13 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
       {/* STEP 4: CHI TIẾT MÁY (UC-05) - Pipeline A→F */}
       {step === 4 && (
         <div className="animate-fade-in">
-          <UC05Detail 
-            kinematicsResult={kinematicsResult} 
+          <UC05Detail
+            activeProject={activeProject}
+            kinematicsResult={kinematicsResult}
             onNavigate={onNavigate}
             onGoBack={() => setStep(3)}
+            onKinematicsSaved={onKinematicsSaved}
+            onProjectSaved={onProjectSaved}
           />
         </div>
       )}
@@ -478,14 +425,14 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 <h2 className="text-xl font-bold text-slate-800">Chi tiết Công thức Tính toán</h2>
                 <p className="text-xs text-slate-400 mt-1 font-medium">UC-04: Động học Dẫn động Thùng trộn</p>
               </div>
-              <button 
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 text-slate-500 hover:bg-slate-300 hover:text-slate-700 transition-colors" 
+              <button
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 text-slate-500 hover:bg-slate-300 hover:text-slate-700 transition-colors"
                 onClick={() => setShowFormulaModal(false)}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
               </button>
             </div>
-            
+
             <div className="p-8 sm:p-10 overflow-y-auto space-y-10">
               <div className="space-y-4">
                 <p className="font-bold text-primary flex items-center gap-2">

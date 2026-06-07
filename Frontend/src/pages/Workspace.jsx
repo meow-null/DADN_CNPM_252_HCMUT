@@ -1,3 +1,5 @@
+import { formatNumber } from '../utils/formatUtils';
+
 export default function Workspace({ onNavigate, projects, loading, errorMessage, onSelectProject, onDeleteProject }) {
   return (
     <section className="space-y-6 animate-fade-in">
@@ -6,19 +8,6 @@ export default function Workspace({ onNavigate, projects, loading, errorMessage,
           <h1 className="text-2xl font-bold text-slate-900">Dự án của tôi</h1>
           <p className="text-slate-500 mt-1">Quản lý danh sách các thiết kế thùng trộn và hệ thống truyền động.</p>
         </div>
-        <button 
-          onClick={() => onSelectProject(null)} // Reset project về null để tạo mới
-          className="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-all shadow-sm"
-        >
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" clipRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path></svg>
-          Tạo dự án mới
-        </button>
-      </div>
-
-      <div className="flex border-b border-slate-200">
-        <button className="px-6 py-3 text-primary border-b-2 border-primary font-medium">Tất cả</button>
-        <button className="px-6 py-3 text-slate-500 hover:text-slate-700 font-medium">Đang thực hiện</button>
-        <button className="px-6 py-3 text-slate-500 hover:text-slate-700 font-medium">Đã hoàn thành</button>
       </div>
 
       {errorMessage && <p className="text-sm font-medium text-red-600 bg-red-50 p-3 rounded-lg border border-red-100">{errorMessage}</p>}
@@ -46,7 +35,7 @@ export default function Workspace({ onNavigate, projects, loading, errorMessage,
             <div className="p-5">
               <h3 className="font-bold text-slate-900 text-lg mb-2 truncate">{project.name}</h3>
               <p className="text-xs font-mono text-slate-500 mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100">
-                P: <span className="font-bold text-primary">{project.input_P}</span> kW <span className="mx-1 text-slate-300">|</span> n: <span className="font-bold text-primary">{project.input_n_ct}</span> rpm
+                P: <span className="font-bold text-primary">{formatNumber(project.input_P)}</span> kW <span className="mx-1 text-slate-300">|</span> n: <span className="font-bold text-primary">{formatNumber(project.input_n_ct)}</span> rpm
               </p>
               <div className="flex items-center gap-2">
                 <button
@@ -88,7 +77,7 @@ export default function Workspace({ onNavigate, projects, loading, errorMessage,
           <div className="w-14 h-14 rounded-full bg-primary-light flex items-center justify-center text-primary group-hover:scale-110 transition-transform mb-4">
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
           </div>
-          <p className="text-slate-500 font-bold group-hover:text-primary">Bắt đầu thiết kế mới</p>
+          <p className="text-slate-500 font-bold group-hover:text-primary">Tạo dự án mới</p>
         </button>
       </div>
     </section>

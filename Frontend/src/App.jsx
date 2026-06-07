@@ -181,14 +181,6 @@ function App() {
             />
           )}
 
-          {currentScreen === 'catalog' && (
-            <div className="flex flex-col items-center justify-center h-full text-slate-500 space-y-4 mt-20 animate-fade-in">
-               <svg className="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
-               <h2 className="text-xl font-bold text-slate-700">Thư viện Linh kiện (Catalog)</h2>
-               <p>Giao diện UC-07 đang được phát triển đợi đi m...</p>
-            </div>
-          )}
-
           <div className={currentScreen === 'calculations' ? 'block' : 'hidden'}>
             <Calculations
               onNavigate={setCurrentScreen}

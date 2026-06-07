@@ -6,7 +6,7 @@ export const calculateDesign = async (req, res, next) => {
     const { projectId } = req.params;
     
     // Gọi Service chạy toàn bộ UC05
-    const designResult = await designService.processUC05(Number(projectId));
+    const designResult = await designService.processUC05(Number(projectId), req.body);
     
     return res.status(200).json({
       status: "success",

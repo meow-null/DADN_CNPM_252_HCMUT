@@ -1968,6 +1968,9 @@ export namespace Prisma {
     C: Decimal | null
     C0: Decimal | null
     deletedBy: number | null
+    Y: Decimal | null
+    alpha_deg: Decimal | null
+    e: Decimal | null
   }
 
   export type BearingsSumAggregateOutputType = {
@@ -1978,6 +1981,9 @@ export namespace Prisma {
     C: Decimal | null
     C0: Decimal | null
     deletedBy: number | null
+    Y: Decimal | null
+    alpha_deg: Decimal | null
+    e: Decimal | null
   }
 
   export type BearingsMinAggregateOutputType = {
@@ -1995,6 +2001,9 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    Y: Decimal | null
+    alpha_deg: Decimal | null
+    e: Decimal | null
   }
 
   export type BearingsMaxAggregateOutputType = {
@@ -2012,6 +2021,9 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    Y: Decimal | null
+    alpha_deg: Decimal | null
+    e: Decimal | null
   }
 
   export type BearingsCountAggregateOutputType = {
@@ -2029,6 +2041,9 @@ export namespace Prisma {
     deletedAt: number
     createdAt: number
     updatedAt: number
+    Y: number
+    alpha_deg: number
+    e: number
     _all: number
   }
 
@@ -2041,6 +2056,9 @@ export namespace Prisma {
     C?: true
     C0?: true
     deletedBy?: true
+    Y?: true
+    alpha_deg?: true
+    e?: true
   }
 
   export type BearingsSumAggregateInputType = {
@@ -2051,6 +2069,9 @@ export namespace Prisma {
     C?: true
     C0?: true
     deletedBy?: true
+    Y?: true
+    alpha_deg?: true
+    e?: true
   }
 
   export type BearingsMinAggregateInputType = {
@@ -2068,6 +2089,9 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    Y?: true
+    alpha_deg?: true
+    e?: true
   }
 
   export type BearingsMaxAggregateInputType = {
@@ -2085,6 +2109,9 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    Y?: true
+    alpha_deg?: true
+    e?: true
   }
 
   export type BearingsCountAggregateInputType = {
@@ -2102,6 +2129,9 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    Y?: true
+    alpha_deg?: true
+    e?: true
     _all?: true
   }
 
@@ -2206,6 +2236,9 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    Y: Decimal | null
+    alpha_deg: Decimal | null
+    e: Decimal | null
     _count: BearingsCountAggregateOutputType | null
     _avg: BearingsAvgAggregateOutputType | null
     _sum: BearingsSumAggregateOutputType | null
@@ -2242,6 +2275,9 @@ export namespace Prisma {
     deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Y?: boolean
+    alpha_deg?: boolean
+    e?: boolean
   }, ExtArgs["result"]["bearings"]>
 
 
@@ -2261,9 +2297,12 @@ export namespace Prisma {
     deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Y?: boolean
+    alpha_deg?: boolean
+    e?: boolean
   }
 
-  export type bearingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "type" | "inner_d" | "outer_D" | "width_B" | "C" | "C0" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["bearings"]>
+  export type bearingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "type" | "inner_d" | "outer_D" | "width_B" | "C" | "C0" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "Y" | "alpha_deg" | "e", ExtArgs["result"]["bearings"]>
 
   export type $bearingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "bearings"
@@ -2283,6 +2322,9 @@ export namespace Prisma {
       deletedAt: Date | null
       createdAt: Date | null
       updatedAt: Date | null
+      Y: Prisma.Decimal | null
+      alpha_deg: Prisma.Decimal | null
+      e: Prisma.Decimal | null
     }, ExtArgs["result"]["bearings"]>
     composites: {}
   }
@@ -2666,6 +2708,9 @@ export namespace Prisma {
     readonly deletedAt: FieldRef<"bearings", 'DateTime'>
     readonly createdAt: FieldRef<"bearings", 'DateTime'>
     readonly updatedAt: FieldRef<"bearings", 'DateTime'>
+    readonly Y: FieldRef<"bearings", 'Decimal'>
+    readonly alpha_deg: FieldRef<"bearings", 'Decimal'>
+    readonly e: FieldRef<"bearings", 'Decimal'>
   }
     
 
@@ -3010,6 +3055,10 @@ export namespace Prisma {
     breaking_load: Decimal | null
     mass_per_m: Decimal | null
     deletedBy: number | null
+    A_mm2: Decimal | null
+    P_allow: Decimal | null
+    n_ref: number | null
+    s_allow: Decimal | null
   }
 
   export type ChainsSumAggregateOutputType = {
@@ -3018,6 +3067,10 @@ export namespace Prisma {
     breaking_load: Decimal | null
     mass_per_m: Decimal | null
     deletedBy: number | null
+    A_mm2: Decimal | null
+    P_allow: Decimal | null
+    n_ref: number | null
+    s_allow: Decimal | null
   }
 
   export type ChainsMinAggregateOutputType = {
@@ -3031,6 +3084,10 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    A_mm2: Decimal | null
+    P_allow: Decimal | null
+    n_ref: number | null
+    s_allow: Decimal | null
   }
 
   export type ChainsMaxAggregateOutputType = {
@@ -3044,6 +3101,10 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    A_mm2: Decimal | null
+    P_allow: Decimal | null
+    n_ref: number | null
+    s_allow: Decimal | null
   }
 
   export type ChainsCountAggregateOutputType = {
@@ -3057,6 +3118,10 @@ export namespace Prisma {
     deletedAt: number
     createdAt: number
     updatedAt: number
+    A_mm2: number
+    P_allow: number
+    n_ref: number
+    s_allow: number
     _all: number
   }
 
@@ -3067,6 +3132,10 @@ export namespace Prisma {
     breaking_load?: true
     mass_per_m?: true
     deletedBy?: true
+    A_mm2?: true
+    P_allow?: true
+    n_ref?: true
+    s_allow?: true
   }
 
   export type ChainsSumAggregateInputType = {
@@ -3075,6 +3144,10 @@ export namespace Prisma {
     breaking_load?: true
     mass_per_m?: true
     deletedBy?: true
+    A_mm2?: true
+    P_allow?: true
+    n_ref?: true
+    s_allow?: true
   }
 
   export type ChainsMinAggregateInputType = {
@@ -3088,6 +3161,10 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    A_mm2?: true
+    P_allow?: true
+    n_ref?: true
+    s_allow?: true
   }
 
   export type ChainsMaxAggregateInputType = {
@@ -3101,6 +3178,10 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    A_mm2?: true
+    P_allow?: true
+    n_ref?: true
+    s_allow?: true
   }
 
   export type ChainsCountAggregateInputType = {
@@ -3114,6 +3195,10 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    A_mm2?: true
+    P_allow?: true
+    n_ref?: true
+    s_allow?: true
     _all?: true
   }
 
@@ -3214,6 +3299,10 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    A_mm2: Decimal | null
+    P_allow: Decimal | null
+    n_ref: number | null
+    s_allow: Decimal | null
     _count: ChainsCountAggregateOutputType | null
     _avg: ChainsAvgAggregateOutputType | null
     _sum: ChainsSumAggregateOutputType | null
@@ -3246,6 +3335,10 @@ export namespace Prisma {
     deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    A_mm2?: boolean
+    P_allow?: boolean
+    n_ref?: boolean
+    s_allow?: boolean
   }, ExtArgs["result"]["chains"]>
 
 
@@ -3261,9 +3354,13 @@ export namespace Prisma {
     deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    A_mm2?: boolean
+    P_allow?: boolean
+    n_ref?: boolean
+    s_allow?: boolean
   }
 
-  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "breaking_load" | "mass_per_m" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["chains"]>
+  export type chainsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pitch" | "breaking_load" | "mass_per_m" | "is_active" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "A_mm2" | "P_allow" | "n_ref" | "s_allow", ExtArgs["result"]["chains"]>
 
   export type $chainsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "chains"
@@ -3279,6 +3376,10 @@ export namespace Prisma {
       deletedAt: Date | null
       createdAt: Date | null
       updatedAt: Date | null
+      A_mm2: Prisma.Decimal | null
+      P_allow: Prisma.Decimal | null
+      n_ref: number | null
+      s_allow: Prisma.Decimal | null
     }, ExtArgs["result"]["chains"]>
     composites: {}
   }
@@ -3658,6 +3759,10 @@ export namespace Prisma {
     readonly deletedAt: FieldRef<"chains", 'DateTime'>
     readonly createdAt: FieldRef<"chains", 'DateTime'>
     readonly updatedAt: FieldRef<"chains", 'DateTime'>
+    readonly A_mm2: FieldRef<"chains", 'Decimal'>
+    readonly P_allow: FieldRef<"chains", 'Decimal'>
+    readonly n_ref: FieldRef<"chains", 'Int'>
+    readonly s_allow: FieldRef<"chains", 'Decimal'>
   }
     
 
@@ -14838,7 +14943,10 @@ export namespace Prisma {
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    Y: 'Y',
+    alpha_deg: 'alpha_deg',
+    e: 'e'
   };
 
   export type BearingsScalarFieldEnum = (typeof BearingsScalarFieldEnum)[keyof typeof BearingsScalarFieldEnum]
@@ -14854,7 +14962,11 @@ export namespace Prisma {
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    A_mm2: 'A_mm2',
+    P_allow: 'P_allow',
+    n_ref: 'n_ref',
+    s_allow: 's_allow'
   };
 
   export type ChainsScalarFieldEnum = (typeof ChainsScalarFieldEnum)[keyof typeof ChainsScalarFieldEnum]
@@ -15194,6 +15306,9 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
+    Y?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    e?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsOrderByWithRelationInput = {
@@ -15211,13 +15326,15 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    Y?: SortOrderInput | SortOrder
+    alpha_deg?: SortOrderInput | SortOrder
+    e?: SortOrderInput | SortOrder
     _relevance?: bearingsOrderByRelevanceInput
   }
 
   export type bearingsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     code?: string
-    inner_d_outer_D_width_B?: bearingsInner_dOuter_DWidth_BCompoundUniqueInput
     AND?: bearingsWhereInput | bearingsWhereInput[]
     OR?: bearingsWhereInput[]
     NOT?: bearingsWhereInput | bearingsWhereInput[]
@@ -15233,7 +15350,10 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"bearings"> | Date | string | null
-  }, "id" | "code" | "inner_d_outer_D_width_B">
+    Y?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    e?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+  }, "id" | "code">
 
   export type bearingsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -15250,6 +15370,9 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    Y?: SortOrderInput | SortOrder
+    alpha_deg?: SortOrderInput | SortOrder
+    e?: SortOrderInput | SortOrder
     _count?: bearingsCountOrderByAggregateInput
     _avg?: bearingsAvgOrderByAggregateInput
     _max?: bearingsMaxOrderByAggregateInput
@@ -15275,6 +15398,9 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
     updatedAt?: DateTimeNullableWithAggregatesFilter<"bearings"> | Date | string | null
+    Y?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
+    e?: DecimalNullableWithAggregatesFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsWhereInput = {
@@ -15291,6 +15417,10 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"chains"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
+    A_mm2?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    P_allow?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    n_ref?: IntNullableFilter<"chains"> | number | null
+    s_allow?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsOrderByWithRelationInput = {
@@ -15304,6 +15434,10 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    A_mm2?: SortOrderInput | SortOrder
+    P_allow?: SortOrderInput | SortOrder
+    n_ref?: SortOrderInput | SortOrder
+    s_allow?: SortOrderInput | SortOrder
   }
 
   export type chainsWhereUniqueInput = Prisma.AtLeast<{
@@ -15320,6 +15454,10 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"chains"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"chains"> | Date | string | null
+    A_mm2?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    P_allow?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    n_ref?: IntNullableFilter<"chains"> | number | null
+    s_allow?: DecimalNullableFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
   }, "id" | "pitch">
 
   export type chainsOrderByWithAggregationInput = {
@@ -15333,6 +15471,10 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    A_mm2?: SortOrderInput | SortOrder
+    P_allow?: SortOrderInput | SortOrder
+    n_ref?: SortOrderInput | SortOrder
+    s_allow?: SortOrderInput | SortOrder
     _count?: chainsCountOrderByAggregateInput
     _avg?: chainsAvgOrderByAggregateInput
     _max?: chainsMaxOrderByAggregateInput
@@ -15354,6 +15496,10 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
     updatedAt?: DateTimeNullableWithAggregatesFilter<"chains"> | Date | string | null
+    A_mm2?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    P_allow?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
+    n_ref?: IntNullableWithAggregatesFilter<"chains"> | number | null
+    s_allow?: DecimalNullableWithAggregatesFilter<"chains"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type motorsWhereInput = {
@@ -16126,6 +16272,9 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    Y?: Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: Decimal | DecimalJsLike | number | string | null
+    e?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsUncheckedCreateInput = {
@@ -16143,6 +16292,9 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    Y?: Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: Decimal | DecimalJsLike | number | string | null
+    e?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsUpdateInput = {
@@ -16159,6 +16311,9 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Y?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    e?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsUncheckedUpdateInput = {
@@ -16176,6 +16331,9 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Y?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    e?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsCreateManyInput = {
@@ -16193,6 +16351,9 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    Y?: Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: Decimal | DecimalJsLike | number | string | null
+    e?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsUpdateManyMutationInput = {
@@ -16209,6 +16370,9 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Y?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    e?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type bearingsUncheckedUpdateManyInput = {
@@ -16226,6 +16390,9 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Y?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    alpha_deg?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    e?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsCreateInput = {
@@ -16238,6 +16405,10 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    A_mm2?: Decimal | DecimalJsLike | number | string | null
+    P_allow?: Decimal | DecimalJsLike | number | string | null
+    n_ref?: number | null
+    s_allow?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsUncheckedCreateInput = {
@@ -16251,6 +16422,10 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    A_mm2?: Decimal | DecimalJsLike | number | string | null
+    P_allow?: Decimal | DecimalJsLike | number | string | null
+    n_ref?: number | null
+    s_allow?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsUpdateInput = {
@@ -16263,6 +16438,10 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    A_mm2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    P_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    s_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsUncheckedUpdateInput = {
@@ -16276,6 +16455,10 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    A_mm2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    P_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    s_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsCreateManyInput = {
@@ -16289,6 +16472,10 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    A_mm2?: Decimal | DecimalJsLike | number | string | null
+    P_allow?: Decimal | DecimalJsLike | number | string | null
+    n_ref?: number | null
+    s_allow?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsUpdateManyMutationInput = {
@@ -16301,6 +16488,10 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    A_mm2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    P_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    s_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type chainsUncheckedUpdateManyInput = {
@@ -16314,6 +16505,10 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    A_mm2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    P_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    n_ref?: NullableIntFieldUpdateOperationsInput | number | null
+    s_allow?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type motorsCreateInput = {
@@ -17209,12 +17404,6 @@ export namespace Prisma {
     search: string
   }
 
-  export type bearingsInner_dOuter_DWidth_BCompoundUniqueInput = {
-    inner_d: Decimal | DecimalJsLike | number | string
-    outer_D: Decimal | DecimalJsLike | number | string
-    width_B: Decimal | DecimalJsLike | number | string
-  }
-
   export type bearingsCountOrderByAggregateInput = {
     id?: SortOrder
     code?: SortOrder
@@ -17230,6 +17419,9 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
+    e?: SortOrder
   }
 
   export type bearingsAvgOrderByAggregateInput = {
@@ -17240,6 +17432,9 @@ export namespace Prisma {
     C?: SortOrder
     C0?: SortOrder
     deletedBy?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
+    e?: SortOrder
   }
 
   export type bearingsMaxOrderByAggregateInput = {
@@ -17257,6 +17452,9 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
+    e?: SortOrder
   }
 
   export type bearingsMinOrderByAggregateInput = {
@@ -17274,6 +17472,9 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
+    e?: SortOrder
   }
 
   export type bearingsSumOrderByAggregateInput = {
@@ -17284,6 +17485,9 @@ export namespace Prisma {
     C?: SortOrder
     C0?: SortOrder
     deletedBy?: SortOrder
+    Y?: SortOrder
+    alpha_deg?: SortOrder
+    e?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -17419,6 +17623,10 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    A_mm2?: SortOrder
+    P_allow?: SortOrder
+    n_ref?: SortOrder
+    s_allow?: SortOrder
   }
 
   export type chainsAvgOrderByAggregateInput = {
@@ -17427,6 +17635,10 @@ export namespace Prisma {
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     deletedBy?: SortOrder
+    A_mm2?: SortOrder
+    P_allow?: SortOrder
+    n_ref?: SortOrder
+    s_allow?: SortOrder
   }
 
   export type chainsMaxOrderByAggregateInput = {
@@ -17440,6 +17652,10 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    A_mm2?: SortOrder
+    P_allow?: SortOrder
+    n_ref?: SortOrder
+    s_allow?: SortOrder
   }
 
   export type chainsMinOrderByAggregateInput = {
@@ -17453,6 +17669,10 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    A_mm2?: SortOrder
+    P_allow?: SortOrder
+    n_ref?: SortOrder
+    s_allow?: SortOrder
   }
 
   export type chainsSumOrderByAggregateInput = {
@@ -17461,6 +17681,10 @@ export namespace Prisma {
     breaking_load?: SortOrder
     mass_per_m?: SortOrder
     deletedBy?: SortOrder
+    A_mm2?: SortOrder
+    P_allow?: SortOrder
+    n_ref?: SortOrder
+    s_allow?: SortOrder
   }
 
   export type ProjectsListRelationFilter = {
