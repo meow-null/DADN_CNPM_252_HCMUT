@@ -1,163 +1,210 @@
-# ⚙️ Hệ thống BK-Gear (Frontend UI)
+# Hướng Dẫn Chạy Project Đồ Án Dẫn Động Cơ Khí (DADN CNPM 252)
 
-Phân hệ Frontend (Giao diện người dùng) cho Hệ thống tính toán kỹ thuật và thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn trụ, bộ truyền xích ngoài, thiết kế trục, chọn động cơ, chọn ổ lăn và then. Được xây dựng để phục vụ dự án môn học Đồ Án Chuyên Ngành.
+Tài liệu này hướng dẫn chạy toàn bộ project (Backend + Frontend) trên máy local.
+Dự án là Hệ thống tính toán thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn - trụ, bộ truyền xích ngoài, thiết kế trục, chọn động cơ, chọn ổ lăn và then.
 
-## 🛠 Công nghệ sử dụng
-- **Core:** ReactJS
-- **Build Tool:** Vite (Tốc độ khởi tạo và build cực nhanh)
-- **Styling:** Tailwind CSS (v3.4)
+> 📚 **Chi tiết thêm:**
+> - Xem **[Tài liệu Frontend](./Frontend/README.md)**
+> - Xem **[Tài liệu Backend](./Backend/README.md)**
 
-## 📂 Cấu trúc thư mục (src/)
-- `/components/`: Chứa các thành phần dùng chung (Header, Sidebar, Modals...).
-- `/pages/`: Chứa các màn hình chính của ứng dụng:
-  - `AuthPage.jsx`: Giao diện Đăng nhập / Đăng ký.
-  - `Workspace.jsx`: Quản lý danh sách dự án.
-  - `Calculations.jsx`: Khu vực tính toán kỹ thuật 4 bước (Nhập liệu, Động cơ, Động học, Chi tiết máy).
-  - `Summary.jsx`: Bảng tóm tắt thiết kế.
-  - `Reports.jsx`: Quản lý tùy chọn xuất báo cáo và Preview PDF.
-- `App.jsx`: Component gốc, quản lý Routing và State điều hướng (màn hình hiện tại).
-- `index.css`: Chứa cấu hình Tailwind và một số custom class tĩnh.
+## 1. Yeu cau moi truong
 
-## 🚀 Hướng dẫn cài đặt và chạy dự án
+- Node.js 18+ (khuyen dung LTS)
+- npm 9+
+- MySQL/MariaDB
 
-**Yêu cầu môi trường:** Cài đặt sẵn [Node.js](https://nodejs.org/) (Khuyên dùng bản LTS).
+Kiem tra nhanh:
 
-**Bước 1: Clone code về máy và di chuyển vào thư mục**
-\`\`\`bash
-# Di chuyển vào đúng thư mục frontend
-cd he-dan-dong
-\`\`\`
+```bash
+node -v
+npm -v
+```
 
-**Bước 2: Cài đặt các thư viện (Dependencies)**
-\`\`\`bash
+## 2. Cau truc va cong mac dinh
+
+- Backend: localhost:3069
+- Frontend (Vite): localhost:5173
+- API base mac dinh frontend: http://localhost:3069/api
+
+## 3. Chuan bi Database
+
+Tai thu muc goc project co file DADN_252.sql.
+
+Ban can:
+
+1. Tao database rong (vi du: dadn_252)
+2. Import file DADN_252.sql vao database do
+
+Vi du voi MySQL CLI:
+
+```bash
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS dadn_252 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p dadn_252 < DADN_252.sql
+```
+
+Neu ban thay doi schema trong Backend/prisma/schema.prisma thi chay lai trong thu muc Backend:
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+*Lưu ý về Prisma:* 
+- `npx prisma generate`: Dùng để cập nhật lại Prisma Client trong code Node.js mỗi khi bạn sửa file schema.
+- `npx prisma db push`: Dùng để đẩy cấu trúc bảng (schema) từ file lên Database (thường dùng ở môi trường dev).
+- `npx prisma studio`: Mở giao diện web tại `localhost:5555` để xem và chỉnh sửa dữ liệu trực tiếp trong Database.
+
+Sau do nap du lieu tra cuu tu CSV bang seed:
+
+```bash
+cd Backend
+node prisma/seed.js
+```
+
+## 4. Cau hinh Backend .env
+
+Tao file Backend/.env voi noi dung mau:
+
+```env
+DATABASE_URL="mysql://root:your_password@localhost:3306/dadn_252"
+ACCESS_TOKEN_SECRET="your_access_secret"
+REFRESH_TOKEN_SECRET="your_refresh_secret"
+
+CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
+
+BREVO_SMTP_USER="your_brevo_smtp_user"
+BREVO_SENDER_EMAIL="your_brevo_sender_email"
+BREVO_SMTP_PASS="your_brevo_smtp_pass"
+
+# Cấu hình AI Local (LM Studio) để tự động viết báo cáo
+LM_STUDIO_URL="http://localhost:1234/v1/chat/completions"
+```
+
+Luu y:
+
+- Neu DB khac host/port/user/password thi sua DATABASE_URL tuong ung.
+- Để sử dụng tính năng AI sinh báo cáo, bạn cần mở phần mềm **LM Studio**, tải một model ngôn ngữ (ví dụ: Gemma) và bật tính năng **Local Server** (thường chạy ở port 1234). Đảm bảo URL trong `.env` khớp với URL mà LM Studio cung cấp.
+
+## 5. Cai dat dependencies
+
+Tai terminal 1 (Backend):
+
+```bash
+cd Backend
 npm install
-\`\`\`
+```
 
-**Bước 3: Khởi chạy môi trường phát triển (Dev Server)**
-\`\`\`bash
+Tai terminal 2 (Frontend):
+
+```bash
+cd Frontend
+npm install
+```
+
+## 6. Chay project
+
+### Chay Backend
+
+```bash
+cd Backend
 npm run dev
-\`\`\`
+```
 
-Sau khi chạy lệnh trên, terminal sẽ cung cấp một đường link (thường là `http://localhost:5173/`). Bấm `Ctrl + Click` vào link đó để xem ứng dụng trên trình duyệt.
+Server thanh cong khi thay log tuong tu:
 
-## 📝 Ghi chú cho Backend Developer
-- Logic chuyển trang hiện tại đang được xử lý cứng (hard-code) bằng State trong `App.jsx`.
-- Khi tích hợp API, cần chú ý cập nhật lại luồng Đăng nhập (`isAuthenticated`) để lưu Token.
+- Server online at port: 3069
 
------------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.1 (28/03)
-Tái cấu trúc Kiến trúc UI (Master-Detail) & Triển khai UC-05 (Chi tiết máy)
+Swagger:
 
-### 1. Tái cấu trúc Luồng điều hướng (Navigation Architecture)
-* **Sửa gì:** Chuyển đổi từ menu phẳng (Global) sang mô hình Master-Detail (Local Project Scope). Xóa nút Tính toán/Báo cáo khỏi thanh điều hướng chung. Thêm nút "Thư viện linh kiện" (Chuẩn bị cho UC-07).
-* **Ở file nào:** 
-  - `src/components/Sidebar.jsx`
-  - `src/components/Header.jsx`
-  - `src/App.jsx`
-* **Để làm gì:** Ngăn chặn lỗi người dùng bấm vào Tính toán khi chưa chọn dự án. Tách biệt rõ ràng Không gian làm việc chung (Global) và Phòng dự án cụ thể (Local). Header giờ đây có thêm nút "Thoát dự án" để quay về Workspace mượt mà.
+- http://localhost:3069/api-docs
 
-### 2. Vá lỗi (Bug Fix) Workspace
-* **Sửa gì:** Cập nhật hàm xử lý của nút "Tạo dự án mới" và các Card dự án trống.
-* **Ở file nào:** `src/pages/Workspace.jsx`
-* **Để làm gì:** Fix lỗi dính dữ liệu cũ. Khi bấm tạo mới, hệ thống sẽ tự động gỡ dữ liệu (`activeProject = null`) trước khi điều hướng sang trang Nhập liệu.
+### Chay Frontend
 
-### 3. Cập nhật Quy trình Wizard & Giao diện UC-05 (Chi tiết máy)
-* **Sửa gì:** 
-  - Đảo vị trí Bước 3 và Bước 4: Luồng chuẩn mới là **Nhập liệu ➔ Động học ➔ Chi tiết máy ➔ Chọn động cơ**.
-  - Xây dựng Sub-menu bên trái cho Bước 3 để điều hướng giữa các module: Vật liệu, Bánh răng côn, Bánh răng trụ, Trục.
-  - Xây dựng UI cho module Bánh răng côn (Sub-step 2).
-* **Ở file nào:** `src/pages/Calculations.jsx`
-* **Để làm gì:** Tuân thủ đúng logic thiết kế cơ khí. Tránh làm màn hình bị quá tải thông tin bằng cách chia nhỏ UC-05.
+```bash
+cd Frontend
+npm run dev
+```
 
-### 4. Tích hợp Logic kiểm nghiệm bền (Chuẩn bị cho API)
-* **Sửa gì:** Xây dựng State giả lập API (`gearData`) cho bánh răng côn. Thêm cơ chế chặn luồng (Disable nút Tiếp tục) khi ứng suất tiếp xúc không đạt (`σH > [σH]`).
-* **Ở file nào:** `src/pages/Calculations.jsx`
-* **Để làm gì:** Mô phỏng đúng AF1 & EF1 trong Đặc tả SRS. Tạo luồng "Thử & Sai" (Trial & Error) chân thực cho kỹ sư: Báo lỗi đỏ ➔ Đổi vật liệu ➔ Bấm cập nhật (có loading 1s) ➔ Đạt chuẩn xanh lá ➔ Mở khóa cho đi tiếp sang Bước 4. Giúp Backend dễ dàng map data JSON vào State sau này.
+Mo trinh duyet:
 
------------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.2 (10/04)
-Triển khai UC-06 (Chọn Động cơ) — Giao diện đề xuất & lựa chọn động cơ tối ưu
+- http://localhost:5173
 
-### 1. Tạo component MotorRecommendation (UC-06)
-* **Sửa gì:** Xây dựng component mới `MotorRecommendation.jsx` phục vụ Bước 4 của Wizard. Component gọi trực tiếp 3 API Backend:
-  - `GET /projects/:id/motors/suggestions` → Lấy Top 3 động cơ đề xuất.
-  - `GET /projects/:id/motors/candidates` → Lấy toàn bộ danh sách động cơ thỏa mãn (AF1).
-  - `POST /projects/:id/motors/select` → Lưu động cơ đã chọn vào project.
-* **Ở file nào:** `src/pages/MotorRecommendation.jsx` **(MỚI)**
-* **Để làm gì:** Hiện thực hóa UC-06 với 5 trạng thái UI:
-  1. **Loading** — Skeleton cards khi đang truy vấn.
-  2. **Top 3 Cards** — Hiển thị 3 động cơ tối ưu nhất (card đầu nổi bật với viền primary, scale-105). Mỗi card có: mã motor, series badge (K/DK/4A color-coded), P_dm, n_dm, hiệu suất, cos φ, ΔP, Δn.
-  3. **Bảng mở rộng (AF1)** — Modal full-width hiển thị tất cả động cơ thỏa mãn, hỗ trợ sort theo từng cột.
-  4. **Empty State (EF1)** — Thông báo khi không tìm thấy động cơ phù hợp hoặc chưa có dữ liệu đầu vào.
-  5. **Xác nhận** — Card xác nhận xanh lá sau khi chọn, có nút "Chọn lại" hoặc "Hoàn tất & Xem tóm tắt".
+## 7. Build production (kiem tra nhanh)
 
-### 2. Tích hợp vào Wizard (Calculations)
-* **Sửa gì:** Thay thế block hardcode tĩnh ở Bước 4 (hiển thị cứng motor 4A132S4Y3) bằng component `MotorRecommendation` mới. Truyền props `activeProject`, `kinematicsResult`, `onMotorSelected`, `onNavigate`.
-* **Ở file nào:** `src/pages/Calculations.jsx`
-* **Để làm gì:** Kết nối Bước 4 với API Backend thật. Sau khi user chọn motor, Backend lưu `selected_motor_id` + `selected_motor_snapshot` vào project và chuyển step sang `motor_selected`.
+Frontend:
 
------------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.3 (11/04)
-Tinh chỉnh UI & Cải thiện trải nghiệm người dùng
+```bash
+cd Frontend
+npm run build
+```
 
-### 1. Tối ưu giao diện Bước 2 (Động học)
-* **Sửa gì:** Gỡ bỏ nút "Tính toán lại" khỏi giao diện kết quả động học.
-* **Ở file nào:** `src/pages/Calculations.jsx`
-* **Để làm gì:** Tránh việc người dùng thao tác nhầm gây gọi lại API không cần thiết hoặc phá vỡ luồng dữ liệu hiện tại, đồng thời làm giao diện gọn gàng, tập trung hơn vào việc chuyển sang bước tiếp theo (Chi tiết máy).
+Backend (chay thu mode production):
 
------------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.4 (12/04)
-Fix Sorting Bugs (UC-06) — Sửa lỗi crash và bổ sung tính năng sort
+```bash
+cd Backend
+npm start
+```
 
-### 1. Sửa logic sắp xếp (Sorting Logic Fix)
-* **Sửa gì:** Nâng cấp hàm `sortedAll` để xử lý an toàn dữ liệu kiểu số và giá trị `null`. Ngăn chặn crash khi gọi `.toLowerCase()` trên dữ liệu không phải chuỗi.
-* **Ở file nào:** `src/pages/MotorRecommendation.jsx`
-* **Để làm gì:** Giải quyết triệt để lỗi trắng màn hình khi người dùng nhấn vào cột Hiệu suất H(%) trong modal danh sách động cơ.
+## 8. API dang dung trong frontend
 
-### 2. Bổ sung tính năng sắp xếp cho cột cos φ
-* **Sửa gì:** Thêm sự kiện `onClick` và biểu tượng `SortIcon` cho tiêu đề cột **cos φ**.
-* **Ở file nào:** `src/pages/MotorRecommendation.jsx` (Table header)
-* **Để làm gì:** Đáp ứng đầy đủ nhu cầu so sánh thông số kỹ thuật giữa các động cơ, giúp người dùng dễ dàng chọn lựa thiết bị tối ưu.
+Tat ca endpoint deu co prefix `/api`.
 
-### 3. Cập nhật so sánh số thông minh
-* **Sửa gì:** Tự động chuyển đổi và so sánh kiểu số nếu dữ liệu trong cột có thể convert sang Number.
+Auth:
 
------------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.5 (07/05)
-Hoàn thiện Standalone UI & Nâng cấp Pipeline UC-05 (Thiết kế chi tiết máy)
+- POST /api/auth/register
+- POST /api/auth/login
+- GET /api/auth/get-info
+- POST /api/auth/refresh-token
+- POST /api/auth/request-change-password
+- POST /api/auth/verify-change-password
 
-### 1. Hoàn thiện Pipeline UC-05 (Module A → F)
-* **Sửa gì:** Tích hợp logic tính toán cơ khí cho toàn bộ chuỗi: Xích (A), Bánh răng Côn (B), Bánh răng Trụ (C), Trục (D), Then (E) và Ổ lăn (F).
-* **Fix Bug:** Sửa lỗi Engine tự động ghi đè Module tiêu chuẩn. Hiện tại hệ thống đã ưu tiên sử dụng Module do người dùng chọn từ UI để tính toán ứng suất tiếp xúc $\sigma_H$.
-* **Ở file nào:** `src/utils/uc05Engine.js`, `src/pages/UC05Detail.jsx`.
+Materials:
 
-### 2. Cấu hình CORS & Kết nối Backend
-* **Sửa gì:** Cập nhật cấu hình CORS cho phép các origin phổ biến (`127.0.0.1`, `localhost`) và các cổng dev (`5173`, `5174`).
-* **Mục đích:** Giải quyết triệt để lỗi "Failed to fetch" khi đăng ký/đăng nhập tài khoản ở môi trường phát triển cục bộ.
-* **Ở file nào:** `Backend/server.js`.
+- GET /api/materials/grades
 
-### 3. Cập nhật Engine tính toán tiêu chuẩn
-* **Sửa gì:** Bổ sung bảng tra tiêu chuẩn cho Then (TCVN) và Ổ lăn (ISO), tích hợp công thức tính ứng suất tiếp xúc $\sigma_H$ cho bánh răng.
-* **Để làm gì:** Đảm bảo kết quả thiết kế chính xác theo tiêu chuẩn kỹ thuật cơ khí.
+User:
 
------------------------------------------------------------------------------
-## 🚀 Patch Notes - Update 1.6 (08/05)
-Tối ưu hóa Workflow & Đồng bộ Logic Kiểm nghiệm (UC-05)
+- GET /api/user
+- GET /api/user/:id
+- POST /api/user/avatar-local
+- POST /api/user/avatar-cloud
 
-### 1. Tối ưu hóa Luồng thiết kế (UI/UX)
-* **Sửa gì:** Đảo lại thứ tự các bước thiết kế: `Chọn Động cơ` (Bước 3) hiện tại sẽ nằm trước `Chi tiết máy` (Bước 4) để đảm bảo tính logic (phải có thông số động cơ mới tính được chi tiết máy).
-* **Cải tiến:** Vô hiệu hóa việc nhấn trực tiếp trên thanh điều hướng để ép người dùng đi theo quy trình tuyến tính, tránh nhảy bước gây lỗi dữ liệu.
-* **Ở file nào:** `src/pages/Calculations.jsx`.
+Projects:
 
-### 2. Nâng cấp Giao diện Xác nhận & Logic Validation (UC-05)
-* **Sửa gì:** 
-    * Thêm màn hình "Thiết kế hoàn tất" với dấu tích xanh sau khi tất cả 6 module đạt chuẩn.
-    * Đồng bộ hóa thanh Sidebar: Hiện tại Sidebar sẽ báo "Không đạt" nếu bất kỳ trục nào (I, II, III) trong module đó lỗi, thay vì chỉ kiểm tra trục I như trước.
-    * Cập nhật logic Then: Ứng suất cho phép của Then hiện tại đã phụ thuộc vào loại vật liệu người dùng chọn (Input-driven).
-* **Ở file nào:** `src/pages/UC05Detail.jsx`, `src/utils/uc05Engine.js`.
+- POST /api/projects
+- GET /api/projects
+- GET /api/projects/:projectId
+- PUT /api/projects/:projectId
+- DELETE /api/projects/:projectId
 
-### 3. Fix Bug Điều hướng & Environment
-* **Sửa gì:** 
-    * Sửa lỗi nút "Xác nhận" không nhảy trang do thiếu prop `onNavigate`.
-    * Fix lỗi Backend crash do thiếu file `.env` (DATABASE_URL).
-* **Ở file nào:** `src/pages/UC05Detail.jsx`, `Backend/.env`.
+Kinematics:
+
+- POST /api/projects/:projectId/kinematics
+- GET /api/projects/:projectId/kinematics
+
+Design:
+
+- POST /api/projects/:projectId/design/calculate
+
+Motors:
+
+- GET /api/projects/:projectId/motors/suggestions
+- GET /api/projects/:projectId/motors/candidates
+- POST /api/projects/:projectId/motors/select
+
+Luu y:
+
+- Cac API `projects`, `kinematics`, `design`, `motors` su dung cookie JWT de xac thuc trong backend.
+- API `design` hien tai duoc goi qua endpoint: `/api/projects/:projectId/design/calculate`.
+- Truoc khi goi API motor, can hoan thanh buoc kinematics cho project do.
+- Swagger day du: http://localhost:3069/api-docs
+
+## 9. Quy trinh chay nhanh (tom tat)
+
+1. Import DADN_252.sql vao MySQL
+2. Tao Backend/.env
+3. npm install trong Backend va Frontend
+4. Chay seed du lieu: cd Backend && node prisma/seed.js
+5. Chay Backend: npm run dev
+6. Chay Frontend: npm run dev
+7. Mo http://localhost:5173

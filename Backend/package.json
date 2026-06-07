@@ -1,0 +1,45 @@
+{
+    "name": "dadn252",
+    "version": "1.0.0",
+    "description": "",
+    "license": "ISC",
+    "author": "",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "npx kill-port 3069 && nodemon server.js",
+        "start": "node server.js",
+        "prisma": "npx prisma db pull && npx prisma generate"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.24.1",
+        "@prisma/adapter-mariadb": "^7.4.1",
+        "@prisma/client": "^7.4.1",
+        "bcrypt": "^6.0.0",
+        "cloudinary": "^2.10.0",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.6",
+        "csv-parser": "^3.2.0",
+        "dotenv": "^17.3.1",
+        "express": "^5.2.1",
+        "html-pdf-node": "^1.0.8",
+        "html-to-docx": "^1.8.0",
+        "jsonwebtoken": "^9.0.3",
+        "kill-port": "^2.0.1",
+        "marked": "^18.0.5",
+        "multer": "^2.1.1",
+        "multer-storage-cloudinary": "^4.0.0",
+        "mysql2": "^3.16.3",
+        "nodemailer": "^8.0.10",
+        "nodemon": "^3.1.11",
+        "sequelize": "^6.37.7",
+        "socket.io": "^4.8.3",
+        "swagger-ui-express": "^5.0.1",
+        "xlsx": "^0.18.5"
+    },
+    "devDependencies": {
+        "@types/node": "^25.3.0",
+        "prisma": "^7.4.1"
+    }
+}
