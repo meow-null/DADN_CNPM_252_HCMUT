@@ -5,39 +5,7 @@ import { formatNumber } from '../utils/formatUtils';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
-// --- DATA TIÊU CHUẨN TRÍCH XUẤT TỪ DATABASE ---
-const MATERIAL_GRADES = [
-  { name: 'Thép 45', HB: 215, sigma_b: 750, sigma_ch: 450, sigma_Hlim: 500, sigma_Flim: 387 },
-  { name: 'Thép 40X', HB: 245, sigma_b: 850, sigma_ch: 550, sigma_Hlim: 560, sigma_Flim: 441 },
-  { name: 'Thép 40XH', HB: 265, sigma_b: 800, sigma_ch: 600, sigma_Hlim: 600, sigma_Flim: 477 },
-  { name: 'Thép 35XM', HB: 241, sigma_b: 900, sigma_ch: 800, sigma_Hlim: 552, sigma_Flim: 433 },
-  { name: 'Thép 20X', HB: 480, sigma_b: 650, sigma_ch: 400, sigma_Hlim: 1150, sigma_Flim: 750 },
-];
 
-const CHAIN_STEPS = [
-  { p: 12.7, Q: 18.2, q: 0.65, A: 39.6, s_allow: 7.8, n_ref: 200 },
-  { p: 15.875, Q: 22.7, q: 0.8, A: 51.5, s_allow: 7.8, n_ref: 200 },
-  { p: 19.05, Q: 31.8, q: 1.9, A: 106, s_allow: 8.2, n_ref: 200 },
-  { p: 25.4, Q: 56.7, q: 2.6, A: 180, s_allow: 8.2, n_ref: 200 },
-  { p: 31.75, Q: 88.5, q: 3.8, A: 262, s_allow: 8.5, n_ref: 200 },
-  { p: 38.1, Q: 127.0, q: 5.5, A: 395, s_allow: 8.5, n_ref: 200 },
-  { p: 44.45, Q: 172.4, q: 7.5, A: 473, s_allow: 8.5, n_ref: 200 },
-  { p: 50.8, Q: 226.8, q: 9.7, A: 645, s_allow: 8.5, n_ref: 200 },
-];
-
-const STANDARD_MODULES = [1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
-const STANDARD_CENTER_DISTANCES = [80, 100, 125, 140, 160, 180, 200, 225, 250, 280, 315];
-const STANDARD_SHAFT_DIAMS = [10, 12, 14, 16, 18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100];
-
-// Dữ liệu tra cứu Then (Key) - Mockup based on TCVN
-const KEY_TABLE = [
-  { d_min: 22, d_max: 30, b: 8, h: 7, t1: 4.0 },
-  { d_min: 30, d_max: 38, b: 10, h: 8, t1: 5.0 },
-  { d_min: 38, d_max: 44, b: 12, h: 8, t1: 5.0 },
-  { d_min: 44, d_max: 50, b: 14, h: 9, t1: 5.5 },
-  { d_min: 50, d_max: 58, b: 16, h: 10, t1: 6.0 },
-  { d_min: 58, d_max: 65, b: 18, h: 11, t1: 7.0 },
-];
 
 async function calcRequest(path, options = {}) {
   const { method = 'GET', body } = options;
@@ -237,7 +205,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 type="number"
                 value={form.input_P}
                 onChange={(e) => setForm((prev) => ({ ...prev, input_P: e.target.value }))}
-                placeholder="6.5"
+                placeholder="VD: 6.5"
               />
             </div>
             <div className="space-y-2">
@@ -247,7 +215,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 type="number"
                 value={form.input_n_ct}
                 onChange={(e) => setForm((prev) => ({ ...prev, input_n_ct: e.target.value }))}
-                placeholder="75"
+                placeholder="VD: 75"
               />
             </div>
             <div className="space-y-2 md:col-span-2">
@@ -257,7 +225,7 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
                 type="number"
                 value={form.input_L}
                 onChange={(e) => setForm((prev) => ({ ...prev, input_L: e.target.value }))}
-                placeholder="10"
+                placeholder="VD: 10"
               />
             </div>
           </div>

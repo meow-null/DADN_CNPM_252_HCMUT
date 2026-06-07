@@ -52,4 +52,14 @@ export const inputController = {
       next(err);
     }
   },
+
+  async uploadCover(req, res, next) {
+    try {
+      const result = await inputService.uploadCover(req);
+      const response = responseSuccess(result, "Upload cover successfully");
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      next(err);
+    }
+  },
 };

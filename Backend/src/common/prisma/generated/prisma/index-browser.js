@@ -193,6 +193,7 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   selected_motor_id: 'selected_motor_id',
   selected_motor_snapshot: 'selected_motor_snapshot',
   design_result: 'design_result',
+  cover_url: 'cover_url',
   step: 'step',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
@@ -206,9 +207,13 @@ exports.Prisma.UsersScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  avatar_url: 'avatar_url',
   role: 'role',
   reset_token: 'reset_token',
   reset_token_expiry: 'reset_token_expiry',
+  is_verified: 'is_verified',
+  verify_token: 'verify_token',
+  verify_token_expiry: 'verify_token_expiry',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
@@ -311,14 +316,17 @@ exports.Prisma.QueryMode = {
 };
 
 exports.Prisma.projectsOrderByRelevanceFieldEnum = {
-  name: 'name'
+  name: 'name',
+  cover_url: 'cover_url'
 };
 
 exports.Prisma.usersOrderByRelevanceFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
-  reset_token: 'reset_token'
+  avatar_url: 'avatar_url',
+  reset_token: 'reset_token',
+  verify_token: 'verify_token'
 };
 
 exports.Prisma.material_gradesOrderByRelevanceFieldEnum = {

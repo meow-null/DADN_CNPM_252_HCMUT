@@ -139,8 +139,12 @@ Auth:
 - POST /api/auth/login
 - GET /api/auth/get-info
 - POST /api/auth/refresh-token
-- GET /api/auth/google
-- GET /api/auth/google/callback
+- POST /api/auth/request-change-password
+- POST /api/auth/verify-change-password
+
+Materials:
+
+- GET /api/materials/grades
 
 User:
 

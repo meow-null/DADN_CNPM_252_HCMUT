@@ -59,6 +59,7 @@ export const inputService = {
         input_P:    true,
         input_n_ct: true,
         input_L:    true,
+        cover_url:  true,
         step:       true,
       },
     });
@@ -70,7 +71,7 @@ export const inputService = {
     const userId = req.user.id;
     const inputs = await prisma.projects.findMany({
       where: { user_id: userId, isDeleted: false },
-      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },
+      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, cover_url: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },
       orderBy: { createdAt: 'desc' } 
     });
 
@@ -83,7 +84,7 @@ export const inputService = {
 
     const input = await prisma.projects.findFirst({
       where: { id: Number(projectId), user_id: userId, isDeleted: false },
-      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },
+      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, cover_url: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },
     });
 
     if (!input) throw new NotfoundException('Dự án không tồn tại hoặc không thuộc về bạn');
@@ -150,7 +151,7 @@ export const inputService = {
         ...(input_L && { input_L: Number(input_L) }),
         updatedAt: new Date(),
       },
-      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },
+      select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, cover_url: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },
     });
 
     return updatedInput;
@@ -175,5 +176,33 @@ export const inputService = {
     });
 
     return { id: projectId, status: "Đã xóa thành công" };
+  },
+
+  async uploadCover(req) {
+    const { projectId } = req.params;
+    const userId = req.user.id;
+
+    if (!req.file) {
+      throw new BadRequestException("Thiếu file upload");
+    }
+
+    const project = await prisma.projects.findFirst({
+      where: { id: Number(projectId), user_id: userId, isDeleted: false },
+    });
+
+    if (!project) {
+      throw new NotfoundException('Dự án không tồn tại hoặc đã bị xóa');
+    }
+
+    const coverUrl = req.file.path; // URL from Cloudinary
+
+    await prisma.projects.update({
+      where: { id: Number(projectId) },
+      data: {
+        cover_url: coverUrl,
+      },
+    });
+
+    return { id: Number(projectId), cover_url: coverUrl };
   }
 };

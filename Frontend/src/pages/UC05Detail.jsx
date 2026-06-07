@@ -1,14 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { formatNumber } from '../utils/formatUtils';
 
 // --- DATA TIÊU CHUẨN ---
-const MATERIAL_GRADES = [
-  { name: 'Thép 45', HB: 215 },
-  { name: 'Thép 40X', HB: 245 },
-  { name: 'Thép 40XH', HB: 265 },
-  { name: 'Thép 35XM', HB: 241 },
-  { name: 'Thép 20X', HB: 480 },
-];
+// Danh sách vật liệu sẽ được fetch từ API
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
@@ -40,7 +34,26 @@ const ResultCard = ({ label, value, unit, highlight, error }) => (
 
 // ============================================================
 export default function UC05Detail({ activeProject, kinematicsResult, onNavigate, onGoBack, onKinematicsSaved, onProjectSaved }) {
-  const [material, setMaterial] = useState(MATERIAL_GRADES[1]); // Thép 40X
+  const [materials, setMaterials] = useState([]);
+  const [material, setMaterial] = useState(null);
+
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/materials/grades`);
+        const data = await response.json();
+        if (response.ok && data.status === 'success') {
+          setMaterials(data.data);
+          if (data.data.length > 0) {
+            setMaterial(data.data[1] || data.data[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Lỗi khi tải danh sách vật liệu:', error);
+      }
+    };
+    fetchMaterials();
+  }, []);
   const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState(null);
   const [activeModule, setActiveModule] = useState('A');
@@ -200,10 +213,10 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Vật liệu Mác thép</label>
             <select
               className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 outline-none focus:border-primary"
-              value={material.name}
-              onChange={e => setMaterial(MATERIAL_GRADES.find(m => m.name === e.target.value))}
+              value={material?.name || ''}
+              onChange={e => setMaterial(materials.find(m => m.name === e.target.value))}
             >
-              {MATERIAL_GRADES.map(m => <option key={m.name} value={m.name}>{m.name} (HB {m.HB})</option>)}
+              {materials.map(m => <option key={m.name} value={m.name}>{m.name} (HB {m.HB})</option>)}
             </select>
           </div>
           <button

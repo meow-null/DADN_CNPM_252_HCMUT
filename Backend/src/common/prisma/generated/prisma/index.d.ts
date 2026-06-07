@@ -5303,6 +5303,7 @@ export namespace Prisma {
     total_ratio: Decimal | null
     safety_factor: Decimal | null
     selected_motor_id: number | null
+    cover_url: string | null
     step: $Enums.projects_step | null
     deletedBy: number | null
     isDeleted: boolean | null
@@ -5323,6 +5324,7 @@ export namespace Prisma {
     total_ratio: Decimal | null
     safety_factor: Decimal | null
     selected_motor_id: number | null
+    cover_url: string | null
     step: $Enums.projects_step | null
     deletedBy: number | null
     isDeleted: boolean | null
@@ -5347,6 +5349,7 @@ export namespace Prisma {
     selected_motor_id: number
     selected_motor_snapshot: number
     design_result: number
+    cover_url: number
     step: number
     deletedBy: number
     isDeleted: number
@@ -5397,6 +5400,7 @@ export namespace Prisma {
     total_ratio?: true
     safety_factor?: true
     selected_motor_id?: true
+    cover_url?: true
     step?: true
     deletedBy?: true
     isDeleted?: true
@@ -5417,6 +5421,7 @@ export namespace Prisma {
     total_ratio?: true
     safety_factor?: true
     selected_motor_id?: true
+    cover_url?: true
     step?: true
     deletedBy?: true
     isDeleted?: true
@@ -5441,6 +5446,7 @@ export namespace Prisma {
     selected_motor_id?: true
     selected_motor_snapshot?: true
     design_result?: true
+    cover_url?: true
     step?: true
     deletedBy?: true
     isDeleted?: true
@@ -5552,6 +5558,7 @@ export namespace Prisma {
     selected_motor_id: number | null
     selected_motor_snapshot: JsonValue | null
     design_result: JsonValue | null
+    cover_url: string | null
     step: $Enums.projects_step | null
     deletedBy: number | null
     isDeleted: boolean | null
@@ -5595,6 +5602,7 @@ export namespace Prisma {
     selected_motor_id?: boolean
     selected_motor_snapshot?: boolean
     design_result?: boolean
+    cover_url?: boolean
     step?: boolean
     deletedBy?: boolean
     isDeleted?: boolean
@@ -5623,6 +5631,7 @@ export namespace Prisma {
     selected_motor_id?: boolean
     selected_motor_snapshot?: boolean
     design_result?: boolean
+    cover_url?: boolean
     step?: boolean
     deletedBy?: boolean
     isDeleted?: boolean
@@ -5631,7 +5640,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "name" | "input_P" | "input_n_ct" | "input_L" | "efficiency" | "Pct" | "total_ratio" | "transmission" | "shafts" | "safety_factor" | "selected_motor_id" | "selected_motor_snapshot" | "design_result" | "step" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["projects"]>
+  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "name" | "input_P" | "input_n_ct" | "input_L" | "efficiency" | "Pct" | "total_ratio" | "transmission" | "shafts" | "safety_factor" | "selected_motor_id" | "selected_motor_snapshot" | "design_result" | "cover_url" | "step" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["projects"]>
   export type projectsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
     motors?: boolean | projects$motorsArgs<ExtArgs>
@@ -5659,6 +5668,7 @@ export namespace Prisma {
       selected_motor_id: number | null
       selected_motor_snapshot: Prisma.JsonValue | null
       design_result: Prisma.JsonValue | null
+      cover_url: string | null
       step: $Enums.projects_step | null
       deletedBy: number | null
       isDeleted: boolean | null
@@ -6051,6 +6061,7 @@ export namespace Prisma {
     readonly selected_motor_id: FieldRef<"projects", 'Int'>
     readonly selected_motor_snapshot: FieldRef<"projects", 'Json'>
     readonly design_result: FieldRef<"projects", 'Json'>
+    readonly cover_url: FieldRef<"projects", 'String'>
     readonly step: FieldRef<"projects", 'projects_step'>
     readonly deletedBy: FieldRef<"projects", 'Int'>
     readonly isDeleted: FieldRef<"projects", 'Boolean'>
@@ -6469,9 +6480,13 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    avatar_url: string | null
     role: $Enums.users_role | null
     reset_token: string | null
     reset_token_expiry: Date | null
+    is_verified: boolean | null
+    verify_token: string | null
+    verify_token_expiry: Date | null
     deletedBy: number | null
     isDeleted: boolean | null
     deletedAt: Date | null
@@ -6484,9 +6499,13 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    avatar_url: string | null
     role: $Enums.users_role | null
     reset_token: string | null
     reset_token_expiry: Date | null
+    is_verified: boolean | null
+    verify_token: string | null
+    verify_token_expiry: Date | null
     deletedBy: number | null
     isDeleted: boolean | null
     deletedAt: Date | null
@@ -6499,9 +6518,13 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    avatar_url: number
     role: number
     reset_token: number
     reset_token_expiry: number
+    is_verified: number
+    verify_token: number
+    verify_token_expiry: number
     deletedBy: number
     isDeleted: number
     deletedAt: number
@@ -6526,9 +6549,13 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    avatar_url?: true
     role?: true
     reset_token?: true
     reset_token_expiry?: true
+    is_verified?: true
+    verify_token?: true
+    verify_token_expiry?: true
     deletedBy?: true
     isDeleted?: true
     deletedAt?: true
@@ -6541,9 +6568,13 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    avatar_url?: true
     role?: true
     reset_token?: true
     reset_token_expiry?: true
+    is_verified?: true
+    verify_token?: true
+    verify_token_expiry?: true
     deletedBy?: true
     isDeleted?: true
     deletedAt?: true
@@ -6556,9 +6587,13 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    avatar_url?: true
     role?: true
     reset_token?: true
     reset_token_expiry?: true
+    is_verified?: true
+    verify_token?: true
+    verify_token_expiry?: true
     deletedBy?: true
     isDeleted?: true
     deletedAt?: true
@@ -6658,9 +6693,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    avatar_url: string | null
     role: $Enums.users_role | null
     reset_token: string | null
     reset_token_expiry: Date | null
+    is_verified: boolean | null
+    verify_token: string | null
+    verify_token_expiry: Date | null
     deletedBy: number | null
     isDeleted: boolean | null
     deletedAt: Date | null
@@ -6692,9 +6731,13 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    avatar_url?: boolean
     role?: boolean
     reset_token?: boolean
     reset_token_expiry?: boolean
+    is_verified?: boolean
+    verify_token?: boolean
+    verify_token_expiry?: boolean
     deletedBy?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
@@ -6711,9 +6754,13 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    avatar_url?: boolean
     role?: boolean
     reset_token?: boolean
     reset_token_expiry?: boolean
+    is_verified?: boolean
+    verify_token?: boolean
+    verify_token_expiry?: boolean
     deletedBy?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
@@ -6721,7 +6768,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "reset_token" | "reset_token_expiry" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
+  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "avatar_url" | "role" | "reset_token" | "reset_token_expiry" | "is_verified" | "verify_token" | "verify_token_expiry" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
   export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projects?: boolean | users$projectsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -6737,9 +6784,13 @@ export namespace Prisma {
       name: string
       email: string
       password: string
+      avatar_url: string | null
       role: $Enums.users_role | null
       reset_token: string | null
       reset_token_expiry: Date | null
+      is_verified: boolean | null
+      verify_token: string | null
+      verify_token_expiry: Date | null
       deletedBy: number | null
       isDeleted: boolean | null
       deletedAt: Date | null
@@ -7119,9 +7170,13 @@ export namespace Prisma {
     readonly name: FieldRef<"users", 'String'>
     readonly email: FieldRef<"users", 'String'>
     readonly password: FieldRef<"users", 'String'>
+    readonly avatar_url: FieldRef<"users", 'String'>
     readonly role: FieldRef<"users", 'users_role'>
     readonly reset_token: FieldRef<"users", 'String'>
     readonly reset_token_expiry: FieldRef<"users", 'DateTime'>
+    readonly is_verified: FieldRef<"users", 'Boolean'>
+    readonly verify_token: FieldRef<"users", 'String'>
+    readonly verify_token_expiry: FieldRef<"users", 'DateTime'>
     readonly deletedBy: FieldRef<"users", 'Int'>
     readonly isDeleted: FieldRef<"users", 'Boolean'>
     readonly deletedAt: FieldRef<"users", 'DateTime'>
@@ -15011,6 +15066,7 @@ export namespace Prisma {
     selected_motor_id: 'selected_motor_id',
     selected_motor_snapshot: 'selected_motor_snapshot',
     design_result: 'design_result',
+    cover_url: 'cover_url',
     step: 'step',
     deletedBy: 'deletedBy',
     isDeleted: 'isDeleted',
@@ -15027,9 +15083,13 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    avatar_url: 'avatar_url',
     role: 'role',
     reset_token: 'reset_token',
     reset_token_expiry: 'reset_token_expiry',
+    is_verified: 'is_verified',
+    verify_token: 'verify_token',
+    verify_token_expiry: 'verify_token_expiry',
     deletedBy: 'deletedBy',
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
@@ -15180,7 +15240,8 @@ export namespace Prisma {
 
 
   export const projectsOrderByRelevanceFieldEnum: {
-    name: 'name'
+    name: 'name',
+    cover_url: 'cover_url'
   };
 
   export type projectsOrderByRelevanceFieldEnum = (typeof projectsOrderByRelevanceFieldEnum)[keyof typeof projectsOrderByRelevanceFieldEnum]
@@ -15190,7 +15251,9 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
-    reset_token: 'reset_token'
+    avatar_url: 'avatar_url',
+    reset_token: 'reset_token',
+    verify_token: 'verify_token'
   };
 
   export type usersOrderByRelevanceFieldEnum = (typeof usersOrderByRelevanceFieldEnum)[keyof typeof usersOrderByRelevanceFieldEnum]
@@ -15639,6 +15702,7 @@ export namespace Prisma {
     selected_motor_id?: IntNullableFilter<"projects"> | number | null
     selected_motor_snapshot?: JsonNullableFilter<"projects">
     design_result?: JsonNullableFilter<"projects">
+    cover_url?: StringNullableFilter<"projects"> | string | null
     step?: Enumprojects_stepNullableFilter<"projects"> | $Enums.projects_step | null
     deletedBy?: IntNullableFilter<"projects"> | number | null
     isDeleted?: BoolNullableFilter<"projects"> | boolean | null
@@ -15665,6 +15729,7 @@ export namespace Prisma {
     selected_motor_id?: SortOrderInput | SortOrder
     selected_motor_snapshot?: SortOrderInput | SortOrder
     design_result?: SortOrderInput | SortOrder
+    cover_url?: SortOrderInput | SortOrder
     step?: SortOrderInput | SortOrder
     deletedBy?: SortOrderInput | SortOrder
     isDeleted?: SortOrderInput | SortOrder
@@ -15695,6 +15760,7 @@ export namespace Prisma {
     selected_motor_id?: IntNullableFilter<"projects"> | number | null
     selected_motor_snapshot?: JsonNullableFilter<"projects">
     design_result?: JsonNullableFilter<"projects">
+    cover_url?: StringNullableFilter<"projects"> | string | null
     step?: Enumprojects_stepNullableFilter<"projects"> | $Enums.projects_step | null
     deletedBy?: IntNullableFilter<"projects"> | number | null
     isDeleted?: BoolNullableFilter<"projects"> | boolean | null
@@ -15721,6 +15787,7 @@ export namespace Prisma {
     selected_motor_id?: SortOrderInput | SortOrder
     selected_motor_snapshot?: SortOrderInput | SortOrder
     design_result?: SortOrderInput | SortOrder
+    cover_url?: SortOrderInput | SortOrder
     step?: SortOrderInput | SortOrder
     deletedBy?: SortOrderInput | SortOrder
     isDeleted?: SortOrderInput | SortOrder
@@ -15753,6 +15820,7 @@ export namespace Prisma {
     selected_motor_id?: IntNullableWithAggregatesFilter<"projects"> | number | null
     selected_motor_snapshot?: JsonNullableWithAggregatesFilter<"projects">
     design_result?: JsonNullableWithAggregatesFilter<"projects">
+    cover_url?: StringNullableWithAggregatesFilter<"projects"> | string | null
     step?: Enumprojects_stepNullableWithAggregatesFilter<"projects"> | $Enums.projects_step | null
     deletedBy?: IntNullableWithAggregatesFilter<"projects"> | number | null
     isDeleted?: BoolNullableWithAggregatesFilter<"projects"> | boolean | null
@@ -15769,9 +15837,13 @@ export namespace Prisma {
     name?: StringFilter<"users"> | string
     email?: StringFilter<"users"> | string
     password?: StringFilter<"users"> | string
+    avatar_url?: StringNullableFilter<"users"> | string | null
     role?: Enumusers_roleNullableFilter<"users"> | $Enums.users_role | null
     reset_token?: StringNullableFilter<"users"> | string | null
     reset_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
+    is_verified?: BoolNullableFilter<"users"> | boolean | null
+    verify_token?: StringNullableFilter<"users"> | string | null
+    verify_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
     deletedBy?: IntNullableFilter<"users"> | number | null
     isDeleted?: BoolNullableFilter<"users"> | boolean | null
     deletedAt?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -15785,9 +15857,13 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    avatar_url?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     reset_token?: SortOrderInput | SortOrder
     reset_token_expiry?: SortOrderInput | SortOrder
+    is_verified?: SortOrderInput | SortOrder
+    verify_token?: SortOrderInput | SortOrder
+    verify_token_expiry?: SortOrderInput | SortOrder
     deletedBy?: SortOrderInput | SortOrder
     isDeleted?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -15805,9 +15881,13 @@ export namespace Prisma {
     NOT?: usersWhereInput | usersWhereInput[]
     name?: StringFilter<"users"> | string
     password?: StringFilter<"users"> | string
+    avatar_url?: StringNullableFilter<"users"> | string | null
     role?: Enumusers_roleNullableFilter<"users"> | $Enums.users_role | null
     reset_token?: StringNullableFilter<"users"> | string | null
     reset_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
+    is_verified?: BoolNullableFilter<"users"> | boolean | null
+    verify_token?: StringNullableFilter<"users"> | string | null
+    verify_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
     deletedBy?: IntNullableFilter<"users"> | number | null
     isDeleted?: BoolNullableFilter<"users"> | boolean | null
     deletedAt?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -15821,9 +15901,13 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    avatar_url?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     reset_token?: SortOrderInput | SortOrder
     reset_token_expiry?: SortOrderInput | SortOrder
+    is_verified?: SortOrderInput | SortOrder
+    verify_token?: SortOrderInput | SortOrder
+    verify_token_expiry?: SortOrderInput | SortOrder
     deletedBy?: SortOrderInput | SortOrder
     isDeleted?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -15844,9 +15928,13 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"users"> | string
     email?: StringWithAggregatesFilter<"users"> | string
     password?: StringWithAggregatesFilter<"users"> | string
+    avatar_url?: StringNullableWithAggregatesFilter<"users"> | string | null
     role?: Enumusers_roleNullableWithAggregatesFilter<"users"> | $Enums.users_role | null
     reset_token?: StringNullableWithAggregatesFilter<"users"> | string | null
     reset_token_expiry?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
+    is_verified?: BoolNullableWithAggregatesFilter<"users"> | boolean | null
+    verify_token?: StringNullableWithAggregatesFilter<"users"> | string | null
+    verify_token_expiry?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
     deletedBy?: IntNullableWithAggregatesFilter<"users"> | number | null
     isDeleted?: BoolNullableWithAggregatesFilter<"users"> | boolean | null
     deletedAt?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
@@ -16665,6 +16753,7 @@ export namespace Prisma {
     safety_factor?: Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -16691,6 +16780,7 @@ export namespace Prisma {
     selected_motor_id?: number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -16712,6 +16802,7 @@ export namespace Prisma {
     safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -16738,6 +16829,7 @@ export namespace Prisma {
     selected_motor_id?: NullableIntFieldUpdateOperationsInput | number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -16762,6 +16854,7 @@ export namespace Prisma {
     selected_motor_id?: number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -16783,6 +16876,7 @@ export namespace Prisma {
     safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -16807,6 +16901,7 @@ export namespace Prisma {
     selected_motor_id?: NullableIntFieldUpdateOperationsInput | number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -16819,9 +16914,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    avatar_url?: string | null
     role?: $Enums.users_role | null
     reset_token?: string | null
     reset_token_expiry?: Date | string | null
+    is_verified?: boolean | null
+    verify_token?: string | null
+    verify_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -16835,9 +16934,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    avatar_url?: string | null
     role?: $Enums.users_role | null
     reset_token?: string | null
     reset_token_expiry?: Date | string | null
+    is_verified?: boolean | null
+    verify_token?: string | null
+    verify_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -16850,9 +16953,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumusers_roleFieldUpdateOperationsInput | $Enums.users_role | null
     reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     reset_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    verify_token?: NullableStringFieldUpdateOperationsInput | string | null
+    verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16866,9 +16973,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumusers_roleFieldUpdateOperationsInput | $Enums.users_role | null
     reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     reset_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    verify_token?: NullableStringFieldUpdateOperationsInput | string | null
+    verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16882,9 +16993,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    avatar_url?: string | null
     role?: $Enums.users_role | null
     reset_token?: string | null
     reset_token_expiry?: Date | string | null
+    is_verified?: boolean | null
+    verify_token?: string | null
+    verify_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -16896,9 +17011,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumusers_roleFieldUpdateOperationsInput | $Enums.users_role | null
     reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     reset_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    verify_token?: NullableStringFieldUpdateOperationsInput | string | null
+    verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16911,9 +17030,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumusers_roleFieldUpdateOperationsInput | $Enums.users_role | null
     reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     reset_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    verify_token?: NullableStringFieldUpdateOperationsInput | string | null
+    verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17851,6 +17974,7 @@ export namespace Prisma {
     selected_motor_id?: SortOrder
     selected_motor_snapshot?: SortOrder
     design_result?: SortOrder
+    cover_url?: SortOrder
     step?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
@@ -17885,6 +18009,7 @@ export namespace Prisma {
     total_ratio?: SortOrder
     safety_factor?: SortOrder
     selected_motor_id?: SortOrder
+    cover_url?: SortOrder
     step?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
@@ -17905,6 +18030,7 @@ export namespace Prisma {
     total_ratio?: SortOrder
     safety_factor?: SortOrder
     selected_motor_id?: SortOrder
+    cover_url?: SortOrder
     step?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
@@ -17981,9 +18107,13 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    avatar_url?: SortOrder
     role?: SortOrder
     reset_token?: SortOrder
     reset_token_expiry?: SortOrder
+    is_verified?: SortOrder
+    verify_token?: SortOrder
+    verify_token_expiry?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
@@ -18001,9 +18131,13 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    avatar_url?: SortOrder
     role?: SortOrder
     reset_token?: SortOrder
     reset_token_expiry?: SortOrder
+    is_verified?: SortOrder
+    verify_token?: SortOrder
+    verify_token_expiry?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
@@ -18016,9 +18150,13 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    avatar_url?: SortOrder
     role?: SortOrder
     reset_token?: SortOrder
     reset_token_expiry?: SortOrder
+    is_verified?: SortOrder
+    verify_token?: SortOrder
+    verify_token_expiry?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
@@ -18864,6 +19002,7 @@ export namespace Prisma {
     safety_factor?: Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -18888,6 +19027,7 @@ export namespace Prisma {
     safety_factor?: Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -18941,6 +19081,7 @@ export namespace Prisma {
     selected_motor_id?: IntNullableFilter<"projects"> | number | null
     selected_motor_snapshot?: JsonNullableFilter<"projects">
     design_result?: JsonNullableFilter<"projects">
+    cover_url?: StringNullableFilter<"projects"> | string | null
     step?: Enumprojects_stepNullableFilter<"projects"> | $Enums.projects_step | null
     deletedBy?: IntNullableFilter<"projects"> | number | null
     isDeleted?: BoolNullableFilter<"projects"> | boolean | null
@@ -18953,9 +19094,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    avatar_url?: string | null
     role?: $Enums.users_role | null
     reset_token?: string | null
     reset_token_expiry?: Date | string | null
+    is_verified?: boolean | null
+    verify_token?: string | null
+    verify_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -18968,9 +19113,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    avatar_url?: string | null
     role?: $Enums.users_role | null
     reset_token?: string | null
     reset_token_expiry?: Date | string | null
+    is_verified?: boolean | null
+    verify_token?: string | null
+    verify_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -19042,9 +19191,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumusers_roleFieldUpdateOperationsInput | $Enums.users_role | null
     reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     reset_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    verify_token?: NullableStringFieldUpdateOperationsInput | string | null
+    verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19057,9 +19210,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumusers_roleFieldUpdateOperationsInput | $Enums.users_role | null
     reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     reset_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    verify_token?: NullableStringFieldUpdateOperationsInput | string | null
+    verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19130,6 +19287,7 @@ export namespace Prisma {
     safety_factor?: Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -19154,6 +19312,7 @@ export namespace Prisma {
     selected_motor_id?: number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -19203,6 +19362,7 @@ export namespace Prisma {
     safety_factor?: Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -19224,6 +19384,7 @@ export namespace Prisma {
     safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -19248,6 +19409,7 @@ export namespace Prisma {
     safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -19271,6 +19433,7 @@ export namespace Prisma {
     safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -19294,6 +19457,7 @@ export namespace Prisma {
     selected_motor_id?: number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
     step?: $Enums.projects_step | null
     deletedBy?: number | null
     isDeleted?: boolean | null
@@ -19315,6 +19479,7 @@ export namespace Prisma {
     safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -19339,6 +19504,7 @@ export namespace Prisma {
     selected_motor_id?: NullableIntFieldUpdateOperationsInput | number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -19362,6 +19528,7 @@ export namespace Prisma {
     selected_motor_id?: NullableIntFieldUpdateOperationsInput | number | null
     selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
     design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
     step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null

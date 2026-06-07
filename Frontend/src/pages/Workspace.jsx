@@ -1,6 +1,54 @@
+import { useState, useRef } from 'react';
 import { formatNumber } from '../utils/formatUtils';
 
-export default function Workspace({ onNavigate, projects, loading, errorMessage, onSelectProject, onDeleteProject }) {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
+
+export default function Workspace({ onNavigate, projects, loading, errorMessage, onSelectProject, onDeleteProject, setProjects }) {
+  const fileInputRefs = useRef({});
+  const [uploadingProjectId, setUploadingProjectId] = useState(null);
+
+  const handleCoverClick = (e, projectId) => {
+    e.stopPropagation();
+    if (fileInputRefs.current[projectId]) {
+      fileInputRefs.current[projectId].click();
+    }
+  };
+
+  const handleCoverChange = async (e, projectId) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploadingProjectId(projectId);
+    try {
+      const formData = new FormData();
+      formData.append('cover', file);
+
+      const response = await fetch(`${API_BASE_URL}/projects/${projectId}/cover`, {
+        method: 'PATCH',
+        credentials: 'include',
+        body: formData,
+      });
+
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || payload?.status === 'error') {
+        throw new Error(payload?.message || 'Upload failed');
+      }
+
+      const newCoverUrl = payload.data.cover_url;
+      // Cập nhật state trực tiếp
+      if (setProjects) {
+        setProjects(prev => prev.map(p => p.id === projectId ? { ...p, cover_url: newCoverUrl } : p));
+      }
+
+    } catch (error) {
+      console.error("Lỗi upload ảnh bìa:", error);
+      alert("Cập nhật ảnh bìa thất bại!");
+    } finally {
+      setUploadingProjectId(null);
+      e.target.value = null;
+    }
+  };
+
   return (
     <section className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -21,21 +69,46 @@ export default function Workspace({ onNavigate, projects, loading, errorMessage,
 
         {!loading && projects?.map((project) => (
           <div key={project.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all group">
-            <div className="h-40 bg-slate-100 relative overflow-hidden">
-              {/* Thêm hiệu ứng hover ảnh mượt mà */}
-              <img alt="Project" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"/>
-              <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
-              <span className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase shadow-sm">
-                {project.step === 'inputs' ? '1. Nhập liệu' : 
-                 project.step === 'kinematics' ? '2. Động học' : 
-                 project.step === 'design_partial' ? '3. Chi tiết máy' : 
-                 project.step === 'design_done' ? 'Hoàn thành' : 'Khởi tạo'}
-              </span>
+            <div 
+              className="h-40 bg-slate-100 relative overflow-hidden group/cover cursor-pointer"
+              onClick={(e) => handleCoverClick(e, project.id)}
+              title="Đổi ảnh dự án"
+            >
+              <img 
+                alt="Project" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                src={project.cover_url || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"}
+              />
+              <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/40 transition-colors"></div>
+              
+              <div className="absolute inset-0 hidden group-hover/cover:flex items-center justify-center">
+                 {uploadingProjectId === project.id ? (
+                    <svg className="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                 ) : (
+                    <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                 )}
+              </div>
+              <input 
+                type="file" 
+                accept="image/*" 
+                className="hidden" 
+                ref={(el) => fileInputRefs.current[project.id] = el}
+                onChange={(e) => handleCoverChange(e, project.id)} 
+              />
             </div>
             <div className="p-5">
               <h3 className="font-bold text-slate-900 text-lg mb-2 truncate">{project.name}</h3>
-              <p className="text-xs font-mono text-slate-500 mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100">
-                P: <span className="font-bold text-primary">{formatNumber(project.input_P)}</span> kW <span className="mx-1 text-slate-300">|</span> n: <span className="font-bold text-primary">{formatNumber(project.input_n_ct)}</span> rpm
+              <p className="text-xs font-mono text-slate-500 mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between gap-1 overflow-x-auto">
+                <span>P: <span className="font-bold text-primary">{formatNumber(project.input_P)}</span> kW</span>
+                <span className="text-slate-300">|</span> 
+                <span>n: <span className="font-bold text-primary">{formatNumber(project.input_n_ct)}</span> rpm</span>
+                <span className="text-slate-300">|</span> 
+                <span>L: <span className="font-bold text-primary">{formatNumber(project.input_L)}</span> năm</span>
               </p>
               <div className="flex items-center gap-2">
                 <button

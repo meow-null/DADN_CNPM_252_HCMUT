@@ -4,7 +4,6 @@ import rootRouter from "./src/routers/root.router.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { logApi } from "./src/common/middlewares/log-api.middleware.js";
-import { initLoginGooglePassport } from "./src/common/passport/login-google.passport.js";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocument } from "./src/common/swagger/init.swagger.js";
 import { initSocket } from "./src/common/socket/init.socket.js";
@@ -37,7 +36,6 @@ app.use(express.json());
 // để lấy được cookie (đảm bảo trước "/api")
 app.use(cookieParser());
 app.use(logApi("product"));
-initLoginGooglePassport();
 app.use(express.static("public"));
 
 // swwagger

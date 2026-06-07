@@ -81,6 +81,7 @@ model projects {
   selected_motor_id       Int?
   selected_motor_snapshot Json?
   design_result           Json?
+  cover_url               String?        @db.VarChar(500)
   step                    projects_step? @default(created)
   deletedBy               Int?           @default(0)
   isDeleted               Boolean?       @default(false)
@@ -99,10 +100,14 @@ model users {
   name               String      @db.VarChar(100)
   email              String      @unique(map: "email") @db.VarChar(150)
   password           String      @db.VarChar(255)
+  avatar_url         String?     @db.VarChar(500)
   role               users_role? @default(user)
   reset_token        String?     @db.VarChar(255)
-  reset_token_expiry DateTime?   @db.DateTime(0)
-  deletedBy          Int?        @default(0)
+  reset_token_expiry  DateTime?   @db.DateTime(0)
+  is_verified         Boolean?    @default(false)
+  verify_token        String?     @db.VarChar(255)
+  verify_token_expiry DateTime?   @db.DateTime(0)
+  deletedBy           Int?        @default(0)
   isDeleted          Boolean?    @default(false)
   deletedAt          DateTime?   @db.Timestamp(0)
   createdAt          DateTime?   @default(now()) @db.Timestamp(0)
