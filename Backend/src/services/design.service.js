@@ -216,7 +216,7 @@ const calculateModuleB = async (T_brc, n1, u1, L_h, material1, material2, overri
       }
     }
 
-    return { sigma_H_allow_MPa, Re_mm: Re_calc, b_mm, m_e_mm, z1_gear, z2_gear, d_m1_mm, d_m2_mm, Ft1_N, Fr1_N, Fa1_N, check_H_pass, check_F_pass: true, warning, recommendation, recommended_material_id, recommended_m_e };
+    return { sigma_H_allow_MPa, sigma_H_check, Re_mm: Re_calc, b_mm, m_e_mm, z1_gear, z2_gear, d_m1_mm, d_m2_mm, Ft1_N, Fr1_N, Fa1_N, check_H_pass, check_F_pass: true, warning, recommendation, recommended_material_id, recommended_m_e };
   } catch (error) {
     throw error.status ? error : throwError(503, 'DB_QUERY_FAIL', 'Lỗi Module B.');
   }
@@ -538,7 +538,11 @@ const calculateModuleF = async (d_tc, F_rA, F_rB, F_a_external, n_shaft, L_h) =>
     let recommended_d_tc = null;
     if (!check_bearing_pass) {
       const rec_bearing = await prisma.bearings.findFirst({
-        where: { type: 'tapered', C: { gte: C_d_kN } },
+        where: { 
+          type: 'tapered', 
+          inner_d: { gte: d_tc },
+          C: { gte: C_d_kN } 
+        },
         orderBy: { inner_d: 'asc' }
       });
       recommended_d_tc = rec_bearing ? rec_bearing.inner_d : Math.ceil(d_tc * 1.2);
@@ -581,7 +585,24 @@ const designService = {
       throwError(400, 'MISSING_MOTOR_DATA', 'Vui lòng chọn động cơ trước khi tính toán chi tiết máy.');
     }
 
-    const P_out = overrides.input_P ? Number(overrides.input_P) : Number(project.input_P);
+    // Nạp overrides trước đó từ database nếu có để tích hợp vào lần chạy này
+    const previousOverrides = (project.design_result && typeof project.design_result === 'object')
+      ? (project.design_result.overrides || {})
+      : {};
+
+    const activeOverrides = {
+      ...previousOverrides,
+      ...overrides
+    };
+
+    // Loại bỏ các trường có giá trị rỗng (để quay lại chế độ tính toán tự động)
+    for (const key in activeOverrides) {
+      if (activeOverrides[key] === null || activeOverrides[key] === undefined || activeOverrides[key] === '') {
+        delete activeOverrides[key];
+      }
+    }
+
+    const P_out = activeOverrides.input_P ? Number(activeOverrides.input_P) : Number(project.input_P);
     const n_out = Number(project.input_n_ct);
     const L_h = Number(project.input_L);
 
@@ -624,10 +645,10 @@ const designService = {
 
     // Lấy thông số vật liệu được chọn của dự án (nếu có), mặc định là Thép 45
     let material = null;
-    const matId = overrides.selected_material_id || project.selected_material_id;
-    if (matId) {
+    const matId = activeOverrides.selected_material_id || project.selected_material_id;
+    if (matId && !isNaN(Number(matId))) {
       material = await prisma.material_grades.findUnique({
-        where: { id: matId }
+        where: { id: Number(matId) }
       });
     }
     if (!material) {
@@ -642,19 +663,19 @@ const designService = {
     const moduleA = await calculateModuleA(kinParams.P_x, kinParams.n3, kinParams.u_x, kinParams.L_h, P_out);
     
     // Module B
-    const moduleB = await calculateModuleB(kinParams.T_brc, kinParams.n1, kinParams.u1, kinParams.L_h, material, material, overrides);
+    const moduleB = await calculateModuleB(kinParams.T_brc, kinParams.n1, kinParams.u1, kinParams.L_h, material, material, activeOverrides);
 
     // Module C
     const moduleC = await calculateModuleC(kinParams.T_brt, kinParams.n2, kinParams.u2, kinParams.L_h, material, material);
 
     // Module D
-    const moduleD = await calculateModuleD(kinParams, moduleB, moduleC, moduleA, material, overrides);
+    const moduleD = await calculateModuleD(kinParams, moduleB, moduleC, moduleA, material, activeOverrides);
 
     // Lấy đường kính trục
     const d_tc_I = moduleD.trucI.d_tc_mm[0] || 25; 
 
     // Module E (Kiểm nghiệm 1 then trên Trục I)
-    const moduleE = await calculateModuleE(d_tc_I, kinParams.T_brc, 25, overrides);
+    const moduleE = await calculateModuleE(d_tc_I, kinParams.T_brc, 25, activeOverrides);
 
     // Lấy phản lực từ kết quả giải Tĩnh học Module D để truyền vào Module F
     const F_rA = moduleD.trucI.F_rA || 1636;
@@ -670,7 +691,8 @@ const designService = {
       ModuleC: moduleC,
       ModuleD: moduleD,
       ModuleE: moduleE,
-      ModuleF: moduleF
+      ModuleF: moduleF,
+      overrides: activeOverrides
     };
 
     // Thu thập tất cả cảnh báo của các module

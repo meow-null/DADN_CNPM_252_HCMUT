@@ -184,9 +184,29 @@ Tích hợp tính năng "⚡ Áp dụng nhanh" (Auto-Apply) & Giải quyết Ngh
   * Tái cấu trúc layout hiển thị bảng trạng thái kiểm nghiệm live A → F và dọn dẹp vị trí thẻ gợi ý tối ưu ra ngoài flex container chính để tránh làm méo layout.
 * **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
 
-### 4. Thiết kế giao diện phong cách Nvidia/Apple & Vá lỗi Logo Bách Khoa
+### 4. Thiết kế giao diện làm lại
 * **Sửa gì:**
   * Cập nhật thanh bên (Sidebar) sang màu đen nhám (Dark Mode `bg-[#0a0a0a]/95`) kết hợp kính mờ glassmorphism và dải màu quang phổ gradient công nghệ ở trên cùng.
   * Bọc logo Bách Khoa (HCMUT) trong khung nền trắng bo góc mềm mại `rounded-2xl` kết hợp đổ bóng phát sáng nhẹ (`glow`) giúp logo luôn nổi bật rõ ràng bất kể màu nền sidebar thay đổi.
   * Đồng bộ hóa font chữ `Inter` và `Outfit` cho toàn bộ văn bản để tăng độ sắc nét trực quan.
 * **Ở file nào:** `Frontend/src/components/Sidebar.jsx`, `Frontend/src/index.css`
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.8 (07/06)
+Nâng cấp Trực quan Hóa Khắc phục lỗi: Chẩn đoán sự cố chi tiết, Liệt kê hành động & Live Change Log gọn nhẹ
+
+### 1. Tích hợp Chẩn đoán Sự cố Cơ học Động (Dynamic Mechanical Diagnostics)
+* **Sửa gì:** Thay thế dòng gợi ý tĩnh bằng khung chẩn đoán động. Tự động đọc dữ liệu tính toán để so sánh trị số vật lý lỗi (ứng suất $\sigma_H$ thực tế vs cho phép $[\sigma_H]$, hệ số an toàn mỏi $s$ vs chuẩn $1.50$, tải trọng $C_d$ vs catalog $C$,...) kèm theo cảnh báo rủi ro cơ học (nứt trục, tróc bánh răng, biến dạng then, bó kẹt ổ bi) và đề xuất hướng sửa cụ thể.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 2. Liệt kê hành động chi tiết trước khi Áp dụng (Impact Preview List)
+* **Sửa gì:** Bổ sung danh sách chi tiết các hành động tự động chỉnh sửa thông số đầu vào hiển thị trực tiếp trong các card "⚡ Áp dụng" (từng Module) và "⚡ Tối ưu tất cả" (toàn hệ thống) giúp người dùng thấy rõ các tham số sẽ thay đổi (Vật liệu, Module bánh răng m_e, Then, Đường kính trục d_tc) trước khi thực hiện.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 3. Báo cáo Thay đổi Thông số Đầu vào gọn nhẹ (Live Overrides Change Log)
+* **Sửa gì:** Phát triển bảng báo cáo thay đổi tự động hiển thị khi người dùng gõ tay hoặc click nút Áp dụng, so sánh giá trị cũ (trong database) và giá trị mới (trực tiếp).
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 4. Tối ưu hóa UI Modal (UX Simplification & Space Clean-up)
+* **Sửa gì:** Loại bỏ bảng kiểm định cơ học trùng lặp tại modal để tránh làm dài modal gây cuộn che khuất các ô nhập liệu đầu vào. Trạng thái Đạt/Lỗi đã được hiển thị đầy đủ và trực quan qua 6 nút Tab status (M.A → M.F) ở đầu modal.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`

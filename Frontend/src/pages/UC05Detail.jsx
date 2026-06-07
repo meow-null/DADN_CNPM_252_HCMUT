@@ -50,6 +50,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   const [showEditModal, setShowEditModal] = useState(false);
   const [correctionTarget, setCorrectionTarget] = useState(null); // 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | null
   const [showAllFields, setShowAllFields] = useState(false);
+  const [initialResults, setInitialResults] = useState(null);
 
   const [materials, setMaterials] = useState([]);
   const [editForm, setEditForm] = useState({
@@ -136,6 +137,13 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     fetchMaterials();
   }, []);
 
+  // Capture baseline mechanical calculation results once when modal opens
+  useEffect(() => {
+    if (showEditModal) {
+      setInitialResults(results);
+    }
+  }, [showEditModal]);
+
   // Sync modal values when activeProject or modal target changes
   useEffect(() => {
     if (activeProject && showEditModal) {
@@ -144,12 +152,12 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         input_n_ct: activeProject.input_n_ct || '',
         input_L: activeProject.input_L || '',
         selected_material_id: activeProject.selected_material_id || '',
-        d_tc_I: latestCalcRef?.designResult?.ModuleD?.trucI?.d_tc_mm?.[0] || '',
-        key_b: latestCalcRef?.designResult?.ModuleE?.b || '',
-        key_h: latestCalcRef?.designResult?.ModuleE?.h || '',
-        key_t1: latestCalcRef?.designResult?.ModuleE?.t1 || '',
-        key_l: latestCalcRef?.designResult?.ModuleE?.l_t_mm || '',
-        m_e_I: latestCalcRef?.designResult?.ModuleB?.m_e_mm || ''
+        d_tc_I: latestCalcRef?.designResult?.ModuleD?.trucI?.d_tc_mm?.[0] || results?.ModuleD?.trucI?.d_tc_mm?.[0] || '',
+        key_b: latestCalcRef?.designResult?.ModuleE?.b || results?.ModuleE?.b || '',
+        key_h: latestCalcRef?.designResult?.ModuleE?.h || results?.ModuleE?.h || '',
+        key_t1: latestCalcRef?.designResult?.ModuleE?.t1 || results?.ModuleE?.t1 || '',
+        key_l: latestCalcRef?.designResult?.ModuleE?.l_t_mm || results?.ModuleE?.l_t_mm || '',
+        m_e_I: latestCalcRef?.designResult?.ModuleB?.m_e_mm || results?.ModuleB?.m_e_mm || ''
       });
       setLiveWarnings([]);
       setLiveCheckPassed(false);
@@ -259,36 +267,405 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   const handleApplySuggestion = () => {
     const res = latestCalcRef?.designResult;
     if (!res) return;
+    let updated = { ...editForm };
     if (correctionTarget === 'A') {
       const val = res.ModuleA?.recommended_P;
-      if (val != null) {
-        setEditForm(prev => ({ ...prev, input_P: val.toString() }));
-      }
+      if (val != null) updated.input_P = val.toString();
     } else if (correctionTarget === 'B') {
       const val = res.ModuleB?.recommended_material_id;
-      if (val != null) {
-        setEditForm(prev => ({ ...prev, selected_material_id: val.toString() }));
-      }
+      if (val != null) updated.selected_material_id = val.toString();
       const valModule = res.ModuleB?.recommended_m_e;
-      if (valModule != null) {
-        setEditForm(prev => ({ ...prev, m_e_I: valModule.toString() }));
-      }
+      if (valModule != null) updated.m_e_I = valModule.toString();
     } else if (correctionTarget === 'D') {
       const val = res.ModuleD?.trucI?.recommended_d_tc;
-      if (val != null) {
-        setEditForm(prev => ({ ...prev, d_tc_I: val.toString() }));
-      }
+      if (val != null) updated.d_tc_I = val.toString();
     } else if (correctionTarget === 'E') {
       const val = res.ModuleE?.recommended_l;
-      if (val != null) {
-        setEditForm(prev => ({ ...prev, key_l: val.toString() }));
-      }
+      if (val != null) updated.key_l = val.toString();
     } else if (correctionTarget === 'F') {
       const val = res.ModuleF?.recommended_d_tc;
-      if (val != null) {
-        setEditForm(prev => ({ ...prev, d_tc_I: val.toString() }));
+      if (val != null) updated.d_tc_I = val.toString();
+    }
+    setEditForm(updated);
+  };
+
+  const handleAutoFixAll = () => {
+    const res = latestCalcRef?.designResult;
+    if (!res) return;
+    
+    let updated = { ...editForm };
+    const valP = res.ModuleA?.recommended_P;
+    if (valP != null) updated.input_P = valP.toString();
+
+    const valMat = res.ModuleB?.recommended_material_id;
+    if (valMat != null) updated.selected_material_id = valMat.toString();
+    
+    const valModule = res.ModuleB?.recommended_m_e;
+    if (valModule != null) updated.m_e_I = valModule.toString();
+
+    const valD = res.ModuleD?.trucI?.recommended_d_tc;
+    if (valD != null) updated.d_tc_I = valD.toString();
+
+    const valL = res.ModuleE?.recommended_l;
+    if (valL != null) updated.key_l = valL.toString();
+
+    const valDF = res.ModuleF?.recommended_d_tc;
+    if (valDF != null) {
+      const maxD = Math.max(Number(updated.d_tc_I || 0), Number(valDF));
+      updated.d_tc_I = maxD.toString();
+    }
+
+    setEditForm(updated);
+  };
+
+  // --- Dynamic Diagnostic and Change Reporting Helpers ---
+  const getDetailedDiagnostic = (target, res) => {
+    if (!res) return null;
+    const mRes = res[`Module${target}`];
+    if (!mRes) return null;
+
+    if (target === 'A') {
+      const okS = mRes.check_s_pass;
+      const okH = mRes.check_H_pass;
+      if (okS && okH) return {
+        status: 'success',
+        problem: 'Bộ truyền xích hoạt động an toàn. Hệ số an toàn bền mỏi (s) và ứng suất tiếp xúc đều đạt yêu cầu kỹ thuật.',
+        solution: 'Không cần thay đổi thông số.'
+      };
+      
+      let problemText = '';
+      if (!okS) problemText += `Hệ số an toàn mỏi thực tế s = ${fmt(mRes.s_safety)} < [s] = ${fmt(mRes.s_allow || 9.8)}. `;
+      if (!okH) problemText += `Ứng suất tiếp xúc răng xích σH = ${fmt(mRes.sigma_H_MPa)} MPa > 600 MPa. `;
+      problemText += 'Hệ thống xích đang bị quá tải, có nguy cơ đứt xích đột ngột hoặc mài mòn răng đĩa xích cực nhanh.';
+
+      return {
+        status: 'error',
+        problem: problemText,
+        solution: `Khuyến nghị: Giảm công suất đầu vào P xuống dưới ${fmt(mRes.recommended_P)} kW để giảm tải kéo lên xích, hoặc tăng vòng quay đầu vào.`
+      };
+    }
+
+    if (target === 'B') {
+      const okH = mRes.check_H_pass;
+      if (okH) return {
+        status: 'success',
+        problem: 'Bánh răng côn cấp nhanh đạt chuẩn ứng suất tiếp xúc cho phép.',
+        solution: 'Không cần thay đổi thông số.'
+      };
+
+      const sigmaHVal = mRes.sigma_H_check ? `${fmt(mRes.sigma_H_check)} MPa` : "Quá tải";
+      let problemText = `Ứng suất tiếp xúc tính toán σH = ${sigmaHVal} vượt quá ứng suất cho phép [σH] = ${fmt(mRes.sigma_H_allow_MPa)} MPa. Bề mặt răng côn chịu lực ép quá lớn, dễ bị tróc rỗ, mẻ răng hoặc hư hỏng nghiêm trọng.`;
+      
+      let solutionText = '';
+      if (mRes.recommended_material_id) {
+        solutionText = `Hãy nâng cấp vật liệu chế tạo lên loại thép có độ cứng cao hơn (độ cứng khuyến nghị HB >= ${Math.ceil((mRes.sigma_H_check * 1.1 / 1.0 - 70) / 2)}). `;
+      }
+      if (mRes.recommended_m_e) {
+        solutionText += `Độ cứng thép yêu cầu quá cao. Hãy ghi đè tăng Module bánh răng côn m_e lên ${mRes.recommended_m_e} mm để mở rộng diện tích tiếp xúc răng, giúp giải tỏa lực tiếp xúc.`;
+      }
+
+      return {
+        status: 'error',
+        problem: problemText,
+        solution: solutionText || 'Hãy nâng cấp vật liệu bánh răng hoặc tăng Module bánh răng côn.'
+      };
+    }
+
+    if (target === 'C') {
+      const okH = mRes.check_H_pass;
+      if (okH) return {
+        status: 'success',
+        problem: 'Bánh răng trụ cấp chậm đạt bền tiếp xúc theo tiêu chuẩn thiết kế.',
+        solution: 'Không cần thay đổi thông số.'
+      };
+      return {
+        status: 'error',
+        problem: 'Ứng suất tiếp xúc trên răng trụ vượt quá giới hạn bền cho phép, có nguy cơ làm rỗ bề mặt răng trụ cấp chậm.',
+        solution: 'Hãy chọn mác vật liệu chế tạo có giới hạn bền tiếp xúc cao hơn hoặc giảm bớt công suất đầu vào.'
+      };
+    }
+
+    if (target === 'D') {
+      const trucI = mRes.trucI;
+      const okFatigue = trucI?.check_fatigue_pass;
+      if (okFatigue) return {
+        status: 'success',
+        problem: `Trục I đạt hệ số an toàn bền mỏi s = ${fmt(trucI?.s_fatigue)} (Yêu cầu ≥ 1.5). Trục có khả năng chịu lực xoắn và uốn kết hợp tốt.`,
+        solution: 'Không cần thay đổi thông số.'
+      };
+
+      return {
+        status: 'error',
+        problem: `Hệ số an toàn bền mỏi s = ${fmt(trucI?.s_fatigue)} nhỏ hơn mức tối thiểu 1.50. Trục I chịu lực uốn và xoắn đồng thời quá lớn tại vị trí lắp bánh răng côn, có nguy cơ nứt gãy mỏi trục sau một thời gian vận hành.`,
+        solution: `Hãy tăng đường kính trục d_tc lên d_tc = ${fmt(trucI?.recommended_d_tc)} mm để tăng độ cứng vững và moment chống uốn xoắn mặt cắt.`
+      };
+    }
+
+    if (target === 'E') {
+      const okE = mRes.check_key_pass;
+      if (okE) return {
+        status: 'success',
+        problem: `Then trục đạt chuẩn độ bền dập (σd = ${fmt(mRes.sigma_d_MPa)} MPa ≤ 100 MPa) and bền cắt (τc = ${fmt(mRes.tau_c_MPa)} MPa ≤ 60 MPa).`,
+        solution: 'Không cần thay đổi thông số.'
+      };
+
+      let problemText = '';
+      const okDap = mRes.sigma_d_MPa <= 100;
+      const okCat = mRes.tau_c_MPa <= 60;
+      if (!okDap) problemText += `Ứng suất dập then σd = ${fmt(mRes.sigma_d_MPa)} MPa > 100 MPa. `;
+      if (!okCat) problemText += `Ứng suất cắt then τc = ${fmt(mRes.tau_c_MPa)} MPa > 60 MPa. `;
+      problemText += 'Then có nguy cơ bị biến dạng dập nát hoặc bị cắt rời khớp truyền động.';
+
+      return {
+        status: 'error',
+        problem: problemText,
+        solution: `Hãy ghi đè tăng chiều dài then l lên l = ${mRes.recommended_l} mm để phân bổ lực đều hơn.`
+      };
+    }
+
+    if (target === 'F') {
+      const okF = mRes.check_bearing_pass;
+      if (okF) return {
+        status: 'success',
+        problem: `Ổ lăn côn mã hiệu ${mRes.bearing_code} chịu tải trọng an toàn (Khả năng tải C_catalog = ${fmt(mRes.C_catalog_kN)} kN ≥ Cd yêu cầu = ${fmt(mRes.C_d_kN)} kN).`,
+        solution: 'Không cần thay đổi thông số.'
+      };
+
+      return {
+        status: 'error',
+        problem: `Không tìm thấy ổ lăn tiêu chuẩn tương thích với đường kính ngõng trục hiện tại thỏa mãn tải trọng động Cd = ${fmt(mRes.C_d_kN)} kN. Gối đỡ chịu phản lực hướng tâm và dọc trục quá lớn, ổ lăn hiện tại sẽ bị quá tải nhiệt hoặc rơ lắc, nhanh hỏng bi.`,
+        solution: `Hãy tăng đường kính trục d_tc lên d_tc = ${fmt(mRes.recommended_d_tc)} mm. Khi ngõng trục to hơn, catalog sẽ tự động đề xuất mã ổ lăn côn lớn có khả năng tải C lớn tương ứng.`
+      };
+    }
+
+    return null;
+  };
+
+
+
+  const getLiveParameterChanges = () => {
+    if (!activeProject || !editForm) return [];
+    const list = [];
+    const fieldsMap = {
+      input_P: { label: "Công suất thiết kế P", unit: "kW", origVal: activeProject.input_P },
+      input_n_ct: { label: "Số vòng quay n_ct", unit: "rpm", origVal: activeProject.input_n_ct },
+      input_L: { label: "Thời gian phục vụ L", unit: "năm", origVal: activeProject.input_L },
+      selected_material_id: { label: "Vật liệu chế tạo", isMaterial: true, origVal: activeProject.selected_material_id },
+      m_e_I: { label: "Module bánh răng côn m_e", unit: "mm", fallback: "Tự động", origVal: results?.ModuleB?.m_e_mm },
+      d_tc_I: { label: "Đường kính trục d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucI?.d_tc_mm?.[0] },
+      key_l: { label: "Chiều dài then l", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.l_t_mm },
+      key_b: { label: "Chiều rộng then b", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.b },
+      key_h: { label: "Chiều cao then h", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.h },
+      key_t1: { label: "Chiều sâu rãnh then t1", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.t1 }
+    };
+
+    for (const key in fieldsMap) {
+      const config = fieldsMap[key];
+      const bVal = config.origVal;
+      const aVal = editForm[key];
+
+      const bStr = bVal != null ? bVal.toString() : '';
+      const aStr = aVal != null ? aVal.toString() : '';
+
+      if (bStr !== aStr && (bStr !== '' || aStr !== '')) {
+        let fromText = bVal || config.fallback || "—";
+        let toText = aVal || config.fallback || "—";
+
+        if (config.isMaterial) {
+          const matBefore = materials.find(m => m.id.toString() === bVal?.toString());
+          const matAfter = materials.find(m => m.id.toString() === aVal?.toString());
+          fromText = matBefore ? matBefore.grade_name : "Mặc định (Thép 45)";
+          toText = matAfter ? matAfter.grade_name : "Mặc định (Thép 45)";
+        } else if (config.unit) {
+          if (bVal) fromText = `${bVal} ${config.unit}`;
+          if (aVal) toText = `${aVal} ${config.unit}`;
+        }
+
+        list.push({
+          label: config.label,
+          from: fromText,
+          to: toText
+        });
       }
     }
+    return list;
+  };
+
+  const renderLiveChangeReport = () => {
+    const parameterChanges = getLiveParameterChanges();
+    const hasParamChanges = parameterChanges.length > 0;
+
+    if (!hasParamChanges) return null;
+
+    return (
+      <div className="p-4 bg-emerald-50/50 border border-emerald-200/60 rounded-3xl animate-fade-in space-y-4 shadow-sm mb-4">
+        <p className="text-xs font-black text-emerald-800 flex items-center gap-1.5">
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span>⚡ BÁO CÁO THAY ĐỔI THÔNG SỐ ĐẦU VÀO</span>
+        </p>
+
+        {/* Section 1: Parameter Changes */}
+        <div className="space-y-2">
+          <p className="text-[10px] font-black text-emerald-700 uppercase tracking-wider font-heading">
+            🛠️ Thông số đã ghi đè (Before vs After):
+          </p>
+          <div className="overflow-x-auto rounded-xl border border-emerald-100 bg-white/80 p-2">
+            <table className="w-full text-left text-[11px] font-semibold text-emerald-900 border-collapse">
+              <thead>
+                <tr className="border-b border-emerald-100/50 text-emerald-600 font-extrabold uppercase tracking-widest text-[9px] pb-1">
+                  <th className="pb-1.5 pl-2">Thông số</th>
+                  <th className="pb-1.5">Giá trị cũ</th>
+                  <th className="pb-1.5 text-center">➔</th>
+                  <th className="pb-1.5 pr-2">Giá trị mới</th>
+                </tr>
+              </thead>
+              <tbody>
+                {parameterChanges.map((item, index) => (
+                  <tr key={index} className="border-b border-emerald-100/20 last:border-0 hover:bg-emerald-50/50 transition-premium">
+                    <td className="py-2 pl-2 text-emerald-900 font-bold">{item.label}</td>
+                    <td className="py-2 text-slate-400 font-mono line-through">{item.from}</td>
+                    <td className="py-2 text-emerald-500 text-center font-bold">➔</td>
+                    <td className="py-2 pr-2 text-emerald-700 font-mono font-bold">
+                      <span className="bg-emerald-100/60 px-2 py-0.5 rounded-lg border border-emerald-200/30">
+                        {item.to}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const getSuggestionImpact = (target, res) => {
+    if (!res) return [];
+    const list = [];
+    if (target === 'A') {
+      const p = res.ModuleA?.recommended_P;
+      if (p != null) list.push(`Giảm Công suất thiết kế P: ${p} kW`);
+    } else if (target === 'B') {
+      const matId = res.ModuleB?.recommended_material_id;
+      const me = res.ModuleB?.recommended_m_e;
+      if (matId != null) {
+        const mat = materials.find(m => m.id.toString() === matId.toString());
+        list.push(`Đổi Vật liệu chế tạo: ${mat ? mat.grade_name : 'Thép chất lượng cao'}`);
+      }
+      if (me != null) {
+        list.push(`Thay đổi Module bánh răng m_e: ${me} mm`);
+      }
+    } else if (target === 'D') {
+      const d = res.ModuleD?.trucI?.recommended_d_tc;
+      if (d != null) list.push(`Thay đổi Đường kính trục d_tc: ${d} mm`);
+    } else if (target === 'E') {
+      const l = res.ModuleE?.recommended_l;
+      if (l != null) list.push(`Thay đổi Chiều dài then l: ${l} mm`);
+    } else if (target === 'F') {
+      const d = res.ModuleF?.recommended_d_tc;
+      if (d != null) list.push(`Thay đổi Đường kính trục d_tc: ${d} mm`);
+    }
+    return list;
+  };
+
+  const getAllSuggestionsImpact = (res) => {
+    if (!res) return [];
+    const list = [];
+    
+    const valP = res.ModuleA?.recommended_P;
+    if (valP != null) list.push(`Giảm Công suất thiết kế P: ${valP} kW`);
+
+    const valMat = res.ModuleB?.recommended_material_id;
+    if (valMat != null) {
+      const mat = materials.find(m => m.id.toString() === valMat.toString());
+      list.push(`Đổi Vật liệu chế tạo: ${mat ? mat.grade_name : 'Thép chất lượng cao'}`);
+    }
+
+    const valModule = res.ModuleB?.recommended_m_e;
+    if (valModule != null) list.push(`Thay đổi Module bánh răng m_e: ${valModule} mm`);
+
+    const valD = res.ModuleD?.trucI?.recommended_d_tc;
+    const valDF = res.ModuleF?.recommended_d_tc;
+    let finalD = null;
+    if (valD != null || valDF != null) {
+      finalD = Math.max(Number(valD || 0), Number(valDF || 0));
+    }
+    if (finalD) {
+      list.push(`Thay đổi Đường kính trục d_tc: ${finalD} mm (Đồng bộ bền mỏi & tra ổ)`);
+    }
+
+    const valL = res.ModuleE?.recommended_l;
+    if (valL != null) list.push(`Thay đổi Chiều dài then l: ${valL} mm`);
+
+    return list;
+  };
+
+  const renderTechnicalComparison = (target) => {
+    const res = latestCalcRef?.designResult || results;
+    if (!res) return null;
+    
+    if (target === 'A') {
+      const r = res.ModuleA;
+      if (!r) return null;
+      const okS = r.check_s_pass;
+      const okH = r.check_H_pass;
+      if (okS && okH) return null;
+      return (
+        <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
+          <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
+          {!okS && <p className="pl-2">· Hệ số an toàn mỏi thực tế: <span className="font-mono font-bold text-rose-700">{fmt(r.s_safety)}</span> (Yêu cầu: <span className="font-mono text-slate-500">&ge; {fmt(r.s_allow || 9.8)}</span>) ❌ Không đạt</p>}
+          {!okH && <p className="pl-2">· Ứng suất tiếp xúc răng xích: <span className="font-mono font-bold text-rose-700">{fmt(r.sigma_H_MPa)} MPa</span> (Cho phép: <span className="font-mono text-slate-500">&le; 600 MPa</span>) ❌ Không đạt</p>}
+        </div>
+      );
+    }
+    if (target === 'B') {
+      const r = res.ModuleB;
+      if (!r || r.check_H_pass) return null;
+      return (
+        <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
+          <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
+          <p className="pl-2">· Ứng suất tiếp xúc tính toán: <span className="font-mono font-bold text-rose-700">{r.sigma_H_check ? `${fmt(r.sigma_H_check)} MPa` : "Quá cao"}</span> (Cho phép: <span className="font-mono text-slate-500">&le; {fmt(r.sigma_H_allow_MPa)} MPa</span>) ❌ Quá tải tiếp xúc</p>
+        </div>
+      );
+    }
+    if (target === 'D') {
+      const r = res.ModuleD?.trucI;
+      if (!r || r.check_fatigue_pass) return null;
+      return (
+        <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
+          <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
+          <p className="pl-2">· Hệ số an toàn mỏi của trục: <span className="font-mono font-bold text-rose-700">{fmt(r.s_fatigue)}</span> (Yêu cầu an toàn: <span className="font-mono text-slate-500">&ge; 1.50</span>) ❌ Không đủ bền mỏi</p>
+        </div>
+      );
+    }
+    if (target === 'E') {
+      const r = res.ModuleE;
+      if (!r || r.check_key_pass) return null;
+      const okDap = r.sigma_d_MPa <= 100;
+      const okCat = r.tau_c_MPa <= 60;
+      return (
+        <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
+          <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
+          {!okDap && <p className="pl-2">· Ứng suất dập then: <span className="font-mono font-bold text-rose-700">{fmt(r.sigma_d_MPa)} MPa</span> (Cho phép: <span className="font-mono text-slate-500">&le; 100 MPa</span>) ❌ Quá tải dập</p>}
+          {!okCat && <p className="pl-2">· Ứng suất cắt then: <span className="font-mono font-bold text-rose-700">{fmt(r.tau_c_MPa)} MPa</span> (Cho phép: <span className="font-mono text-slate-500">&le; 60 MPa</span>) ❌ Quá tải cắt</p>}
+        </div>
+      );
+    }
+    if (target === 'F') {
+      const r = res.ModuleF;
+      if (!r || r.check_bearing_pass) return null;
+      return (
+        <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
+          <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
+          <p className="pl-2">· Khả năng tải động yêu cầu C_d: <span className="font-mono font-bold text-rose-700">{fmt(r.C_d_kN)} kN</span> (Khả năng tải danh định của ổ hiện tại C: <span className="font-mono text-slate-500">{fmt(r.C_catalog_kN || 0)} kN</span>) ❌ Quá tải ổ lăn</p>
+        </div>
+      );
+    }
+    return null;
   };
 
   const handleRun = async () => {
@@ -357,6 +734,18 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     return false;
   };
 
+  const getTargetWarning = (target) => {
+    if (!latestCalcRef?.designResult) return null;
+    const res = latestCalcRef.designResult;
+    if (target === 'A') return res.ModuleA?.warning;
+    if (target === 'B') return res.ModuleB?.warning;
+    if (target === 'C') return res.ModuleC?.warning;
+    if (target === 'D') return res.ModuleD?.trucI?.warning;
+    if (target === 'E') return res.ModuleE?.warning;
+    if (target === 'F') return res.ModuleF?.warning;
+    return null;
+  };
+
   const isAllOk = results && ['A', 'B', 'C', 'D', 'E', 'F'].every(getModuleOk);
 
   if (showSuccess) {
@@ -387,6 +776,17 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       </div>
     );
   }
+
+  const isCurrentTargetOk = (() => {
+    if (!latestCalcRef?.designResult) return false;
+    if (!correctionTarget) return liveCheckPassed;
+    return getLiveModuleOk(correctionTarget);
+  })();
+
+  const targetWarningText = correctionTarget ? getTargetWarning(correctionTarget) : null;
+  const warningsToShow = correctionTarget 
+    ? (targetWarningText ? [targetWarningText] : [])
+    : liveWarnings;
 
   // Find selected material label
   const activeMaterial = materials.find(m => m.id === activeProject?.selected_material_id);
@@ -518,7 +918,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       {/* QUICK EDIT / CONTEXTUAL CORRECTION MODAL */}
       {showEditModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
-          <div className="bg-white rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col border border-slate-200">
+          <div className="bg-white rounded-3xl w-full max-w-xl max-h-[85vh] shadow-2xl overflow-hidden flex flex-col border border-slate-200">
             {/* Header */}
             <div className="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
               <div>
@@ -533,13 +933,74 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
               </button>
             </div>
 
-            {/* Description/Explanation */}
-            <div className="px-6 py-4 bg-blue-50/50 border-b border-slate-100 text-xs text-blue-800 leading-relaxed font-medium">
-              💡 <strong>Gợi ý cơ học:</strong> {currentConfig.desc}
+            {/* Stepper Status Tabs */}
+            <div className="px-6 py-3 border-b border-slate-100 bg-slate-50/20">
+              <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-2">Chọn Module để chỉnh sửa hoặc khắc phục nhanh:</p>
+              <div className="grid grid-cols-6 gap-2">
+                {['A', 'B', 'C', 'D', 'E', 'F'].map(m => {
+                  const ok = getLiveModuleOk(m);
+                  const isActive = correctionTarget === m;
+                  return (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => setCorrectionTarget(isActive ? null : m)}
+                      className={`p-2 rounded-2xl border text-center transition-all transform hover:scale-105 active:scale-95 ${
+                        isActive 
+                          ? 'ring-2 ring-blue-600 shadow-md bg-blue-50 border-blue-300 text-blue-900 font-black' 
+                          : ok 
+                            ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-800' 
+                            : 'bg-rose-50 hover:bg-rose-100 border-rose-200 text-rose-800'
+                      }`}
+                    >
+                      <p className="text-[10px] font-black font-heading">M.{m}</p>
+                      <span className={`inline-block w-1.5 h-1.5 rounded-full mt-1 ${
+                        ok ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-rose-500 animate-pulse shadow-sm shadow-rose-500/50'
+                      }`}></span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
+
+            {/* Description/Explanation */}
+            {(() => {
+              const diag = correctionTarget ? getDetailedDiagnostic(correctionTarget, latestCalcRef?.designResult || results) : null;
+              if (!diag) {
+                return (
+                  <div className="px-6 py-4 bg-blue-50/50 border-b border-slate-100 text-xs text-blue-800 leading-relaxed font-medium">
+                    💡 <strong>Gợi ý cơ học:</strong> {currentConfig.desc}
+                  </div>
+                );
+              }
+              const isErr = diag.status === 'error';
+              return (
+                <div className={`px-6 py-4 border-b text-xs leading-relaxed font-semibold transition-all ${
+                  isErr 
+                    ? 'bg-rose-50/80 border-rose-100 text-rose-800' 
+                    : 'bg-emerald-50/80 border-emerald-100 text-emerald-800'
+                }`}>
+                  <div className="flex items-center gap-2 font-black mb-1.5 uppercase tracking-wider text-[10px]">
+                    <span className={`w-2 h-2 rounded-full ${isErr ? 'bg-rose-500 animate-pulse' : 'bg-emerald-500'}`}></span>
+                    <span>Chẩn đoán cơ học - Module {correctionTarget}</span>
+                  </div>
+                  <p className="mb-2 text-slate-800 font-medium">
+                    <strong className="underline text-slate-900 font-bold">Sự cố phát hiện:</strong> {diag.problem}
+                  </p>
+                  <p className="text-slate-650 leading-relaxed font-medium">
+                    <strong className="text-indigo-700 underline font-bold">Biện pháp khắc phục:</strong> {diag.solution}
+                  </p>
+                </div>
+              );
+            })()}
 
             {/* Dynamic Inputs */}
             <div className="p-6 space-y-5 flex-1 overflow-y-auto">
+              {/* Technical Comparison Block */}
+              {renderTechnicalComparison(correctionTarget)}
+
+              {/* Live Change & Safety Verification Report */}
+              {renderLiveChangeReport()}
               <div className="grid grid-cols-2 gap-4">
                 {/* Input P */}
                 {(showAllFields || currentConfig.fields.includes('input_P')) && (
@@ -679,45 +1140,73 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
               {/* Status and warnings section */}
               <div className="pt-4 border-t border-slate-100 space-y-4">
                 {/* Stepper Status Dots for all Modules A-F */}
-                <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Độ ổn định hệ thống (Module A → F):</p>
-                  <div className="grid grid-cols-6 gap-2">
-                    {['A', 'B', 'C', 'D', 'E', 'F'].map(m => {
-                      const ok = getLiveModuleOk(m);
-                      return (
-                        <div key={m} className={`p-2 rounded-2xl border text-center transition-all ${
-                          ok ? 'bg-emerald-50 border-emerald-100/80 text-emerald-700' : 'bg-rose-50 border-rose-100/80 text-rose-700'
-                        }`}>
-                          <p className="text-[10px] font-extrabold font-heading">M.{m}</p>
-                          <span className={`inline-block w-2 h-2 rounded-full mt-1 ${
-                            ok ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-rose-500 shadow-sm shadow-rose-500/50 animate-pulse'
-                          }`}></span>
-                        </div>
-                      );
-                    })}
+                {correctionTarget ? (
+                  <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl animate-fade-in">
+                    <span className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Trạng thái Module {correctionTarget} ({moduleLabels[correctionTarget]}):</span>
+                    {isLiveCalculating ? (
+                      <span className="flex items-center gap-1.5 text-xs text-blue-500 font-bold">
+                        <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                        Đang phân tích...
+                      </span>
+                    ) : (
+                      <span>
+                        {isCurrentTargetOk ? (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 rounded-full text-xs font-black uppercase tracking-wider">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
+                            Đạt chuẩn
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-500/10 text-rose-700 border border-rose-500/20 rounded-full text-xs font-black uppercase tracking-wider">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shadow-sm shadow-rose-500/50 animate-pulse"></span>
+                            Có lỗi
+                          </span>
+                        )}
+                      </span>
+                    )}
                   </div>
-                </div>
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Độ ổn định hệ thống (Module A → F):</p>
+                      <div className="grid grid-cols-6 gap-2">
+                        {['A', 'B', 'C', 'D', 'E', 'F'].map(m => {
+                          const ok = getLiveModuleOk(m);
+                          return (
+                            <div key={m} className={`p-2 rounded-2xl border text-center transition-all ${
+                              ok ? 'bg-emerald-50 border-emerald-100/80 text-emerald-700' : 'bg-rose-50 border-rose-100/80 text-rose-700'
+                            }`}>
+                              <p className="text-[10px] font-extrabold font-heading">M.{m}</p>
+                              <span className={`inline-block w-2 h-2 rounded-full mt-1 ${
+                                ok ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-rose-500 shadow-sm shadow-rose-500/50 animate-pulse'
+                              }`}></span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
 
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trạng thái kiểm tra thời gian thực:</span>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trạng thái kiểm tra thời gian thực:</span>
 
-                  {isLiveCalculating ? (
-                    <span className="flex items-center gap-1.5 text-xs text-blue-500 font-bold">
-                      <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-                      Đang phân tích...
-                    </span>
-                  ) : (
-                    <span>
-                      {liveCheckPassed ? (
-                        <span className="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-extrabold border border-emerald-200">AN TOÀN - ĐẠT CHUẨN</span>
+                      {isLiveCalculating ? (
+                        <span className="flex items-center gap-1.5 text-xs text-blue-500 font-bold">
+                          <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                          Đang phân tích...
+                        </span>
                       ) : (
-                        <span className="px-2.5 py-1 bg-rose-50 text-rose-600 rounded-lg text-xs font-extrabold border border-rose-200">KHÔNG ĐẠT - XUẤT HIỆN LỖI</span>
+                        <span>
+                          {liveCheckPassed ? (
+                            <span className="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-extrabold border border-emerald-200">AN TOÀN - ĐẠT CHUẨN</span>
+                          ) : (
+                            <span className="px-2.5 py-1 bg-rose-50 text-rose-600 rounded-lg text-xs font-extrabold border border-rose-200">KHÔNG ĐẠT - XUẤT HIỆN LỖI</span>
+                          )}
+                        </span>
                       )}
-                    </span>
-                  )}
-                </div>
+                    </div>
+                  </>
+                )}
 
-                {(() => {
+                {correctionTarget ? (() => {
                   const moduleResult = latestCalcRef?.designResult?.[`Module${correctionTarget}`];
                   const recText = correctionTarget === 'D' 
                     ? latestCalcRef?.designResult?.ModuleD?.trucI?.recommendation 
@@ -734,11 +1223,29 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
 
                   return (
                     <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
-                      <div className="space-y-1">
+                      <div className="space-y-1.5 flex-1">
                         <p className="text-xs font-bold text-indigo-700 flex items-center gap-1.5">
-                          <span>📌 Gợi ý tối ưu từ hệ thống:</span>
+                          <span>📌 Gợi ý tối ưu Module {correctionTarget}:</span>
                         </p>
                         <p className="text-[11px] text-indigo-600 font-semibold leading-relaxed">{recText}</p>
+                        
+                        {/* Dynamic impact preview */}
+                        {hasSuggestion && (() => {
+                          const impacts = getSuggestionImpact(correctionTarget, latestCalcRef?.designResult);
+                          if (impacts.length === 0) return null;
+                          return (
+                            <div className="mt-2 pt-2 border-t border-indigo-100/50 text-[10px] text-indigo-900 space-y-1 font-bold">
+                              <p className="text-indigo-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Áp dụng":</p>
+                              <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-indigo-700">
+                                {impacts.map((imp, idx) => (
+                                  <li key={idx}>
+                                    {imp}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          );
+                        })()}
                       </div>
                       {hasSuggestion && (
                         <button
@@ -751,12 +1258,51 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                       )}
                     </div>
                   );
+                })() : (() => {
+                  const hasAnyErrors = latestCalcRef?.designResult && !liveCheckPassed;
+                  if (!hasAnyErrors) return null;
+                  
+                  return (
+                    <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
+                      <div className="space-y-1.5 flex-1">
+                        <p className="text-xs font-bold text-blue-700 flex items-center gap-1.5">
+                          <span>⚡ Tự động tối ưu hóa toàn bộ hệ thống:</span>
+                        </p>
+                        <p className="text-[11px] text-blue-600 font-semibold leading-relaxed">Áp dụng đồng thời tất cả gợi ý tối ưu (vật liệu, mô-đun răng, then, đường kính trục) để sửa đổi đồng bộ toàn hệ thống.</p>
+
+                        {/* Dynamic impact preview for auto fix all */}
+                        {(() => {
+                          const impacts = getAllSuggestionsImpact(latestCalcRef?.designResult);
+                          if (impacts.length === 0) return null;
+                          return (
+                            <div className="mt-2 pt-2 border-t border-blue-100/50 text-[10px] text-blue-900 space-y-1 font-bold">
+                              <p className="text-blue-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Tối ưu tất cả":</p>
+                              <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-blue-700">
+                                {impacts.map((imp, idx) => (
+                                  <li key={idx}>
+                                    {imp}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleAutoFixAll}
+                        className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md shrink-0 self-end md:self-center"
+                      >
+                        ⚡ Tối ưu tất cả
+                      </button>
+                    </div>
+                  );
                 })()}
 
                 {/* Warnings inside modal */}
-                {liveWarnings.length > 0 && (
+                {warningsToShow.length > 0 && (
                   <div className="bg-rose-50/60 border border-rose-100 rounded-2xl p-4 space-y-2 text-xs text-rose-700 font-medium">
-                    {liveWarnings.map((w, index) => (
+                    {warningsToShow.map((w, index) => (
                       <div key={index} className="flex gap-2 items-start">
                         <span className="w-1.5 h-1.5 bg-rose-500 rounded-full shrink-0 mt-1.5"></span>
                         <span>{w}</span>
@@ -764,10 +1310,15 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                     ))}
                   </div>
                 )}
-                {liveCheckPassed && !isLiveCalculating && (
+                {isCurrentTargetOk && !isLiveCalculating && (
                   <div className="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-4 text-xs text-emerald-700 font-medium flex gap-2 items-center">
                     <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
-                    <span>Tuyệt vời! Tất cả các module đã hoàn thành bước kiểm nghiệm an toàn.</span>
+                    <span>
+                      {correctionTarget 
+                        ? `Tuyệt vời! Module ${moduleLabels[correctionTarget] || correctionTarget} đã hoàn thành bước kiểm nghiệm an toàn.`
+                        : "Tuyệt vời! Tất cả các module đã hoàn thành bước kiểm nghiệm an toàn."
+                      }
+                    </span>
                   </div>
                 )}
               </div>
@@ -783,9 +1334,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
               </button>
               <button
                 onClick={handleApplyChanges}
-                disabled={!liveCheckPassed || isLiveCalculating}
+                disabled={!isCurrentTargetOk || isLiveCalculating}
                 className={`px-6 py-3 rounded-2xl font-bold text-xs transition-premium shadow-md shadow-blue-500/10 ${
-                  liveCheckPassed && !isLiveCalculating
+                  isCurrentTargetOk && !isLiveCalculating
                     ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                 }`}
