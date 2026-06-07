@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatNumber } from '../utils/formatUtils';
 
 export default function Reports({ onNavigate, activeProject, kinematicsResult }) {
   // Quản lý trạng thái bật/tắt của Modal Preview PDF
@@ -9,7 +10,7 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
     <section className="space-y-10 animate-fade-in relative">
       <div className="flex items-center justify-between">
         <div>
-          <button 
+          <button
             onClick={() => onNavigate('summary')}
             className="mb-4 px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-500 font-semibold flex items-center gap-2 hover:bg-slate-50 transition-colors w-fit shadow-sm"
           >
@@ -19,7 +20,7 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
           <h2 className="text-3xl font-bold text-slate-900">Tổng kết Dự án & Xuất báo cáo</h2>
           <p className="text-slate-500">Tóm tắt các thông số chính đã tính toán và xuất báo cáo thuyết minh kỹ thuật.</p>
         </div>
-        <button 
+        <button
           onClick={() => setShowPreviewModal(true)}
           className="bg-primary text-white px-8 py-3 rounded-xl font-bold hover:bg-primary-dark transition-all flex items-center gap-2 shadow-lg shadow-primary/20"
         >
@@ -33,9 +34,9 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
             <tr><th className="px-8 py-5">Thông số</th><th className="px-8 py-5">Ký hiệu</th><th className="px-8 py-5">Đơn vị</th><th className="px-8 py-5 text-right">Giá trị</th></tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            <tr><td className="px-8 py-5 font-medium">Công suất</td><td className="px-8 py-5 text-slate-400 font-mono">P</td><td className="px-8 py-5 text-slate-400">kW</td><td className="px-8 py-5 text-right font-bold text-primary text-lg">{activeProject?.input_P ?? '-'}</td></tr>
-            <tr><td className="px-8 py-5 font-medium">Số vòng quay</td><td className="px-8 py-5 text-slate-400 font-mono">n</td><td className="px-8 py-5 text-slate-400">vòng/phút</td><td className="px-8 py-5 text-right font-bold text-primary text-lg">{activeProject?.input_n_ct ?? '-'}</td></tr>
-            <tr><td className="px-8 py-5 font-medium">Tỷ số truyền</td><td className="px-8 py-5 text-slate-400 font-mono">u</td><td className="px-8 py-5 text-slate-400">-</td><td className="px-8 py-5 text-right font-bold text-primary text-lg">{kinematics?.u_ch_sb ?? '-'}</td></tr>
+            <tr><td className="px-8 py-5 font-medium">Công suất</td><td className="px-8 py-5 text-slate-400 font-mono">P</td><td className="px-8 py-5 text-slate-400">kW</td><td className="px-8 py-5 text-right font-bold text-primary text-lg">{formatNumber(activeProject?.input_P) ?? '-'}</td></tr>
+            <tr><td className="px-8 py-5 font-medium">Số vòng quay</td><td className="px-8 py-5 text-slate-400 font-mono">n</td><td className="px-8 py-5 text-slate-400">vòng/phút</td><td className="px-8 py-5 text-right font-bold text-primary text-lg">{formatNumber(activeProject?.input_n_ct) ?? '-'}</td></tr>
+            <tr><td className="px-8 py-5 font-medium">Tỷ số truyền</td><td className="px-8 py-5 text-slate-400 font-mono">u</td><td className="px-8 py-5 text-slate-400">-</td><td className="px-8 py-5 text-right font-bold text-primary text-lg">{formatNumber(kinematics?.u_ch_sb) ?? '-'}</td></tr>
           </tbody>
         </table>
       </div>
@@ -56,7 +57,7 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
             </div>
           </div>
         </div>
-        
+
         <div className="flex gap-4 pt-6">
           <button onClick={() => setShowPreviewModal(true)} className="flex-1 py-4 bg-slate-100 text-slate-600 rounded-xl font-bold hover:bg-slate-200 flex items-center justify-center gap-2 transition-colors">
             Xem trước (Preview)

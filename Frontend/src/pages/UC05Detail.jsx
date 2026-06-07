@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { formatNumber } from '../utils/formatUtils';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
 // --- UI helpers ---
+const formatNum = (val, d = 2) => val != null ? formatNumber(val, d) : '-';
+
 const StatusBadge = ({ ok }) =>
   ok
     ? (
@@ -27,11 +30,11 @@ const ModuleHeader = ({ letter, title, tag }) => (
   </div>
 );
 
-const ResultCard = ({ label, value, unit, highlight }) => (
-  <div className={`p-4 rounded-2xl border transition-premium ${highlight ? 'bg-blue-600/5 border-blue-500/20 shadow-sm' : 'bg-slate-50/50 border-slate-100/80 hover:bg-slate-50'}`}>
-    <p className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">{label}</p>
-    <p className={`text-xl font-extrabold font-heading ${highlight ? 'text-blue-600' : 'text-slate-800'}`}>
-      {value} {unit && <span className="text-xs font-semibold text-slate-400">{unit}</span>}
+const ResultCard = ({ label, value, unit, highlight, error }) => (
+  <div className={`p-4 rounded-2xl border transition-premium ${error ? 'bg-rose-550/5 border-rose-250/20 shadow-sm' : highlight ? 'bg-blue-600/5 border-blue-500/20 shadow-sm' : 'bg-slate-50/50 border-slate-100/80 hover:bg-slate-50'}`}>
+    <p className={`text-[9px] font-extrabold uppercase tracking-widest mb-1 ${error ? 'text-rose-500' : 'text-slate-400'}`}>{label}</p>
+    <p className={`text-xl font-extrabold font-heading ${error ? 'text-rose-600' : highlight ? 'text-blue-600' : 'text-slate-800'}`}>
+      {value != null ? value : '-'} {unit && <span className="text-xs font-semibold text-slate-400">{unit}</span>}
     </p>
   </div>
 );
@@ -59,6 +62,8 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     input_L: '',
     selected_material_id: '',
     d_tc_I: '',
+    d_tc_II: '',
+    d_tc_III: '',
     key_b: '',
     key_h: '',
     key_t1: '',
@@ -91,7 +96,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     },
     D: {
       title: 'Khắc phục độ bền mỏi Trục (Module D)',
-      desc: 'Hệ số an toàn bền mỏi s của Trục I không đạt chuẩn an toàn cơ học (s < 1.5). Hãy giảm nhẹ công suất đầu vào P, chọn vật liệu tốt hơn, hoặc nhập đường kính trục d_tc lớn hơn.',
+      desc: 'Hệ số an toàn bền mỏi s của Trục không đạt chuẩn an toàn cơ học (s < 1.5). Hãy giảm nhẹ công suất đầu vào P, chọn vật liệu tốt hơn, hoặc nhập đường kính trục d_tc tương ứng.',
       fields: ['d_tc_I', 'selected_material_id', 'input_P']
     },
     E: {
@@ -100,7 +105,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       fields: ['d_tc_I', 'key_b', 'key_h', 'key_t1', 'key_l', 'selected_material_id', 'input_P']
     },
     F: {
-      title: 'Khắc phục Ổ lăn Trục I (Module F)',
+      title: 'Khắc phục Ổ lăn (Module F)',
       desc: 'Không tìm thấy ổ lăn tương thích hoặc tải trọng quá lớn. Bạn nên nhập (ghi đè) đường kính trục d_tc lớn hơn để tìm được ổ lăn lớn, hoặc giảm bớt công suất P.',
       fields: ['d_tc_I', 'input_P', 'input_n_ct', 'input_L']
     }
@@ -153,10 +158,12 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         input_L: activeProject.input_L || '',
         selected_material_id: activeProject.selected_material_id || '',
         d_tc_I: latestCalcRef?.designResult?.ModuleD?.trucI?.d_tc_mm?.[0] || results?.ModuleD?.trucI?.d_tc_mm?.[0] || '',
-        key_b: latestCalcRef?.designResult?.ModuleE?.b || results?.ModuleE?.b || '',
-        key_h: latestCalcRef?.designResult?.ModuleE?.h || results?.ModuleE?.h || '',
-        key_t1: latestCalcRef?.designResult?.ModuleE?.t1 || results?.ModuleE?.t1 || '',
-        key_l: latestCalcRef?.designResult?.ModuleE?.l_t_mm || results?.ModuleE?.l_t_mm || '',
+        d_tc_II: latestCalcRef?.designResult?.ModuleD?.trucII?.d_tc_mm?.[0] || results?.ModuleD?.trucII?.d_tc_mm?.[0] || '',
+        d_tc_III: latestCalcRef?.designResult?.ModuleD?.trucIII?.d_tc_mm?.[0] || results?.ModuleD?.trucIII?.d_tc_mm?.[0] || '',
+        key_b: latestCalcRef?.designResult?.ModuleE?.trucI?.b || results?.ModuleE?.trucI?.b || '',
+        key_h: latestCalcRef?.designResult?.ModuleE?.trucI?.h || results?.ModuleE?.trucI?.h || '',
+        key_t1: latestCalcRef?.designResult?.ModuleE?.trucI?.t1 || results?.ModuleE?.trucI?.t1 || '',
+        key_l: latestCalcRef?.designResult?.ModuleE?.trucI?.l_t_mm || results?.ModuleE?.trucI?.l_t_mm || '',
         m_e_I: latestCalcRef?.designResult?.ModuleB?.m_e_mm || results?.ModuleB?.m_e_mm || ''
       });
       setLiveWarnings([]);
@@ -225,9 +232,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         const okA = resData.ModuleA?.check_s_pass && resData.ModuleA?.check_H_pass;
         const okB = resData.ModuleB?.check_H_pass;
         const okC = resData.ModuleC?.check_H_pass;
-        const okD = resData.ModuleD?.trucI?.check_fatigue_pass;
-        const okE = resData.ModuleE?.check_key_pass;
-        const okF = resData.ModuleF?.check_bearing_pass;
+        const okD = resData.ModuleD?.trucI?.check_fatigue_pass && resData.ModuleD?.trucII?.check_fatigue_pass && resData.ModuleD?.trucIII?.check_fatigue_pass;
+        const okE = resData.ModuleE?.trucI?.check_key_pass && resData.ModuleE?.trucII?.check_key_pass && resData.ModuleE?.trucIII?.check_key_pass;
+        const okF = resData.ModuleF?.trucI?.check_bearing_pass && resData.ModuleF?.trucII?.check_bearing_pass && resData.ModuleF?.trucIII?.check_bearing_pass;
 
         const passed = okA && okB && okC && okD && okE && okF;
         setLiveCheckPassed(passed);
@@ -277,14 +284,22 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       const valModule = res.ModuleB?.recommended_m_e;
       if (valModule != null) updated.m_e_I = valModule.toString();
     } else if (correctionTarget === 'D') {
-      const val = res.ModuleD?.trucI?.recommended_d_tc;
-      if (val != null) updated.d_tc_I = val.toString();
+      const valI = res.ModuleD?.trucI?.recommended_d_tc;
+      if (valI != null) updated.d_tc_I = valI.toString();
+      const valII = res.ModuleD?.trucII?.recommended_d_tc;
+      if (valII != null) updated.d_tc_II = valII.toString();
+      const valIII = res.ModuleD?.trucIII?.recommended_d_tc;
+      if (valIII != null) updated.d_tc_III = valIII.toString();
     } else if (correctionTarget === 'E') {
-      const val = res.ModuleE?.recommended_l;
+      const val = res.ModuleE?.trucI?.recommended_l;
       if (val != null) updated.key_l = val.toString();
     } else if (correctionTarget === 'F') {
-      const val = res.ModuleF?.recommended_d_tc;
-      if (val != null) updated.d_tc_I = val.toString();
+      const valI = res.ModuleF?.trucI?.recommended_d_tc;
+      if (valI != null) updated.d_tc_I = valI.toString();
+      const valII = res.ModuleF?.trucII?.recommended_d_tc;
+      if (valII != null) updated.d_tc_II = valII.toString();
+      const valIII = res.ModuleF?.trucIII?.recommended_d_tc;
+      if (valIII != null) updated.d_tc_III = valIII.toString();
     }
     setEditForm(updated);
   };
@@ -303,16 +318,30 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     const valModule = res.ModuleB?.recommended_m_e;
     if (valModule != null) updated.m_e_I = valModule.toString();
 
-    const valD = res.ModuleD?.trucI?.recommended_d_tc;
-    if (valD != null) updated.d_tc_I = valD.toString();
+    const valDI = res.ModuleD?.trucI?.recommended_d_tc;
+    if (valDI != null) updated.d_tc_I = valDI.toString();
+    const valDII = res.ModuleD?.trucII?.recommended_d_tc;
+    if (valDII != null) updated.d_tc_II = valDII.toString();
+    const valDIII = res.ModuleD?.trucIII?.recommended_d_tc;
+    if (valDIII != null) updated.d_tc_III = valDIII.toString();
 
-    const valL = res.ModuleE?.recommended_l;
+    const valL = res.ModuleE?.trucI?.recommended_l;
     if (valL != null) updated.key_l = valL.toString();
 
-    const valDF = res.ModuleF?.recommended_d_tc;
-    if (valDF != null) {
-      const maxD = Math.max(Number(updated.d_tc_I || 0), Number(valDF));
+    const valDFI = res.ModuleF?.trucI?.recommended_d_tc;
+    if (valDFI != null) {
+      const maxD = Math.max(Number(updated.d_tc_I || 0), Number(valDFI));
       updated.d_tc_I = maxD.toString();
+    }
+    const valDFII = res.ModuleF?.trucII?.recommended_d_tc;
+    if (valDFII != null) {
+      const maxD = Math.max(Number(updated.d_tc_II || 0), Number(valDFII));
+      updated.d_tc_II = maxD.toString();
+    }
+    const valDFIII = res.ModuleF?.trucIII?.recommended_d_tc;
+    if (valDFIII != null) {
+      const maxD = Math.max(Number(updated.d_tc_III || 0), Number(valDFIII));
+      updated.d_tc_III = maxD.toString();
     }
 
     setEditForm(updated);
@@ -341,7 +370,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       return {
         status: 'error',
         problem: problemText,
-        solution: `Khuyến nghị: Giảm công suất đầu vào P xuống dưới ${fmt(mRes.recommended_P)} kW để giảm tải kéo lên xích, hoặc tăng vòng quay đầu vào.`
+        solution: `Khuyến nghị: Giảm công suất đầu vào P xuống dưới ${fmt(mRes.recommended_P)} kW để giảm tải kéo lên xích.`
       };
     }
 
@@ -354,14 +383,14 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       };
 
       const sigmaHVal = mRes.sigma_H_check ? `${fmt(mRes.sigma_H_check)} MPa` : "Quá tải";
-      let problemText = `Ứng suất tiếp xúc tính toán σH = ${sigmaHVal} vượt quá ứng suất cho phép [σH] = ${fmt(mRes.sigma_H_allow_MPa)} MPa. Bề mặt răng côn chịu lực ép quá lớn, dễ bị tróc rỗ, mẻ răng hoặc hư hỏng nghiêm trọng.`;
+      let problemText = `Ứng suất tiếp xúc tính toán σH = ${sigmaHVal} vượt quá ứng suất cho phép [σH] = ${fmt(mRes.sigma_H_allow_MPa)} MPa. Bề mặt răng côn chịu lực ép quá lớn, dễ bị tróc rỗ.`;
       
       let solutionText = '';
       if (mRes.recommended_material_id) {
         solutionText = `Hãy nâng cấp vật liệu chế tạo lên loại thép có độ cứng cao hơn (độ cứng khuyến nghị HB >= ${Math.ceil((mRes.sigma_H_check * 1.1 / 1.0 - 70) / 2)}). `;
       }
       if (mRes.recommended_m_e) {
-        solutionText += `Độ cứng thép yêu cầu quá cao. Hãy ghi đè tăng Module bánh răng côn m_e lên ${mRes.recommended_m_e} mm để mở rộng diện tích tiếp xúc răng, giúp giải tỏa lực tiếp xúc.`;
+        solutionText += `Độ cứng thép yêu cầu quá cao. Hãy ghi đè tăng Module bánh răng côn m_e lên ${mRes.recommended_m_e} mm để giảm ứng suất tiếp xúc.`;
       }
 
       return {
@@ -386,62 +415,115 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     }
 
     if (target === 'D') {
-      const trucI = mRes.trucI;
-      const okFatigue = trucI?.check_fatigue_pass;
-      if (okFatigue) return {
-        status: 'success',
-        problem: `Trục I đạt hệ số an toàn bền mỏi s = ${fmt(trucI?.s_fatigue)} (Yêu cầu ≥ 1.5). Trục có khả năng chịu lực xoắn và uốn kết hợp tốt.`,
-        solution: 'Không cần thay đổi thông số.'
-      };
-
+      const { trucI, trucII, trucIII } = mRes;
+      const trucIFail = trucI && trucI.s_fatigue < 1.5;
+      const trucIIFail = trucII && trucII.s_fatigue < 1.5;
+      const trucIIIFail = trucIII && trucIII.s_fatigue < 1.5;
+      
+      if (!trucIFail && !trucIIFail && !trucIIIFail) {
+        return {
+          status: 'success',
+          problem: `Tất cả các trục đều đạt hệ số an toàn bền mỏi (Trục I: ${fmt(trucI?.s_fatigue)}, Trục II: ${fmt(trucII?.s_fatigue)}, Trục III: ${fmt(trucIII?.s_fatigue)}).`,
+          solution: 'Không cần thay đổi thông số.'
+        };
+      }
+      
+      let problemText = '';
+      let solutionText = '';
+      if (trucIFail) {
+        problemText += `Trục I không đạt hệ số an toàn mỏi (s = ${fmt(trucI.s_fatigue)} < 1.5). `;
+        solutionText += `Hãy tăng d_tc Trục I lên ${fmt(trucI.recommended_d_tc)} mm. `;
+      }
+      if (trucIIFail) {
+        problemText += `Trục II không đạt hệ số an toàn mỏi (s = ${fmt(trucII.s_fatigue)} < 1.5). `;
+        solutionText += `Hãy tăng d_tc Trục II lên ${fmt(trucII.recommended_d_tc)} mm. `;
+      }
+      if (trucIIIFail) {
+        problemText += `Trục III không đạt hệ số an toàn mỏi (s = ${fmt(trucIII.s_fatigue)} < 1.5). `;
+        solutionText += `Hãy tăng d_tc Trục III lên ${fmt(trucIII.recommended_d_tc)} mm. `;
+      }
+      
       return {
         status: 'error',
-        problem: `Hệ số an toàn bền mỏi s = ${fmt(trucI?.s_fatigue)} nhỏ hơn mức tối thiểu 1.50. Trục I chịu lực uốn và xoắn đồng thời quá lớn tại vị trí lắp bánh răng côn, có nguy cơ nứt gãy mỏi trục sau một thời gian vận hành.`,
-        solution: `Hãy tăng đường kính trục d_tc lên d_tc = ${fmt(trucI?.recommended_d_tc)} mm để tăng độ cứng vững và moment chống uốn xoắn mặt cắt.`
+        problem: problemText,
+        solution: solutionText
       };
     }
 
     if (target === 'E') {
-      const okE = mRes.check_key_pass;
-      if (okE) return {
-        status: 'success',
-        problem: `Then trục đạt chuẩn độ bền dập (σd = ${fmt(mRes.sigma_d_MPa)} MPa ≤ 100 MPa) and bền cắt (τc = ${fmt(mRes.tau_c_MPa)} MPa ≤ 60 MPa).`,
-        solution: 'Không cần thay đổi thông số.'
-      };
-
+      const { trucI, trucII, trucIII } = mRes;
+      const t1Fail = trucI && !trucI.check_key_pass;
+      const t2Fail = trucII && !trucII.check_key_pass;
+      const t3Fail = trucIII && !trucIII.check_key_pass;
+      
+      if (!t1Fail && !t2Fail && !t3Fail) {
+        return {
+          status: 'success',
+          problem: 'Tất cả các then ghép đều đạt yêu cầu độ bền dập và bền cắt.',
+          solution: 'Không cần thay đổi thông số.'
+        };
+      }
+      
       let problemText = '';
-      const okDap = mRes.sigma_d_MPa <= 100;
-      const okCat = mRes.tau_c_MPa <= 60;
-      if (!okDap) problemText += `Ứng suất dập then σd = ${fmt(mRes.sigma_d_MPa)} MPa > 100 MPa. `;
-      if (!okCat) problemText += `Ứng suất cắt then τc = ${fmt(mRes.tau_c_MPa)} MPa > 60 MPa. `;
-      problemText += 'Then có nguy cơ bị biến dạng dập nát hoặc bị cắt rời khớp truyền động.';
-
+      let solutionText = '';
+      if (t1Fail) {
+        problemText += `Then Trục I không đạt bền (σd = ${fmt(trucI.sigma_d_MPa)} MPa, τc = ${fmt(trucI.tau_c_MPa)} MPa). `;
+        solutionText += `Hãy tăng chiều dài then l Trục I lên ${trucI.recommended_l} mm. `;
+      }
+      if (t2Fail) {
+        problemText += `Then Trục II không đạt bền (σd = ${fmt(trucII.sigma_d_MPa)} MPa, τc = ${fmt(trucII.tau_c_MPa)} MPa). `;
+        solutionText += `Hãy tăng chiều dài then l Trục II lên ${trucII.recommended_l} mm. `;
+      }
+      if (t3Fail) {
+        problemText += `Then Trục III không đạt bền (σd = ${fmt(trucIII.sigma_d_MPa)} MPa, τc = ${fmt(trucIII.tau_c_MPa)} MPa). `;
+        solutionText += `Hãy tăng chiều dài then l Trục III lên ${trucIII.recommended_l} mm. `;
+      }
+      
       return {
         status: 'error',
         problem: problemText,
-        solution: `Hãy ghi đè tăng chiều dài then l lên l = ${mRes.recommended_l} mm để phân bổ lực đều hơn.`
+        solution: solutionText
       };
     }
 
     if (target === 'F') {
-      const okF = mRes.check_bearing_pass;
-      if (okF) return {
-        status: 'success',
-        problem: `Ổ lăn côn mã hiệu ${mRes.bearing_code} chịu tải trọng an toàn (Khả năng tải C_catalog = ${fmt(mRes.C_catalog_kN)} kN ≥ Cd yêu cầu = ${fmt(mRes.C_d_kN)} kN).`,
-        solution: 'Không cần thay đổi thông số.'
-      };
-
+      const { trucI, trucII, trucIII } = mRes;
+      const b1Fail = trucI && !trucI.check_bearing_pass;
+      const b2Fail = trucII && !trucII.check_bearing_pass;
+      const b3Fail = trucIII && !trucIII.check_bearing_pass;
+      
+      if (!b1Fail && !b2Fail && !b3Fail) {
+        return {
+          status: 'success',
+          problem: `Tất cả các gối ổ lăn đều đạt khả năng tải thiết kế.`,
+          solution: 'Không cần thay đổi thông số.'
+        };
+      }
+      
+      let problemText = '';
+      let solutionText = '';
+      if (b1Fail) {
+        problemText += `Ổ lăn Trục I (${trucI.bearing_code}) không đạt tải (Cd = ${fmt(trucI.C_d_kN)} kN > C = ${fmt(trucI.C_catalog_kN)} kN). `;
+        solutionText += `Hãy tăng d_tc Trục I lên ${fmt(trucI.recommended_d_tc)} mm. `;
+      }
+      if (b2Fail) {
+        problemText += `Ổ lăn Trục II (${trucII.bearing_code}) không đạt tải (Cd = ${fmt(trucII.C_d_kN)} kN > C = ${fmt(trucII.C_catalog_kN)} kN). `;
+        solutionText += `Hãy tăng d_tc Trục II lên ${fmt(trucII.recommended_d_tc)} mm. `;
+      }
+      if (b3Fail) {
+        problemText += `Ổ lăn Trục III (${trucIII.bearing_code}) không đạt tải (Cd = ${fmt(trucIII.C_d_kN)} kN > C = ${fmt(trucIII.C_catalog_kN)} kN). `;
+        solutionText += `Hãy tăng d_tc Trục III lên ${fmt(trucIII.recommended_d_tc)} mm. `;
+      }
+      
       return {
         status: 'error',
-        problem: `Không tìm thấy ổ lăn tiêu chuẩn tương thích với đường kính ngõng trục hiện tại thỏa mãn tải trọng động Cd = ${fmt(mRes.C_d_kN)} kN. Gối đỡ chịu phản lực hướng tâm và dọc trục quá lớn, ổ lăn hiện tại sẽ bị quá tải nhiệt hoặc rơ lắc, nhanh hỏng bi.`,
-        solution: `Hãy tăng đường kính trục d_tc lên d_tc = ${fmt(mRes.recommended_d_tc)} mm. Khi ngõng trục to hơn, catalog sẽ tự động đề xuất mã ổ lăn côn lớn có khả năng tải C lớn tương ứng.`
+        problem: problemText,
+        solution: solutionText
       };
     }
 
     return null;
   };
-
-
 
   const getLiveParameterChanges = () => {
     if (!activeProject || !editForm) return [];
@@ -452,11 +534,13 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       input_L: { label: "Thời gian phục vụ L", unit: "năm", origVal: activeProject.input_L },
       selected_material_id: { label: "Vật liệu chế tạo", isMaterial: true, origVal: activeProject.selected_material_id },
       m_e_I: { label: "Module bánh răng côn m_e", unit: "mm", fallback: "Tự động", origVal: results?.ModuleB?.m_e_mm },
-      d_tc_I: { label: "Đường kính trục d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucI?.d_tc_mm?.[0] },
-      key_l: { label: "Chiều dài then l", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.l_t_mm },
-      key_b: { label: "Chiều rộng then b", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.b },
-      key_h: { label: "Chiều cao then h", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.h },
-      key_t1: { label: "Chiều sâu rãnh then t1", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.t1 }
+      d_tc_I: { label: "Đường kính trục I d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucI?.d_tc_mm?.[0] },
+      d_tc_II: { label: "Đường kính trục II d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucII?.d_tc_mm?.[0] },
+      d_tc_III: { label: "Đường kính trục III d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucIII?.d_tc_mm?.[0] },
+      key_l: { label: "Chiều dài then l", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.l_t_mm },
+      key_b: { label: "Chiều rộng then b", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.b },
+      key_h: { label: "Chiều cao then h", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.h },
+      key_t1: { label: "Chiều sâu rãnh then t1", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.t1 }
     };
 
     for (const key in fieldsMap) {
@@ -563,10 +647,10 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       const d = res.ModuleD?.trucI?.recommended_d_tc;
       if (d != null) list.push(`Thay đổi Đường kính trục d_tc: ${d} mm`);
     } else if (target === 'E') {
-      const l = res.ModuleE?.recommended_l;
+      const l = res.ModuleE?.trucI?.recommended_l;
       if (l != null) list.push(`Thay đổi Chiều dài then l: ${l} mm`);
     } else if (target === 'F') {
-      const d = res.ModuleF?.recommended_d_tc;
+      const d = res.ModuleF?.trucI?.recommended_d_tc;
       if (d != null) list.push(`Thay đổi Đường kính trục d_tc: ${d} mm`);
     }
     return list;
@@ -589,7 +673,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     if (valModule != null) list.push(`Thay đổi Module bánh răng m_e: ${valModule} mm`);
 
     const valD = res.ModuleD?.trucI?.recommended_d_tc;
-    const valDF = res.ModuleF?.recommended_d_tc;
+    const valDF = res.ModuleF?.trucI?.recommended_d_tc;
     let finalD = null;
     if (valD != null || valDF != null) {
       finalD = Math.max(Number(valD || 0), Number(valDF || 0));
@@ -598,7 +682,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       list.push(`Thay đổi Đường kính trục d_tc: ${finalD} mm (Đồng bộ bền mỏi & tra ổ)`);
     }
 
-    const valL = res.ModuleE?.recommended_l;
+    const valL = res.ModuleE?.trucI?.recommended_l;
     if (valL != null) list.push(`Thay đổi Chiều dài then l: ${valL} mm`);
 
     return list;
@@ -633,35 +717,47 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       );
     }
     if (target === 'D') {
-      const r = res.ModuleD?.trucI;
-      if (!r || r.check_fatigue_pass) return null;
+      const { trucI, trucII, trucIII } = res.ModuleD;
+      const f1 = trucI && !trucI.check_fatigue_pass;
+      const f2 = trucII && !trucII.check_fatigue_pass;
+      const f3 = trucIII && !trucIII.check_fatigue_pass;
+      if (!f1 && !f2 && !f3) return null;
       return (
         <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
           <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
-          <p className="pl-2">· Hệ số an toàn mỏi của trục: <span className="font-mono font-bold text-rose-700">{fmt(r.s_fatigue)}</span> (Yêu cầu an toàn: <span className="font-mono text-slate-500">&ge; 1.50</span>) ❌ Không đủ bền mỏi</p>
+          {f1 && <p className="pl-2">· Trục I: Hệ số an toàn mỏi: <span className="font-mono font-bold text-rose-700">{fmt(trucI.s_fatigue)}</span> (Yêu cầu: &ge; 1.50) ❌ Không đạt</p>}
+          {f2 && <p className="pl-2">· Trục II: Hệ số an toàn mỏi: <span className="font-mono font-bold text-rose-700">{fmt(trucII.s_fatigue)}</span> (Yêu cầu: &ge; 1.50) ❌ Không đạt</p>}
+          {f3 && <p className="pl-2">· Trục III: Hệ số an toàn mỏi: <span className="font-mono font-bold text-rose-700">{fmt(trucIII.s_fatigue)}</span> (Yêu cầu: &ge; 1.50) ❌ Không đạt</p>}
         </div>
       );
     }
     if (target === 'E') {
-      const r = res.ModuleE;
-      if (!r || r.check_key_pass) return null;
-      const okDap = r.sigma_d_MPa <= 100;
-      const okCat = r.tau_c_MPa <= 60;
+      const { trucI, trucII, trucIII } = res.ModuleE;
+      const f1 = trucI && !trucI.check_key_pass;
+      const f2 = trucII && !trucII.check_key_pass;
+      const f3 = trucIII && !trucIII.check_key_pass;
+      if (!f1 && !f2 && !f3) return null;
       return (
         <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
           <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
-          {!okDap && <p className="pl-2">· Ứng suất dập then: <span className="font-mono font-bold text-rose-700">{fmt(r.sigma_d_MPa)} MPa</span> (Cho phép: <span className="font-mono text-slate-500">&le; 100 MPa</span>) ❌ Quá tải dập</p>}
-          {!okCat && <p className="pl-2">· Ứng suất cắt then: <span className="font-mono font-bold text-rose-700">{fmt(r.tau_c_MPa)} MPa</span> (Cho phép: <span className="font-mono text-slate-500">&le; 60 MPa</span>) ❌ Quá tải cắt</p>}
+          {f1 && <p className="pl-2">· Then Trục I: σd = <span className="font-mono font-bold text-rose-700">{fmt(trucI.sigma_d_MPa)} MPa</span> (bền dập &le; 100), τc = <span className="font-mono font-bold text-rose-700">{fmt(trucI.tau_c_MPa)} MPa</span> (bền cắt &le; 60) ❌ Không đạt</p>}
+          {f2 && <p className="pl-2">· Then Trục II: σd = <span className="font-mono font-bold text-rose-700">{fmt(trucII.sigma_d_MPa)} MPa</span> (bền dập &le; 100), τc = <span className="font-mono font-bold text-rose-700">{fmt(trucII.tau_c_MPa)} MPa</span> (bền cắt &le; 60) ❌ Không đạt</p>}
+          {f3 && <p className="pl-2">· Then Trục III: σd = <span className="font-mono font-bold text-rose-700">{fmt(trucIII.sigma_d_MPa)} MPa</span> (bền dập &le; 100), τc = <span className="font-mono font-bold text-rose-700">{fmt(trucIII.tau_c_MPa)} MPa</span> (bền cắt &le; 60) ❌ Không đạt</p>}
         </div>
       );
     }
     if (target === 'F') {
-      const r = res.ModuleF;
-      if (!r || r.check_bearing_pass) return null;
+      const { trucI, trucII, trucIII } = res.ModuleF;
+      const f1 = trucI && !trucI.check_bearing_pass;
+      const f2 = trucII && !trucII.check_bearing_pass;
+      const f3 = trucIII && !trucIII.check_bearing_pass;
+      if (!f1 && !f2 && !f3) return null;
       return (
         <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl text-[11px] font-semibold text-rose-800 space-y-1 animate-fade-in mb-3">
           <p className="font-bold flex items-center gap-1"><span className="w-1.5 h-3 bg-rose-500 rounded-full"></span> 🔍 Phân tích thông số kỹ thuật thực tế:</p>
-          <p className="pl-2">· Khả năng tải động yêu cầu C_d: <span className="font-mono font-bold text-rose-700">{fmt(r.C_d_kN)} kN</span> (Khả năng tải danh định của ổ hiện tại C: <span className="font-mono text-slate-500">{fmt(r.C_catalog_kN || 0)} kN</span>) ❌ Quá tải ổ lăn</p>
+          {f1 && <p className="pl-2">· Ổ lăn Trục I: Cd = <span className="font-mono font-bold text-rose-700">{fmt(trucI.C_d_kN)} kN</span> (C_catalog = {fmt(trucI.C_catalog_kN)} kN) ❌ Quá tải</p>}
+          {f2 && <p className="pl-2">· Ổ lăn Trục II: Cd = <span className="font-mono font-bold text-rose-700">{fmt(trucII.C_d_kN)} kN</span> (C_catalog = {fmt(trucII.C_catalog_kN)} kN) ❌ Quá tải</p>}
+          {f3 && <p className="pl-2">· Ổ lăn Trục III: Cd = <span className="font-mono font-bold text-rose-700">{fmt(trucIII.C_d_kN)} kN</span> (C_catalog = {fmt(trucIII.C_catalog_kN)} kN) ❌ Quá tải</p>}
         </div>
       );
     }
@@ -670,31 +766,72 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
 
   const handleRun = async () => {
     if (!activeProject?.id) {
-      setErrorMessage('Không tìm thấy dự án. Vui lòng quay lại và chọn dự án.');
+      setErrorMessage('Không tìm thấy dự án hiện tại. Vui lòng quay lại bước 1 để tạo dự án.');
       return;
     }
+    
     setIsRunning(true);
     setErrorMessage('');
-    setResults(null);
+    
     try {
+      // Gọi API tính toán thiết kế chi tiết máy
       const response = await fetch(`${API_BASE_URL}/projects/${activeProject.id}/design/calculate`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ overrides: {} })
       });
+      
       const payload = await response.json().catch(() => null);
+      
       if (!response.ok || payload?.status === 'error') {
-        throw new Error(payload?.message || `Lỗi máy chủ (${response.status})`);
+        throw new Error(payload?.message || 'Lỗi từ máy chủ khi tính toán thiết kế chi tiết máy.');
       }
+      
       setResults(payload.data);
-      setActiveModule('A');
       if (payload?.warning) {
         setErrorMessage(payload.warning);
       } else {
         setErrorMessage('');
       }
-    } catch (err) {
-      setErrorMessage(err.message || 'Không thể kết nối đến máy chủ.');
+
+      if (onProjectSaved) {
+        onProjectSaved({ ...activeProject, design_result: payload.data });
+      }
+      setShowSuccess(false);
+
+      // Đồng bộ state kinematics với DB sau khi tính toán xong
+      if (onKinematicsSaved) {
+        try {
+          const kinResponse = await fetch(`${API_BASE_URL}/projects/${activeProject.id}/kinematics`, {
+            credentials: 'include',
+          });
+          const kinPayload = await kinResponse.json();
+          if (kinResponse.ok && kinPayload?.data) {
+            const data = kinPayload.data;
+            onKinematicsSaved({
+              project: data,
+              kinematics: {
+                eta: data.efficiency,
+                P_ct: data.Pct,
+                u_ch_sb: data.total_ratio, 
+                u_h_sb: data.transmission?.u_h,
+                u_x_sb: data.transmission?.u_x,
+                u_1: data.transmission?.u_1,
+                u_2: data.transmission?.u_2,
+                n_sb: data.transmission?.n_sb,
+                shaft_powers: data.shafts,
+                T_out: data.shafts?.T_out,
+              }
+            });
+          }
+        } catch (e) {
+          console.error("Failed to sync kinematics state", e);
+        }
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setResults(null);
     } finally {
       setIsRunning(false);
     }
@@ -715,22 +852,39 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     if (m === 'A') return results.ModuleA?.check_s_pass && results.ModuleA?.check_H_pass;
     if (m === 'B') return results.ModuleB?.check_H_pass;
     if (m === 'C') return results.ModuleC?.check_H_pass;
-    if (m === 'D') return results.ModuleD?.trucI?.check_fatigue_pass;
-    if (m === 'E') return results.ModuleE?.check_key_pass;
-    if (m === 'F') return results.ModuleF?.check_bearing_pass;
+    if (m === 'D') {
+      const d = results.ModuleD;
+      return d?.trucI?.check_fatigue_pass && d?.trucII?.check_fatigue_pass && d?.trucIII?.check_fatigue_pass;
+    }
+    if (m === 'E') {
+      const e = results.ModuleE;
+      return e?.trucI?.check_key_pass && e?.trucII?.check_key_pass && e?.trucIII?.check_key_pass;
+    }
+    if (m === 'F') {
+      const f = results.ModuleF;
+      return f?.trucI?.check_bearing_pass && f?.trucII?.check_bearing_pass && f?.trucIII?.check_bearing_pass;
+    }
     return false;
   };
 
-  // Helper inside modal to check dynamic modules status during preview
   const getLiveModuleOk = (m) => {
     if (!latestCalcRef?.designResult) return false;
     const res = latestCalcRef.designResult;
     if (m === 'A') return res.ModuleA?.check_s_pass && res.ModuleA?.check_H_pass;
     if (m === 'B') return res.ModuleB?.check_H_pass;
     if (m === 'C') return res.ModuleC?.check_H_pass;
-    if (m === 'D') return res.ModuleD?.trucI?.check_fatigue_pass;
-    if (m === 'E') return res.ModuleE?.check_key_pass;
-    if (m === 'F') return res.ModuleF?.check_bearing_pass;
+    if (m === 'D') {
+      const d = res.ModuleD;
+      return d?.trucI?.check_fatigue_pass && d?.trucII?.check_fatigue_pass && d?.trucIII?.check_fatigue_pass;
+    }
+    if (m === 'E') {
+      const e = res.ModuleE;
+      return e?.trucI?.check_key_pass && e?.trucII?.check_key_pass && e?.trucIII?.check_key_pass;
+    }
+    if (m === 'F') {
+      const f = res.ModuleF;
+      return f?.trucI?.check_bearing_pass && f?.trucII?.check_bearing_pass && f?.trucIII?.check_bearing_pass;
+    }
     return false;
   };
 
@@ -740,9 +894,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     if (target === 'A') return res.ModuleA?.warning;
     if (target === 'B') return res.ModuleB?.warning;
     if (target === 'C') return res.ModuleC?.warning;
-    if (target === 'D') return res.ModuleD?.trucI?.warning;
-    if (target === 'E') return res.ModuleE?.warning;
-    if (target === 'F') return res.ModuleF?.warning;
+    if (target === 'D') return res.ModuleD?.trucI?.warning || res.ModuleD?.trucII?.warning || res.ModuleD?.trucIII?.warning;
+    if (target === 'E') return res.ModuleE?.trucI?.warning || res.ModuleE?.trucII?.warning || res.ModuleE?.trucIII?.warning;
+    if (target === 'F') return res.ModuleF?.trucI?.warning || res.ModuleF?.trucII?.warning || res.ModuleF?.trucIII?.warning;
     return null;
   };
 
@@ -849,7 +1003,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       {errorMessage && (
         <div className="p-4 bg-rose-50/75 text-rose-700 rounded-2xl border border-rose-100 backdrop-blur-sm text-xs font-semibold flex flex-col gap-2.5 shadow-sm">
           {errorMessage.split(' | ').map((msg, i) => (
-            <div key={i} className="flex items-start gap-2.5">
+            <div key={i} className="flex items-start gap-2.5 animate-fade-in">
               <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5 animate-ping"></span>
               <span>{msg}</span>
             </div>
@@ -857,7 +1011,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         </div>
       )}
 
-      {/* Placeholder */}
+      {/* Placeholder when no results */}
       {!results && !isRunning && !errorMessage && (
         <div className="bg-slate-50/50 border border-dashed border-slate-200 rounded-3xl p-16 text-center text-slate-400">
           <p className="font-bold text-base text-slate-700">Chưa có dữ liệu thiết kế</p>
@@ -886,7 +1040,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
             </div>
 
             {/* Display panel */}
-            <div className="lg:col-span-3 bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm animate-fade-in">
+            <div className="lg:col-span-3 bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm animate-fade-in font-sans">
               {activeModule === 'A' && <ModuleA r={results.ModuleA} onOpenCorrection={() => handleOpenCorrection('A')} />}
               {activeModule === 'B' && <ModuleB r={results.ModuleB} onOpenCorrection={() => handleOpenCorrection('B')} />}
               {activeModule === 'C' && <ModuleC r={results.ModuleC} onOpenCorrection={() => handleOpenCorrection('C')} />}
@@ -899,8 +1053,14 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
           {/* Master Design Confirm Button */}
           <div className="flex justify-center pt-8">
             <button
-              disabled={!isAllOk}
-              onClick={() => setShowSuccess(true)}
+              onClick={() => {
+                if (!isAllOk) {
+                  setErrorMessage('Chưa thể hoàn tất! Có ít nhất một module không đạt yêu cầu kỹ thuật.');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  return;
+                }
+                setShowSuccess(true);
+              }}
               className={`
                 px-12 py-4 rounded-3xl font-black text-sm tracking-wider uppercase transition-all duration-300 transform shadow-xl flex items-center gap-3
                 ${isAllOk
@@ -1001,6 +1161,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
 
               {/* Live Change & Safety Verification Report */}
               {renderLiveChangeReport()}
+              
               <div className="grid grid-cols-2 gap-4">
                 {/* Input P */}
                 {(showAllFields || currentConfig.fields.includes('input_P')) && (
@@ -1062,7 +1223,6 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                 )}
               </div>
 
-              
               {/* Overrides cho Module bánh răng */}
               <div className="grid grid-cols-2 gap-4">
                 {(showAllFields || currentConfig.fields.includes('m_e_I')) && (
@@ -1081,10 +1241,10 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
               </div>
 
               {/* Overrides cho Trục & Then */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 {(showAllFields || currentConfig.fields.includes('d_tc_I')) && (
                   <div className="space-y-1.5 animate-fade-in">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Đường kính trục d_tc (mm)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trục I d_tc (mm)</label>
                     <input
                       type="number"
                       value={editForm.d_tc_I}
@@ -1094,7 +1254,33 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                     />
                   </div>
                 )}
-                
+                {(showAllFields || currentConfig.fields.includes('d_tc_I')) && (
+                  <div className="space-y-1.5 animate-fade-in">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trục II d_tc (mm)</label>
+                    <input
+                      type="number"
+                      value={editForm.d_tc_II}
+                      placeholder="Tự động"
+                      onChange={(e) => setEditForm(prev => ({ ...prev, d_tc_II: e.target.value }))}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200/80 rounded-2xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-premium font-mono font-bold text-slate-800 text-sm"
+                    />
+                  </div>
+                )}
+                {(showAllFields || currentConfig.fields.includes('d_tc_I')) && (
+                  <div className="space-y-1.5 animate-fade-in">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trục III d_tc (mm)</label>
+                    <input
+                      type="number"
+                      value={editForm.d_tc_III}
+                      placeholder="Tự động"
+                      onChange={(e) => setEditForm(prev => ({ ...prev, d_tc_III: e.target.value }))}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200/80 rounded-2xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-premium font-mono font-bold text-slate-800 text-sm"
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
                 {(showAllFields || currentConfig.fields.includes('key_l')) && (
                   <div className="space-y-1.5 animate-fade-in">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Chiều dài then l (mm)</label>
@@ -1172,52 +1358,31 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                         {['A', 'B', 'C', 'D', 'E', 'F'].map(m => {
                           const ok = getLiveModuleOk(m);
                           return (
-                            <div key={m} className={`p-2 rounded-2xl border text-center transition-all ${
-                              ok ? 'bg-emerald-50 border-emerald-100/80 text-emerald-700' : 'bg-rose-50 border-rose-100/80 text-rose-700'
-                            }`}>
-                              <p className="text-[10px] font-extrabold font-heading">M.{m}</p>
-                              <span className={`inline-block w-2 h-2 rounded-full mt-1 ${
-                                ok ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-rose-500 shadow-sm shadow-rose-500/50 animate-pulse'
+                            <div 
+                              key={m}
+                              className={`p-2 rounded-xl border text-center transition-all ${
+                                ok 
+                                  ? 'bg-emerald-50/50 border-emerald-100 text-emerald-800' 
+                                  : 'bg-rose-50/50 border-rose-100 text-rose-800'
+                              }`}
+                            >
+                              <p className="text-[10px] font-extrabold uppercase font-heading">{m}</p>
+                              <span className={`inline-block w-1.5 h-1.5 rounded-full mt-1 ${
+                                ok ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-rose-500 animate-pulse'
                               }`}></span>
                             </div>
                           );
                         })}
                       </div>
                     </div>
-
-                    <div className="flex items-center justify-between pt-2">
-                      <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trạng thái kiểm tra thời gian thực:</span>
-
-                      {isLiveCalculating ? (
-                        <span className="flex items-center gap-1.5 text-xs text-blue-500 font-bold">
-                          <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-                          Đang phân tích...
-                        </span>
-                      ) : (
-                        <span>
-                          {liveCheckPassed ? (
-                            <span className="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-extrabold border border-emerald-200">AN TOÀN - ĐẠT CHUẨN</span>
-                          ) : (
-                            <span className="px-2.5 py-1 bg-rose-50 text-rose-600 rounded-lg text-xs font-extrabold border border-rose-200">KHÔNG ĐẠT - XUẤT HIỆN LỖI</span>
-                          )}
-                        </span>
-                      )}
-                    </div>
                   </>
                 )}
 
-                {correctionTarget ? (() => {
-                  const moduleResult = latestCalcRef?.designResult?.[`Module${correctionTarget}`];
-                  const recText = correctionTarget === 'D' 
-                    ? latestCalcRef?.designResult?.ModuleD?.trucI?.recommendation 
-                    : moduleResult?.recommendation;
-                  
-                  const hasSuggestion = 
-                    (correctionTarget === 'A' && latestCalcRef?.designResult?.ModuleA?.recommended_P != null) ||
-                    (correctionTarget === 'B' && (latestCalcRef?.designResult?.ModuleB?.recommended_material_id != null || latestCalcRef?.designResult?.ModuleB?.recommended_m_e != null)) ||
-                    (correctionTarget === 'D' && latestCalcRef?.designResult?.ModuleD?.trucI?.recommended_d_tc != null) ||
-                    (correctionTarget === 'E' && latestCalcRef?.designResult?.ModuleE?.recommended_l != null) ||
-                    (correctionTarget === 'F' && latestCalcRef?.designResult?.ModuleF?.recommended_d_tc != null);
+                {/* Live suggestion block */}
+                {(!isCurrentTargetOk && !isLiveCalculating) ? (() => {
+                  const suggs = correctionTarget ? getSuggestionImpact(correctionTarget, latestCalcRef?.designResult) : [];
+                  const hasSuggestion = suggs.length > 0;
+                  const recText = correctionTarget ? getDetailedDiagnostic(correctionTarget, latestCalcRef?.designResult || results)?.solution : null;
 
                   if (!recText) return null;
 
@@ -1303,7 +1468,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                 {warningsToShow.length > 0 && (
                   <div className="bg-rose-50/60 border border-rose-100 rounded-2xl p-4 space-y-2 text-xs text-rose-700 font-medium">
                     {warningsToShow.map((w, index) => (
-                      <div key={index} className="flex gap-2 items-start">
+                      <div key={index} className="flex gap-2 items-start animate-fade-in">
                         <span className="w-1.5 h-1.5 bg-rose-500 rounded-full shrink-0 mt-1.5"></span>
                         <span>{w}</span>
                       </div>
@@ -1311,7 +1476,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                   </div>
                 )}
                 {isCurrentTargetOk && !isLiveCalculating && (
-                  <div className="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-4 text-xs text-emerald-700 font-medium flex gap-2 items-center">
+                  <div className="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-4 text-xs text-emerald-700 font-medium flex gap-2 items-center animate-fade-in">
                     <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
                     <span>
                       {correctionTarget 
@@ -1376,22 +1541,22 @@ function ModuleA({ r, onOpenCorrection }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ResultCard label="Số răng z₁" value={r.z1} />
-        <ResultCard label="Số răng z₂" value={r.z2} />
-        <ResultCard label="Số mắt xích" value={r.x_links} />
-        <ResultCard label="Bước xích p" value={fmt(r.p_mm)} unit="mm" highlight />
+        <ResultCard label="Số răng đĩa dẫn z₁" value={r.z1} />
+        <ResultCard label="Số răng đĩa bị dẫn z₂" value={r.z2} />
+        <ResultCard label="Số mắt xích x" value={r.x_links} />
+        <ResultCard label={`Bước xích p (${r.strands || 1} dãy)`} value={fmt(r.p_mm)} unit="mm" highlight />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ResultCard label="Khoảng cách trục a" value={fmt(r.a_mm)} unit="mm" />
+        <ResultCard label="Khoảng cách trục a" value={fmt(r.a_mm, 1)} unit="mm" />
         <ResultCard label="Vận tốc xích v" value={fmt(r.v_ms)} unit="m/s" />
-        <ResultCard label="Hệ số an toàn s" value={fmt(r.s_safety)} />
-        <ResultCard label="Ứng suất σH" value={fmt(r.sigma_H_MPa)} unit="MPa" highlight />
+        <ResultCard label="Hệ số an toàn s" value={fmt(r.s_safety)} error={!r.check_s_pass} />
+        <ResultCard label="Ứng suất tiếp xúc σH" value={fmt(r.sigma_H_MPa)} unit="MPa" highlight error={!r.check_H_pass} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ResultCard label="Lực tác dụng lên trục Fr" value={fmt(r.Fr_N, 0)} unit="N" highlight />
         <div className="flex gap-4 items-center p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
-          <div className="flex items-center gap-1.5"><StatusBadge ok={r.check_s_pass} /><span className="text-[11px] font-bold text-slate-500">Bền mỏi (s)</span></div>
-          <div className="flex items-center gap-1.5"><StatusBadge ok={r.check_H_pass} /><span className="text-[11px] font-bold text-slate-500">Tiếp xúc (σH)</span></div>
+          <div className="flex items-center gap-1.5"><StatusBadge ok={r.check_s_pass} /><span className="text-[11px] font-bold text-slate-500 font-heading">Bền mỏi (s)</span></div>
+          <div className="flex items-center gap-1.5"><StatusBadge ok={r.check_H_pass} /><span className="text-[11px] font-bold text-slate-500 font-heading">Tiếp xúc (σH)</span></div>
         </div>
       </div>
     </div>
@@ -1408,8 +1573,8 @@ function ModuleB({ r, onOpenCorrection }) {
       <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${passed ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700'}`}>
         <span className="text-xs font-bold leading-relaxed">
           {passed
-            ? `Đạt bền tiếp xúc: [σH] = ${fmt(r.sigma_H_allow_MPa)} MPa`
-            : `KHÔNG ĐẠT bền tiếp xúc: σH (${fmt(r.sigmaH)} MPa) > [σH] (${fmt(r.sigma_H_allow_MPa)} MPa)`}
+            ? `Đạt bền tiếp xúc: [σH] = ${fmt(r.sigma_H_allow_MPa, 0)} MPa`
+            : `KHÔNG ĐẠT bền tiếp xúc: σH (${fmt(r.sigma_H_check, 1)} MPa) > [σH] (${fmt(r.sigma_H_allow_MPa, 1)} MPa)`}
         </span>
         {!passed && (
           <button
@@ -1422,23 +1587,23 @@ function ModuleB({ r, onOpenCorrection }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ResultCard label="Số răng z₁" value={r.z1_gear} />
-        <ResultCard label="Số răng z₂" value={r.z2_gear} />
-        <ResultCard label="Module mₑ" value={fmt(r.m_e_mm)} unit="mm" highlight />
-        <ResultCard label="Chiều dài côn Re" value={fmt(r.Re_mm)} unit="mm" />
+        <ResultCard label="Số răng bánh nhỏ z₁" value={r.z1_gear} />
+        <ResultCard label="Số răng bánh lớn z₂" value={r.z2_gear} />
+        <ResultCard label="Module ngoài mₑ" value={fmt(r.m_e_mm)} unit="mm" highlight />
+        <ResultCard label="Chiều dài côn ngoài Re" value={fmt(r.Re_mm)} unit="mm" />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <ResultCard label="Đ.kính trung bình d_m1" value={fmt(r.d_m1_mm)} unit="mm" />
         <ResultCard label="Đ.kính trung bình d_m2" value={fmt(r.d_m2_mm)} unit="mm" />
-        <ResultCard label="Chiều rộng b" value={fmt(r.b_mm, 0)} unit="mm" />
-        <ResultCard label="[σH] cho phép" value={fmt(r.sigma_H_allow_MPa)} unit="MPa" />
+        <ResultCard label="Chiều rộng bánh răng b" value={fmt(r.b_mm, 0)} unit="mm" />
+        <ResultCard label="[σH] cho phép" value={fmt(r.sigma_H_allow_MPa)} unit="MPa" highlight error={!r.check_H_pass} />
       </div>
       <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100">
-        <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-3">Lực truyền xuống Module D (Trục)</p>
+        <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-3 font-heading">Lực ăn khớp bánh răng côn (truyền xuống Trục)</p>
         <div className="grid grid-cols-3 gap-4">
-          <ResultCard label="Lực vòng Ft" value={fmt(r.Ft1_N, 0)} unit="N" highlight />
-          <ResultCard label="Lực hướng tâm Fr" value={fmt(r.Fr1_N, 0)} unit="N" />
-          <ResultCard label="Lực dọc trục Fa" value={fmt(r.Fa1_N, 0)} unit="N" />
+          <ResultCard label="Lực vòng Ft1" value={fmt(r.Ft1_N, 0)} unit="N" highlight />
+          <ResultCard label="Lực hướng tâm Fr1" value={fmt(r.Fr1_N, 0)} unit="N" />
+          <ResultCard label="Lực dọc trục Fa1" value={fmt(r.Fa1_N, 0)} unit="N" />
         </div>
       </div>
     </div>
@@ -1454,7 +1619,7 @@ function ModuleC({ r, onOpenCorrection }) {
 
       <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${passed ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700'}`}>
         <span className="text-xs font-bold leading-relaxed">
-          {passed ? `Đạt bền tiếp xúc: a_w = ${fmt(r.a_w_mm)} mm` : 'KHÔNG ĐẠT bền tiếp xúc'}
+          {passed ? `Đạt bền tiếp xúc: Khoảng cách trục aw = ${fmt(r.a_w_mm, 0)} mm` : 'KHÔNG ĐẠT bền tiếp xúc'}
         </span>
         {!passed && (
           <button
@@ -1467,22 +1632,23 @@ function ModuleC({ r, onOpenCorrection }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ResultCard label="K.cách trục aw" value={fmt(r.a_w_mm)} unit="mm" highlight />
-        <ResultCard label="Module m" value={fmt(r.m_tc_mm)} unit="mm" />
-        <ResultCard label="Số răng z₁" value={r.z1_gear} />
-        <ResultCard label="Số răng z₂" value={r.z2_gear} />
+        <ResultCard label="Khoảng cách trục aw" value={r.a_w_mm} unit="mm" highlight />
+        <ResultCard label="Module m_tc" value={r.m_tc_mm} unit="mm" />
+        <ResultCard label="Số răng bánh nhỏ z₁" value={r.z1_gear} />
+        <ResultCard label="Số răng bánh lớn z₂" value={r.z2_gear} />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ResultCard label="Đường kính d₁" value={fmt(r.d1_mm)} unit="mm" />
-        <ResultCard label="Đường kính d₂" value={fmt(r.d2_mm)} unit="mm" />
-        <ResultCard label="Chiều rộng bw" value={fmt(r.b_w_mm, 0)} unit="mm" />
+        <ResultCard label="Đường kính d₁" value={fmt(r.d1_mm, 1)} unit="mm" />
+        <ResultCard label="Đường kính d₂" value={fmt(r.d2_mm, 1)} unit="mm" />
+        <ResultCard label="Chiều rộng bw" value={fmt(r.b_w_mm, 1)} unit="mm" />
+        <ResultCard label="Tình trạng" value={passed ? "Đạt" : "Không đạt"} error={!passed} />
       </div>
-      <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100">
-        <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-3">Lực truyền xuống Module D (Trục)</p>
+      <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+        <p className="text-xs font-bold text-slate-500 uppercase mb-2">Lực truyền xuống Module D (Trục)</p>
         <div className="grid grid-cols-3 gap-4">
           <ResultCard label="Lực vòng Ft" value={fmt(r.Ft2_N, 0)} unit="N" highlight />
           <ResultCard label="Lực hướng tâm Fr" value={fmt(r.Fr2_N, 0)} unit="N" />
-          <ResultCard label="Lực dọc trục Fa" value={fmt(r.Fa2_N, 0)} unit="N" />
+          <ResultCard label="Lực dọc trục Fa" value={r.Fa2_N || 0} unit="N" />
         </div>
       </div>
     </div>
@@ -1491,15 +1657,70 @@ function ModuleC({ r, onOpenCorrection }) {
 
 function ModuleD({ r, onOpenCorrection }) {
   if (!r) return null;
-  const t = r.trucI;
-  const passed = t?.check_fatigue_pass;
+  const [subTab, setSubTab] = useState('overview');
+
+  const passedI = r.trucI?.check_fatigue_pass;
+  const passedII = r.trucII?.check_fatigue_pass !== false;
+  const passedIII = r.trucIII?.check_fatigue_pass !== false;
+  const passedAll = passedI && passedII && passedIII;
+
+  const renderDetailTable = (t, label) => {
+    if (!t) return null;
+    return (
+      <div className="overflow-x-auto border border-slate-200/60 rounded-2xl animate-fade-in">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Thông số kỹ thuật Trục {label}</th>
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Giá trị</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Đường kính sơ bộ d<sub>sb</sub></td>
+              <td className="px-6 py-4 font-mono font-bold text-blue-600">{fmt(t.d_sb_mm)} mm</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Đường kính tiêu chuẩn d<sub>tc</sub></td>
+              <td className="px-6 py-4"><span className="px-3.5 py-1.5 bg-blue-50 text-blue-600 font-extrabold rounded-xl border border-blue-100">{t.d_tc_mm?.[0]} mm</span></td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Moment uốn tổng hợp M<sub>j</sub></td>
+              <td className="px-6 py-4 font-mono text-slate-700">{t.M_j_Nmm?.[0]?.toLocaleString()} N.mm</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Phản lực gối A (F<sub>rA</sub>)</td>
+              <td className="px-6 py-4 font-mono text-slate-700">{fmt(t.F_rA, 0)} N</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Phản lực gối B (F<sub>rB</sub>)</td>
+              <td className="px-6 py-4 font-mono text-slate-700">{fmt(t.F_rB, 0)} N</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Hệ số an toàn mỏi s</td>
+              <td className={`px-6 py-4 font-mono font-bold ${t.s_fatigue >= 1.5 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                {fmt(t.s_fatigue)} <span className="text-xs text-slate-400 font-medium">(Yêu cầu ≥ 1.5)</span>
+              </td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Kiểm nghiệm độ bền mỏi</td>
+              <td className="px-6 py-4"><StatusBadge ok={t.s_fatigue >= 1.5} /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
-      <ModuleHeader letter="D" title="Thiết kế Trục I" tag="Giải phương trình cân bằng + Kiểm mỏi" />
+      <ModuleHeader letter="D" title="Thiết kế Trục I, II, III" tag="Giải phương trình cân bằng + Kiểm mỏi" />
       
-      {!passed && (
+      {!passedAll && (
         <div className="p-4 rounded-2xl border bg-rose-50 border-rose-200 text-rose-700 flex items-center justify-between gap-4 mb-4">
-          <span className="text-xs font-bold">LỖI: Hệ số an toàn bền mỏi của trục không đạt tiêu chuẩn (s &lt; 1.5)</span>
+          <span className="text-xs font-bold leading-relaxed">
+            LỖI: Hệ số an toàn bền mỏi của trục không đạt tiêu chuẩn (s &lt; 1.5).
+          </span>
           <button
             onClick={onOpenCorrection}
             className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-xs shadow-sm transition-premium flex items-center gap-1 shrink-0"
@@ -1509,128 +1730,289 @@ function ModuleD({ r, onOpenCorrection }) {
         </div>
       )}
 
-      <div className="overflow-x-auto border border-slate-200/60 rounded-2xl">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Thông số kỹ thuật</th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Giá trị</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Đường kính sơ bộ d<sub>sb</sub></td>
-              <td className="px-6 py-4 font-mono font-bold text-blue-600">{fmt(t?.d_sb_mm)} mm</td>
-            </tr>
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Đường kính tiêu chuẩn d<sub>tc</sub></td>
-              <td className="px-6 py-4"><span className="px-3.5 py-1.5 bg-blue-50 text-blue-600 font-extrabold rounded-xl border border-blue-100">{t?.d_tc_mm?.[0]} mm</span></td>
-            </tr>
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Moment uốn tổng hợp M<sub>j</sub></td>
-              <td className="px-6 py-4 font-mono font-medium text-slate-700">{t?.M_j_Nmm?.[0]?.toLocaleString()} N.mm</td>
-            </tr>
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Phản lực gối A (F<sub>rA</sub>)</td>
-              <td className="px-6 py-4 font-mono font-medium text-slate-700">{fmt(t?.F_rA, 0)} N</td>
-            </tr>
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Phản lực gối B (F<sub>rB</sub>)</td>
-              <td className="px-6 py-4 font-mono font-medium text-slate-700">{fmt(t?.F_rB, 0)} N</td>
-            </tr>
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Hệ số an toàn mỏi s</td>
-              <td className={`px-6 py-4 font-mono font-bold ${t?.check_fatigue_pass ? 'text-emerald-600' : 'text-rose-600'}`}>
-                {fmt(t?.s_fatigue)} <span className="text-xs text-slate-400 font-medium">(Yêu cầu ≥ 1.5)</span>
-              </td>
-            </tr>
-            <tr className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4 font-semibold text-slate-600">Kiểm nghiệm độ bền mỏi</td>
-              <td className="px-6 py-4"><StatusBadge ok={t?.check_fatigue_pass} /></td>
-            </tr>
-          </tbody>
-        </table>
+      {/* Sub-tabs bar */}
+      <div className="flex border-b border-slate-100 gap-6 text-xs font-bold uppercase tracking-wider mb-4">
+        <button onClick={() => setSubTab('overview')} className={`pb-3 ${subTab === 'overview' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Tổng quan</button>
+        <button onClick={() => setSubTab('I')} className={`pb-3 ${subTab === 'I' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục I</button>
+        <button onClick={() => setSubTab('II')} className={`pb-3 ${subTab === 'II' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục II</button>
+        <button onClick={() => setSubTab('III')} className={`pb-3 ${subTab === 'III' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục III</button>
       </div>
-      <div className="bg-blue-50/50 border border-blue-100/80 p-4 rounded-2xl text-blue-700 text-xs font-semibold leading-relaxed">
-        👉 <strong>Quy trình thiết kế:</strong> Đường kính sơ bộ d_sb tính theo công thức ứng suất xoắn cho phép, sau đó chọn đường kính tiêu chuẩn d_tc tương ứng và tính toán mô men uốn tổng hợp, phản lực gối đỡ để kiểm nghiệm hệ số an toàn mỏi (s ≥ 1.5).
-      </div>
+
+      {subTab === 'overview' && (
+        <div className="overflow-x-auto border border-slate-200/60 rounded-2xl animate-fade-in">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Trục</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">d_sb (mm)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">M_j (N.mm)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">d_tc (mm)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Hệ số s</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Kết quả</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {['I', 'II', 'III'].map(id => {
+                const s = r[`truc${id}`];
+                if (!s) return null;
+                const ok = s.s_fatigue >= 1.5;
+                return (
+                  <tr key={id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4 font-bold text-slate-700">Trục {id}</td>
+                    <td className="px-6 py-4 font-mono font-bold text-blue-600">{fmt(s.d_sb_mm)} mm</td>
+                    <td className="px-6 py-4 font-mono text-slate-600">{s.M_j_Nmm?.[0]?.toLocaleString()}</td>
+                    <td className="px-6 py-4">
+                      <span className="px-3 py-1.5 bg-blue-50 text-blue-600 font-extrabold rounded-lg border border-blue-100">{s.d_tc_mm?.[0]} mm</span>
+                    </td>
+                    <td className={`px-6 py-4 font-mono font-bold ${ok ? 'text-emerald-600' : 'text-rose-600'}`}>{fmt(s.s_fatigue)}</td>
+                    <td className="px-6 py-4"><StatusBadge ok={ok} /></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {subTab === 'I' && renderDetailTable(r.trucI, 'I')}
+      {subTab === 'II' && renderDetailTable(r.trucII, 'II')}
+      {subTab === 'III' && renderDetailTable(r.trucIII, 'III')}
     </div>
   );
 }
 
 function ModuleE({ r, onOpenCorrection }) {
   if (!r) return null;
-  const passed = r.check_key_pass;
+  const [subTab, setSubTab] = useState('overview');
+
+  const passedI = r.trucI?.check_key_pass;
+  const passedII = r.trucII?.check_key_pass !== false;
+  const passedIII = r.trucIII?.check_key_pass !== false;
+  const passedAll = passedI && passedII && passedIII;
+
+  const renderDetailTable = (k, label) => {
+    if (!k) return null;
+    return (
+      <div className="overflow-x-auto border border-slate-200/60 rounded-2xl animate-fade-in">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Thông số kỹ thuật Then Trục {label}</th>
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Giá trị</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Kích thước then b&times;h</td>
+              <td className="px-6 py-4 font-mono font-bold text-blue-600">{k.b}&times;{k.h} mm</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Chiều sâu rãnh then t1</td>
+              <td className="px-6 py-4 font-mono text-slate-700">{k.t1} mm</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Chiều sâu rãnh then t2</td>
+              <td className="px-6 py-4 font-mono text-slate-700">{fmt(k.t2, 1)} mm</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Chiều dài then l</td>
+              <td className="px-6 py-4 font-mono font-bold text-blue-600">{k.l_t_mm} mm</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Ứng suất dập σd</td>
+              <td className={`px-6 py-4 font-mono font-bold ${k.sigma_d_MPa <= 100 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                {fmt(k.sigma_d_MPa)} MPa <span className="text-xs text-slate-400 font-medium">(Yêu cầu ≤ 100 MPa)</span>
+              </td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Ứng suất cắt τc</td>
+              <td className={`px-6 py-4 font-mono font-bold ${k.tau_c_MPa <= 60 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                {fmt(k.tau_c_MPa)} MPa <span className="text-xs text-slate-400 font-medium">(Yêu cầu ≤ 60 MPa)</span>
+              </td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Kiểm nghiệm độ bền then</td>
+              <td className="px-6 py-4"><StatusBadge ok={k.check_key_pass} /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
       <ModuleHeader letter="E" title="Kiểm nghiệm Then (Key)" tag="Dựa trên d_tc từ Module D" />
       
-      <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${passed ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700'}`}>
-        <span className="text-xs font-bold leading-relaxed">
-          {passed ? 'Đạt điều kiện bền dập và bền cắt' : 'LỖI: Then không đạt độ bền dập và cắt'}
-        </span>
-        {!passed && (
+      {!passedAll && (
+        <div className="p-4 rounded-2xl border bg-rose-50 border-rose-200 text-rose-700 flex items-center justify-between gap-4 mb-4">
+          <span className="text-xs font-bold leading-relaxed">
+            LỖI: Then lắp trên trục không đạt điều kiện bền dập hoặc cắt.
+          </span>
           <button
             onClick={onOpenCorrection}
             className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-xs shadow-sm transition-premium flex items-center gap-1 shrink-0"
           >
             💡 Khắc phục nhanh
           </button>
-        )}
+        </div>
+      )}
+
+      {/* Sub-tabs bar */}
+      <div className="flex border-b border-slate-100 gap-6 text-xs font-bold uppercase tracking-wider mb-4">
+        <button onClick={() => setSubTab('overview')} className={`pb-3 ${subTab === 'overview' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Tổng quan</button>
+        <button onClick={() => setSubTab('I')} className={`pb-3 ${subTab === 'I' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục I</button>
+        <button onClick={() => setSubTab('II')} className={`pb-3 ${subTab === 'II' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục II</button>
+        <button onClick={() => setSubTab('III')} className={`pb-3 ${subTab === 'III' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục III</button>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <ResultCard label="Chiều rộng b" value={r.b} unit="mm" />
-        <ResultCard label="Chiều cao h" value={r.h} unit="mm" />
-        <ResultCard label="Chiều dài then l_t" value={r.l_t_mm} unit="mm" highlight />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className={`p-5 rounded-2xl border transition-premium ${Number(r.sigma_d_MPa) <= r.sigma_d_allow ? 'bg-emerald-500/5 border-emerald-500/15' : 'bg-rose-500/5 border-rose-500/15'}`}>
-          <p className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">Ứng suất dập σ<sub>d</sub></p>
-          <p className="text-2xl font-black text-slate-800 font-heading">{fmt(r.sigma_d_MPa)} <span className="text-xs font-semibold text-slate-400">MPa</span></p>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">Giới hạn bền dập cho phép: [σd] = {r.sigma_d_allow} MPa</p>
+      {subTab === 'overview' && (
+        <div className="overflow-x-auto border border-slate-200/60 rounded-2xl animate-fade-in">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Trục</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Kích thước then b&times;h</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Chiều dài l_t (mm)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">σd (MPa)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">τc (MPa)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Kết quả</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {['I', 'II', 'III'].map(id => {
+                const k = r[`truc${id}`];
+                if (!k) return null;
+                return (
+                  <tr key={id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4 font-bold text-slate-700">Trục {id}</td>
+                    <td className="px-6 py-4 font-mono text-slate-600">{k.b}&times;{k.h}</td>
+                    <td className="px-6 py-4 font-mono text-slate-655">{k.l_t_mm}</td>
+                    <td className={`px-6 py-4 font-mono font-bold ${k.sigma_d_MPa <= 100 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      {fmt(k.sigma_d_MPa, 1)} <span className="text-[10px] text-slate-400 font-medium">≤ 100</span>
+                    </td>
+                    <td className={`px-6 py-4 font-mono font-bold ${k.tau_c_MPa <= 60 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      {fmt(k.tau_c_MPa, 1)} <span className="text-[10px] text-slate-400 font-medium">≤ 60</span>
+                    </td>
+                    <td className="px-6 py-4"><StatusBadge ok={k.check_key_pass} /></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-        <div className={`p-5 rounded-2xl border transition-premium ${Number(r.tau_c_MPa) <= r.tau_c_allow ? 'bg-emerald-500/5 border-emerald-500/15' : 'bg-rose-500/5 border-rose-500/15'}`}>
-          <p className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">Ứng suất cắt τ<sub>c</sub></p>
-          <p className="text-2xl font-black text-slate-800 font-heading">{fmt(r.tau_c_MPa)} <span className="text-xs font-semibold text-slate-400">MPa</span></p>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">Giới hạn bền cắt cho phép: [τc] = {r.tau_c_allow} MPa</p>
-        </div>
-      </div>
+      )}
+
+      {subTab === 'I' && renderDetailTable(r.trucI, 'I')}
+      {subTab === 'II' && renderDetailTable(r.trucII, 'II')}
+      {subTab === 'III' && renderDetailTable(r.trucIII, 'III')}
     </div>
   );
 }
 
 function ModuleF({ r, onOpenCorrection }) {
   if (!r) return null;
-  const passed = r.check_bearing_pass;
+  const [subTab, setSubTab] = useState('overview');
+
+  const passedI = r.trucI?.check_bearing_pass;
+  const passedII = r.trucII?.check_bearing_pass !== false;
+  const passedIII = r.trucIII?.check_bearing_pass !== false;
+  const passedAll = passedI && passedII && passedIII;
+
+  const renderDetailTable = (b, label) => {
+    if (!b) return null;
+    return (
+      <div className="overflow-x-auto border border-slate-200/60 rounded-2xl animate-fade-in">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Thông số kỹ thuật Ổ lăn Trục {label}</th>
+              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Giá trị</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Mã hiệu ổ lăn tiêu chuẩn</td>
+              <td className="px-6 py-4 font-mono font-bold text-blue-600">{b.bearing_code}</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Tải trọng động Cd yêu cầu</td>
+              <td className="px-6 py-4 font-mono text-slate-700">{fmt(b.C_d_kN)} kN</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Khả năng tải trọng động C của ổ</td>
+              <td className="px-6 py-4 font-mono font-bold text-blue-600">{fmt(b.C_catalog_kN)} kN</td>
+            </tr>
+            <tr className="hover:bg-slate-50 transition-colors">
+              <td className="px-6 py-4 font-semibold text-slate-600">Kiểm nghiệm khả năng tải</td>
+              <td className="px-6 py-4"><StatusBadge ok={b.check_bearing_pass} /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
-      <ModuleHeader letter="F" title="Kiểm nghiệm Ổ lăn" tag="Ổ côn — Trục I" />
+      <ModuleHeader letter="F" title="Kiểm nghiệm Ổ lăn" tag="Tải trọng động & catalog ổ lăn côn" />
       
-      <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${passed ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700'}`}>
-        <span className="text-xs font-bold leading-relaxed">
-          {passed
-            ? `Ổ ${r.bearing_code} đạt: C_catalog = ${fmt(r.C_catalog_kN)} kN ≥ Cd = ${fmt(r.C_d_kN)} kN`
-            : `KHÔNG ĐẠT: Không tìm thấy ổ đạt chuẩn tải trọng (C_catalog < Cd)`}
-        </span>
-        {!passed && (
+      {!passedAll && (
+        <div className="p-4 rounded-2xl border bg-rose-50 border-rose-200 text-rose-700 flex items-center justify-between gap-4 mb-4">
+          <span className="text-xs font-bold leading-relaxed">
+            LỖI: Trục không tìm thấy ổ lăn đạt chuẩn tải trọng C_catalog &gt; C_d.
+          </span>
           <button
             onClick={onOpenCorrection}
             className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-xs shadow-sm transition-premium flex items-center gap-1 shrink-0"
           >
             💡 Khắc phục nhanh
           </button>
-        )}
+        </div>
+      )}
+
+      {/* Sub-tabs bar */}
+      <div className="flex border-b border-slate-100 gap-6 text-xs font-bold uppercase tracking-wider mb-4">
+        <button onClick={() => setSubTab('overview')} className={`pb-3 ${subTab === 'overview' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Tổng quan</button>
+        <button onClick={() => setSubTab('I')} className={`pb-3 ${subTab === 'I' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục I</button>
+        <button onClick={() => setSubTab('II')} className={`pb-3 ${subTab === 'II' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục II</button>
+        <button onClick={() => setSubTab('III')} className={`pb-3 ${subTab === 'III' ? 'text-blue-600 border-b-2 border-blue-600 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}>Trục III</button>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <ResultCard label="Mã hiệu ổ lăn" value={r.bearing_code} highlight />
-        <ResultCard label="Tải trọng động C_d" value={fmt(r.C_d_kN)} unit="kN" />
-        <ResultCard label="Khả năng tải Catalog" value={fmt(r.C_catalog_kN)} unit="kN" />
-      </div>
-      <div className="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl text-slate-600 text-xs font-semibold leading-relaxed">
-        👉 <strong>Kiểm định ổ lăn:</strong> Hệ thống tự động tra catalog tìm các vòng ổ đỡ có đường kính trong ăn khớp với ngõng trục, tính toán tải trọng động quy đổi C_d dựa trên tuổi thọ thiết kế (L_h) và vòng quay trục để chọn mã ổ đạt chuẩn an toàn.
-      </div>
+      {subTab === 'overview' && (
+        <div className="overflow-x-auto border border-slate-200/60 rounded-2xl animate-fade-in">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50/50 text-left">
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Trục</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Mã ổ</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">C_d (kN)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">C_catalog (kN)</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest font-heading">Kết quả</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {['I', 'II', 'III'].map(id => {
+                const b = r[`truc${id}`];
+                if (!b) return null;
+                return (
+                  <tr key={id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4 font-bold text-slate-700">Trục {id}</td>
+                    <td className="px-6 py-4 font-mono font-bold text-blue-600">{b.bearing_code}</td>
+                    <td className="px-6 py-4 font-mono text-slate-600">{fmt(b.C_d_kN, 2)}</td>
+                    <td className={`px-6 py-4 font-mono font-bold ${b.check_bearing_pass ? 'text-emerald-600' : 'text-rose-600'}`}>{fmt(b.C_catalog_kN, 2)}</td>
+                    <td className="px-6 py-4"><StatusBadge ok={b.check_bearing_pass} /></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {subTab === 'I' && renderDetailTable(r.trucI, 'I')}
+      {subTab === 'II' && renderDetailTable(r.trucII, 'II')}
+      {subTab === 'III' && renderDetailTable(r.trucIII, 'III')}
     </div>
   );
 }

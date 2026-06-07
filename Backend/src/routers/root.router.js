@@ -7,6 +7,7 @@ import motorRouter from "./motor.router.js";
 import designRouter from "./design.router.js";
 import { prisma } from "../common/prisma/connect.prisma.js";
 import { protect } from "../common/middlewares/protect.middleware.js";
+import materialRouter from "./material.router.js";
 
 const rootRouter = express.Router()
 rootRouter.use("/projects", inputRouter);
@@ -16,6 +17,7 @@ rootRouter.use("/projects", kinematicsRouter);
 rootRouter.use("/motors", motorRouter);
 rootRouter.use("/projects/:projectId/motors", motorRouter);
 rootRouter.use("/projects/:projectId/design", designRouter);
+rootRouter.use("/materials", materialRouter);
 
 rootRouter.get("/materials", protect, async (req, res, next) => {
   try {

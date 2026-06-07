@@ -129,15 +129,15 @@ exports.Prisma.BearingsScalarFieldEnum = {
   width_B: 'width_B',
   C: 'C',
   C0: 'C0',
-  e: 'e',
-  Y: 'Y',
-  alpha_deg: 'alpha_deg',
   is_active: 'is_active',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  Y: 'Y',
+  alpha_deg: 'alpha_deg',
+  e: 'e'
 };
 
 exports.Prisma.ChainsScalarFieldEnum = {
@@ -145,16 +145,16 @@ exports.Prisma.ChainsScalarFieldEnum = {
   pitch: 'pitch',
   breaking_load: 'breaking_load',
   mass_per_m: 'mass_per_m',
-  P_allow: 'P_allow',
-  A_mm2: 'A_mm2',
-  s_allow: 's_allow',
-  n_ref: 'n_ref',
   is_active: 'is_active',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  A_mm2: 'A_mm2',
+  P_allow: 'P_allow',
+  n_ref: 'n_ref',
+  s_allow: 's_allow'
 };
 
 exports.Prisma.MotorsScalarFieldEnum = {
@@ -193,6 +193,7 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   selected_motor_id: 'selected_motor_id',
   selected_motor_snapshot: 'selected_motor_snapshot',
   design_result: 'design_result',
+  cover_url: 'cover_url',
   step: 'step',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
@@ -207,9 +208,13 @@ exports.Prisma.UsersScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  avatar_url: 'avatar_url',
   role: 'role',
   reset_token: 'reset_token',
   reset_token_expiry: 'reset_token_expiry',
+  is_verified: 'is_verified',
+  verify_token: 'verify_token',
+  verify_token_expiry: 'verify_token_expiry',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
@@ -312,14 +317,17 @@ exports.Prisma.QueryMode = {
 };
 
 exports.Prisma.projectsOrderByRelevanceFieldEnum = {
-  name: 'name'
+  name: 'name',
+  cover_url: 'cover_url'
 };
 
 exports.Prisma.usersOrderByRelevanceFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
-  reset_token: 'reset_token'
+  avatar_url: 'avatar_url',
+  reset_token: 'reset_token',
+  verify_token: 'verify_token'
 };
 
 exports.Prisma.material_gradesOrderByRelevanceFieldEnum = {

@@ -1,6 +1,7 @@
-# Huong Dan Chay Project DADN CNPM 252
+# Hướng Dẫn Chạy Project Đồ Án Dẫn Động Cơ Khí (DADN CNPM 252)
 
-Tai lieu nay huong dan chay toan bo project (Backend + Frontend) tren may local.
+Tài liệu này hướng dẫn chạy toàn bộ project (Backend + Frontend) trên máy local.
+Dự án là Hệ thống tính toán thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn - trụ, bộ truyền xích ngoài, thiết kế trục, chọn động cơ, chọn ổ lăn và then.
 
 > 📚 **Chi tiết thêm:**
 > - Xem **[Tài liệu Frontend](./Frontend/README.md)**
@@ -62,6 +63,12 @@ Tao file Backend/.env voi noi dung mau:
 DATABASE_URL="mysql://root:your_password@localhost:3306/dadn_252"
 ACCESS_TOKEN_SECRET="your_access_secret"
 REFRESH_TOKEN_SECRET="your_refresh_secret"
+
+CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
+
+BREVO_SMTP_USER="your_brevo_smtp_user"
+BREVO_SENDER_EMAIL="your_brevo_sender_email"
+BREVO_SMTP_PASS="your_brevo_smtp_pass"
 ```
 
 Luu y:
@@ -138,8 +145,12 @@ Auth:
 - POST /api/auth/login
 - GET /api/auth/get-info
 - POST /api/auth/refresh-token
-- GET /api/auth/google
-- GET /api/auth/google/callback
+- POST /api/auth/request-change-password
+- POST /api/auth/verify-change-password
+
+Materials:
+
+- GET /api/materials/grades
 
 User:
 

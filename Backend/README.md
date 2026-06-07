@@ -1,6 +1,6 @@
 # 🚀 DADN252 — Back-end API Server
 
-> Hệ thống back-end phục vụ tính toán thiết kế hệ dẫn động cơ khí (kinematics, chọn động cơ, thiết kế hộp giảm tốc), xây dựng trên nền tảng **Node.js / Express.js** với kiến trúc phân lớp rõ ràng và nhiều cơ chế bảo mật hiện đại.
+> Hệ thống back-end phục vụ tính toán thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn trụ, bộ truyền xích, thiết kế trục, chọn động cơ, chọn ổ lăn, then. Xây dựng trên nền tảng **Node.js / Express.js** với kiến trúc phân lớp rõ ràng và nhiều cơ chế bảo mật hiện đại.
 
 ---
 
@@ -43,8 +43,6 @@
 |---|---|---|
 | **JSON Web Token (JWT)** | ^9.0.3 | Cơ chế xác thực stateless — Access Token (1 ngày) + Refresh Token |
 | **bcrypt** | ^6.0.0 | Hash mật khẩu với salt rounds = 10 |
-| **Passport.js** | ^0.7.0 | Middleware xác thực — hỗ trợ nhiều strategy |
-| **passport-google-oauth20** | ^2.0.0 | Đăng nhập qua Google OAuth 2.0 |
 | **cookie-parser** | ^1.4.7 | Đọc và ghi HTTP cookie (lưu Access/Refresh Token) |
 
 ### Real-time & Upload
@@ -259,35 +257,6 @@ export const responseError = (message, statusCode, stack) => ({
 
 ---
 
-### 6. 🔑 Strategy Pattern (OAuth2 Authentication)
-
-**Vị trí:** `src/common/passport/login-google.passport.js`
-
-**Mô tả:** Sử dụng **Passport.js** áp dụng Strategy Pattern — cho phép thay đổi/bổ sung phương thức xác thực mà không làm ảnh hưởng đến phần còn lại của ứng dụng. Hiện tại triển khai `GoogleStrategy` (OAuth 2.0).
-
-```javascript
-// login-google.passport.js
-export const initLoginGooglePassport = () => {
-  passport.use(
-    new GoogleStrategy(
-      { clientID, clientSecret, callbackURL },
-      async (accessTokenGG, refreshTokenGG, profile, cb) => {
-        // Tìm hoặc tạo user từ thông tin Google profile
-        let user = await prisma.users.findUnique({ where: { email } });
-        if (!user) user = await prisma.users.create({ data: { email, ... } });
-
-        // Cấp JWT của hệ thống
-        const accessToken  = tokenService.createAccessToken(user.id);
-        const refreshToken = tokenService.createRefreshToken(user.id);
-        return cb(null, { accessToken, refreshToken });
-      }
-    )
-  );
-};
-```
-
----
-
 ### 7. 🗃️ Repository Pattern (qua Prisma ORM)
 
 **Vị trí:** Toàn bộ `src/services/*.service.js` — sử dụng `prisma.*`
@@ -385,8 +354,6 @@ DADN252/
             │   ├── protect.middleware.js     # JWT authentication guard
             │   ├── protect-header.middleware.js
             │   └── log-api.middleware.js     # Request logging
-            ├── passport/
-            │   └── login-google.passport.js  # Google OAuth2 strategy
             ├── prisma/
             │   ├── connect.prisma.js         # Singleton Prisma Client
             │   └── generated/prisma/         # Auto-generated Prisma types
@@ -478,14 +445,13 @@ DATABASE_URL="mysql://user:password@localhost:3306/dadn252"
 ACCESS_TOKEN_SECRET=your_access_token_secret_here
 REFRESH_TOKEN_SECRET=your_refresh_token_secret_here
 
-# Google OAuth2
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
 # Cloudinary (Upload ảnh)
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
+
+# Brevo (Gửi Email)
+BREVO_SMTP_USER="your_brevo_smtp_user"
+BREVO_SENDER_EMAIL="your_brevo_sender_email"
+BREVO_SMTP_PASS="your_brevo_smtp_pass"
 ```
 
 ---
@@ -498,8 +464,9 @@ CLOUDINARY_API_SECRET=your_api_secret
 | POST | `/api/auth/login` | Đăng nhập | ❌ |
 | GET | `/api/auth/get-info` | Lấy thông tin người dùng hiện tại | ✅ JWT |
 | POST | `/api/auth/refresh-token` | Làm mới Access Token | ❌ |
-| GET | `/api/auth/google` | Khởi tạo đăng nhập Google | ❌ |
-| GET | `/api/auth/google/callback` | Callback sau khi xác thực Google | ❌ |
+| POST | `/api/auth/request-change-password` | Yêu cầu đổi mật khẩu (gửi OTP) | ✅ JWT |
+| POST | `/api/auth/verify-change-password` | Xác thực OTP & đổi mật khẩu | ✅ JWT |
+| GET | `/api/materials/grades` | Lấy danh sách vật liệu (mác thép) | ❌ |
 | GET | `/api/user` | Lấy danh sách user | ❌ |
 | GET | `/api/user/:id` | Lấy chi tiết user | ❌ |
 | POST | `/api/user/avatar-local` | Upload avatar xuống local storage | ✅ JWT |

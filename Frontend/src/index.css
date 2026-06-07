@@ -78,3 +78,14 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .animate-fade-in {
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Ẩn con mắt mặc định của trình duyệt ở các ô nhập mật khẩu */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+}

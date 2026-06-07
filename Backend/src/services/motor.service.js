@@ -5,8 +5,7 @@ import {
   ServiceUnavailableException,
 } from "../common/helpers/exception.helper.js";
 
-const NO_MATCHED_MOTOR_MESSAGE =
-  "Không tìm thấy động cơ nào phù hợp trong Cơ sở dữ liệu hiện tại. Vui lòng kiểm tra lại thông số thiết kế đầu vào hoặc yêu cầu Admin cập nhật thêm Catalog linh kiện cỡ lớn";
+const NO_MATCHED_MOTOR_MESSAGE = "Không tìm thấy động cơ phù hợp";
 
 const CATALOG_DB_ERROR_MESSAGE =
   "Lỗi truy xuất dữ liệu Catalog. Vui lòng thử lại sau";
@@ -21,8 +20,16 @@ const normalizeMotor = (motor, P_ct, n_sb) => {
   const P_dm_val = toNumber(motor.P_dm) ?? 0;
   const price_val = toNumber(motor.price);
   const mass_val = toNumber(motor.mass_kg);
-  const delta_n = Math.abs((toNumber(motor.n_dm) ?? 0) - n_sb);
-  
+
+  // Tính tốc độ đồng bộ (n_dong_bo) dựa trên tốc độ định mức n_dm
+  const n_dm = toNumber(motor.n_dm) ?? 0;
+  let sync_speed = 750;
+  if (n_dm > 1500) sync_speed = 3000;
+  else if (n_dm > 1000) sync_speed = 1500;
+  else if (n_dm > 750) sync_speed = 1000;
+
+  const delta_n = Math.abs(sync_speed - n_sb);
+
 
   return {
     ...motor,
@@ -36,10 +43,12 @@ const normalizeMotor = (motor, P_ct, n_sb) => {
 };
 
 const sortBySimplePriority = (a, b) => {
+  // Ưu tiên 1: Động cơ phải có tốc độ đồng bộ gần với n_sb nhất (delta_n nhỏ nhất)
   if (a.delta_n !== b.delta_n) {
     return a.delta_n - b.delta_n;
   }
 
+  // Ưu tiên 2: Công suất dư thừa (delta_P) càng nhỏ càng tốt
   return a.delta_P - b.delta_P;
 };
 
@@ -75,6 +84,7 @@ const buildCandidates = async ({ P_ct, n_sb }) => {
     throw new NotfoundException(NO_MATCHED_MOTOR_MESSAGE);
   }
 
+  // Đánh giá tất cả motor, tính delta_n (dựa trên tốc độ đồng bộ) và delta_P
   const candidates = availableMotors.map((motor) => normalizeMotor(motor, P_ct, n_sb));
 
   if (candidates.length === 0) {
@@ -83,7 +93,12 @@ const buildCandidates = async ({ P_ct, n_sb }) => {
 
   candidates.sort(sortBySimplePriority);
 
-  return candidates.map((motor) => {
+  // Lọc CỨNG: Chỉ giữ lại các động cơ thuộc nhóm tốc độ đồng bộ phù hợp nhất (delta_n nhỏ nhất)
+  // Các động cơ thuộc nhóm tốc độ khác (bị sai lệch tốc độ) sẽ bị loại bỏ hoàn toàn khỏi danh sách "Xem tất cả"
+  const min_delta_n = candidates[0].delta_n;
+  const valid_candidates = candidates.filter(motor => motor.delta_n === min_delta_n);
+
+  return valid_candidates.map((motor) => {
     const { P_dm_val, price_val, mass_val, ...rest } = motor;
     return rest;
   });

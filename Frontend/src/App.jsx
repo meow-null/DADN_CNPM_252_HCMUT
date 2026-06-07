@@ -37,6 +37,7 @@ function App() {
   const [calcStep, setCalcStep] = useState(1); // persist wizard step across workspace navigation
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [workspaceError, setWorkspaceError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const loadCurrentUser = async () => {
     try {
@@ -152,6 +153,25 @@ function App() {
     return <AuthPage onLoginSuccess={handleLoginSuccess} />;
   }
 
+  const handleUpdateAvatar = async (file) => {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const response = await fetch(`${API_BASE_URL}/user/avatar`, {
+      method: 'PATCH',
+      credentials: 'include',
+      body: formData,
+    });
+
+    const payload = await response.json().catch(() => null);
+    if (!response.ok || payload?.status === 'error') {
+      throw new Error(payload?.message || 'Upload failed');
+    }
+
+    const newAvatarUrl = payload.data.avatar_url;
+    setCurrentUser(prev => ({ ...prev, avatar_url: newAvatarUrl }));
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 transition-opacity duration-300">
       <Sidebar 
@@ -159,6 +179,9 @@ function App() {
         onNavigate={setCurrentScreen} 
         onLogout={handleLogout}
         userName={currentUser?.name}
+        userEmail={currentUser?.email}
+        avatarUrl={currentUser?.avatar_url}
+        onUpdateAvatar={handleUpdateAvatar}
       />
       
       <main className="flex-1 flex flex-col overflow-hidden bg-slate-50">
@@ -166,27 +189,24 @@ function App() {
         <Header 
           currentScreen={currentScreen} 
           onNavigate={setCurrentScreen} 
-          activeProjectName={activeProject?.name} 
+          activeProjectName={activeProject?.name}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          projects={projects}
+          onSelectProject={handleProjectSelected}
         />
         
         <div className="flex-1 overflow-y-auto p-8" id="screen-container">
           {currentScreen === 'workspace' && (
-            <Workspace
-              onNavigate={setCurrentScreen}
-              projects={projects}
-              loading={loadingProjects}
-              errorMessage={workspaceError}
-              onSelectProject={handleProjectSelected}
-              onDeleteProject={handleProjectDeleted}
-            />
-          )}
-
-          {currentScreen === 'catalog' && (
-            <div className="flex flex-col items-center justify-center h-full text-slate-500 space-y-4 mt-20 animate-fade-in">
-               <svg className="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
-               <h2 className="text-xl font-bold text-slate-700">Thư viện Linh kiện (Catalog)</h2>
-               <p>Giao diện UC-07 đang được phát triển đợi đi m...</p>
-            </div>
+              <Workspace
+        onNavigate={setCurrentScreen}
+        projects={projects}
+        loading={loadingProjects}
+        errorMessage={workspaceError}
+        onSelectProject={handleProjectSelected}
+        onDeleteProject={handleProjectDeleted}
+        setProjects={setProjects}
+      />
           )}
 
           <div className={currentScreen === 'calculations' ? 'block' : 'hidden'}>

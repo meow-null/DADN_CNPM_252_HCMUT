@@ -7,7 +7,6 @@ export const calculateDesign = async (req, res, next) => {
 
     // Gọi Service chạy toàn bộ UC05
     const { designResult, warning } = await designService.processUC05(Number(projectId), req.body?.overrides);
-
     return res.status(200).json({
       status: "success",
       message: "Tính toán thiết kế chi tiết máy thành công",

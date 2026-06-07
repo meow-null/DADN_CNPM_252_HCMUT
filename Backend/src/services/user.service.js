@@ -44,91 +44,22 @@ export const userService = {
         return user;
     },
 
-    async avatarLocal(req) {
-        // req.file is the `avatar` file
-        // req.body will hold the text fields, if there were any
-
-        if (!req.file) {
-            throw new BadRequestException("Thiếu file");
-        }
-
-        // Vì 1 user chỉ có 1 avatar, nên phải xoá hình cũ nếu có
-        if (req.user.avatar) {
-            // win: \\
-            // mac: //
-            const oldFilePath = path.join("public/images/", req.user.avatar);
-            if (fs.existsSync(oldFilePath)) {
-                fs.unlinkSync(oldFilePath);
-            }
-
-            // xoá cloud
-            cloudinary.uploader.destroy(req.user.avatar);
-        }
-
-        await prisma.users.update({
-            where: {
-                id: req.user.id,
-            },
-            data: {
-                avatar: req.file.filename,
-            },
-        });
-
-        console.log({
-            "req.file": req.file,
-            "req.body": req.body,
-            "req.user": req.user,
-        });
-
-        return `http://localhost:3069/images/${req.file.filename}`;
-    },
-
     async avatarCloud(req) {
         if (!req.file) {
-            throw new BadRequestException("Thiếu file");
+            throw new BadRequestException("Thiếu file upload");
         }
 
-        // đảm bảo 1 user chỉ có 1 tấm hình avatar
-        if (req.user.avatar) {
-            // xoá local
-            // win: \\
-            // mac: //
-            const oldFilePath = path.join("public/images/", req.user.avatar);
-            if (fs.existsSync(oldFilePath)) {
-                fs.unlinkSync(oldFilePath);
-            }
-
-            // xoá cloud
-            cloudinary.uploader.destroy(req.user.avatar);
-        }
-
-        const uploadResult = await new Promise((resolve, reject) => {
-            cloudinary.uploader
-                .upload_stream({ folder: "node_54" }, (error, uploadResult) => {
-                    if (error) {
-                        return reject(error);
-                    }
-                    return resolve(uploadResult);
-                })
-                .end(req.file.buffer);
-        });
+        const avatarUrl = req.file.path; // URL do Cloudinary trả về thông qua multer-storage-cloudinary
 
         await prisma.users.update({
             where: {
                 id: req.user.id,
             },
             data: {
-                avatar: uploadResult.public_id,
+                avatar_url: avatarUrl,
             },
         });
 
-        console.log({
-            "req.file": req.file,
-            "req.body": req.body,
-            "req.user": req.user,
-            "uploadResult": uploadResult,
-        });
-
-        return uploadResult.secure_url;
+        return { avatar_url: avatarUrl };
     },
 };

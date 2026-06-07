@@ -4,7 +4,13 @@ import { authService } from "../services/auth.service.js";
 export const authController = {
     async register(req, res, next) {
         const result = await authService.register(req);
-        const response = responseSuccess(result, `register auth successfully`);
+        const response = responseSuccess(result, `Vui lòng kiểm tra email để nhận mã OTP.`);
+        res.status(response.statusCode).json(response);
+    },
+
+    async verifyOtp(req, res, next) {
+        const result = await authService.verifyOtp(req);
+        const response = responseSuccess(result, `Xác thực email thành công.`);
         res.status(response.statusCode).json(response);
     },
 
@@ -36,12 +42,15 @@ export const authController = {
         res.status(response.statusCode).json(response);
     },
 
-    async googleCallback(req, res, next) {
-        console.log(req.user);
-        res.cookie("accessToken", req.user.accessToken);
-        res.cookie("refreshToken", req.user.refreshToken);
-
-        res.redirect("http://localhost:3000/login-callback");
+    async requestChangePassword(req, res, next) {
+        const result = await authService.requestChangePassword(req);
+        const response = responseSuccess(result, `Mã OTP xác thực đã được gửi đến email của bạn.`);
+        res.status(response.statusCode).json(response);
     },
-};
 
+    async verifyChangePassword(req, res, next) {
+        const result = await authService.verifyChangePassword(req);
+        const response = responseSuccess(result, `Đổi mật khẩu thành công.`);
+        res.status(response.statusCode).json(response);
+    }
+};
