@@ -37,6 +37,7 @@ function App() {
   const [calcStep, setCalcStep] = useState(1); // persist wizard step across workspace navigation
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [workspaceError, setWorkspaceError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const loadCurrentUser = async () => {
     try {
@@ -166,7 +167,11 @@ function App() {
         <Header 
           currentScreen={currentScreen} 
           onNavigate={setCurrentScreen} 
-          activeProjectName={activeProject?.name} 
+          activeProjectName={activeProject?.name}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          projects={projects}
+          onSelectProject={handleProjectSelected}
         />
         
         <div className="flex-1 overflow-y-auto p-8" id="screen-container">

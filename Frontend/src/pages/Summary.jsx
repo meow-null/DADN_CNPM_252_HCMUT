@@ -214,7 +214,7 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
               <span className="w-2 h-6 bg-primary rounded"></span>
-              <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">6. THIẾT KẾ TRỤC (MÔ ĐUN D)</h3>
+              <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">6. THIẾT KẾ TRỤC</h3>
             </div>
             <table className="w-full text-left">
               <thead className="text-[11px] uppercase text-slate-400 font-bold bg-white">

@@ -44,6 +44,12 @@ export default function AuthPage({ onLoginSuccess }) {
     e.preventDefault();
     setErrorMessage('');
 
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{4,20}$/;
+    if (!passwordRegex.test(registerForm.password)) {
+      setErrorMessage('Mật khẩu từ 4-20 ký tự, phải có ít nhất 1 số, 1 chữ thường, 1 chữ hoa, và 1 ký tự đặc biệt.');
+      return;
+    }
+
     if (registerForm.password !== registerForm.confirmPassword) {
       setErrorMessage('Mật khẩu xác nhận không khớp.');
       return;
@@ -75,7 +81,7 @@ export default function AuthPage({ onLoginSuccess }) {
             <span className="font-bold text-xl tracking-tight text-slate-800">Thiết kế Dẫn động</span>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <a className="hover:text-teal-600 transition-colors" href="#">Trang chủ</a>
+            <button className="hover:text-teal-600 transition-colors" onClick={() => setIsLogin(true)}>Trang chủ</button>
             <div className="h-4 w-px bg-gray-300"></div>
             <button className="hover:text-teal-600 transition-colors" onClick={() => setIsLogin(true)}>Đăng nhập</button>
             <button className="text-teal-600 font-semibold" onClick={() => setIsLogin(false)}>Đăng ký</button>
@@ -144,9 +150,10 @@ export default function AuthPage({ onLoginSuccess }) {
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Họ và tên</label>
                   <input
                     required
+                    maxLength={30}
                     className="w-full px-4 py-3 rounded-xl border border-teal-100 bg-teal-50/30 outline-none"
                     type="text"
-                    placeholder="Nhập họ tên"
+                    placeholder="Nhập họ tên (tối đa 30 ký tự)"
                     value={registerForm.name}
                     onChange={(e) => setRegisterForm((prev) => ({ ...prev, name: e.target.value }))}
                   />
@@ -166,9 +173,11 @@ export default function AuthPage({ onLoginSuccess }) {
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Mật khẩu</label>
                   <input
                     required
+                    minLength={4}
+                    maxLength={20}
                     className="w-full px-4 py-3 rounded-xl border border-teal-100 bg-teal-50/30 outline-none"
                     type="password"
-                    placeholder="Nhập mật khẩu"
+                    placeholder="Nhập mật khẩu (tối thiểu 4 ký tự)"
                     value={registerForm.password}
                     onChange={(e) => setRegisterForm((prev) => ({ ...prev, password: e.target.value }))}
                   />
@@ -177,6 +186,8 @@ export default function AuthPage({ onLoginSuccess }) {
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Xác nhận mật khẩu</label>
                   <input
                     required
+                    minLength={4}
+                    maxLength={20}
                     className="w-full px-4 py-3 rounded-xl border border-teal-100 bg-teal-50/30 outline-none"
                     type="password"
                     placeholder="Nhập lại mật khẩu"
