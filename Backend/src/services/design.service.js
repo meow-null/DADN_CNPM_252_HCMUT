@@ -580,7 +580,7 @@ const designService = {
       T_brt,
       n2,
       u2,
-      T_brx: T_x,
+      T_x,
       ux
     };
 
