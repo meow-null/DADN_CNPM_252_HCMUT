@@ -199,7 +199,8 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  selected_material_id: 'selected_material_id'
 };
 
 exports.Prisma.UsersScalarFieldEnum = {

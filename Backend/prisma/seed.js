@@ -26,6 +26,30 @@ const readCSV = (fileName) => {
 };
 
 async function main() {
+  console.log("🧹 Bắt đầu dọn dẹp database cũ...");
+  try {
+    // Gỡ liên kết motor trong projects trước để tránh vi phạm khóa ngoại
+    await prisma.projects.updateMany({
+      data: { selected_motor_id: null }
+    });
+
+    await prisma.kx_ksigma_coefficients.deleteMany({});
+    await prisma.shaft_allowable_stress.deleteMany({});
+    await prisma.motors.deleteMany({});
+    await prisma.bearings.deleteMany({});
+    await prisma.chains.deleteMany({});
+    await prisma.key_dimensions.deleteMany({});
+    await prisma.standard_key_lengths.deleteMany({});
+    await prisma.standard_shaft_diameters.deleteMany({});
+    await prisma.standard_center_distances.deleteMany({});
+    await prisma.standard_modules.deleteMany({});
+    await prisma.material_grades.deleteMany({});
+    console.log("✅ Dọn dẹp xong database!");
+  } catch (err) {
+    console.error("❌ Lỗi dọn dẹp:", err);
+    throw err;
+  }
+
   console.log("🚀 Bắt đầu Import dữ liệu từ CSV...");
 
   // 1. Material Grades
