@@ -47,7 +47,7 @@ app.use(appError);
 
 const httpServer = initSocket(app);
 
-const PORT = 3069;
+const PORT = process.env.PORT || 3070;
 const server = httpServer.listen(PORT, () => {
     console.log(`Server online at port: ${PORT}`);
 });

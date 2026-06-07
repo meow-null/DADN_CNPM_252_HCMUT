@@ -8,7 +8,7 @@
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "npx kill-port 3069 && nodemon server.js",
+        "dev": "npx kill-port 3070 && nodemon server.js",
         "start": "node server.js",
         "prisma": "npx prisma db pull && npx prisma generate"
     },

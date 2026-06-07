@@ -210,3 +210,36 @@ Nâng cấp Trực quan Hóa Khắc phục lỗi: Chẩn đoán sự cố chi ti
 ### 4. Tối ưu hóa UI Modal (UX Simplification & Space Clean-up)
 * **Sửa gì:** Loại bỏ bảng kiểm định cơ học trùng lặp tại modal để tránh làm dài modal gây cuộn che khuất các ô nhập liệu đầu vào. Trạng thái Đạt/Lỗi đã được hiển thị đầy đủ và trực quan qua 6 nút Tab status (M.A → M.F) ở đầu modal.
 * **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.9 (07/06)
+Hợp nhất nhánh Local Premium vào nhánh GitHub chính & Tích hợp tính năng Báo cáo (Reports)
+
+### 1. Hợp nhất giao diện Premium từ bản Local vào dự án GitHub
+* **Sửa gì:** Tiến hành merge toàn bộ giao diện cao cấp (Dark Mode, Glassmorphism, Gradient) từ nhánh phát triển Local vào dự án chính trên GitHub bằng kỹ thuật `git merge` qua local remote. Giải quyết xung đột duy nhất phát sinh tại Sidebar.jsx (giữ lại giao diện tối màu Premium).
+* **Ở file nào:**
+  - `Frontend/src/components/Sidebar.jsx`
+  - `Frontend/src/components/Header.jsx`
+  - `Frontend/src/index.css`
+  - `Frontend/src/pages/Calculations.jsx`
+  - `Frontend/src/pages/UC05Detail.jsx`
+  - `Backend/src/services/design.service.js`
+  - `Backend/src/services/input.service.js`
+  - `Backend/src/routers/root.router.js`
+  - `Backend/src/controllers/design.controller.js`
+
+### 2. Tích hợp Hiển thị 3 Trục dạng Sub-tab (Modules D, E, F)
+* **Sửa gì:** Cập nhật giao diện UC05Detail để dung hòa giữa bảng tóm tắt 3 trục (I, II, III) và các bảng thông số chi tiết từng trục. Thiết kế dạng **Sub-tabs** (Tổng quan / Trục I / Trục II / Trục III) bên trong mỗi Module D, E, F.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 3. Đồng bộ trường dữ liệu vật liệu (selected_material_id)
+* **Sửa gì:** Tích hợp lại trường `selected_material_id` vào toàn bộ service và endpoint CRUD dự án, bao gồm `create`, `findAll`, `findOne` và `update`. Bổ sung route lấy danh sách vật liệu `GET /materials` trực tiếp phục vụ tính năng gợi ý chỉnh sửa vật liệu trong Modal Khắc phục nhanh.
+* **Ở file nào:** `Backend/src/services/input.service.js`, `Backend/src/routers/root.router.js`
+
+### 4. Hợp nhất tính năng Báo cáo — Reports (từ teammate push)
+* **Sửa gì:** Tích hợp tính năng xuất Báo cáo PDF được bạn đồng đội đẩy lên GitHub vào cùng dự án. Toàn bộ API (`report.controller.js`, `report.service.js`, `report.router.js`) và giao diện trang `Reports.jsx` được gộp vào nhánh chính mà không làm mất bất kỳ tính năng Premium nào của nhánh Local.
+* **Ở file nào:** `Backend/src/controllers/report.controller.js`, `Backend/src/services/report.service.js`, `Backend/src/routers/report.router.js`, `Frontend/src/pages/Reports.jsx`
+
+### 5. Cập nhật Database Schema & Prisma Client
+* **Sửa gì:** Hợp nhất `schema.prisma` với trường `selected_material_id` và khoá ngoại liên kết tới bảng `material_grades`. Chạy lại `npx prisma db push` để đồng bộ cấu trúc bảng MySQL và `npx prisma generate` để cập nhật Prisma Client.
+* **Ở file nào:** `Backend/prisma/schema.prisma`
