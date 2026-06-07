@@ -120,7 +120,7 @@ export default function Sidebar({ currentScreen, onNavigate, onLogout, userName,
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0 relative z-10">
         <div className="p-6 border-b border-slate-100 flex items-center gap-3">
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png" alt="Logo HCMUT" className="h-10 w-10 object-contain" />
-          <span className="font-bold text-lg tracking-tight text-primary-dark whitespace-nowrap">Thiết kế dẫn động</span>
+          <span className="font-bold text-lg tracking-tight text-primary-dark whitespace-nowrap">BK-Gear</span>
         </div>
         
         <nav className="flex-1 p-4 space-y-2">

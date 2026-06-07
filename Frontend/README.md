@@ -1,4 +1,4 @@
-# ⚙️ Hệ thống Thiết kế Dẫn động (Frontend UI)
+# ⚙️ Hệ thống BK-Gear (Frontend UI)
 
 Phân hệ Frontend (Giao diện người dùng) cho Hệ thống tính toán kỹ thuật và thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn trụ, bộ truyền xích ngoài, thiết kế trục, chọn động cơ, chọn ổ lăn và then. Được xây dựng để phục vụ dự án môn học Đồ Án Chuyên Ngành.
 

@@ -6,6 +6,7 @@ import kinematicsRouter from './kinematics.router.js';
 import motorRouter from "./motor.router.js";
 import designRouter from "./design.router.js";
 import materialRouter from "./material.router.js";
+import reportRouter from "./report.router.js";
 
 const rootRouter = express.Router()
 rootRouter.use("/projects", inputRouter);
@@ -15,6 +16,7 @@ rootRouter.use("/projects", kinematicsRouter);
 rootRouter.use("/motors", motorRouter);
 rootRouter.use("/projects/:projectId/motors", motorRouter);
 rootRouter.use("/projects/:projectId/design", designRouter);
+rootRouter.use("/projects/:projectId/report", reportRouter);
 rootRouter.use("/materials", materialRouter);
 
 export default rootRouter

@@ -45,8 +45,14 @@ mysql -u root -p dadn_252 < DADN_252.sql
 Neu ban thay doi schema trong Backend/prisma/schema.prisma thi chay lai trong thu muc Backend:
 
 ```bash
-npm run prisma
+npx prisma generate
+npx prisma db push
 ```
+
+*Lưu ý về Prisma:* 
+- `npx prisma generate`: Dùng để cập nhật lại Prisma Client trong code Node.js mỗi khi bạn sửa file schema.
+- `npx prisma db push`: Dùng để đẩy cấu trúc bảng (schema) từ file lên Database (thường dùng ở môi trường dev).
+- `npx prisma studio`: Mở giao diện web tại `localhost:5555` để xem và chỉnh sửa dữ liệu trực tiếp trong Database.
 
 Sau do nap du lieu tra cuu tu CSV bang seed:
 
@@ -69,11 +75,15 @@ CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
 BREVO_SMTP_USER="your_brevo_smtp_user"
 BREVO_SENDER_EMAIL="your_brevo_sender_email"
 BREVO_SMTP_PASS="your_brevo_smtp_pass"
+
+# Cấu hình AI Local (LM Studio) để tự động viết báo cáo
+LM_STUDIO_URL="http://localhost:1234/v1/chat/completions"
 ```
 
 Luu y:
 
 - Neu DB khac host/port/user/password thi sua DATABASE_URL tuong ung.
+- Để sử dụng tính năng AI sinh báo cáo, bạn cần mở phần mềm **LM Studio**, tải một model ngôn ngữ (ví dụ: Gemma) và bật tính năng **Local Server** (thường chạy ở port 1234). Đảm bảo URL trong `.env` khớp với URL mà LM Studio cung cấp.
 
 ## 5. Cai dat dependencies
 

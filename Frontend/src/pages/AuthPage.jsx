@@ -110,7 +110,7 @@ export default function AuthPage({ onLoginSuccess }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png" alt="Logo HCMUT" className="h-10 w-10 object-contain" />
-            <span className="font-bold text-xl tracking-tight text-slate-800">Thiết kế Dẫn động</span>
+            <span className="font-bold text-xl tracking-tight text-slate-800">BK-Gear</span>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <button className="hover:text-teal-600 transition-colors" onClick={() => setIsLogin(true)}>Trang chủ</button>
@@ -128,8 +128,8 @@ export default function AuthPage({ onLoginSuccess }) {
             <div className="lg:w-1/2 bg-technical-blueprint relative flex flex-col justify-center px-12 lg:px-24 py-20 text-white overflow-hidden">
               <div className="blueprint-overlay"></div>
               <div className="relative z-10 max-w-lg">
-                <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">Công cụ chuyên nghiệp cho kỹ sư cơ khí</h1>
-                <p className="text-slate-300 text-lg mb-10 leading-relaxed">Nền tảng thiết kế và tính toán hộp giảm tốc, thùng trộn với độ chính xác cao.</p>
+                <h1 className="text-4xl lg:text-5xl font-extrabold mb-6" style={{ lineHeight: '1.2' }}>Công cụ thiết kế hệ thống dẫn động thùng trộn</h1>
+                <p className="text-slate-300 text-lg mb-10 leading-relaxed">Nền tảng thiết kế và tính toán với độ chính xác cao.</p>
               </div>
             </div>
 
