@@ -446,9 +446,12 @@ ACCESS_TOKEN_SECRET=your_access_token_secret_here
 REFRESH_TOKEN_SECRET=your_refresh_token_secret_here
 
 # Cloudinary (Upload ảnh)
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
+
+# Brevo (Gửi Email)
+BREVO_SMTP_USER="your_brevo_smtp_user"
+BREVO_SENDER_EMAIL="your_brevo_sender_email"
+BREVO_SMTP_PASS="your_brevo_smtp_pass"
 ```
 
 ---

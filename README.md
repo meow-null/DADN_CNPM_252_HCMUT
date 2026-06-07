@@ -63,6 +63,12 @@ Tao file Backend/.env voi noi dung mau:
 DATABASE_URL="mysql://root:your_password@localhost:3306/dadn_252"
 ACCESS_TOKEN_SECRET="your_access_secret"
 REFRESH_TOKEN_SECRET="your_refresh_secret"
+
+CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
+
+BREVO_SMTP_USER="your_brevo_smtp_user"
+BREVO_SENDER_EMAIL="your_brevo_sender_email"
+BREVO_SMTP_PASS="your_brevo_smtp_pass"
 ```
 
 Luu y:
