@@ -1472,89 +1472,89 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                 )}
 
                 {/* Live suggestion block */}
-                {(!isCurrentTargetOk && !isLiveCalculating) ? (() => {
-                  const suggs = correctionTarget ? getSuggestionImpact(correctionTarget, latestCalcRef?.designResult || results) : [];
-                  const hasSuggestion = suggs.length > 0;
-                  const recText = correctionTarget ? getDetailedDiagnostic(correctionTarget, latestCalcRef?.designResult || results)?.solution : null;
+                {!isLiveCalculating && (() => {
+                  if (correctionTarget) {
+                    // Specific module correction target (A, B, C, D, E, F)
+                    if (isCurrentTargetOk) return null; // If already OK, do not show specific suggestions anymore
 
-                  if (!recText) return null;
+                    const suggs = getSuggestionImpact(correctionTarget, latestCalcRef?.designResult || results);
+                    const hasSuggestion = suggs.length > 0;
+                    const diag = getDetailedDiagnostic(correctionTarget, latestCalcRef?.designResult || results);
+                    const recText = diag?.solution;
+                    if (!recText || recText === 'Không cần thay đổi thông số.') return null;
 
-                  return (
-                    <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
-                      <div className="space-y-1.5 flex-1">
-                        <p className="text-xs font-bold text-indigo-700 flex items-center gap-1.5">
-                          <span>📌 Gợi ý tối ưu Module {correctionTarget}:</span>
-                        </p>
-                        <p className="text-[11px] text-indigo-600 font-semibold leading-relaxed">{recText}</p>
-                        
-                        {/* Dynamic impact preview */}
-                        {hasSuggestion && (() => {
-                          const impacts = getSuggestionImpact(correctionTarget, latestCalcRef?.designResult || results);
-                          if (impacts.length === 0) return null;
-                          return (
+                    return (
+                      <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
+                        <div className="space-y-1.5 flex-1">
+                          <p className="text-xs font-bold text-indigo-700 flex items-center gap-1.5">
+                            <span>📌 Gợi ý tối ưu Module {correctionTarget}:</span>
+                          </p>
+                          <p className="text-[11px] text-indigo-600 font-semibold leading-relaxed">{recText}</p>
+                          
+                          {/* Dynamic impact preview */}
+                          {hasSuggestion && (
                             <div className="mt-2 pt-2 border-t border-indigo-100/50 text-[10px] text-indigo-900 space-y-1 font-bold">
                               <p className="text-indigo-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Áp dụng":</p>
                               <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-indigo-700">
-                                {impacts.map((imp, idx) => (
+                                {suggs.map((imp, idx) => (
                                   <li key={idx}>
                                     {imp}
                                   </li>
                                 ))}
                               </ul>
                             </div>
-                          );
-                        })()}
+                          )}
+                        </div>
+                        {hasSuggestion && (
+                          <button
+                            type="button"
+                            onClick={handleApplySuggestion}
+                            className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 shrink-0 self-end md:self-center"
+                          >
+                            ⚡ Áp dụng
+                          </button>
+                        )}
                       </div>
-                      {hasSuggestion && (
+                    );
+                  } else {
+                    // General "Chỉnh sửa nhanh" modal (correctionTarget is null/undefined)
+                    const hasAnyErrors = latestCalcRef?.designResult ? !liveCheckPassed : !isAllOk;
+                    if (!hasAnyErrors) return null; // Hide suggestions if everything is green
+
+                    const impacts = getAllSuggestionsImpact(latestCalcRef?.designResult || results);
+                    if (impacts.length === 0) return null;
+
+                    return (
+                      <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
+                        <div className="space-y-1.5 flex-1">
+                          <p className="text-xs font-bold text-blue-700 flex items-center gap-1.5">
+                            <span>⚡ Tự động tối ưu hóa toàn bộ hệ thống:</span>
+                          </p>
+                          <p className="text-[11px] text-blue-600 font-semibold leading-relaxed">
+                            Áp dụng đồng thời tất cả gợi ý tối ưu (vật liệu, mô-đun răng, then, đường kính trục) để sửa đổi đồng bộ toàn hệ thống.
+                          </p>
+
+                          <div className="mt-2 pt-2 border-t border-blue-100/50 text-[10px] text-blue-900 space-y-1 font-bold">
+                            <p className="text-blue-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Tối ưu tất cả":</p>
+                            <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-blue-700">
+                              {impacts.map((imp, idx) => (
+                                <li key={idx}>
+                                  {imp}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
                         <button
                           type="button"
-                          onClick={handleApplySuggestion}
-                          className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 shrink-0 self-end md:self-center"
+                          onClick={handleAutoFixAll}
+                          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md shrink-0 self-end md:self-center"
                         >
-                          ⚡ Áp dụng
+                          ⚡ Tối ưu tất cả
                         </button>
-                      )}
-                    </div>
-                  );
-                })() : (() => {
-                  const hasAnyErrors = latestCalcRef?.designResult ? !liveCheckPassed : !isAllOk;
-                  if (!hasAnyErrors) return null;
-                  
-                  return (
-                    <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
-                      <div className="space-y-1.5 flex-1">
-                        <p className="text-xs font-bold text-blue-700 flex items-center gap-1.5">
-                          <span>⚡ Tự động tối ưu hóa toàn bộ hệ thống:</span>
-                        </p>
-                        <p className="text-[11px] text-blue-600 font-semibold leading-relaxed">Áp dụng đồng thời tất cả gợi ý tối ưu (vật liệu, mô-đun răng, then, đường kính trục) để sửa đổi đồng bộ toàn hệ thống.</p>
-
-                        {/* Dynamic impact preview for auto fix all */}
-                        {(() => {
-                          const impacts = getAllSuggestionsImpact(latestCalcRef?.designResult || results);
-                          if (impacts.length === 0) return null;
-                          return (
-                            <div className="mt-2 pt-2 border-t border-blue-100/50 text-[10px] text-blue-900 space-y-1 font-bold">
-                              <p className="text-blue-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Tối ưu tất cả":</p>
-                              <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-blue-700">
-                                {impacts.map((imp, idx) => (
-                                  <li key={idx}>
-                                    {imp}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          );
-                        })()}
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleAutoFixAll}
-                        className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md shrink-0 self-end md:self-center"
-                      >
-                        ⚡ Tối ưu tất cả
-                      </button>
-                    </div>
-                  );
+                    );
+                  }
                 })()}
 
                 {/* Warnings inside modal */}

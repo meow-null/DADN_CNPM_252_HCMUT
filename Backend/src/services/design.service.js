@@ -57,9 +57,9 @@ const calculateModuleA = async (P_x, n3, u_x, L_h, P_input) => {
         orderBy: { P_allow: 'desc' }
       });
       const maxPAllow = chain ? Number(chain.P_allow) : 27.0;
-      const P_x_max = (maxPAllow * K_x_arr[3] * k_z * k_n) / k; // Giả sử dùng 4 dãy
+      const P_x_max = (maxPAllow * K_x_arr[3]) / (k * k_z * k_n); // Giả sử dùng 4 dãy
       const P_input_max = P_input ? P_input * (P_x_max / P_x) : 12.0;
-      recommended_P = Math.floor(P_input_max * 10) / 10;
+      recommended_P = Math.max(0.1, Math.min(55.0, Math.floor(P_input_max * 10) / 10));
 
       warning = `Không tìm thấy xích tiêu chuẩn thỏa mãn tải Pt = ${Pt_require.toFixed(2)} kW. Khuyến nghị: Giảm công suất đầu vào P xuống dưới ${recommended_P} kW.`;
       recommendation = warning;
@@ -96,7 +96,7 @@ const calculateModuleA = async (P_x, n3, u_x, L_h, P_input) => {
       const Ft_max_s = ((Q_kN * 1000) / (chain.s_allow || 8.5) - F0 - Fv) / 1.2;
       const P_x_max = (Ft_max_s * v_ms) / 1000;
       const P_input_max = P_input * (P_x_max / P_x);
-      recommended_P = Math.floor(P_input_max * 10) / 10;
+      recommended_P = Math.max(0.1, Math.min(55.0, Math.floor(P_input_max * 10) / 10));
       warning = `Chi tiết [Xích] không đạt điều kiện bền hệ số an toàn. Khuyến nghị: Giảm công suất thiết kế P xuống dưới ${recommended_P} kW.`;
       recommendation = warning;
     }
@@ -113,7 +113,7 @@ const calculateModuleA = async (P_x, n3, u_x, L_h, P_input) => {
       const Ft_max_H = ((Math.pow(600 / 0.47, 2) * A_area) / 0.44 - Fvd) / 1.2;
       const P_x_max = (Ft_max_H * v_ms) / 1000;
       const P_input_max = P_input * (P_x_max / P_x);
-      recommended_P = Math.floor(P_input_max * 10) / 10;
+      recommended_P = Math.max(0.1, Math.min(55.0, Math.floor(P_input_max * 10) / 10));
       warning = `Chi tiết [Xích] không đạt điều kiện bền tiếp xúc. Khuyến nghị: Giảm công suất thiết kế P xuống dưới ${recommended_P} kW.`;
       recommendation = warning;
     }
@@ -524,6 +524,7 @@ const calculateModuleF = async (d_tc, F_rA, F_rB, F_a_external, n_shaft, L_h) =>
       if (is_fallback_max) {
         final_warning = `Ổ lăn lớn nhất hiện có (${bearing_final.code}) không đủ khả năng chịu tải (Cd = ${C_d.toFixed(2)} kN > C = ${C_catalog} kN).`;
         recommendation = `Khuyến nghị: Hãy giảm công suất P hoặc tăng tốc độ vòng quay n_ct để giảm tải trọng động lên ổ.`;
+        recommended_d_tc = Math.ceil(d_tc * 1.1);
       } else {
         const rec_bearing = await prisma.bearings.findFirst({
           where: { 
@@ -535,7 +536,7 @@ const calculateModuleF = async (d_tc, F_rA, F_rB, F_a_external, n_shaft, L_h) =>
           },
           orderBy: [{ inner_d: 'asc' }, { C: 'asc' }]
         });
-        recommended_d_tc = rec_bearing ? rec_bearing.inner_d : Math.ceil(d_tc * 1.2);
+        recommended_d_tc = rec_bearing ? Number(rec_bearing.inner_d) : Math.ceil(d_tc * 1.1);
         recommendation = `Khuyến nghị: Hãy nhập (ghi đè) Đường kính trục d_tc lớn hơn mức hiện tại (${d_tc} mm) thành d_tc = ${recommended_d_tc} mm để chọn ổ lăn lớn hơn chịu tải C_d = ${C_d.toFixed(2)} kN.`;
       }
     }
