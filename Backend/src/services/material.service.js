@@ -7,7 +7,8 @@ export const materialService = {
         orderBy: { id: 'asc' }
       });
       return grades.map(g => ({
-        name: g.grade_name,
+        id: g.id,
+        grade_name: g.grade_name,
         HB: g.HB,
         sigma_b: g.sigma_b,
         sigma_ch: g.sigma_ch,

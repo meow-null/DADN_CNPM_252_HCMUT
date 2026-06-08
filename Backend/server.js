@@ -7,8 +7,26 @@ import { logApi } from "./src/common/middlewares/log-api.middleware.js";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocument } from "./src/common/swagger/init.swagger.js";
 import { initSocket } from "./src/common/socket/init.socket.js";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import { metricsEndpoint } from "./src/common/helpers/metrics.helper.js";
+import { initLoginGooglePassport } from "./src/common/passport/login-google.passport.js";
 
 const app = express();
+
+// Security: Helmet
+app.use(helmet());
+
+// Security: Rate Limit (100000 requests per 15 minutes for all routes in dev)
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100000,
+    message: "Quá nhiều request từ IP này, vui lòng thử lại sau 15 phút.",
+});
+app.use(limiter);
+
+// System Metrics for Grafana
+app.get("/metrics", metricsEndpoint);
 
 // xử lý cors bằng cơm
 // app.use((req, res, next) => {
@@ -19,15 +37,19 @@ const app = express();
 //     res.setHeader("access-control-allow-origin", "*")
 //     next();
 // });
-app.use(cors({
+app.use(cors({ 
     origin: [
-        "http://localhost:3000",
-        "http://localhost:5173",
+        "http://localhost:3000", 
+        "http://localhost:5173", 
         "http://localhost:5174",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174"
-    ],
-    credentials: true
+        "http://localhost:5175",
+        "http://localhost:5176",
+        "http://127.0.0.1:5173", 
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:5176"
+    ], 
+    credentials: true 
 }));
 
 
@@ -36,6 +58,7 @@ app.use(express.json());
 // để lấy được cookie (đảm bảo trước "/api")
 app.use(cookieParser());
 app.use(logApi("product"));
+initLoginGooglePassport();
 app.use(express.static("public"));
 
 // swwagger
@@ -47,7 +70,7 @@ app.use(appError);
 
 const httpServer = initSocket(app);
 
-const PORT = 3069;
+const PORT = process.env.PORT || 3069;
 const server = httpServer.listen(PORT, () => {
     console.log(`Server online at port: ${PORT}`);
 });
@@ -65,3 +88,4 @@ server.requestTimeout = 0;
 // npx prisma generate: tạo ra object CLIENT để sử dụng trong code (để dev)
 
 // EXPRESSS verssion <5: phải bắt try/catch trong controller
+

@@ -40,7 +40,6 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedMotor, setSelectedMotor] = useState(null);
 
-  // ----------------------------------
 
   // ----------------------------------
 
@@ -129,31 +128,31 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Navigation Wizard - Đã sửa: Cho phép nhấn quay lại các bước cũ */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between px-10">
-        <button
-          onClick={() => setStep(1)}
-          className={`${getNavClass(1)} ${step > 1 ? 'cursor-pointer hover:text-primary' : ''}`}
+      <div className="bg-white px-8 py-5 rounded-2xl border border-slate-200/60 shadow-sm flex items-center justify-between font-heading">
+        <button 
+          onClick={() => setStep(1)} 
+          className={`${getNavClass(1)} ${step > 1 ? 'cursor-pointer hover:text-blue-600' : ''}`}
           disabled={step === 1}
         >
           1. Nhập liệu
         </button>
-        <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button
-          onClick={() => setStep(2)}
-          className={`${getNavClass(2)} ${step > 2 ? 'cursor-pointer hover:text-primary' : ''}`}
+        <div className="h-px bg-slate-100 flex-1 mx-6"></div>
+        <button 
+          onClick={() => setStep(2)} 
+          className={`${getNavClass(2)} ${step > 2 ? 'cursor-pointer hover:text-blue-600' : ''}`}
           disabled={step <= 2}
         >
           2. Động học
         </button>
-        <div className="h-px bg-slate-200 flex-1 mx-4"></div>
-        <button
-          onClick={() => setStep(3)}
-          className={`${getNavClass(3)} ${step > 3 ? 'cursor-pointer hover:text-primary' : ''}`}
+        <div className="h-px bg-slate-100 flex-1 mx-6"></div>
+        <button 
+          onClick={() => setStep(3)} 
+          className={`${getNavClass(3)} ${step > 3 ? 'cursor-pointer hover:text-blue-600' : ''}`}
           disabled={step <= 3}
         >
           3. Chọn Động cơ
         </button>
-        <div className="h-px bg-slate-200 flex-1 mx-4"></div>
+        <div className="h-px bg-slate-100 flex-1 mx-6"></div>
         <button
           onClick={() => setStep(4)}
           className={`${getNavClass(4)} cursor-default`}
@@ -378,8 +377,8 @@ export default function Calculations({ onNavigate, activeProject, onProjectSaved
             kinematicsResult={kinematicsResult}
             onNavigate={onNavigate}
             onGoBack={() => setStep(3)}
-            onKinematicsSaved={onKinematicsSaved}
             onProjectSaved={onProjectSaved}
+            onKinematicsSaved={onKinematicsSaved}
           />
         </div>
       )}

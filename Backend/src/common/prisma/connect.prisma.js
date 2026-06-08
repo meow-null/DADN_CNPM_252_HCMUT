@@ -13,7 +13,7 @@ const adapter = new PrismaMariaDb({
     user: url.username,
     password: url.password,
     database: url.pathname.substring(1),
-    port: url.port, // code mẫu trong doc không có port (LƯU Ý phải thêm port)
+    port: url.port ? Number(url.port) : 3306, // MUST BE NUMBER
     connectionLimit: 5,
 });
 const prisma = new PrismaClient({

@@ -1,0 +1,21 @@
+# Nhật ký Cập nhật - Update 2.0
+
+Bản cập nhật 2.0 tập trung sửa đổi các lỗi liên quan đến thuật toán thiết kế cơ khí chi tiết máy (Module E, F) khi chạy với các trục có đường kính lớn và đồng bộ hóa, sửa lỗi danh mục linh kiện (Catalog) ở Use Case 7.
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Backend (Logic & CSDL)
+- **Backend/src/services/design.service.js**
+  - Sửa hàm `calculateModuleE` (Then): Khi đường kính trục d_tc > 110 mm (vượt quá giới hạn database), hệ thống tự động fallback sử dụng kích thước then lớn nhất hiện có (b=28, h=16, t1=10) thay vì crash báo lỗi 503.
+  - Sửa hàm `calculateModuleE` trả về đúng khóa `t1` và `t2` (thay vì trả về `T_brc: keyDim.t1`), giúp Frontend hiển thị chính xác chiều sâu rãnh then trên giao diện.
+  - Sửa hàm `calculateModuleB` (Bánh răng côn): Recalculate lại thông số hình học `Re_calc` và `b_mm` sau khi lấy được Module tiêu chuẩn `m_e_mm` từ database để đảm bảo tính đồng bộ hình học và chính xác khi tính bền tiếp xúc.
+  - Sửa hàm `calculateModuleF` (Ổ lăn): Bổ sung bộ lọc trạng thái linh kiện `is_active: true, isDeleted: false` khi tra cứu ổ lăn côn từ database.
+  - Sửa hàm `calculateModuleF` (Ổ lăn): Khắc phục lỗi feedback loop bằng cách sử dụng ổ lăn lớn nhất hiện có làm fallback khi trục lớn hơn 60mm. Nếu tải trọng động thực tế đạt chuẩn (C >= C_d), hệ thống sẽ đánh dấu đạt chuẩn (check_bearing_pass = true) và xóa cảnh báo, ngăn chặn việc đề xuất tăng kích thước trục vô hạn gây crash then.
+- **Backend/prisma/seed.js**
+  - Cập nhật logic import động cơ: Tự động chia hiệu suất (efficiency_pct từ file CSV) cho 100 để quy đổi về hệ số thập phân 0.0 - 1.0, đồng bộ dữ liệu với Zod Schema validation (z.number().min(0).max(1)) ở Backend.
+- **Backend/prisma/data/shaft_allowable_stress.csv**
+  - Đồng bộ hóa độ bền sigma_b của Thép 45 từ 600 thành 750 để khớp với mác thép tôi cải thiện trong bảng material_grades.csv, giúp sửa lỗi tra cứu ứng suất cho phép của trục trả về rỗng.
+
+### 2. Frontend (Giao diện)
+- **Frontend/src/pages/UC05Detail.jsx**
+  - Cập nhật giao diện kiểm nghiệm then hiển thị đúng các giá trị chiều sâu rãnh then `t1` và `t2` nhờ đồng bộ key trả về từ API.

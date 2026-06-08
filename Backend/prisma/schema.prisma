@@ -25,6 +25,8 @@ model bearings {
   Y         Decimal?  @db.Decimal(10, 4)
   alpha_deg Decimal?  @db.Decimal(10, 2)
   e         Decimal?  @db.Decimal(10, 4)
+
+  @@unique([inner_d, outer_D, width_B, type], map: "inner_d_unique")
 }
 
 model chains {
@@ -88,31 +90,34 @@ model projects {
   deletedAt               DateTime?      @db.Timestamp(0)
   createdAt               DateTime?      @default(now()) @db.Timestamp(0)
   updatedAt               DateTime?      @default(now()) @db.Timestamp(0)
+  selected_material_id    Int?
   users                   users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "projects_ibfk_1")
   motors                  motors?        @relation(fields: [selected_motor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "projects_ibfk_2")
+  material_grade          material_grades? @relation(fields: [selected_material_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "projects_ibfk_3")
 
   @@index([selected_motor_id], map: "idx_projects_motor_id")
+  @@index([selected_material_id], map: "idx_projects_material_id")
   @@index([user_id], map: "idx_projects_user_id")
 }
 
 model users {
-  id                 Int         @id @default(autoincrement())
-  name               String      @db.VarChar(100)
-  email              String      @unique(map: "email") @db.VarChar(150)
-  password           String      @db.VarChar(255)
-  avatar_url         String?     @db.VarChar(500)
-  role               users_role? @default(user)
-  reset_token        String?     @db.VarChar(255)
+  id                  Int         @id @default(autoincrement())
+  name                String      @db.VarChar(100)
+  email               String      @unique(map: "email") @db.VarChar(150)
+  password            String      @db.VarChar(255)
+  avatar_url          String?     @db.VarChar(500)
+  role                users_role? @default(user)
+  reset_token         String?     @db.VarChar(255)
   reset_token_expiry  DateTime?   @db.DateTime(0)
   is_verified         Boolean?    @default(false)
   verify_token        String?     @db.VarChar(255)
   verify_token_expiry DateTime?   @db.DateTime(0)
   deletedBy           Int?        @default(0)
-  isDeleted          Boolean?    @default(false)
-  deletedAt          DateTime?   @db.Timestamp(0)
-  createdAt          DateTime?   @default(now()) @db.Timestamp(0)
-  updatedAt          DateTime?   @default(now()) @db.Timestamp(0)
-  projects           projects[]
+  isDeleted           Boolean?    @default(false)
+  deletedAt           DateTime?   @db.Timestamp(0)
+  createdAt           DateTime?   @default(now()) @db.Timestamp(0)
+  updatedAt           DateTime?   @default(now()) @db.Timestamp(0)
+  projects            projects[]
 }
 
 model material_grades {
@@ -123,6 +128,7 @@ model material_grades {
   sigma_ch   Float
   sigma_Hlim Float
   sigma_Flim Float
+  projects   projects[]
 }
 
 model standard_modules {

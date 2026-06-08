@@ -11,39 +11,34 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
   const kinematics = kinematicsResult?.kinematics;
 
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchPreview = async () => {
+    if (!activeProject?.id) return;
+    setIsGenerating(true);
+    setError(null);
+    try {
+      const response = await fetch(`http://localhost:3069/api/projects/${activeProject.id}/report/preview`, {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      if (data.status === 'success') {
+        setMarkdownContent(data.data.markdown);
+        setHasGenerated(true);
+      } else {
+        setError(data.message || "Lỗi tạo báo cáo");
+      }
+    } catch (err) {
+      setError("Lỗi kết nối khi tạo báo cáo.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchPreview = async () => {
-      if (hasGenerated) return;
-      setIsGenerating(true);
-      try {
-        const response = await fetch(`http://localhost:3069/api/projects/${activeProject.id}/report/preview`, {
-          credentials: 'include'
-        });
-        const data = await response.json();
-        if (isMounted) {
-          if (data.status === 'success') {
-            setMarkdownContent(data.data.markdown);
-            setHasGenerated(true);
-          } else {
-            alert("Lỗi tạo báo cáo: " + data.message);
-          }
-        }
-      } catch (err) {
-        if (isMounted) {
-          alert("Lỗi kết nối khi tạo báo cáo.");
-        }
-      } finally {
-        if (isMounted) setIsGenerating(false);
-      }
-    };
-
     if (activeProject?.id && !hasGenerated) {
       fetchPreview();
     }
-
-    return () => { isMounted = false; };
   }, [activeProject?.id, hasGenerated]);
 
   const handleGeneratePreview = () => {
@@ -159,6 +154,14 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
                   <div className="flex flex-col items-center justify-center h-full space-y-4 py-20 text-slate-500">
                     <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                     <p className="animate-pulse">AI đang tổng hợp và viết báo cáo...</p>
+                  </div>
+                ) : error ? (
+                  <div className="flex flex-col items-center justify-center h-full space-y-4 py-20 text-center">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-red-500 text-2xl font-bold mx-auto">!</div>
+                    <h4 className="text-lg font-bold text-slate-800">Không thể tải bản xem trước báo cáo</h4>
+                    <button onClick={fetchPreview} className="mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition-all shadow-sm w-fit mx-auto">
+                      Thử lại
+                    </button>
                   </div>
                 ) : (
                   <ReactMarkdown>{markdownContent}</ReactMarkdown>

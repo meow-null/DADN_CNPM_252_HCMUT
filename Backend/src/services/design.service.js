@@ -170,6 +170,8 @@ const calculateModuleB = async (T_brc, n1, u1, L_h, mat1, mat2, overrides = {}) 
 
       const modRec = await prisma.standard_modules.findFirst({ where: { value: { gte: m_e_calc } }, orderBy: { value: 'asc' }});
       m_e_mm = modRec ? modRec.value : 2.5;
+      Re_calc = (m_e_mm * z1_gear * Math.sqrt(u1 * u1 + 1)) / 2;
+      b_mm = Math.round(K_be * Re_calc);
     }
     
     const m_tm = m_e_mm * (1 - 0.5 * K_be);
@@ -287,11 +289,11 @@ const calculateModuleD = async (kin, modB, modC, modA, material, overrides = {})
       return rec ? rec.value : Math.ceil(dsb);
     };
 
-    // Áp dụng overrides cho Trục I nếu có
+    // Áp dụng overrides cho Trục I, II, III nếu có
     const d_tc = {
       I: overrides.d_tc_I ? Number(overrides.d_tc_I) : await getDtc(d_sb.I),
-      II: await getDtc(d_sb.II),
-      III: await getDtc(d_sb.III)
+      II: overrides.d_tc_II ? Number(overrides.d_tc_II) : await getDtc(d_sb.II),
+      III: overrides.d_tc_III ? Number(overrides.d_tc_III) : await getDtc(d_sb.III)
     };
 
     // Lấy ứng suất cho phép
@@ -336,20 +338,27 @@ const calculateModuleD = async (kin, modB, modC, modA, material, overrides = {})
     trucII.F_rA = (modB.Ft1_N + modC.Ft2_N) / 2; trucII.F_rB = trucII.F_rA;
     trucIII.F_rA = (modC.Ft2_N + modA.Fr_N) / 2; trucIII.F_rB = trucIII.F_rA;
 
-    const check_fatigue_pass = trucI.s_fatigue >= 1.5;
-    let warning = null;
-    let recommendation = null;
-    let recommended_d_tc = null;
-    if (!check_fatigue_pass) {
-      const required_d_tc = trucI.d_tc * Math.cbrt(1.55 / trucI.s_fatigue);
-      const rec = await prisma.standard_shaft_diameters.findFirst({
-        where: { value: { gte: Math.round(required_d_tc) } },
-        orderBy: { value: 'asc' }
-      });
-      recommended_d_tc = rec ? rec.value : Math.ceil(required_d_tc);
-      warning = 'Chi tiết [Trục] không đạt hệ số an toàn bền mỏi.';
-      recommendation = `Khuyến nghị: Hãy tăng đường kính trục d_tc (Hiện tại: ${trucI.d_tc} mm) lên d_tc = ${recommended_d_tc} mm hoặc chọn vật liệu tốt hơn.`;
-    }
+    const checkShaftFatigue = async (trucObj, keyName) => {
+      const check_fatigue_pass = trucObj.s_fatigue >= 1.5;
+      let warning = null;
+      let recommendation = null;
+      let recommended_d_tc = null;
+      if (!check_fatigue_pass) {
+        const required_d_tc = trucObj.d_tc * Math.cbrt(1.55 / trucObj.s_fatigue);
+        const rec = await prisma.standard_shaft_diameters.findFirst({
+          where: { value: { gte: Math.round(required_d_tc) } },
+          orderBy: { value: 'asc' }
+        });
+        recommended_d_tc = rec ? rec.value : Math.ceil(required_d_tc);
+        warning = `Chi tiết [Trục ${keyName}] không đạt hệ số an toàn bền mỏi.`;
+        recommendation = `Khuyến nghị: Hãy tăng đường kính trục d_tc (Hiện tại: ${trucObj.d_tc} mm) lên d_tc = ${recommended_d_tc} mm hoặc chọn vật liệu tốt hơn.`;
+      }
+      return { check_fatigue_pass, warning, recommendation, recommended_d_tc };
+    };
+
+    const statusI = await checkShaftFatigue(trucI, 'I');
+    const statusII = await checkShaftFatigue(trucII, 'II');
+    const statusIII = await checkShaftFatigue(trucIII, 'III');
 
     return {
       trucI: { 
@@ -359,13 +368,26 @@ const calculateModuleD = async (kin, modB, modC, modA, material, overrides = {})
         F_rA: trucI.F_rA, 
         F_rB: trucI.F_rB, 
         s_fatigue: trucI.s_fatigue,
-        check_fatigue_pass,
-        warning,
-        recommendation,
-        recommended_d_tc
+        ...statusI
       },
-      trucII: { d_sb_mm: d_sb.II, d_tc_mm: [trucII.d_tc], M_j_Nmm: [trucII.M_j], F_rA: trucII.F_rA, F_rB: trucII.F_rB, s_fatigue: trucII.s_fatigue },
-      trucIII: { d_sb_mm: d_sb.III, d_tc_mm: [trucIII.d_tc], M_j_Nmm: [trucIII.M_j], F_rA: trucIII.F_rA, F_rB: trucIII.F_rB, s_fatigue: trucIII.s_fatigue }
+      trucII: { 
+        d_sb_mm: d_sb.II, 
+        d_tc_mm: [trucII.d_tc], 
+        M_j_Nmm: [trucII.M_j], 
+        F_rA: trucII.F_rA, 
+        F_rB: trucII.F_rB, 
+        s_fatigue: trucII.s_fatigue,
+        ...statusII
+      },
+      trucIII: { 
+        d_sb_mm: d_sb.III, 
+        d_tc_mm: [trucIII.d_tc], 
+        M_j_Nmm: [trucIII.M_j], 
+        F_rA: trucIII.F_rA, 
+        F_rB: trucIII.F_rB, 
+        s_fatigue: trucIII.s_fatigue,
+        ...statusIII
+      }
     };
   } catch (error) {
     throw error.status ? error : throwError(503, 'DB_QUERY_FAIL', 'Lỗi Module D.');
@@ -382,6 +404,10 @@ const calculateModuleE = async (d_tc, T_at_pos, l_may, overrides = {}) => {
       keyDim = { b: Number(overrides.key_b), h: Number(overrides.key_h), t1: Number(overrides.key_t1), t2: Number(overrides.key_h) - Number(overrides.key_t1) };
     } else {
       keyDim = await prisma.key_dimensions.findFirst({ where: { d_min: { lte: d_tc }, d_max: { gte: d_tc } }});
+      if (!keyDim && d_tc > 110) {
+        // Hàng quy chuẩn then trong DB chỉ tới d_max = 110. Nếu trục lớn hơn 110, tự động lấy kích thước then lớn nhất (d_max = 110)
+        keyDim = await prisma.key_dimensions.findFirst({ where: { d_max: 110 } });
+      }
     }
     if (!keyDim) throwError(503, 'DB_QUERY_FAIL', 'Không tìm thấy kích thước then tiêu chuẩn.');
 
@@ -415,7 +441,7 @@ const calculateModuleE = async (d_tc, T_at_pos, l_may, overrides = {}) => {
       recommendation = `Khuyến nghị: Hãy ghi đè tăng chiều dài then l (hiện tại: ${l_t_mm} mm) lên l = ${recommended_l} mm.`;
     }
 
-    return { b: keyDim.b, h: keyDim.h, T_brc: keyDim.t1, l_t_mm, sigma_d_MPa, tau_c_MPa, check_key_pass, warning, recommendation, recommended_l };
+    return { b: keyDim.b, h: keyDim.h, t1: keyDim.t1, t2: keyDim.t2, l_t_mm, sigma_d_MPa, tau_c_MPa, check_key_pass, warning, recommendation, recommended_l };
   } catch (error) {
     throw error.status ? error : throwError(503, 'DB_QUERY_FAIL', 'Lỗi Module E.');
   }
@@ -427,21 +453,25 @@ const calculateModuleE = async (d_tc, T_at_pos, l_may, overrides = {}) => {
 const calculateModuleF = async (d_tc, F_rA, F_rB, F_a_external, n_shaft, L_h) => {
   try {
     let bearing_init = await prisma.bearings.findFirst({ 
-      where: { inner_d: { gte: d_tc }, type: 'tapered' }, 
+      where: { inner_d: { gte: d_tc }, type: 'tapered', is_active: true, isDeleted: false }, 
       orderBy: [{ inner_d: 'asc' }, { C: 'asc' }] 
     });
     
     let warning = null;
+    let is_fallback_max = false;
+    
     if (!bearing_init) {
+      // Nếu không tìm thấy ổ lăn nào có inner_d >= d_tc, tự động chọn ổ lăn lớn nhất hiện có trong DB
       bearing_init = await prisma.bearings.findFirst({
-        where: { type: 'tapered' },
+        where: { type: 'tapered', is_active: true, isDeleted: false },
         orderBy: { inner_d: 'desc' }
       });
-      warning = 'Không tìm thấy ổ lăn tiêu chuẩn tương thích với đường kính trục này. Khuyến nghị: Hãy thay đổi đường kính ngõng trục hoặc điều chỉnh thông số động học.';
+      is_fallback_max = true;
+      warning = 'Đường kính trục vượt quá kích thước ổ lăn lớn nhất trong cơ sở dữ liệu. Hệ thống tự động chọn ổ lăn lớn nhất hiện có.';
     }
 
-    const e = bearing_init?.e || 0.35; 
-    const Y = bearing_init?.Y || 1.7;
+    const e = bearing_init?.e ? Number(bearing_init.e) : 0.35; 
+    const Y = bearing_init?.Y ? Number(bearing_init.Y) : 1.7;
 
     const F_sA = 0.83 * e * F_rA; const F_sB = 0.83 * e * F_rB;
     let F_aA, F_aB;
@@ -463,47 +493,59 @@ const calculateModuleF = async (d_tc, F_rA, F_rB, F_a_external, n_shaft, L_h) =>
       return { bearing_code: `N/A (d=${d_tc}mm)`, C_catalog_kN: 0, C_d_kN: C_d, check_bearing_pass: false, warning };
     }
 
-    let bearing_final = await prisma.bearings.findFirst({
-      where: { inner_d: { gte: d_tc }, type: 'tapered', C: { gte: C_d } },
-      orderBy: [{ inner_d: 'asc' }, { C: 'asc' }]
-    });
-
-    if (!bearing_final) {
-      bearing_final = await prisma.bearings.findFirst({
-        where: { inner_d: { gte: d_tc }, type: 'tapered' },
-        orderBy: { C: 'desc' }
-      });
-      if (!warning) warning = 'Không tìm thấy ổ lăn thỏa mãn khả năng tải động C_d.';
-    }
-
-    if (!bearing_final) {
+    let bearing_final;
+    if (is_fallback_max) {
       bearing_final = bearing_init;
-      if (!warning) warning = 'Không tìm thấy ổ lăn tiêu chuẩn tương thích với đường kính trục này.';
+    } else {
+      bearing_final = await prisma.bearings.findFirst({
+        where: { inner_d: { gte: d_tc }, type: 'tapered', C: { gte: C_d }, is_active: true, isDeleted: false },
+        orderBy: [{ inner_d: 'asc' }, { C: 'asc' }]
+      });
+
+      if (!bearing_final) {
+        bearing_final = await prisma.bearings.findFirst({
+          where: { inner_d: { gte: d_tc }, type: 'tapered', is_active: true, isDeleted: false },
+          orderBy: { C: 'desc' }
+        });
+        warning = 'Không tìm thấy ổ lăn tiêu chuẩn thỏa mãn khả năng tải động C_d.';
+      }
     }
 
-    const check_bearing_pass = warning ? false : (bearing_final.C >= C_d);
+    const C_catalog = bearing_final ? Number(bearing_final.C) : 0;
+    // Kiểm nghiệm khả năng tải của ổ lăn
+    const check_bearing_pass = bearing_final ? (C_catalog >= C_d) : false;
+    
+    // Nếu ổ lăn đạt bền tải động, chúng ta xóa warning để không chặn hoàn tất thiết kế
+    let final_warning = check_bearing_pass ? null : warning;
     
     let recommendation = null;
     let recommended_d_tc = null;
     if (!check_bearing_pass) {
-      const rec_bearing = await prisma.bearings.findFirst({
-        where: { 
-          type: 'tapered', 
-          inner_d: { gte: d_tc },
-          C: { gte: C_d } 
-        },
-        orderBy: [{ inner_d: 'asc' }, { C: 'asc' }]
-      });
-      recommended_d_tc = rec_bearing ? rec_bearing.inner_d : Math.ceil(d_tc * 1.2);
-      recommendation = `Khuyến nghị: Hãy nhập (ghi đè) Đường kính trục d_tc lớn hơn mức hiện tại (${d_tc} mm) thành d_tc = ${recommended_d_tc} mm để chọn ổ lăn lớn hơn chịu tải C_d = ${C_d.toFixed(2)} kN.`;
+      if (is_fallback_max) {
+        final_warning = `Ổ lăn lớn nhất hiện có (${bearing_final.code}) không đủ khả năng chịu tải (Cd = ${C_d.toFixed(2)} kN > C = ${C_catalog} kN).`;
+        recommendation = `Khuyến nghị: Hãy giảm công suất P hoặc tăng tốc độ vòng quay n_ct để giảm tải trọng động lên ổ.`;
+      } else {
+        const rec_bearing = await prisma.bearings.findFirst({
+          where: { 
+            type: 'tapered', 
+            inner_d: { gte: d_tc },
+            C: { gte: C_d },
+            is_active: true,
+            isDeleted: false
+          },
+          orderBy: [{ inner_d: 'asc' }, { C: 'asc' }]
+        });
+        recommended_d_tc = rec_bearing ? rec_bearing.inner_d : Math.ceil(d_tc * 1.2);
+        recommendation = `Khuyến nghị: Hãy nhập (ghi đè) Đường kính trục d_tc lớn hơn mức hiện tại (${d_tc} mm) thành d_tc = ${recommended_d_tc} mm để chọn ổ lăn lớn hơn chịu tải C_d = ${C_d.toFixed(2)} kN.`;
+      }
     }
 
     return {
       bearing_code: bearing_final.code,
-      C_catalog_kN: Number(bearing_final.C),
+      C_catalog_kN: C_catalog,
       C_d_kN: C_d,
       check_bearing_pass,
-      warning,
+      warning: final_warning,
       recommendation,
       recommended_d_tc
     };
@@ -613,11 +655,20 @@ const designService = {
     // Tính toán Trục (Trả về thông số I, II, III)
     const moduleD = await calculateModuleD(kinData, moduleB, moduleC, moduleA, material, activeOverrides);
 
-    // Tính then cho 3 tiết diện nguy hiểm trên 3 trục (Chỉ truyền overrides cho Trục I)
+    // Tính then cho 3 tiết diện nguy hiểm trên 3 trục
     const moduleE = {
-      trucI: await calculateModuleE(moduleD.trucI.d_tc_mm[0], kinData.T_brc, 30, activeOverrides),
-      trucII: await calculateModuleE(moduleD.trucII.d_tc_mm[0], kinData.T_brt, 40),
-      trucIII: await calculateModuleE(moduleD.trucIII.d_tc_mm[0], kinData.T_x, 50)
+      trucI: await calculateModuleE(moduleD.trucI.d_tc_mm[0], kinData.T_brc, 30, {
+        key_b: activeOverrides.key_b,
+        key_h: activeOverrides.key_h,
+        key_t1: activeOverrides.key_t1,
+        key_l: activeOverrides.key_l_I || activeOverrides.key_l
+      }),
+      trucII: await calculateModuleE(moduleD.trucII.d_tc_mm[0], kinData.T_brt, 40, {
+        key_l: activeOverrides.key_l_II
+      }),
+      trucIII: await calculateModuleE(moduleD.trucIII.d_tc_mm[0], kinData.T_x, 50, {
+        key_l: activeOverrides.key_l_III
+      })
     };
 
     // Chọn ổ lăn cho cả 3 trục
@@ -631,9 +682,15 @@ const designService = {
     const warnings = [];
     if (moduleA.warning) warnings.push(moduleA.warning);
     if (moduleB.warning) warnings.push(moduleB.warning);
-    if (moduleD.trucI && moduleD.trucI.warning) warnings.push(moduleD.trucI.warning);
-    if (moduleE.trucI && moduleE.trucI.warning) warnings.push(moduleE.trucI.warning);
-    if (moduleF.trucI && moduleF.trucI.warning) warnings.push(moduleF.trucI.warning);
+    if (moduleD.trucI?.warning) warnings.push(moduleD.trucI.warning);
+    if (moduleD.trucII?.warning) warnings.push(moduleD.trucII.warning);
+    if (moduleD.trucIII?.warning) warnings.push(moduleD.trucIII.warning);
+    if (moduleE.trucI?.warning) warnings.push(moduleE.trucI.warning);
+    if (moduleE.trucII?.warning) warnings.push(moduleE.trucII.warning);
+    if (moduleE.trucIII?.warning) warnings.push(moduleE.trucIII.warning);
+    if (moduleF.trucI?.warning) warnings.push(moduleF.trucI.warning);
+    if (moduleF.trucII?.warning) warnings.push(moduleF.trucII.warning);
+    if (moduleF.trucIII?.warning) warnings.push(moduleF.trucIII.warning);
 
     const joinedWarning = warnings.length > 0 ? warnings.join(" | ") : null;
 

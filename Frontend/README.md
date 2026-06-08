@@ -161,3 +161,85 @@ Tối ưu hóa Workflow & Đồng bộ Logic Kiểm nghiệm (UC-05)
     * Sửa lỗi nút "Xác nhận" không nhảy trang do thiếu prop `onNavigate`.
     * Fix lỗi Backend crash do thiếu file `.env` (DATABASE_URL).
 * **Ở file nào:** `src/pages/UC05Detail.jsx`, `Backend/.env`.
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.7 (07/06)
+Tích hợp tính năng "⚡ Áp dụng nhanh" (Auto-Apply) & Giải quyết Nghịch lý Thiết kế Cơ khí
+
+### 1. Giải pháp Khắc phục "Nghịch lý Giảm công suất" & Đề xuất Mô-đun tiêu chuẩn
+* **Sửa gì:**
+  * Tại `design.service.js`, nâng cấp giải thuật tính toán ngược khi bánh răng côn (Module B) bị quá tải tiếp xúc. Thay vì đề xuất tăng HB lên quá giới hạn thép thực tế (ví dụ HB >= 678), hệ thống sẽ tự so sánh với độ cứng tối đa trong CSDL (HB=480). Nếu vượt quá giới hạn, hệ thống chuyển sang tính toán và đề xuất ghi đè tăng Mô-đun tiêu chuẩn ($m_e$) lên giá trị lớn hơn tương ứng.
+  * Hỗ trợ ghi đè tham số Mô-đun bánh răng côn `m_e_I` trong API Backend, từ đó bỏ qua bước auto-sizing gây co nhỏ bánh răng.
+* **Ở file nào:** `Backend/src/services/design.service.js`
+
+### 2. Tích hợp tính năng "⚡ Áp dụng nhanh" (Auto-Apply) gợi ý sửa lỗi
+* **Sửa gì:**
+  * Cập nhật logic backend để trả về các trường tham số gợi ý có cấu trúc gồm: `recommended_P` (Xích), `recommended_material_id` và `recommended_m_e` (Bánh răng côn), `recommended_d_tc` (Trục & Ổ lăn), `recommended_l` (Then).
+  * Tích hợp nút bấm **⚡ Áp dụng** tại Modal Khắc phục nhanh trên giao diện frontend. Khi người dùng click nút này, hệ thống sẽ tự động điền các thông số đề xuất vào form (đổi vật liệu phù hợp, cập nhật đường kính trục, chiều dài then hoặc module) và kích hoạt live calculation tính toán kiểm nghiệm thời gian thực để chuyển trạng thái các module sang màu xanh an toàn chỉ với một chạm.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`, `Backend/src/services/design.service.js`
+
+### 3. Bổ sung trường nhập liệu hình học & Tái cấu trúc Layout Modal
+* **Sửa gì:**
+  * Thêm ô nhập liệu **Module bánh răng côn m_e**, **Đường kính trục d_tc**, và các thông số kích thước then tiêu chuẩn (**b, h, t1, l**) vào Modal Khắc phục nhanh.
+  * Tái cấu trúc layout hiển thị bảng trạng thái kiểm nghiệm live A → F và dọn dẹp vị trí thẻ gợi ý tối ưu ra ngoài flex container chính để tránh làm méo layout.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 4. Thiết kế giao diện làm lại
+* **Sửa gì:**
+  * Cập nhật thanh bên (Sidebar) sang màu đen nhám (Dark Mode `bg-[#0a0a0a]/95`) kết hợp kính mờ glassmorphism và dải màu quang phổ gradient công nghệ ở trên cùng.
+  * Bọc logo Bách Khoa (HCMUT) trong khung nền trắng bo góc mềm mại `rounded-2xl` kết hợp đổ bóng phát sáng nhẹ (`glow`) giúp logo luôn nổi bật rõ ràng bất kể màu nền sidebar thay đổi.
+  * Đồng bộ hóa font chữ `Inter` và `Outfit` cho toàn bộ văn bản để tăng độ sắc nét trực quan.
+* **Ở file nào:** `Frontend/src/components/Sidebar.jsx`, `Frontend/src/index.css`
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.8 (07/06)
+Nâng cấp Trực quan Hóa Khắc phục lỗi: Chẩn đoán sự cố chi tiết, Liệt kê hành động & Live Change Log gọn nhẹ
+
+### 1. Tích hợp Chẩn đoán Sự cố Cơ học Động (Dynamic Mechanical Diagnostics)
+* **Sửa gì:** Thay thế dòng gợi ý tĩnh bằng khung chẩn đoán động. Tự động đọc dữ liệu tính toán để so sánh trị số vật lý lỗi (ứng suất $\sigma_H$ thực tế vs cho phép $[\sigma_H]$, hệ số an toàn mỏi $s$ vs chuẩn $1.50$, tải trọng $C_d$ vs catalog $C$,...) kèm theo cảnh báo rủi ro cơ học (nứt trục, tróc bánh răng, biến dạng then, bó kẹt ổ bi) và đề xuất hướng sửa cụ thể.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 2. Liệt kê hành động chi tiết trước khi Áp dụng (Impact Preview List)
+* **Sửa gì:** Bổ sung danh sách chi tiết các hành động tự động chỉnh sửa thông số đầu vào hiển thị trực tiếp trong các card "⚡ Áp dụng" (từng Module) và "⚡ Tối ưu tất cả" (toàn hệ thống) giúp người dùng thấy rõ các tham số sẽ thay đổi (Vật liệu, Module bánh răng m_e, Then, Đường kính trục d_tc) trước khi thực hiện.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 3. Báo cáo Thay đổi Thông số Đầu vào gọn nhẹ (Live Overrides Change Log)
+* **Sửa gì:** Phát triển bảng báo cáo thay đổi tự động hiển thị khi người dùng gõ tay hoặc click nút Áp dụng, so sánh giá trị cũ (trong database) và giá trị mới (trực tiếp).
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 4. Tối ưu hóa UI Modal (UX Simplification & Space Clean-up)
+* **Sửa gì:** Loại bỏ bảng kiểm định cơ học trùng lặp tại modal để tránh làm dài modal gây cuộn che khuất các ô nhập liệu đầu vào. Trạng thái Đạt/Lỗi đã được hiển thị đầy đủ và trực quan qua 6 nút Tab status (M.A → M.F) ở đầu modal.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+-----------------------------------------------------------------------------
+## 🚀 Patch Notes - Update 1.9 (07/06)
+Hợp nhất nhánh Local Premium vào nhánh GitHub chính & Tích hợp tính năng Báo cáo (Reports)
+
+### 1. Hợp nhất giao diện Premium từ bản Local vào dự án GitHub
+* **Sửa gì:** Tiến hành merge toàn bộ giao diện cao cấp (Dark Mode, Glassmorphism, Gradient) từ nhánh phát triển Local vào dự án chính trên GitHub bằng kỹ thuật `git merge` qua local remote. Giải quyết xung đột duy nhất phát sinh tại Sidebar.jsx (giữ lại giao diện tối màu Premium).
+* **Ở file nào:**
+  - `Frontend/src/components/Sidebar.jsx`
+  - `Frontend/src/components/Header.jsx`
+  - `Frontend/src/index.css`
+  - `Frontend/src/pages/Calculations.jsx`
+  - `Frontend/src/pages/UC05Detail.jsx`
+  - `Backend/src/services/design.service.js`
+  - `Backend/src/services/input.service.js`
+  - `Backend/src/routers/root.router.js`
+  - `Backend/src/controllers/design.controller.js`
+
+### 2. Tích hợp Hiển thị 3 Trục dạng Sub-tab (Modules D, E, F)
+* **Sửa gì:** Cập nhật giao diện UC05Detail để dung hòa giữa bảng tóm tắt 3 trục (I, II, III) và các bảng thông số chi tiết từng trục. Thiết kế dạng **Sub-tabs** (Tổng quan / Trục I / Trục II / Trục III) bên trong mỗi Module D, E, F.
+* **Ở file nào:** `Frontend/src/pages/UC05Detail.jsx`
+
+### 3. Đồng bộ trường dữ liệu vật liệu (selected_material_id)
+* **Sửa gì:** Tích hợp lại trường `selected_material_id` vào toàn bộ service và endpoint CRUD dự án, bao gồm `create`, `findAll`, `findOne` và `update`. Bổ sung route lấy danh sách vật liệu `GET /materials` trực tiếp phục vụ tính năng gợi ý chỉnh sửa vật liệu trong Modal Khắc phục nhanh.
+* **Ở file nào:** `Backend/src/services/input.service.js`, `Backend/src/routers/root.router.js`
+
+### 4. Hợp nhất tính năng Báo cáo — Reports (từ teammate push)
+* **Sửa gì:** Tích hợp tính năng xuất Báo cáo PDF được bạn đồng đội đẩy lên GitHub vào cùng dự án. Toàn bộ API (`report.controller.js`, `report.service.js`, `report.router.js`) và giao diện trang `Reports.jsx` được gộp vào nhánh chính mà không làm mất bất kỳ tính năng Premium nào của nhánh Local.
+* **Ở file nào:** `Backend/src/controllers/report.controller.js`, `Backend/src/services/report.service.js`, `Backend/src/routers/report.router.js`, `Frontend/src/pages/Reports.jsx`
+
+### 5. Cập nhật Database Schema & Prisma Client
+* **Sửa gì:** Hợp nhất `schema.prisma` với trường `selected_material_id` và khoá ngoại liên kết tới bảng `material_grades`. Chạy lại `npx prisma db push` để đồng bộ cấu trúc bảng MySQL và `npx prisma generate` để cập nhật Prisma Client.
+* **Ở file nào:** `Backend/prisma/schema.prisma`

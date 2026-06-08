@@ -1945,6 +1945,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type Material_gradesCountOutputType
+   */
+
+  export type Material_gradesCountOutputType = {
+    projects: number
+  }
+
+  export type Material_gradesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    projects?: boolean | Material_gradesCountOutputTypeCountProjectsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Material_gradesCountOutputType without action
+   */
+  export type Material_gradesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Material_gradesCountOutputType
+     */
+    select?: Material_gradesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Material_gradesCountOutputType without action
+   */
+  export type Material_gradesCountOutputTypeCountProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: projectsWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -5275,6 +5306,7 @@ export namespace Prisma {
     safety_factor: Decimal | null
     selected_motor_id: number | null
     deletedBy: number | null
+    selected_material_id: number | null
   }
 
   export type ProjectsSumAggregateOutputType = {
@@ -5289,6 +5321,7 @@ export namespace Prisma {
     safety_factor: Decimal | null
     selected_motor_id: number | null
     deletedBy: number | null
+    selected_material_id: number | null
   }
 
   export type ProjectsMinAggregateOutputType = {
@@ -5310,6 +5343,7 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    selected_material_id: number | null
   }
 
   export type ProjectsMaxAggregateOutputType = {
@@ -5331,6 +5365,7 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    selected_material_id: number | null
   }
 
   export type ProjectsCountAggregateOutputType = {
@@ -5356,6 +5391,7 @@ export namespace Prisma {
     deletedAt: number
     createdAt: number
     updatedAt: number
+    selected_material_id: number
     _all: number
   }
 
@@ -5372,6 +5408,7 @@ export namespace Prisma {
     safety_factor?: true
     selected_motor_id?: true
     deletedBy?: true
+    selected_material_id?: true
   }
 
   export type ProjectsSumAggregateInputType = {
@@ -5386,6 +5423,7 @@ export namespace Prisma {
     safety_factor?: true
     selected_motor_id?: true
     deletedBy?: true
+    selected_material_id?: true
   }
 
   export type ProjectsMinAggregateInputType = {
@@ -5407,6 +5445,7 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    selected_material_id?: true
   }
 
   export type ProjectsMaxAggregateInputType = {
@@ -5428,6 +5467,7 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    selected_material_id?: true
   }
 
   export type ProjectsCountAggregateInputType = {
@@ -5453,6 +5493,7 @@ export namespace Prisma {
     deletedAt?: true
     createdAt?: true
     updatedAt?: true
+    selected_material_id?: true
     _all?: true
   }
 
@@ -5565,6 +5606,7 @@ export namespace Prisma {
     deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    selected_material_id: number | null
     _count: ProjectsCountAggregateOutputType | null
     _avg: ProjectsAvgAggregateOutputType | null
     _sum: ProjectsSumAggregateOutputType | null
@@ -5609,8 +5651,10 @@ export namespace Prisma {
     deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    selected_material_id?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
     motors?: boolean | projects$motorsArgs<ExtArgs>
+    material_grade?: boolean | projects$material_gradeArgs<ExtArgs>
   }, ExtArgs["result"]["projects"]>
 
 
@@ -5638,12 +5682,14 @@ export namespace Prisma {
     deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    selected_material_id?: boolean
   }
 
-  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "name" | "input_P" | "input_n_ct" | "input_L" | "efficiency" | "Pct" | "total_ratio" | "transmission" | "shafts" | "safety_factor" | "selected_motor_id" | "selected_motor_snapshot" | "design_result" | "cover_url" | "step" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["projects"]>
+  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "name" | "input_P" | "input_n_ct" | "input_L" | "efficiency" | "Pct" | "total_ratio" | "transmission" | "shafts" | "safety_factor" | "selected_motor_id" | "selected_motor_snapshot" | "design_result" | "cover_url" | "step" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "selected_material_id", ExtArgs["result"]["projects"]>
   export type projectsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | usersDefaultArgs<ExtArgs>
     motors?: boolean | projects$motorsArgs<ExtArgs>
+    material_grade?: boolean | projects$material_gradeArgs<ExtArgs>
   }
 
   export type $projectsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5651,6 +5697,7 @@ export namespace Prisma {
     objects: {
       users: Prisma.$usersPayload<ExtArgs>
       motors: Prisma.$motorsPayload<ExtArgs> | null
+      material_grade: Prisma.$material_gradesPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5675,6 +5722,7 @@ export namespace Prisma {
       deletedAt: Date | null
       createdAt: Date | null
       updatedAt: Date | null
+      selected_material_id: number | null
     }, ExtArgs["result"]["projects"]>
     composites: {}
   }
@@ -6017,6 +6065,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     users<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     motors<T extends projects$motorsArgs<ExtArgs> = {}>(args?: Subset<T, projects$motorsArgs<ExtArgs>>): Prisma__motorsClient<$Result.GetResult<Prisma.$motorsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    material_grade<T extends projects$material_gradeArgs<ExtArgs> = {}>(args?: Subset<T, projects$material_gradeArgs<ExtArgs>>): Prisma__material_gradesClient<$Result.GetResult<Prisma.$material_gradesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6068,6 +6117,7 @@ export namespace Prisma {
     readonly deletedAt: FieldRef<"projects", 'DateTime'>
     readonly createdAt: FieldRef<"projects", 'DateTime'>
     readonly updatedAt: FieldRef<"projects", 'DateTime'>
+    readonly selected_material_id: FieldRef<"projects", 'Int'>
   }
     
 
@@ -6432,6 +6482,25 @@ export namespace Prisma {
      */
     include?: motorsInclude<ExtArgs> | null
     where?: motorsWhereInput
+  }
+
+  /**
+   * projects.material_grade
+   */
+  export type projects$material_gradeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the material_grades
+     */
+    select?: material_gradesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the material_grades
+     */
+    omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    where?: material_gradesWhereInput
   }
 
   /**
@@ -7806,6 +7875,8 @@ export namespace Prisma {
     sigma_ch?: boolean
     sigma_Hlim?: boolean
     sigma_Flim?: boolean
+    projects?: boolean | material_grades$projectsArgs<ExtArgs>
+    _count?: boolean | Material_gradesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["material_grades"]>
 
 
@@ -7821,10 +7892,16 @@ export namespace Prisma {
   }
 
   export type material_gradesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "grade_name" | "HB" | "sigma_b" | "sigma_ch" | "sigma_Hlim" | "sigma_Flim", ExtArgs["result"]["material_grades"]>
+  export type material_gradesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    projects?: boolean | material_grades$projectsArgs<ExtArgs>
+    _count?: boolean | Material_gradesCountOutputTypeDefaultArgs<ExtArgs>
+  }
 
   export type $material_gradesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "material_grades"
-    objects: {}
+    objects: {
+      projects: Prisma.$projectsPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       grade_name: string
@@ -8173,6 +8250,7 @@ export namespace Prisma {
    */
   export interface Prisma__material_gradesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    projects<T extends material_grades$projectsArgs<ExtArgs> = {}>(args?: Subset<T, material_grades$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$projectsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8226,6 +8304,10 @@ export namespace Prisma {
      */
     omit?: material_gradesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    /**
      * Filter, which material_grades to fetch.
      */
     where: material_gradesWhereUniqueInput
@@ -8244,6 +8326,10 @@ export namespace Prisma {
      */
     omit?: material_gradesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    /**
      * Filter, which material_grades to fetch.
      */
     where: material_gradesWhereUniqueInput
@@ -8261,6 +8347,10 @@ export namespace Prisma {
      * Omit specific fields from the material_grades
      */
     omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
     /**
      * Filter, which material_grades to fetch.
      */
@@ -8310,6 +8400,10 @@ export namespace Prisma {
      */
     omit?: material_gradesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    /**
      * Filter, which material_grades to fetch.
      */
     where?: material_gradesWhereInput
@@ -8357,6 +8451,10 @@ export namespace Prisma {
      * Omit specific fields from the material_grades
      */
     omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
     /**
      * Filter, which material_grades to fetch.
      */
@@ -8406,6 +8504,10 @@ export namespace Prisma {
      */
     omit?: material_gradesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    /**
      * The data needed to create a material_grades.
      */
     data: XOR<material_gradesCreateInput, material_gradesUncheckedCreateInput>
@@ -8434,6 +8536,10 @@ export namespace Prisma {
      * Omit specific fields from the material_grades
      */
     omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
     /**
      * The data needed to update a material_grades.
      */
@@ -8475,6 +8581,10 @@ export namespace Prisma {
      */
     omit?: material_gradesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    /**
      * The filter to search for the material_grades to update in case it exists.
      */
     where: material_gradesWhereUniqueInput
@@ -8501,6 +8611,10 @@ export namespace Prisma {
      */
     omit?: material_gradesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
+    /**
      * Filter which material_grades to delete.
      */
     where: material_gradesWhereUniqueInput
@@ -8521,6 +8635,30 @@ export namespace Prisma {
   }
 
   /**
+   * material_grades.projects
+   */
+  export type material_grades$projectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the projects
+     */
+    select?: projectsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the projects
+     */
+    omit?: projectsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: projectsInclude<ExtArgs> | null
+    where?: projectsWhereInput
+    orderBy?: projectsOrderByWithRelationInput | projectsOrderByWithRelationInput[]
+    cursor?: projectsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectsScalarFieldEnum | ProjectsScalarFieldEnum[]
+  }
+
+  /**
    * material_grades without action
    */
   export type material_gradesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8532,6 +8670,10 @@ export namespace Prisma {
      * Omit specific fields from the material_grades
      */
     omit?: material_gradesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: material_gradesInclude<ExtArgs> | null
   }
 
 
@@ -15072,7 +15214,8 @@ export namespace Prisma {
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    selected_material_id: 'selected_material_id'
   };
 
   export type ProjectsScalarFieldEnum = (typeof ProjectsScalarFieldEnum)[keyof typeof ProjectsScalarFieldEnum]
@@ -15398,6 +15541,7 @@ export namespace Prisma {
   export type bearingsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     code?: string
+    inner_d_outer_D_width_B_type?: bearingsInner_dOuter_DWidth_BTypeCompoundUniqueInput
     AND?: bearingsWhereInput | bearingsWhereInput[]
     OR?: bearingsWhereInput[]
     NOT?: bearingsWhereInput | bearingsWhereInput[]
@@ -15416,7 +15560,7 @@ export namespace Prisma {
     Y?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
     alpha_deg?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
     e?: DecimalNullableFilter<"bearings"> | Decimal | DecimalJsLike | number | string | null
-  }, "id" | "code">
+  }, "id" | "code" | "inner_d_outer_D_width_B_type">
 
   export type bearingsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -15709,8 +15853,10 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"projects"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"projects"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"projects"> | Date | string | null
+    selected_material_id?: IntNullableFilter<"projects"> | number | null
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
     motors?: XOR<MotorsNullableScalarRelationFilter, motorsWhereInput> | null
+    material_grade?: XOR<Material_gradesNullableScalarRelationFilter, material_gradesWhereInput> | null
   }
 
   export type projectsOrderByWithRelationInput = {
@@ -15736,8 +15882,10 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    selected_material_id?: SortOrderInput | SortOrder
     users?: usersOrderByWithRelationInput
     motors?: motorsOrderByWithRelationInput
+    material_grade?: material_gradesOrderByWithRelationInput
     _relevance?: projectsOrderByRelevanceInput
   }
 
@@ -15767,8 +15915,10 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"projects"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"projects"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"projects"> | Date | string | null
+    selected_material_id?: IntNullableFilter<"projects"> | number | null
     users?: XOR<UsersScalarRelationFilter, usersWhereInput>
     motors?: XOR<MotorsNullableScalarRelationFilter, motorsWhereInput> | null
+    material_grade?: XOR<Material_gradesNullableScalarRelationFilter, material_gradesWhereInput> | null
   }, "id">
 
   export type projectsOrderByWithAggregationInput = {
@@ -15794,6 +15944,7 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    selected_material_id?: SortOrderInput | SortOrder
     _count?: projectsCountOrderByAggregateInput
     _avg?: projectsAvgOrderByAggregateInput
     _max?: projectsMaxOrderByAggregateInput
@@ -15827,6 +15978,7 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableWithAggregatesFilter<"projects"> | Date | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"projects"> | Date | string | null
     updatedAt?: DateTimeNullableWithAggregatesFilter<"projects"> | Date | string | null
+    selected_material_id?: IntNullableWithAggregatesFilter<"projects"> | number | null
   }
 
   export type usersWhereInput = {
@@ -15953,6 +16105,7 @@ export namespace Prisma {
     sigma_ch?: FloatFilter<"material_grades"> | number
     sigma_Hlim?: FloatFilter<"material_grades"> | number
     sigma_Flim?: FloatFilter<"material_grades"> | number
+    projects?: ProjectsListRelationFilter
   }
 
   export type material_gradesOrderByWithRelationInput = {
@@ -15963,6 +16116,7 @@ export namespace Prisma {
     sigma_ch?: SortOrder
     sigma_Hlim?: SortOrder
     sigma_Flim?: SortOrder
+    projects?: projectsOrderByRelationAggregateInput
     _relevance?: material_gradesOrderByRelevanceInput
   }
 
@@ -15977,6 +16131,7 @@ export namespace Prisma {
     sigma_ch?: FloatFilter<"material_grades"> | number
     sigma_Hlim?: FloatFilter<"material_grades"> | number
     sigma_Flim?: FloatFilter<"material_grades"> | number
+    projects?: ProjectsListRelationFilter
   }, "id" | "grade_name">
 
   export type material_gradesOrderByWithAggregationInput = {
@@ -16762,6 +16917,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     users: usersCreateNestedOneWithoutProjectsInput
     motors?: motorsCreateNestedOneWithoutProjectsInput
+    material_grade?: material_gradesCreateNestedOneWithoutProjectsInput
   }
 
   export type projectsUncheckedCreateInput = {
@@ -16787,6 +16943,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    selected_material_id?: number | null
   }
 
   export type projectsUpdateInput = {
@@ -16811,6 +16968,7 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: usersUpdateOneRequiredWithoutProjectsNestedInput
     motors?: motorsUpdateOneWithoutProjectsNestedInput
+    material_grade?: material_gradesUpdateOneWithoutProjectsNestedInput
   }
 
   export type projectsUncheckedUpdateInput = {
@@ -16836,6 +16994,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selected_material_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type projectsCreateManyInput = {
@@ -16861,6 +17020,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    selected_material_id?: number | null
   }
 
   export type projectsUpdateManyMutationInput = {
@@ -16908,6 +17068,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selected_material_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type usersCreateInput = {
@@ -17051,6 +17212,7 @@ export namespace Prisma {
     sigma_ch: number
     sigma_Hlim: number
     sigma_Flim: number
+    projects?: projectsCreateNestedManyWithoutMaterial_gradeInput
   }
 
   export type material_gradesUncheckedCreateInput = {
@@ -17061,6 +17223,7 @@ export namespace Prisma {
     sigma_ch: number
     sigma_Hlim: number
     sigma_Flim: number
+    projects?: projectsUncheckedCreateNestedManyWithoutMaterial_gradeInput
   }
 
   export type material_gradesUpdateInput = {
@@ -17070,6 +17233,7 @@ export namespace Prisma {
     sigma_ch?: FloatFieldUpdateOperationsInput | number
     sigma_Hlim?: FloatFieldUpdateOperationsInput | number
     sigma_Flim?: FloatFieldUpdateOperationsInput | number
+    projects?: projectsUpdateManyWithoutMaterial_gradeNestedInput
   }
 
   export type material_gradesUncheckedUpdateInput = {
@@ -17080,6 +17244,7 @@ export namespace Prisma {
     sigma_ch?: FloatFieldUpdateOperationsInput | number
     sigma_Hlim?: FloatFieldUpdateOperationsInput | number
     sigma_Flim?: FloatFieldUpdateOperationsInput | number
+    projects?: projectsUncheckedUpdateManyWithoutMaterial_gradeNestedInput
   }
 
   export type material_gradesCreateManyInput = {
@@ -17527,6 +17692,13 @@ export namespace Prisma {
     search: string
   }
 
+  export type bearingsInner_dOuter_DWidth_BTypeCompoundUniqueInput = {
+    inner_d: Decimal | DecimalJsLike | number | string
+    outer_D: Decimal | DecimalJsLike | number | string
+    width_B: Decimal | DecimalJsLike | number | string
+    type: string
+  }
+
   export type bearingsCountOrderByAggregateInput = {
     id?: SortOrder
     code?: SortOrder
@@ -17952,6 +18124,11 @@ export namespace Prisma {
     isNot?: motorsWhereInput | null
   }
 
+  export type Material_gradesNullableScalarRelationFilter = {
+    is?: material_gradesWhereInput | null
+    isNot?: material_gradesWhereInput | null
+  }
+
   export type projectsOrderByRelevanceInput = {
     fields: projectsOrderByRelevanceFieldEnum | projectsOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -17981,6 +18158,7 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    selected_material_id?: SortOrder
   }
 
   export type projectsAvgOrderByAggregateInput = {
@@ -17995,6 +18173,7 @@ export namespace Prisma {
     safety_factor?: SortOrder
     selected_motor_id?: SortOrder
     deletedBy?: SortOrder
+    selected_material_id?: SortOrder
   }
 
   export type projectsMaxOrderByAggregateInput = {
@@ -18016,6 +18195,7 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    selected_material_id?: SortOrder
   }
 
   export type projectsMinOrderByAggregateInput = {
@@ -18037,6 +18217,7 @@ export namespace Prisma {
     deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    selected_material_id?: SortOrder
   }
 
   export type projectsSumOrderByAggregateInput = {
@@ -18051,6 +18232,7 @@ export namespace Prisma {
     safety_factor?: SortOrder
     selected_motor_id?: SortOrder
     deletedBy?: SortOrder
+    selected_material_id?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -18606,6 +18788,12 @@ export namespace Prisma {
     connect?: motorsWhereUniqueInput
   }
 
+  export type material_gradesCreateNestedOneWithoutProjectsInput = {
+    create?: XOR<material_gradesCreateWithoutProjectsInput, material_gradesUncheckedCreateWithoutProjectsInput>
+    connectOrCreate?: material_gradesCreateOrConnectWithoutProjectsInput
+    connect?: material_gradesWhereUniqueInput
+  }
+
   export type NullableEnumprojects_stepFieldUpdateOperationsInput = {
     set?: $Enums.projects_step | null
   }
@@ -18626,6 +18814,16 @@ export namespace Prisma {
     delete?: motorsWhereInput | boolean
     connect?: motorsWhereUniqueInput
     update?: XOR<XOR<motorsUpdateToOneWithWhereWithoutProjectsInput, motorsUpdateWithoutProjectsInput>, motorsUncheckedUpdateWithoutProjectsInput>
+  }
+
+  export type material_gradesUpdateOneWithoutProjectsNestedInput = {
+    create?: XOR<material_gradesCreateWithoutProjectsInput, material_gradesUncheckedCreateWithoutProjectsInput>
+    connectOrCreate?: material_gradesCreateOrConnectWithoutProjectsInput
+    upsert?: material_gradesUpsertWithoutProjectsInput
+    disconnect?: material_gradesWhereInput | boolean
+    delete?: material_gradesWhereInput | boolean
+    connect?: material_gradesWhereUniqueInput
+    update?: XOR<XOR<material_gradesUpdateToOneWithWhereWithoutProjectsInput, material_gradesUpdateWithoutProjectsInput>, material_gradesUncheckedUpdateWithoutProjectsInput>
   }
 
   export type projectsCreateNestedManyWithoutUsersInput = {
@@ -18674,12 +18872,54 @@ export namespace Prisma {
     deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
   }
 
+  export type projectsCreateNestedManyWithoutMaterial_gradeInput = {
+    create?: XOR<projectsCreateWithoutMaterial_gradeInput, projectsUncheckedCreateWithoutMaterial_gradeInput> | projectsCreateWithoutMaterial_gradeInput[] | projectsUncheckedCreateWithoutMaterial_gradeInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutMaterial_gradeInput | projectsCreateOrConnectWithoutMaterial_gradeInput[]
+    createMany?: projectsCreateManyMaterial_gradeInputEnvelope
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+  }
+
+  export type projectsUncheckedCreateNestedManyWithoutMaterial_gradeInput = {
+    create?: XOR<projectsCreateWithoutMaterial_gradeInput, projectsUncheckedCreateWithoutMaterial_gradeInput> | projectsCreateWithoutMaterial_gradeInput[] | projectsUncheckedCreateWithoutMaterial_gradeInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutMaterial_gradeInput | projectsCreateOrConnectWithoutMaterial_gradeInput[]
+    createMany?: projectsCreateManyMaterial_gradeInputEnvelope
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type projectsUpdateManyWithoutMaterial_gradeNestedInput = {
+    create?: XOR<projectsCreateWithoutMaterial_gradeInput, projectsUncheckedCreateWithoutMaterial_gradeInput> | projectsCreateWithoutMaterial_gradeInput[] | projectsUncheckedCreateWithoutMaterial_gradeInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutMaterial_gradeInput | projectsCreateOrConnectWithoutMaterial_gradeInput[]
+    upsert?: projectsUpsertWithWhereUniqueWithoutMaterial_gradeInput | projectsUpsertWithWhereUniqueWithoutMaterial_gradeInput[]
+    createMany?: projectsCreateManyMaterial_gradeInputEnvelope
+    set?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    disconnect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    delete?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    update?: projectsUpdateWithWhereUniqueWithoutMaterial_gradeInput | projectsUpdateWithWhereUniqueWithoutMaterial_gradeInput[]
+    updateMany?: projectsUpdateManyWithWhereWithoutMaterial_gradeInput | projectsUpdateManyWithWhereWithoutMaterial_gradeInput[]
+    deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
+  }
+
+  export type projectsUncheckedUpdateManyWithoutMaterial_gradeNestedInput = {
+    create?: XOR<projectsCreateWithoutMaterial_gradeInput, projectsUncheckedCreateWithoutMaterial_gradeInput> | projectsCreateWithoutMaterial_gradeInput[] | projectsUncheckedCreateWithoutMaterial_gradeInput[]
+    connectOrCreate?: projectsCreateOrConnectWithoutMaterial_gradeInput | projectsCreateOrConnectWithoutMaterial_gradeInput[]
+    upsert?: projectsUpsertWithWhereUniqueWithoutMaterial_gradeInput | projectsUpsertWithWhereUniqueWithoutMaterial_gradeInput[]
+    createMany?: projectsCreateManyMaterial_gradeInputEnvelope
+    set?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    disconnect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    delete?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
+    update?: projectsUpdateWithWhereUniqueWithoutMaterial_gradeInput | projectsUpdateWithWhereUniqueWithoutMaterial_gradeInput[]
+    updateMany?: projectsUpdateManyWithWhereWithoutMaterial_gradeInput | projectsUpdateManyWithWhereWithoutMaterial_gradeInput[]
+    deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -19010,6 +19250,7 @@ export namespace Prisma {
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     users: usersCreateNestedOneWithoutProjectsInput
+    material_grade?: material_gradesCreateNestedOneWithoutProjectsInput
   }
 
   export type projectsUncheckedCreateWithoutMotorsInput = {
@@ -19034,6 +19275,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    selected_material_id?: number | null
   }
 
   export type projectsCreateOrConnectWithoutMotorsInput = {
@@ -19088,6 +19330,7 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"projects"> | Date | string | null
     createdAt?: DateTimeNullableFilter<"projects"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"projects"> | Date | string | null
+    selected_material_id?: IntNullableFilter<"projects"> | number | null
   }
 
   export type usersCreateWithoutProjectsInput = {
@@ -19174,6 +19417,30 @@ export namespace Prisma {
   export type motorsCreateOrConnectWithoutProjectsInput = {
     where: motorsWhereUniqueInput
     create: XOR<motorsCreateWithoutProjectsInput, motorsUncheckedCreateWithoutProjectsInput>
+  }
+
+  export type material_gradesCreateWithoutProjectsInput = {
+    grade_name: string
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+  }
+
+  export type material_gradesUncheckedCreateWithoutProjectsInput = {
+    id?: number
+    grade_name: string
+    HB: number
+    sigma_b: number
+    sigma_ch: number
+    sigma_Hlim: number
+    sigma_Flim: number
+  }
+
+  export type material_gradesCreateOrConnectWithoutProjectsInput = {
+    where: material_gradesWhereUniqueInput
+    create: XOR<material_gradesCreateWithoutProjectsInput, material_gradesUncheckedCreateWithoutProjectsInput>
   }
 
   export type usersUpsertWithoutProjectsInput = {
@@ -19274,6 +19541,36 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type material_gradesUpsertWithoutProjectsInput = {
+    update: XOR<material_gradesUpdateWithoutProjectsInput, material_gradesUncheckedUpdateWithoutProjectsInput>
+    create: XOR<material_gradesCreateWithoutProjectsInput, material_gradesUncheckedCreateWithoutProjectsInput>
+    where?: material_gradesWhereInput
+  }
+
+  export type material_gradesUpdateToOneWithWhereWithoutProjectsInput = {
+    where?: material_gradesWhereInput
+    data: XOR<material_gradesUpdateWithoutProjectsInput, material_gradesUncheckedUpdateWithoutProjectsInput>
+  }
+
+  export type material_gradesUpdateWithoutProjectsInput = {
+    grade_name?: StringFieldUpdateOperationsInput | string
+    HB?: IntFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_ch?: FloatFieldUpdateOperationsInput | number
+    sigma_Hlim?: FloatFieldUpdateOperationsInput | number
+    sigma_Flim?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type material_gradesUncheckedUpdateWithoutProjectsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    grade_name?: StringFieldUpdateOperationsInput | string
+    HB?: IntFieldUpdateOperationsInput | number
+    sigma_b?: FloatFieldUpdateOperationsInput | number
+    sigma_ch?: FloatFieldUpdateOperationsInput | number
+    sigma_Hlim?: FloatFieldUpdateOperationsInput | number
+    sigma_Flim?: FloatFieldUpdateOperationsInput | number
+  }
+
   export type projectsCreateWithoutUsersInput = {
     name: string
     input_P: Decimal | DecimalJsLike | number | string
@@ -19295,6 +19592,7 @@ export namespace Prisma {
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     motors?: motorsCreateNestedOneWithoutProjectsInput
+    material_grade?: material_gradesCreateNestedOneWithoutProjectsInput
   }
 
   export type projectsUncheckedCreateWithoutUsersInput = {
@@ -19319,6 +19617,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    selected_material_id?: number | null
   }
 
   export type projectsCreateOrConnectWithoutUsersInput = {
@@ -19347,6 +19646,81 @@ export namespace Prisma {
     data: XOR<projectsUpdateManyMutationInput, projectsUncheckedUpdateManyWithoutUsersInput>
   }
 
+  export type projectsCreateWithoutMaterial_gradeInput = {
+    name: string
+    input_P: Decimal | DecimalJsLike | number | string
+    input_n_ct: Decimal | DecimalJsLike | number | string
+    input_L: Decimal | DecimalJsLike | number | string
+    efficiency?: Decimal | DecimalJsLike | number | string | null
+    Pct?: Decimal | DecimalJsLike | number | string | null
+    total_ratio?: Decimal | DecimalJsLike | number | string | null
+    transmission?: NullableJsonNullValueInput | InputJsonValue
+    shafts?: NullableJsonNullValueInput | InputJsonValue
+    safety_factor?: Decimal | DecimalJsLike | number | string | null
+    selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
+    design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
+    step?: $Enums.projects_step | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    users: usersCreateNestedOneWithoutProjectsInput
+    motors?: motorsCreateNestedOneWithoutProjectsInput
+  }
+
+  export type projectsUncheckedCreateWithoutMaterial_gradeInput = {
+    id?: number
+    user_id: number
+    name: string
+    input_P: Decimal | DecimalJsLike | number | string
+    input_n_ct: Decimal | DecimalJsLike | number | string
+    input_L: Decimal | DecimalJsLike | number | string
+    efficiency?: Decimal | DecimalJsLike | number | string | null
+    Pct?: Decimal | DecimalJsLike | number | string | null
+    total_ratio?: Decimal | DecimalJsLike | number | string | null
+    transmission?: NullableJsonNullValueInput | InputJsonValue
+    shafts?: NullableJsonNullValueInput | InputJsonValue
+    safety_factor?: Decimal | DecimalJsLike | number | string | null
+    selected_motor_id?: number | null
+    selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
+    design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
+    step?: $Enums.projects_step | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+  }
+
+  export type projectsCreateOrConnectWithoutMaterial_gradeInput = {
+    where: projectsWhereUniqueInput
+    create: XOR<projectsCreateWithoutMaterial_gradeInput, projectsUncheckedCreateWithoutMaterial_gradeInput>
+  }
+
+  export type projectsCreateManyMaterial_gradeInputEnvelope = {
+    data: projectsCreateManyMaterial_gradeInput | projectsCreateManyMaterial_gradeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type projectsUpsertWithWhereUniqueWithoutMaterial_gradeInput = {
+    where: projectsWhereUniqueInput
+    update: XOR<projectsUpdateWithoutMaterial_gradeInput, projectsUncheckedUpdateWithoutMaterial_gradeInput>
+    create: XOR<projectsCreateWithoutMaterial_gradeInput, projectsUncheckedCreateWithoutMaterial_gradeInput>
+  }
+
+  export type projectsUpdateWithWhereUniqueWithoutMaterial_gradeInput = {
+    where: projectsWhereUniqueInput
+    data: XOR<projectsUpdateWithoutMaterial_gradeInput, projectsUncheckedUpdateWithoutMaterial_gradeInput>
+  }
+
+  export type projectsUpdateManyWithWhereWithoutMaterial_gradeInput = {
+    where: projectsScalarWhereInput
+    data: XOR<projectsUpdateManyMutationInput, projectsUncheckedUpdateManyWithoutMaterial_gradeInput>
+  }
+
   export type projectsCreateManyMotorsInput = {
     id?: number
     user_id: number
@@ -19369,6 +19743,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    selected_material_id?: number | null
   }
 
   export type projectsUpdateWithoutMotorsInput = {
@@ -19392,6 +19767,7 @@ export namespace Prisma {
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users?: usersUpdateOneRequiredWithoutProjectsNestedInput
+    material_grade?: material_gradesUpdateOneWithoutProjectsNestedInput
   }
 
   export type projectsUncheckedUpdateWithoutMotorsInput = {
@@ -19416,6 +19792,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selected_material_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type projectsUncheckedUpdateManyWithoutMotorsInput = {
@@ -19440,6 +19817,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selected_material_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type projectsCreateManyUsersInput = {
@@ -19464,6 +19842,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    selected_material_id?: number | null
   }
 
   export type projectsUpdateWithoutUsersInput = {
@@ -19487,6 +19866,7 @@ export namespace Prisma {
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     motors?: motorsUpdateOneWithoutProjectsNestedInput
+    material_grade?: material_gradesUpdateOneWithoutProjectsNestedInput
   }
 
   export type projectsUncheckedUpdateWithoutUsersInput = {
@@ -19511,10 +19891,111 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selected_material_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type projectsUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    input_P?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    input_n_ct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    input_L?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Pct?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    total_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transmission?: NullableJsonNullValueInput | InputJsonValue
+    shafts?: NullableJsonNullValueInput | InputJsonValue
+    safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    selected_motor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
+    design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    selected_material_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type projectsCreateManyMaterial_gradeInput = {
+    id?: number
+    user_id: number
+    name: string
+    input_P: Decimal | DecimalJsLike | number | string
+    input_n_ct: Decimal | DecimalJsLike | number | string
+    input_L: Decimal | DecimalJsLike | number | string
+    efficiency?: Decimal | DecimalJsLike | number | string | null
+    Pct?: Decimal | DecimalJsLike | number | string | null
+    total_ratio?: Decimal | DecimalJsLike | number | string | null
+    transmission?: NullableJsonNullValueInput | InputJsonValue
+    shafts?: NullableJsonNullValueInput | InputJsonValue
+    safety_factor?: Decimal | DecimalJsLike | number | string | null
+    selected_motor_id?: number | null
+    selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
+    design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: string | null
+    step?: $Enums.projects_step | null
+    deletedBy?: number | null
+    isDeleted?: boolean | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+  }
+
+  export type projectsUpdateWithoutMaterial_gradeInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    input_P?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    input_n_ct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    input_L?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Pct?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    total_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transmission?: NullableJsonNullValueInput | InputJsonValue
+    shafts?: NullableJsonNullValueInput | InputJsonValue
+    safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
+    design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    users?: usersUpdateOneRequiredWithoutProjectsNestedInput
+    motors?: motorsUpdateOneWithoutProjectsNestedInput
+  }
+
+  export type projectsUncheckedUpdateWithoutMaterial_gradeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    input_P?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    input_n_ct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    input_L?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    efficiency?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Pct?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    total_ratio?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transmission?: NullableJsonNullValueInput | InputJsonValue
+    shafts?: NullableJsonNullValueInput | InputJsonValue
+    safety_factor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    selected_motor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    selected_motor_snapshot?: NullableJsonNullValueInput | InputJsonValue
+    design_result?: NullableJsonNullValueInput | InputJsonValue
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    step?: NullableEnumprojects_stepFieldUpdateOperationsInput | $Enums.projects_step | null
+    deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
+    isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type projectsUncheckedUpdateManyWithoutMaterial_gradeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     input_P?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     input_n_ct?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
