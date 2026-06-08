@@ -373,6 +373,7 @@ expressjs/
     │   ├── motor.router.js
     │   ├── design.router.js
     │   ├── material.router.js
+    │   ├── catalog.router.js
     │   └── report.router.js
     ├── controllers/                 # Nhận request, trả response
     │   ├── auth.controller.js
@@ -382,6 +383,7 @@ expressjs/
     │   ├── motor.controller.js
     │   ├── design.controller.js
     │   ├── material.controller.js
+    │   ├── catalog.controller.js
     │   └── report.controller.js
     ├── services/                    # Business logic
     │   ├── auth.service.js
@@ -392,6 +394,7 @@ expressjs/
     │   ├── design.service.js
     │   ├── material.service.js
     │   ├── report.service.js
+    │   ├── catalog.service.js
     │   ├── mail.service.js          # Gửi email OTP (Nodemailer)
     │   └── token.service.js
     ├── models/
@@ -408,6 +411,7 @@ expressjs/
         │   ├── build-query-prisma.helper.js
         │   └── status-code.helper.js
         ├── middlewares/
+        │   ├── authorize.middleware.js       # Phân quyền Admin
         │   ├── protect.middleware.js         # JWT authentication guard
         │   ├── protect-header.middleware.js  # JWT từ Authorization header
         │   ├── log-api.middleware.js         # Request logging ra terminal
@@ -420,7 +424,8 @@ expressjs/
         ├── redis/
         │   └── redis.client.js              # Redis client singleton
         ├── schema/
-        │   └── auth.schema.js               # Zod validation schemas
+        │   ├── auth.schema.js               # Zod validation schemas
+        │   └── catalog.schema.js
         ├── sequelize/
         │   └── connect.sequelize.js
         ├── socket/
@@ -578,11 +583,7 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| POST | `/api/auth/register` | Đăng ký tài khoản | ❌ |
-| POST | `/api/auth/verify-otp` | Xác thực OTP đăng ký | ❌ |
-| POST | `/api/auth/login` | Đăng nhập | ❌ |
 | GET | `/api/auth/get-info` | Lấy thông tin người dùng hiện tại | ✅ JWT |
-| POST | `/api/auth/refresh-token` | Làm mới Access Token | ❌ |
 | POST | `/api/auth/request-change-password` | Yêu cầu đổi mật khẩu (gửi OTP qua email) | ✅ JWT |
 | POST | `/api/auth/verify-change-password` | Xác thực OTP & đổi mật khẩu | ✅ JWT |
 
@@ -590,8 +591,6 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/user` | Lấy danh sách user | ❌ |
-| GET | `/api/user/:id` | Lấy chi tiết user | ❌ |
 | POST | `/api/user/avatar-local` | Upload avatar xuống local storage | ✅ JWT |
 | POST | `/api/user/avatar-cloud` | Upload avatar lên Cloudinary | ✅ JWT |
 
@@ -612,7 +611,6 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/motors` | Lấy toàn bộ danh sách động cơ | ❌ |
 | GET | `/api/projects/:projectId/motors/suggestions` | Gợi ý top 3 động cơ phù hợp | ✅ JWT |
 | GET | `/api/projects/:projectId/motors/candidates` | Lấy danh sách ứng viên động cơ | ✅ JWT |
 | POST | `/api/projects/:projectId/motors/select` | Lưu động cơ đã chọn | ✅ JWT |
@@ -624,11 +622,15 @@ Chạy lại seed khi:
 | POST | `/api/projects/:projectId/design/calculate` | Tính toán thiết kế hộp giảm tốc | ✅ JWT |
 | GET | `/api/projects/:projectId/report` | Xuất báo cáo (PDF/DOCX) | ✅ JWT |
 
-### 🧱 Materials
+### 📚 Catalog (Quản lý dữ liệu tra cứu)
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/materials/grades` | Lấy danh sách vật liệu (mác thép) | ❌ |
+| GET | `/api/catalog/:component` | Lấy danh sách catalog (motor, bearing...) | ✅ JWT |
+| GET | `/api/catalog/:component/:id` | Lấy chi tiết catalog theo ID | ✅ JWT |
+| POST | `/api/catalog/:component` | Thêm catalog mới | ✅ JWT + Admin |
+| PUT | `/api/catalog/:component/:id` | Cập nhật catalog | ✅ JWT + Admin |
+| DELETE | `/api/catalog/:component/:id` | Xóa catalog | ✅ JWT + Admin |
 
 > 📖 Xem đầy đủ và test trực tiếp tại: **http://localhost:3069/api-docs**
 
