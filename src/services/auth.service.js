@@ -134,19 +134,18 @@ async requestChangePassword(req) {
         throw new BadRequestException("Mật khẩu cũ không chính xác.");
     }
 
-    // Generate 4 digit OTP
-    const verifyToken = Math.floor(1000 + Math.random() * 9000).toString();
-    const expiryDate = new Date(Date.now() + 5 * 60 * 1000); // 5 phút
+    const changePasswordOtp = Math.floor(1000 + Math.random() * 9000).toString();
+    const expiryDate = new Date(Date.now() + 5 * 60 * 1000);
 
     await prisma.users.update({
         where: { id: userId },
-        data: { 
-            verify_token: verifyToken,
-            verify_token_expiry: expiryDate
+        data: {
+            change_password_token: changePasswordOtp,
+            change_password_token_expiry: expiryDate,
         },
     });
 
-    await mailService.sendChangePasswordOtpEmail(user.email, user.name, verifyToken);
+    await mailService.sendChangePasswordOtpEmail(user.email, user.name, changePasswordOtp);
 
     return true;
 },
@@ -163,11 +162,11 @@ async verifyChangePassword(req) {
         where: { id: userId },
     });
 
-    if (!user || user.verify_token !== otp) {
+    if (!user || user.change_password_token !== otp) {
         throw new BadRequestException("Mã OTP không chính xác.");
     }
 
-    if (user.verify_token_expiry < new Date()) {
+    if (user.change_password_token_expiry < new Date()) {
         throw new BadRequestException("Mã OTP đã hết hạn (quá 5 phút). Vui lòng thử lại.");
     }
 
@@ -175,10 +174,10 @@ async verifyChangePassword(req) {
 
     await prisma.users.update({
         where: { id: userId },
-        data: { 
+        data: {
             password: newPasswordHash,
-            verify_token: null,
-            verify_token_expiry: null,
+            change_password_token: null,
+            change_password_token_expiry: null,
         },
     });
 

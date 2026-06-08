@@ -148,7 +148,7 @@ const selectMotorForProject = async ({ projectId, userId, motorId }) => {
   const [project, motor] = await Promise.all([
     prisma.projects.findFirst({
       where: { id: parsedProjectId, user_id: userId, isDeleted: false },
-      select: { id: true },
+      select: { id: true, step: true },
     }),
     prisma.motors.findFirst({
       where: { id: parsedMotorId, isDeleted: false, is_active: true },
@@ -158,6 +158,14 @@ const selectMotorForProject = async ({ projectId, userId, motorId }) => {
   if (!project) {
     throw new NotfoundException("Dự án không tồn tại");
   }
+
+  const allowedSteps = ['kinematics', 'motor_selected', 'design_done'];
+  if (!allowedSteps.includes(project.step)) {
+    throw new BadRequestException(
+      "Dự án chưa hoàn thành bước tính động học. Vui lòng thực hiện bước Kinematics trước khi chọn động cơ."
+    );
+  }
+
   if (!motor) {
     throw new NotfoundException("Động cơ không tồn tại trong Catalog hiện tại");
   }

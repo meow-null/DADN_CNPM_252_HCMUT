@@ -64,15 +64,40 @@ export const projectService = {
   async update(req) {
     const { projectId } = req.params;
     const userId = req.user.id;
-    const { input_P, input_n_ct, input_L } = req.body;
+    const { name, input_P, input_n_ct, input_L } = req.body;
 
     const errors = [];
-    if (input_P && input_P <= 0) errors.push('Công suất phải là số dương');
-    if (input_n_ct && input_n_ct <= 0) errors.push('Số vòng quay phải là số dương');
-    if (input_L && input_L <= 0) errors.push('Thời gian phục vụ phải là số dương');
-    
-    if (errors.length > 0) {
-      throw new BadRequestException(errors.join('; '));
+    if (name !== undefined) {
+      if (!name || name.trim().length < 1 || name.trim().length > 50)
+        errors.push('Tên dự án phải dài từ 1 đến 50 ký tự');
+    }
+    if (input_P === '') {
+      errors.push('Vui lòng nhập Công suất P');
+    } else if (input_P !== undefined && input_P !== null) {
+      const p = Number(input_P);
+      if (p < 0.01 || p > 55) errors.push('Công suất P phải nằm trong khoảng 0.01 kW đến 55.0 kW');
+    }
+    if (input_n_ct === '') {
+      errors.push('Vui lòng nhập Số vòng quay n');
+    } else if (input_n_ct !== undefined && input_n_ct !== null) {
+      const n = Number(input_n_ct);
+      if (n < 1 || n > 1000) errors.push('Số vòng quay n phải nằm trong khoảng 1 đến 1000 v/p');
+    }
+    if (input_L === '') {
+      errors.push('Vui lòng nhập Thời gian phục vụ L');
+    } else if (input_L !== undefined && input_L !== null) {
+      const l = Number(input_L);
+      if (l < 1 || l > 100) errors.push('Thời gian phục vụ L phải nằm trong khoảng 1 đến 100 năm');
+    }
+
+    if (errors.length > 0) throw new BadRequestException(errors.join('; '));
+
+    if (name) {
+      const existingProject = await prisma.projects.findFirst({
+        where: { user_id: userId, name, isDeleted: false, id: { not: Number(projectId) } },
+      });
+      if (existingProject)
+        throw new BadRequestException('Tên dự án đã tồn tại. Vui lòng chọn tên khác.');
     }
 
     const project = await prisma.projects.findFirst({
@@ -80,12 +105,26 @@ export const projectService = {
     });
     if (!project) throw new NotfoundException('Dự án không tồn tại hoặc không thuộc về bạn');
 
+    const coreInputChanged = input_P !== undefined || input_n_ct !== undefined || input_L !== undefined;
+
     const updatedProject = await prisma.projects.update({
       where: { id: Number(projectId) },
       data: {
-        ...(input_P && { input_P: Number(input_P) }),
-        ...(input_n_ct && { input_n_ct: Number(input_n_ct) }),
-        ...(input_L && { input_L: Number(input_L) }),
+        ...(name !== undefined && { name }),
+        ...(input_P !== undefined && input_P !== null && input_P !== '' && { input_P: Number(input_P) }),
+        ...(input_n_ct !== undefined && input_n_ct !== null && input_n_ct !== '' && { input_n_ct: Number(input_n_ct) }),
+        ...(input_L !== undefined && input_L !== null && input_L !== '' && { input_L: Number(input_L) }),
+        ...(coreInputChanged && {
+          step: 'inputs',
+          efficiency: null,
+          Pct: null,
+          total_ratio: null,
+          transmission: null,
+          shafts: null,
+          selected_motor_id: null,
+          selected_motor_snapshot: null,
+          design_result: null,
+        }),
         updatedAt: new Date(),
       },
       select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true },
