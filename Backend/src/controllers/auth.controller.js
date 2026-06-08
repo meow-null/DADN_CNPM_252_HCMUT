@@ -19,8 +19,16 @@ export const authController = {
 
         const response = responseSuccess(true, `login auths successfully`);
 
-        res.cookie("accessToken", result.accessToken);
-        res.cookie("refreshToken", result.refreshToken);
+        const isProduction = process.env.NODE_ENV === "production" || !req.hostname.includes("localhost");
+        const cookieOptions = {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        };
+
+        res.cookie("accessToken", result.accessToken, cookieOptions);
+        res.cookie("refreshToken", result.refreshToken, cookieOptions);
 
         res.status(response.statusCode).json(response);
     },
@@ -36,8 +44,16 @@ export const authController = {
 
         const response = responseSuccess(true, `refreshToken auths successfully`);
 
-        res.cookie("accessToken", result.accessToken);
-        res.cookie("refreshToken", result.refreshToken);
+        const isProduction = process.env.NODE_ENV === "production" || !req.hostname.includes("localhost");
+        const cookieOptions = {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        };
+
+        res.cookie("accessToken", result.accessToken, cookieOptions);
+        res.cookie("refreshToken", result.refreshToken, cookieOptions);
 
         res.status(response.statusCode).json(response);
     },

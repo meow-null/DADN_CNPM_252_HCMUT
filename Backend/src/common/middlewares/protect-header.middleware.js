@@ -1,6 +1,6 @@
 import { tokenService } from "../../services/token.service.js";
 import { UnauthorizedException } from "../helpers/exception.helper.js";
-import { prisma } from "../prisma/conntect.prisma.js";
+import { prisma } from "../prisma/connect.prisma.js";
 
 export const protect = async (req, res, next) => {
     const authorization = req.headers.authorization;

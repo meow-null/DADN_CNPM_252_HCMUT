@@ -86,6 +86,32 @@ async login(req) {
     return { accessToken, refreshToken };
 },
 
+async refreshToken(req) {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+        throw new UnauthorizedException("Không có refresh token");
+    }
+
+    try {
+        const decode = tokenService.verifyRefreshToken(refreshToken);
+        const userExist = await prisma.users.findUnique({
+            where: { id: decode.userId },
+        });
+
+        if (!userExist) {
+            throw new UnauthorizedException("Người dùng không tồn tại");
+        }
+
+        const newAccessToken = tokenService.createAccessToken(userExist.id);
+        const newRefreshToken = tokenService.createRefreshToken(userExist.id);
+
+        return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+    } catch (error) {
+        throw new UnauthorizedException("Refresh token không hợp lệ hoặc đã hết hạn");
+    }
+},
+
 async getInfo(req) {
     const userInfo = await prisma.users.findUnique({
         where: { id: req.user.id },
