@@ -56,7 +56,23 @@ if (process.env.FRONTEND_URL) {
     allowedOrigins.push(`${formattedOrigin}/`);
 }
 app.use(cors({ 
-    origin: allowedOrigins, 
+    origin: (origin, callback) => {
+        // Cho phép các request không có origin (ví dụ: Mobile app, Postman, server-to-server)
+        if (!origin) return callback(null, true);
+        
+        // Kiểm tra xem origin có nằm trong danh sách được định nghĩa sẵn không
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            return callback(null, true);
+        }
+        
+        // Hỗ trợ Vercel Preview/Branch deployments: Cho phép mọi domain kết thúc bằng .vercel.app
+        if (origin.endsWith(".vercel.app") || origin.endsWith("vercel.app")) {
+            return callback(null, true);
+        }
+        
+        // Chặn các origin khác
+        callback(null, false);
+    },
     credentials: true 
 }));
 
