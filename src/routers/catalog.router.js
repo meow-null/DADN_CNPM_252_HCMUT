@@ -34,6 +34,8 @@ catalogRouter.patch(
     authorizeAdmin,
     motorCatalogController.toggleActive
 );
+catalogRouter.get("/motors/deleted", protect, authorizeAdmin, motorCatalogController.getAllDeleted);
+catalogRouter.patch("/motors/:id/restore", protect, authorizeAdmin, motorCatalogController.restore);
 
 catalogRouter.get("/bearings", protect, bearingCatalogController.getAll);
 catalogRouter.get("/bearings/:id", protect, bearingCatalogController.getById);
@@ -58,6 +60,8 @@ catalogRouter.patch(
     authorizeAdmin,
     bearingCatalogController.toggleActive
 );
+catalogRouter.get("/bearings/deleted", protect, authorizeAdmin, bearingCatalogController.getAllDeleted);
+catalogRouter.patch("/bearings/:id/restore", protect, authorizeAdmin, bearingCatalogController.restore);
 
 catalogRouter.get("/chains", protect, chainCatalogController.getAll);
 catalogRouter.get("/chains/:id", protect, chainCatalogController.getById);
@@ -82,5 +86,7 @@ catalogRouter.patch(
     authorizeAdmin,
     chainCatalogController.toggleActive
 );
+catalogRouter.get("/chains/deleted", protect, authorizeAdmin, chainCatalogController.getAllDeleted);
+catalogRouter.patch("/chains/:id/restore", protect, authorizeAdmin, chainCatalogController.restore);
 
 export default catalogRouter;
