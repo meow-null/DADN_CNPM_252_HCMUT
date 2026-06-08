@@ -118,6 +118,24 @@ const createCatalogHandlers = (modelName, label) => {
                 next(error);
             }
         },
+
+        restore: async (req, res, next) => {
+            try {
+                const { id } = req.params;
+                const adminId = req.user.id;
+                const result = await catalogService.restore(modelName, id, adminId);
+                const response = responseSuccess(
+                    result,
+                    `Phục hồi ${label} thành công`
+                );
+                return res.status(response.statusCode).json(response);
+            } catch (error) {
+                if (error?.code?.startsWith?.("P") || error?.name?.includes?.("Prisma")) {
+                    return next(new ServiceUnavailableException(DB_ERROR_MESSAGE));
+                }
+                next(error);
+            }
+        },
     };
 };
 

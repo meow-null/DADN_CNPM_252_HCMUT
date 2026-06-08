@@ -36,3 +36,27 @@ Bản cập nhật 2.1 cải thiện trải nghiệm người dùng (UX) và gia
   - Hiển thị trực quan thông tin phản hồi lỗi từ Backend ngay trên Delete Modal (ví dụ: khi xóa linh kiện đang được sử dụng trong dự án, hiển thị lỗi ràng buộc khóa ngoại thay vì để trang im lặng hay crash).
 - **Frontend/src/index.css**
   - Thêm keyframes và class `.animate-slide-up` để làm mượt chuyển động xuất hiện của Toast.
+
+# Nhật ký Cập nhật - Update 2.2
+
+Bản cập nhật 2.2 bổ sung thùng rác lưu trữ linh kiện đã bị xóa và cho phép Admin phục hồi (restore) linh kiện:
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Backend (Logic & APIs)
+- **Backend/src/common/helpers/build-query-prisma.helper.js**
+  - Sửa đổi hàm `buildQueryPrisma` để cho phép ghi đè cờ `isDeleted` trong filters truy vấn, thay vì luôn buộc `isDeleted: false`.
+- **Backend/src/services/catalog.service.js**
+  - Sửa hàm `catalogService.getAll` để sử dụng trực tiếp bộ lọc `where` thay vì ghi đè cứng `isDeleted: false`.
+  - Bổ sung hàm `catalogService.restore` để thực hiện phục hồi (phục hồi mềm) linh kiện bằng cách đặt `isDeleted: false` và tự động kích hoạt `is_active: true`.
+- **Backend/src/controllers/catalog.controller.js**
+  - Bổ sung handler `restore` trong bộ khung điều phối `createCatalogHandlers` cho motors, bearings và chains.
+- **Backend/src/routers/catalog.router.js**
+  - Thêm 3 API routes `PATCH /api/catalog/motors/:id/restore`, `bearings/:id/restore` và `chains/:id/restore` với middleware kiểm tra quyền Admin.
+
+### 2. Frontend (Giao diện)
+- **Frontend/src/pages/Catalog.jsx**
+  - Cập nhật logic `fetchData` để hỗ trợ lọc trạng thái `deleted`.
+  - Thêm tùy chọn lọc trạng thái `"Đã xóa"` vào thẻ `<select>` lọc trạng thái (chỉ hiển thị đối với tài khoản Admin).
+  - Khi Admin chọn lọc "Đã xóa", cột trạng thái của các linh kiện sẽ hiển thị badge `"Đã xóa"` màu đỏ nhạt, và cột hành động sẽ hiển thị duy nhất nút **"🔄 Phục hồi"** thay vì các nút sửa/ẩn/xóa thông thường.
+  - Implement hàm `handleRestore` kết nối với API khôi phục linh kiện và thông báo thành công qua Toast khi hoàn thành.

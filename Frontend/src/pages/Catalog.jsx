@@ -106,6 +106,8 @@ export default function Catalog({ onNavigate, currentUser }) {
         filters.is_active = true;
       } else if (activeFilter === 'inactive') {
         filters.is_active = false;
+      } else if (activeFilter === 'deleted') {
+        filters.isDeleted = true;
       }
 
       const queryParams = new URLSearchParams({
@@ -279,6 +281,24 @@ export default function Catalog({ onNavigate, currentUser }) {
     }
   };
 
+  const handleRestore = async (item) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/catalog/${activeTab}/${item.id}/restore`, {
+        method: 'PATCH',
+        credentials: 'include'
+      });
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || payload?.status === 'error') {
+        throw new Error(payload?.message || 'Khôi phục linh kiện thất bại.');
+      }
+      fetchData();
+      const label = activeTab === 'motors' ? `động cơ ${item.code}` : activeTab === 'bearings' ? `ổ lăn ${item.code}` : `bước xích ${item.pitch}mm`;
+      showToastMsg(`Đã khôi phục thành công ${label} vào thư viện!`, 'success');
+    } catch (err) {
+      showToastMsg(err.message, 'error');
+    }
+  };
+
   // Submit Handler for Modal Form
   const handleSubmitForm = async (e) => {
     e.preventDefault();
@@ -446,6 +466,7 @@ export default function Catalog({ onNavigate, currentUser }) {
             <option value="all">Tất cả trạng thái</option>
             <option value="active">Kích hoạt</option>
             <option value="inactive">Đang ẩn</option>
+            {isAdmin && <option value="deleted">Đã xóa</option>}
           </select>
         </div>
 
@@ -571,7 +592,12 @@ export default function Catalog({ onNavigate, currentUser }) {
 
                     {/* STATUS BADGE */}
                     <td className="px-6 py-3.5 text-center">
-                      {item.is_active ? (
+                      {activeFilter === 'deleted' ? (
+                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-full text-[9px] font-extrabold uppercase">
+                          <span className="w-1 h-1 rounded-full bg-rose-500"></span>
+                          Đã xóa
+                        </span>
+                      ) : item.is_active ? (
                         <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[9px] font-extrabold uppercase">
                           <span className="w-1 h-1 rounded-full bg-emerald-500"></span>
                           Hiện
@@ -587,29 +613,43 @@ export default function Catalog({ onNavigate, currentUser }) {
                     {/* ACTIONS (Admin only) */}
                     {isAdmin && (
                       <td className="px-6 py-3.5 text-center pr-8">
-                        <div className="flex items-center justify-center gap-2">
+                        {activeFilter === 'deleted' ? (
                           <button
-                            onClick={() => handleOpenEdit(item)}
-                            className="p-1 text-slate-400 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-premium"
-                            title="Sửa thông số"
+                            type="button"
+                            onClick={() => handleRestore(item)}
+                            className="px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-bold text-[10px] hover:scale-[1.02] shadow-sm shadow-emerald-500/15 transition-premium flex items-center justify-center gap-1 mx-auto"
+                            title="Khôi phục linh kiện"
                           >
-                            ✏️
+                            🔄 Phục hồi
                           </button>
-                          <button
-                            onClick={() => handleToggleActive(item)}
-                            className={`p-1 rounded-lg transition-premium ${item.is_active ? 'text-slate-400 hover:text-amber-600 hover:bg-amber-50' : 'text-slate-400 hover:text-emerald-600 hover:bg-emerald-50'}`}
-                            title={item.is_active ? "Vô hiệu hóa (Ẩn)" : "Kích hoạt (Hiện)"}
-                          >
-                            👁️
-                          </button>
-                          <button
-                            onClick={() => handleOpenDelete(item)}
-                            className="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-premium"
-                            title="Xóa linh kiện"
-                          >
-                            🗑️
-                          </button>
-                        </div>
+                        ) : (
+                          <div className="flex items-center justify-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => handleOpenEdit(item)}
+                              className="p-1 text-slate-400 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-premium"
+                              title="Sửa thông số"
+                            >
+                              ✏️
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleToggleActive(item)}
+                              className={`p-1 rounded-lg transition-premium ${item.is_active ? 'text-slate-400 hover:text-amber-600 hover:bg-amber-50' : 'text-slate-400 hover:text-emerald-600 hover:bg-emerald-50'}`}
+                              title={item.is_active ? "Vô hiệu hóa (Ẩn)" : "Kích hoạt (Hiện)"}
+                            >
+                              👁️
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleOpenDelete(item)}
+                              className="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-premium"
+                              title="Xóa linh kiện"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        )}
                       </td>
                     )}
                   </tr>
