@@ -1,18 +1,17 @@
 # 🚀 DADN252 — Back-end API Server
 
-> Hệ thống back-end phục vụ tính toán thiết kế hệ dẫn động cơ khí gồm: thùng trộn, hộp giảm tốc bánh răng côn trụ, bộ truyền xích, thiết kế trục, chọn động cơ, chọn ổ lăn, then. Xây dựng trên nền tảng **Node.js / Express.js** với kiến trúc phân lớp, container hoá bằng **Docker**, và tích hợp đầy đủ hệ thống **bảo mật — giám sát — logging** cấp production.
+> Hệ thống back-end phục vụ tính toán thiết kế hệ dẫn động cơ khí (kinematics, chọn động cơ, thiết kế hộp giảm tốc), xây dựng trên nền tảng **Node.js / Express.js** với kiến trúc phân lớp rõ ràng và nhiều cơ chế bảo mật hiện đại.
 
 ---
 
 ## 📋 Mục Lục
 
 - [Công Nghệ Sử Dụng](#-công-nghệ-sử-dụng)
-- [Kiến Trúc Hệ Thống](#-kiến-trúc-hệ-thống)
+- [Kiến Trúc Dự Án](#-kiến-trúc-dự-án)
 - [Design Patterns](#-design-patterns)
 - [Cấu Trúc Thư Mục](#-cấu-trúc-thư-mục)
 - [Cài Đặt & Chạy](#-cài-đặt--chạy)
 - [Biến Môi Trường](#-biến-môi-trường)
-- [Dữ Liệu Mẫu](#-dữ-liệu-mẫu)
 - [API Endpoints](#-api-endpoints)
 - [Cơ Sở Dữ Liệu](#-cơ-sở-dữ-liệu)
 
@@ -31,136 +30,125 @@
 
 | Công nghệ | Phiên bản | Mô tả |
 |---|---|---|
-| **MySQL** | 8.0 | Hệ quản trị CSDL quan hệ, chạy trong Docker container |
+| **MySQL** | — | Hệ quản trị CSDL quan hệ |
 | **Prisma ORM** | ^7.4.1 | ORM chính — type-safe, tự sinh model từ schema, hỗ trợ migration |
 | **@prisma/adapter-mariadb** | ^7.4.1 | Adapter để Prisma kết nối MariaDB/MySQL |
 | **Sequelize** | ^6.37.7 | ORM phụ trợ (dự phòng hoặc cho các truy vấn đặc thù) |
 | **mysql2** | ^3.16.3 | Driver kết nối MySQL thuần |
-| **Redis** | Alpine | In-memory cache & session store, chạy trong Docker container |
 
 ### Xác Thực & Bảo Mật
 
 | Công nghệ | Phiên bản | Mô tả |
 |---|---|---|
-| **JSON Web Token (JWT)** | ^9.0.3 | Cơ chế xác thực stateless — Access Token + Refresh Token |
+| **JSON Web Token (JWT)** | ^9.0.3 | Cơ chế xác thực stateless — Access Token (1 ngày) + Refresh Token |
 | **bcrypt** | ^6.0.0 | Hash mật khẩu với salt rounds = 10 |
+| **Passport.js** | ^0.7.0 | Middleware xác thực — hỗ trợ nhiều strategy |
+| **passport-google-oauth20** | ^2.0.0 | Đăng nhập qua Google OAuth 2.0 |
 | **cookie-parser** | ^1.4.7 | Đọc và ghi HTTP cookie (lưu Access/Refresh Token) |
-| **Helmet** | ^8.2.0 | Bảo vệ HTTP headers — chống XSS, Clickjacking, MIME sniffing |
-| **express-rate-limit** | ^8.5.2 | Chống DDoS/brute-force — giới hạn 100 request/15 phút mỗi IP |
-| **Passport.js** | ^0.7.0 | Framework xác thực đa chiến lược |
-| **passport-google-oauth20** | ^2.0.0 | Đăng nhập bằng tài khoản Google (OAuth 2.0) |
-| **Zod** | ^4.4.3 | Schema validation — kiểm tra dữ liệu đầu vào type-safe |
 
-### Giám Sát & Logging (Observability Stack)
-
-| Công nghệ | Phiên bản | Mô tả |
-|---|---|---|
-| **Winston** | ^3.19.0 | Structured logging — ghi log có format, timestamp, level |
-| **winston-elasticsearch** | ^0.19.0 | Transport đẩy log từ Winston vào Elasticsearch |
-| **Elasticsearch** | 8.10.2 | Search engine — lưu trữ và tìm kiếm log tập trung |
-| **Kibana** | 8.10.2 | Dashboard trực quan hoá log từ Elasticsearch |
-| **Prometheus** | Latest | Thu thập metrics hệ thống (CPU, RAM, HTTP requests) |
-| **prom-client** | ^15.1.3 | Thư viện xuất metrics Node.js cho Prometheus scrape |
-| **Grafana** | Latest | Dashboard trực quan hoá metrics từ Prometheus |
-
-### Real-time, Upload & Báo Cáo
+### Real-time & Upload
 
 | Công nghệ | Phiên bản | Mô tả |
 |---|---|---|
 | **Socket.IO** | ^4.8.3 | Giao tiếp real-time hai chiều (WebSocket) |
 | **Multer** | ^2.1.1 | Xử lý `multipart/form-data` — upload file |
-| **Cloudinary** | ^2.10.0 | Lưu trữ và quản lý media trên cloud |
-| **multer-storage-cloudinary** | ^4.0.0 | Storage engine Multer → Cloudinary trực tiếp |
-| **Nodemailer** | ^8.0.10 | Gửi email OTP xác thực, thông báo |
-| **html-pdf-node** | ^1.0.8 | Xuất báo cáo PDF từ HTML template |
-| **html-to-docx** | ^1.8.0 | Xuất báo cáo DOCX từ HTML template |
-| **Marked** | ^18.0.5 | Chuyển đổi Markdown sang HTML |
-| **csv-parser** | ^3.2.0 | Parse file CSV (import dữ liệu tra cứu) |
-| **xlsx** | ^0.18.5 | Đọc/ghi file Excel |
-| **@google/generative-ai** | ^0.24.1 | Tích hợp Google Gemini AI |
+| **Cloudinary** | ^2.9.0 | Lưu trữ và quản lý media trên cloud |
 
-### DevOps & Containerization
+### Tài Liệu & Tiện Ích
 
-| Công nghệ | Mô tả |
-|---|---|
-| **Docker** | Container hoá toàn bộ ứng dụng |
-| **Docker Compose** | Orchestration 7 services: Backend, MySQL, Redis, Elasticsearch, Kibana, Prometheus, Grafana |
-| **Swagger UI** | Tự động sinh tài liệu API tại `/api-docs` |
+| Công nghệ | Phiên bản | Mô tả |
+|---|---|---|
+| **swagger-ui-express** | ^5.0.1 | Tự động sinh tài liệu API tại `/api-docs` |
+| **cors** | ^2.8.6 | Xử lý Cross-Origin Resource Sharing |
+| **dotenv** | ^17.3.1 | Quản lý biến môi trường từ file `.env` |
+| **nodemon** | ^3.1.11 | Tự động restart server khi code thay đổi (dev) |
+| **kill-port** | ^2.0.1 | Giải phóng port trước khi start (tránh conflict) |
 
 ---
 
-## 🏗️ Kiến Trúc Hệ Thống
+## 🏗️ Kiến Trúc Dự Án
 
-### Kiến trúc phân lớp (Layered Architecture)
+### Sơ đồ triển khai (Railway + Vercel)
 
+```mermaid
+graph TB
+    subgraph USERS["🌐 Người dùng"]
+        Browser["🖥️ Browser"]
+        Mobile["📱 Mobile"]
+    end
+
+    subgraph VERCEL["💚 Vercel — Frontend"]
+        FE["⚛️ React + Vite<br/>SSR / Static<br/>Auto SSL + CDN"]
+    end
+
+    subgraph RAILWAY["🚂 Railway — Backend"]
+        direction TB
+
+        subgraph APP_SVC["⚡ Backend Service"]
+            BE["🟢 Express.js :3069<br/>Socket.IO • JWT • Prisma<br/>Health Check /health"]
+        end
+
+        subgraph DATA_SVC["💾 Railway Plugins"]
+            MySQL["🐬 MySQL 8.0<br/>Managed Database<br/>Auto Backup"]
+            Redis["⚡ Redis<br/>Managed Cache<br/>Persistent"]
+        end
+    end
+
+    subgraph EXTERNAL["☁️ External Services"]
+        Cloudinary["☁️ Cloudinary<br/>Image CDN"]
+        Google["🔐 Google OAuth 2.0"]
+        Email["📧 Nodemailer"]
+    end
+
+    Browser -->|"HTTPS"| FE
+    Mobile -->|"HTTPS"| FE
+    FE -->|"API Calls<br/>HTTPS + WebSocket"| BE
+
+    BE -->|"Prisma ORM"| MySQL
+    BE -->|"Cache"| Redis
+
+    BE --> Cloudinary
+    BE --> Google
+    BE --> Email
+
+    style VERCEL fill:#000,stroke:#00dc82,color:#fff
+    style RAILWAY fill:#1a1a2e,stroke:#7c3aed,color:#fff
+    style APP_SVC fill:#16213e,stroke:#e94560,color:#fff
+    style DATA_SVC fill:#16213e,stroke:#0ea5e9,color:#fff
+    style EXTERNAL fill:#1a1a2e,stroke:#10b981,color:#fff
 ```
+
+### Kiến trúc bên trong (Layered Architecture)
+
+Dự án áp dụng kiến trúc **Layered Architecture (3 tầng)** — mỗi lớp chỉ giao tiếp với lớp liền kề, đảm bảo tách biệt trách nhiệm (Separation of Concerns).
+
+```text
 HTTP Request
      │
      ▼
-┌──────────────┐
-│   Helmet     │  Bảo vệ HTTP headers (XSS, Clickjack, MIME)
-└──────┬───────┘
+┌─────────────┐
+│   Router    │  Định tuyến URL → Controller tương ứng
+└──────┬──────┘
        │
        ▼
-┌──────────────┐
-│  Rate Limit  │  Chống DDoS (100 req/15 phút/IP)
-└──────┬───────┘
+┌─────────────┐
+│ Middleware  │  Xác thực token, log API, bảo vệ route
+└──────┬──────┘
        │
        ▼
-┌──────────────┐
-│    CORS      │  Cho phép origin localhost:3000/5173/5174
-└──────┬───────┘
+┌─────────────┐
+│ Controller  │  Nhận request, gọi Service, trả về response
+└──────┬──────┘
        │
        ▼
-┌──────────────┐
-│   Router     │  Định tuyến URL → Controller tương ứng
-└──────┬───────┘
+┌─────────────┐
+│   Service   │  Chứa toàn bộ business logic, gọi Prisma
+└──────┬──────┘
        │
        ▼
-┌──────────────┐
-│  Middleware   │  Xác thực JWT, log API, validate Zod
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│  Controller  │  Nhận request, gọi Service, trả response
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│   Service    │  Business logic, gọi Prisma/Redis
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│  Prisma ORM  │  Tương tác với MySQL database
-└──────────────┘
-```
-
-### Kiến trúc Docker Compose (7 services)
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Docker Network                       │
-│                                                         │
-│  ┌──────────┐  ┌──────────┐  ┌───────────────────────┐  │
-│  │  Backend  │  │  MySQL   │  │   Redis (Cache)       │  │
-│  │  :3069   │──│  :3307   │  │   :6379               │  │
-│  └──────────┘  └──────────┘  └───────────────────────┘  │
-│       │                                                  │
-│       │ logs ──────────────────────────┐                 │
-│       │ metrics ────────┐              │                 │
-│       ▼                 ▼              ▼                 │
-│  ┌──────────┐    ┌────────────┐  ┌──────────────┐       │
-│  │Prometheus│───▶│  Grafana   │  │Elasticsearch │       │
-│  │  :9090   │    │   :3000    │  │   :9200      │       │
-│  └──────────┘    └────────────┘  └──────┬───────┘       │
-│                                         │               │
-│                                   ┌─────▼──────┐        │
-│                                   │   Kibana    │        │
-│                                   │   :5601     │        │
-│                                   └────────────┘        │
-└─────────────────────────────────────────────────────────┘
+┌─────────────┐
+│  Prisma ORM │  Tương tác với MySQL database
+└─────────────┘
 ```
 
 ---
@@ -173,6 +161,7 @@ HTTP Request
 
 **Mô tả:** Toàn bộ nghiệp vụ (business logic) được tách biệt hoàn toàn khỏi Controller vào lớp Service. Controller chỉ đơn giản nhận request, chuyển cho Service xử lý và trả về response — không tự tính toán hay truy vấn database trực tiếp.
 
+**Ví dụ:**
 ```javascript
 // kinematics.service.js — tính toán động học
 export const kinematicsService = {
@@ -180,6 +169,7 @@ export const kinematicsService = {
     const project = await prisma.projects.findFirst({ ... });
     const eta = round3(ETA.kn * eta_ol4 * ETA.brc * ETA.brt * ETA.x);
     const P_ct = round3(P / eta);
+    // ... toàn bộ nghiệp vụ tính toán tại đây
     await prisma.projects.update({ data: { efficiency: eta, ... } });
     return { project, kinematics: { eta, P_ct, ... } };
   }
@@ -203,17 +193,16 @@ export const kinematicsController = {
 **Mô tả:** Request đi qua một chuỗi middleware theo thứ tự, mỗi middleware xử lý một mối quan tâm riêng biệt rồi chuyển tiếp (`next()`) cho middleware kế tiếp. Chuỗi có thể bị ngắt bất cứ lúc nào (ví dụ: token không hợp lệ).
 
 ```
-helmet → rateLimit → cors → json parser → cookieParser → logApi → protect → controller
+cors → json parser → cookieParser → logApi → protect → controller
 ```
 
+**Ví dụ:**
 ```javascript
-// server.js — chuỗi bảo mật đầy đủ
-app.use(helmet());                    // Bảo vệ HTTP headers
-app.use(limiter);                     // Chống DDoS
-app.use(cors({ origin: [...] }));     // CORS
-app.use(express.json());              // Parse JSON body
-app.use(cookieParser());              // Parse cookie
-app.use(logApi("product"));           // Log mọi request ra terminal
+// server.js
+app.use(cors({ origin: ["http://localhost:3000"] }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(logApi("product"));  // log mọi request
 
 // protect.middleware.js — middleware xác thực JWT
 export const protect = async (req, res, next) => {
@@ -221,7 +210,7 @@ export const protect = async (req, res, next) => {
   if (!accessToken) throw new UnauthorizedException("Không có token");
   const decode = tokenService.verifyAccessToken(accessToken);
   req.user = await prisma.users.findUnique({ where: { id: decode.userId } });
-  next();
+  next(); // chuyển tiếp nếu hợp lệ
 };
 ```
 
@@ -270,12 +259,16 @@ export class UnauthorizedException extends Error {
 export class NotfoundException extends Error {
   code = statusCodes.NOT_FOUND; // 404
 }
+// ... 9 loại Exception khác (Forbidden, Conflict, v.v.)
 
-// app-error.helper.js — Global Error Handler
+// app-error.helper.js — Global Error Handler (middleware đặc biệt 4 tham số)
 export const appError = (err, req, res, next) => {
   const response = responseError(err?.message, err?.code, err?.stack);
   res.status(response.statusCode).json(response);
 };
+
+// server.js — đăng ký cuối cùng
+app.use(appError);
 ```
 
 ---
@@ -286,6 +279,25 @@ export const appError = (err, req, res, next) => {
 
 **Mô tả:** Toàn bộ response trả về client đều có cùng một cấu trúc chuẩn (DTO), giúp Frontend dễ dàng xử lý nhất quán.
 
+```javascript
+// response.helper.js
+export const responseSuccess = (data, message, statusCode) => ({
+  status: "success",
+  statusCode: statusCode,
+  message: message,
+  data: data,
+  doc: "swagger.com",
+});
+
+export const responseError = (message, statusCode, stack) => ({
+  status: "error",
+  statusCode: statusCode,
+  message: message,
+  doc: "swagger.com",
+});
+```
+
+**Response mẫu:**
 ```json
 {
   "status": "success",
@@ -298,13 +310,43 @@ export const appError = (err, req, res, next) => {
 
 ---
 
-### 6. 🗃️ Repository Pattern (qua Prisma ORM)
+### 6. 🔑 Strategy Pattern (OAuth2 Authentication)
+
+**Vị trí:** `src/common/passport/login-google.passport.js`
+
+**Mô tả:** Sử dụng **Passport.js** áp dụng Strategy Pattern — cho phép thay đổi/bổ sung phương thức xác thực mà không làm ảnh hưởng đến phần còn lại của ứng dụng. Hiện tại triển khai `GoogleStrategy` (OAuth 2.0).
+
+```javascript
+// login-google.passport.js
+export const initLoginGooglePassport = () => {
+  passport.use(
+    new GoogleStrategy(
+      { clientID, clientSecret, callbackURL },
+      async (accessTokenGG, refreshTokenGG, profile, cb) => {
+        // Tìm hoặc tạo user từ thông tin Google profile
+        let user = await prisma.users.findUnique({ where: { email } });
+        if (!user) user = await prisma.users.create({ data: { email, ... } });
+
+        // Cấp JWT của hệ thống
+        const accessToken  = tokenService.createAccessToken(user.id);
+        const refreshToken = tokenService.createRefreshToken(user.id);
+        return cb(null, { accessToken, refreshToken });
+      }
+    )
+  );
+};
+```
+
+---
+
+### 7. 🗃️ Repository Pattern (qua Prisma ORM)
 
 **Vị trí:** Toàn bộ `src/services/*.service.js` — sử dụng `prisma.*`
 
 **Mô tả:** Prisma đóng vai trò là lớp **Data Access / Repository**, trừu tượng hóa toàn bộ tương tác với database. Service không viết SQL thuần mà chỉ gọi qua Prisma API type-safe.
 
 ```javascript
+// Prisma đóng gói toàn bộ SQL phía dưới
 const project = await prisma.projects.findFirst({
   where: { id: Number(projectId), user_id: userId, isDeleted: false },
 });
@@ -317,7 +359,7 @@ await prisma.projects.update({
 
 ---
 
-### 7. 🛤️ Router Aggregation Pattern
+### 8. 🛤️ Router Aggregation Pattern
 
 **Vị trí:** `src/routers/root.router.js`
 
@@ -326,19 +368,15 @@ await prisma.projects.update({
 ```javascript
 // root.router.js
 const rootRouter = express.Router();
-rootRouter.use("/auth", authRouter);
-rootRouter.use("/user", userRouter);
+rootRouter.use("/auth",     authRouter);
+rootRouter.use("/user",     userRouter);
 rootRouter.use("/projects", inputRouter);
 rootRouter.use("/projects", kinematicsRouter);
-rootRouter.use("/motors", motorRouter);
-rootRouter.use("/projects/:projectId/motors", motorRouter);
-rootRouter.use("/projects/:projectId/design", designRouter);
-rootRouter.use("/projects/:projectId/report", reportRouter);
-rootRouter.use("/materials", materialRouter);
 export default rootRouter;
 
 // server.js
 app.use("/api", rootRouter);
+// → /api/auth/login, /api/user/profile, /api/projects/:id/kinematics
 ```
 
 ---
@@ -346,98 +384,66 @@ app.use("/api", rootRouter);
 ## 📁 Cấu Trúc Thư Mục
 
 ```
-expressjs/
-├── server.js                        # Entry point — khởi động app + bảo mật
-├── package.json
-├── Dockerfile                       # Build image cho Docker
-├── docker-compose.yml               # Orchestration 7 services
-├── prometheus.yml                   # Cấu hình Prometheus scrape
-├── prisma.config.ts
-├── .env                             # Biến môi trường (GIT IGNORED)
-├── .gitignore
-├── prisma/
-│   ├── schema.prisma                # Định nghĩa schema database
-│   ├── seed.js                      # Nạp dữ liệu mẫu từ CSV vào DB
-│   └── data/                        # Dữ liệu CSV cho seed
-│       ├── material_grades.csv
-│       ├── bearing_catalog.csv
-│       ├── chain_params.csv
-│       └── ...
-└── src/
-    ├── routers/                     # Định tuyến HTTP
-    │   ├── root.router.js           # Gom toàn bộ sub-router
-    │   ├── auth.router.js
-    │   ├── user.router.js
-    │   ├── input.router.js          # CRUD projects
-    │   ├── kinematics.router.js
-    │   ├── motor.router.js
-    │   ├── design.router.js
-    │   ├── material.router.js
-    │   ├── catalog.router.js
-    │   └── report.router.js
-    ├── controllers/                 # Nhận request, trả response
-    │   ├── auth.controller.js
-    │   ├── user.controller.js
-    │   ├── input.controller.js
-    │   ├── kinematics.controller.js
-    │   ├── motor.controller.js
-    │   ├── design.controller.js
-    │   ├── material.controller.js
-    │   ├── catalog.controller.js
-    │   └── report.controller.js
-    ├── services/                    # Business logic
-    │   ├── auth.service.js
-    │   ├── user.service.js
-    │   ├── input.service.js
-    │   ├── kinematics.service.js
-    │   ├── motor.service.js
-    │   ├── design.service.js
-    │   ├── material.service.js
-    │   ├── report.service.js
-    │   ├── catalog.service.js
-    │   ├── mail.service.js          # Gửi email OTP (Nodemailer)
-    │   └── token.service.js
-    ├── models/
-    │   └── users.model.js
-    └── common/                      # Dùng chung toàn ứng dụng
-        ├── constant/
-        │   └── app.constant.js      # Hằng số môi trường
-        ├── helpers/
-        │   ├── exception.helper.js  # Custom exception classes
-        │   ├── response.helper.js   # Chuẩn hóa response
-        │   ├── app-error.helper.js  # Global error handler
-        │   ├── logger.helper.js     # Winston → Elasticsearch logger
-        │   ├── metrics.helper.js    # Prometheus metrics endpoint
-        │   ├── build-query-prisma.helper.js
-        │   └── status-code.helper.js
-        ├── middlewares/
-        │   ├── authorize.middleware.js       # Phân quyền Admin
-        │   ├── protect.middleware.js         # JWT authentication guard
-        │   ├── protect-header.middleware.js  # JWT từ Authorization header
-        │   ├── log-api.middleware.js         # Request logging ra terminal
-        │   └── zod.middleware.js             # Zod schema validation
-        ├── passport/
-        │   └── login-google.passport.js     # Google OAuth 2.0 strategy
-        ├── prisma/
-        │   ├── connect.prisma.js            # Singleton Prisma Client
-        │   └── generated/prisma/            # Auto-generated Prisma types
-        ├── redis/
-        │   └── redis.client.js              # Redis client singleton
-        ├── schema/
-        │   ├── auth.schema.js               # Zod validation schemas
-        │   └── catalog.schema.js
-        ├── sequelize/
-        │   └── connect.sequelize.js
-        ├── socket/
-        │   └── init.socket.js               # Socket.IO initialization
-        ├── multer/
-        │   ├── cloudinary.config.js         # Upload → Cloudinary
-        │   ├── disk-storage.multer.js       # Upload → local disk
-        │   └── memory-storage.multer.js     # Upload → memory buffer
-        └── swagger/
-            ├── init.swagger.js
-            ├── auth.swagger.js
-            └── user.swagger.js
+DADN252/
+├── DADN_252.sql                     # Script khởi tạo database
+├── requirement.txt                  # Yêu cầu dự án
+└── expressjs/
+    ├── server.js                    # Entry point — khởi động app
+    ├── package.json
+    ├── prisma.config.ts
+    ├── .env                         # Biến môi trường
+    ├── prisma/
+    │   └── schema.prisma            # Định nghĩa schema database
+    └── src/
+        ├── routers/                 # Định tuyến HTTP
+        │   ├── root.router.js
+        │   ├── auth.router.js
+        │   ├── user.router.js
+        │   ├── input.router.js
+        │   ├── kinematics.router.js
+        │   ├── design.router.js
+        │   └── recommadation.router.js
+        ├── controllers/             # Nhận request, trả response
+        │   ├── auth.controller.js
+        │   ├── user.controller.js
+        │   ├── input.controller.js
+        │   ├── kinematics.controller.js
+        │   ├── design.controller.js
+        │   └── recommendation.controller.js
+        ├── services/                # Business logic
+        │   ├── auth.service.js
+        │   ├── user.service.js
+        │   ├── input.service.js
+        │   ├── kinematics.service.js
+        │   └── token.service.js
+        ├── models/                  # Model (Sequelize)
+        │   └── users.model.js
+        └── common/                  # Dùng chung toàn ứng dụng
+            ├── constant/
+            │   └── app.constant.js  # Hằng số môi trường
+            ├── helpers/
+            │   ├── exception.helper.js      # Custom exception classes
+            │   ├── response.helper.js       # Chuẩn hóa response
+            │   ├── app-error.helper.js      # Global error handler
+            │   ├── build-query-prisma.helper.js
+            │   └── status-code.helper.js    # HTTP status codes
+            ├── middlewares/
+            │   ├── protect.middleware.js     # JWT authentication guard
+            │   ├── protect-header.middleware.js
+            │   └── log-api.middleware.js     # Request logging
+            ├── passport/
+            │   └── login-google.passport.js  # Google OAuth2 strategy
+            ├── prisma/
+            │   ├── connect.prisma.js         # Singleton Prisma Client
+            │   └── generated/prisma/         # Auto-generated Prisma types
+            ├── sequelize/                    # Sequelize config
+            ├── socket/
+            │   └── init.socket.js            # Socket.IO initialization
+            ├── multer/                       # File upload config
+            └── swagger/
+                ├── init.swagger.js           # Swagger document setup
+                ├── auth.swagger.js
+                └── user.swagger.js
 ```
 
 ---
@@ -447,50 +453,54 @@ expressjs/
 ### Yêu cầu hệ thống
 
 - Node.js >= 18.x
-- Docker Desktop (cho MySQL, Redis, ELK, Grafana)
+- MySQL >= 8.x hoặc MariaDB >= 10.x
 
-### Cách 1: Chạy full stack bằng Docker (Khuyên dùng)
+### Các bước cài đặt
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/meow-null/DADN_CNPM_252_HCMUT.git
+git clone <repo-url>
 
 # 2. Di chuyển vào thư mục backend
-cd DADN_CNPM_252_HCMUT
-git checkout Backend
-cd expressjs
+cd DADN252/expressjs
 
-# 3. Tạo file .env (xem mục Biến Môi Trường bên dưới)
-
-# 4. Build và chạy toàn bộ 7 services
-docker compose up -d --build
-
-# 5. Nạp dữ liệu tra cứu mẫu (chạy lần đầu)
-node prisma/seed.js
-```
-
-### Cách 2: Chạy Backend trên máy thật + Docker chỉ cho DB/Redis/ELK
-
-```bash
-# 1. Bật Database, Redis, Elasticsearch
-docker compose up -d db redis elasticsearch
-
-# 2. Cài đặt dependencies
+# 3. Cài đặt dependencies
 npm install
 
-# 3. Generate Prisma Client
+# 4. Tạo file .env (tham khảo mục Biến Môi Trường bên dưới)
+cp .env.example .env
+
+# 5. Import database schema
+mysql -u root -p < ../DADN_252.sql
+
+# 6. Kéo schema từ database và generate Prisma Client
 npm run prisma
 
-# 4. Chạy server development (auto-restart khi code thay đổi)
+# 7. Chạy server ở chế độ development
 npm run dev
 ```
 
-> 🌐 Server: **http://localhost:3069**
-> 📖 API Docs (Swagger): **http://localhost:3069/api-docs**
-> 📊 Grafana Dashboard: **http://localhost:3000**
-> 🔍 Kibana (Log viewer): **http://localhost:5601**
-> 📈 Prometheus: **http://localhost:9090**
-> 📡 Metrics endpoint: **http://localhost:3069/metrics**
+> Server sẽ chạy tại: **http://localhost:3069**  
+> Tài liệu API Swagger: **http://localhost:3069/api-docs**
+
+---
+
+## 🚀 Hướng Dẫn Deploy (Railway + Vercel)
+
+Hệ thống được tối ưu hóa để triển khai trên Railway (Backend) và Vercel (Frontend). Đã bao gồm `Dockerfile` production-ready (multi-stage) và `railway.toml`.
+
+### Railway (Backend)
+1. Tạo project trên Railway và connect với repo GitHub của bạn (nhánh backend).
+2. Thêm **MySQL Plugin** và **Redis Plugin** từ Railway Dashboard.
+3. Cấu hình biến môi trường trên Railway (xem mục Biến Môi Trường).
+   - *Lưu ý: Railway sẽ tự tạo `DATABASE_URL` và `REDIS_URL`.*
+   - Thêm `FRONTEND_URL=https://<your-vercel-app>.vercel.app` để cấu hình CORS.
+4. Deploy! Server cung cấp `/health` endpoint để Railway tự động kiểm tra trạng thái hoạt động.
+
+### Vercel (Frontend)
+1. Tạo project trên Vercel và connect với repo GitHub của bạn (nhánh frontend).
+2. Thiết lập biến môi trường: `VITE_API_URL=https://<your-railway-app>.up.railway.app`.
+3. Deploy! Vercel sẽ tự động build.
 
 ---
 
@@ -500,139 +510,42 @@ Tạo file `.env` trong thư mục `expressjs/` với nội dung sau:
 
 ```env
 # Database
-DATABASE_URL="mysql://root:123456@localhost:3307/DADN252"
+DATABASE_URL="mysql://user:password@localhost:3306/dadn252"
 
 # JWT Secrets
 ACCESS_TOKEN_SECRET=your_access_token_secret_here
 REFRESH_TOKEN_SECRET=your_refresh_token_secret_here
 
-# Google OAuth 2.0
+# Google OAuth2
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 # Cloudinary (Upload ảnh)
-CLOUDINARY_URL="cloudinary://api_key:api_secret@cloud_name"
-
-# Email (Nodemailer / Brevo SMTP)
-BREVO_SMTP_USER="your_brevo_smtp_user"
-BREVO_SENDER_EMAIL="your_brevo_sender_email"
-BREVO_SMTP_PASS="your_brevo_smtp_pass"
-
-# ELK (tự động inject khi chạy Docker Compose)
-ELASTICSEARCH_URL=http://localhost:9200
-
-# Redis (tự động inject khi chạy Docker Compose)
-REDIS_URL=redis://localhost:6379
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
-
----
-
-## 🛡️ Bảo Mật & Chống Tấn Công
-
-| Tính năng | Mô tả |
-|---|---|
-| **Helmet** | Thiết lập 15+ HTTP security headers — chống XSS, Clickjacking, MIME sniffing, DNS prefetch |
-| **Rate Limiting** | Giới hạn 100 request/15 phút cho mỗi IP — chống DDoS, brute-force |
-| **JWT (HttpOnly Cookie)** | Token lưu trong cookie HttpOnly — chống XSS đánh cắp token |
-| **bcrypt** | Hash mật khẩu với salt 10 rounds — chống rainbow table |
-| **CORS** | Chỉ cho phép các origin được whitelist |
-| **Zod Validation** | Validate input type-safe — chống injection, dữ liệu bẩn |
-| **OTP Email** | Xác thực 2 bước qua email khi đổi mật khẩu |
-
----
-
-## 📊 Giám Sát & Logging
-
-| Thành phần | URL | Mô tả |
-|---|---|---|
-| **Prometheus** | `http://localhost:9090` | Thu thập metrics: CPU, RAM, HTTP request count, response time |
-| **Grafana** | `http://localhost:3000` | Dashboard trực quan hoá metrics (mặc định admin/admin) |
-| **Elasticsearch** | `http://localhost:9200` | Lưu trữ log tập trung |
-| **Kibana** | `http://localhost:5601` | Tìm kiếm và trực quan hoá log |
-| **Metrics Endpoint** | `http://localhost:3069/metrics` | Endpoint Prometheus scrape (prom-client) |
-
----
-
-## 🌱 Dữ Liệu Mẫu
-
-File `prisma/seed.js` dùng để nạp lại các bảng tra cứu từ CSV trong `prisma/data/`.
-
-Script hiện tại import các nhóm dữ liệu sau:
-
-- `material_grades` — Cơ tính vật liệu (mác thép)
-- `standard_modules` — Dãy mô đun tiêu chuẩn
-- `standard_center_distances` — Dãy khoảng cách trục tiêu chuẩn
-- `standard_shaft_diameters` — Dãy đường kính trục tiêu chuẩn
-- `standard_key_lengths` — Dãy chiều dài then tiêu chuẩn
-- `key_dimensions` — Bảng tra kích thước then
-- `chains` — Bảng tra xích truyền động
-- `bearings` — Bảng tra ổ lăn
-- `motors` — Bảng tra động cơ điện
-
-Chạy lại seed khi:
-
-- Database vừa được tạo mới
-- Cần đồng bộ lại dữ liệu tra cứu sau khi thay đổi file CSV
-- Muốn nạp thêm danh sách động cơ, bạc đạn hoặc xích mới
 
 ---
 
 ## 🌐 API Endpoints
 
-### 🔑 Authentication
-
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/auth/get-info` | Lấy thông tin người dùng hiện tại | ✅ JWT |
-| POST | `/api/auth/request-change-password` | Yêu cầu đổi mật khẩu (gửi OTP qua email) | ✅ JWT |
-| POST | `/api/auth/verify-change-password` | Xác thực OTP & đổi mật khẩu | ✅ JWT |
-
-### 👤 Users
-
-| Method | Endpoint | Mô tả | Auth |
-|--------|----------|-------|------|
-| POST | `/api/user/avatar-local` | Upload avatar xuống local storage | ✅ JWT |
-| POST | `/api/user/avatar-cloud` | Upload avatar lên Cloudinary | ✅ JWT |
-
-### 📐 Projects (CRUD + Tính Toán)
-
-| Method | Endpoint | Mô tả | Auth |
-|--------|----------|-------|------|
+| POST | `/api/auth/register` | Đăng ký tài khoản | ✅ JWT |
+| POST | `/api/auth/login` | Đăng nhập | ✅ JWT |
+| POST | `/api/auth/refresh-token` | Làm mới Access Token | ✅ JWT |
+| GET | `/api/auth/google` | Đăng nhập qua Google | - |
+| GET | `/api/auth/me` | Lấy thông tin người dùng hiện tại | ✅ JWT |
+| GET | `/api/user/profile` | Xem profile | ✅ JWT |
 | POST | `/api/projects` | Tạo project mới | ✅ JWT |
-| GET | `/api/projects` | Lấy danh sách project | ✅ JWT |
 | GET | `/api/projects/:id` | Lấy thông tin project | ✅ JWT |
-| PUT | `/api/projects/:id` | Cập nhật project | ✅ JWT |
-| DELETE | `/api/projects/:id` | Xoá project (soft delete) | ✅ JWT |
-| PATCH | `/api/projects/:id/cover` | Upload ảnh bìa project lên Cloudinary | ✅ JWT |
-| POST | `/api/projects/:id/kinematics` | Tính toán động học | ✅ JWT |
+| POST | `/api/projects/:id/kinematics` | Tính toán động học |✅ JWT |
 | GET | `/api/projects/:id/kinematics` | Lấy kết quả động học | ✅ JWT |
+|
 
-### ⚙️ Motors
 
-| Method | Endpoint | Mô tả | Auth |
-|--------|----------|-------|------|
-| GET | `/api/projects/:projectId/motors/suggestions` | Gợi ý top 3 động cơ phù hợp | ✅ JWT |
-| GET | `/api/projects/:projectId/motors/candidates` | Lấy danh sách ứng viên động cơ | ✅ JWT |
-| POST | `/api/projects/:projectId/motors/select` | Lưu động cơ đã chọn | ✅ JWT |
-
-### 🔧 Design & Report
-
-| Method | Endpoint | Mô tả | Auth |
-|--------|----------|-------|------|
-| POST | `/api/projects/:projectId/design/calculate` | Tính toán thiết kế hộp giảm tốc | ✅ JWT |
-| GET | `/api/projects/:projectId/report` | Xuất báo cáo (PDF/DOCX) | ✅ JWT |
-
-### 📚 Catalog (Quản lý dữ liệu tra cứu)
-
-| Method | Endpoint | Mô tả | Auth |
-|--------|----------|-------|------|
-| GET | `/api/catalog/:component` | Lấy danh sách catalog (motor, bearing...) | ✅ JWT |
-| GET | `/api/catalog/:component/:id` | Lấy chi tiết catalog theo ID | ✅ JWT |
-| POST | `/api/catalog/:component` | Thêm catalog mới | ✅ JWT + Admin |
-| PUT | `/api/catalog/:component/:id` | Cập nhật catalog | ✅ JWT + Admin |
-| DELETE | `/api/catalog/:component/:id` | Xóa catalog | ✅ JWT + Admin |
-
-> 📖 Xem đầy đủ và test trực tiếp tại: **http://localhost:3069/api-docs**
+> 📖 Xem đầy đủ tại: **http://localhost:3069/api-docs**
 
 ---
 
@@ -652,20 +565,12 @@ projects
  ├── efficiency, Pct, total_ratio    (kết quả động học)
  ├── transmission, shafts (JSON)     (kết quả chi tiết)
  ├── selected_motor_id → motors
- ├── selected_motor_snapshot (JSON)
- ├── design_result (JSON)
  ├── step: created → inputs → kinematics → motor_selected → design_done
  └── isDeleted (soft delete)
 
-material_grades          — bảng tra cứu cơ tính vật liệu
-standard_modules         — dãy mô đun tiêu chuẩn
-standard_center_distances — dãy khoảng cách trục tiêu chuẩn
-standard_shaft_diameters — dãy đường kính trục tiêu chuẩn
-standard_key_lengths     — dãy chiều dài then tiêu chuẩn
-key_dimensions           — bảng tra cứu kích thước then
-motors                   — bảng tra cứu động cơ điện
-bearings                 — bảng tra cứu ổ lăn
-chains                   — bảng tra cứu xích truyền động
+motors     — bảng tra cứu động cơ điện
+bearings   — bảng tra cứu ổ lăn
+chains     — bảng tra cứu xích truyền động
 ```
 
 ---
@@ -681,7 +586,6 @@ chains                   — bảng tra cứu xích truyền động
 ---
 
 <div align="center">
-  <strong>DADN252 — Đồ Án Đại Học · HCMUT</strong><br/>
-  Xây dựng với ❤️ bằng Node.js & Express.js<br/>
-  <sub>Bảo mật bởi Helmet · Rate Limit · JWT · Zod | Giám sát bởi ELK · Prometheus · Grafana</sub>
+  <strong>DADN252 — Đồ Án Đa Ngành · HCMUT</strong><br/>
+  Xây dựng với ❤️ bằng Node.js & Express.js
 </div>

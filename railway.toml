@@ -1,0 +1,20 @@
+# ==============================
+# Railway Deployment Configuration
+# ==============================
+
+[build]
+# Use Dockerfile for building
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Health check endpoint
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+
+# Restart policy
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 5
+
+# Number of replicas (1 for free plan)
+numReplicas = 1

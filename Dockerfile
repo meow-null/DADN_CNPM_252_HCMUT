@@ -1,24 +1,52 @@
-# Sử dụng bản Node.js gọn nhẹ
-FROM node:20-alpine
+# ==============================
+# Stage 1: Build dependencies
+# ==============================
+FROM node:20-alpine AS builder
 
-# Thư mục làm việc bên trong container
 WORKDIR /app
 
-# Copy các file quản lý thư viện vào trước để tận dụng Docker cache
+# Copy package files first for Docker cache optimization
 COPY package.json package-lock.json ./
 
-# Cài đặt thư viện
-RUN npm install
+# Install all dependencies (including devDependencies for Prisma)
+RUN npm ci --omit=dev && \
+    # Install prisma CLI separately since it's in devDependencies
+    npm install prisma@latest
 
-# Copy file database schema vào và generate prisma client
+# Copy Prisma schema and generate client
 COPY prisma ./prisma
+COPY prisma.config.ts ./
 RUN npx prisma generate
 
-# Copy toàn bộ source code còn lại vào
+# ==============================
+# Stage 2: Production image
+# ==============================
+FROM node:20-alpine AS production
+
+# Security: run as non-root user
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -S appuser -u 1001 -G appgroup
+
+WORKDIR /app
+
+# Copy node_modules and generated Prisma client from builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
+
+# Copy source code
 COPY . .
 
-# Mở port mà app đang chạy
+# Change ownership to non-root user
+RUN chown -R appuser:appgroup /app
+
+USER appuser
+
+# Expose port
 EXPOSE 3069
 
-# Lệnh khởi chạy server
-CMD ["npm", "run", "start"]
+# Health check - Railway will use this to verify the service is running
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3069/health || exit 1
+
+# Start server
+CMD ["node", "server.js"]
