@@ -118,6 +118,40 @@ const createCatalogHandlers = (modelName, label) => {
                 next(error);
             }
         },
+
+        getAllDeleted: async (req, res, next) => {
+            try {
+                const result = await catalogService.getAllDeleted(modelName, req);
+                const response = responseSuccess(
+                    result,
+                    `Lấy danh sách ${label} đã xóa thành công`
+                );
+                return res.status(response.statusCode).json(response);
+            } catch (error) {
+                if (error?.code?.startsWith?.("P") || error?.name?.includes?.("Prisma")) {
+                    return next(new ServiceUnavailableException(DB_ERROR_MESSAGE));
+                }
+                next(error);
+            }
+        },
+
+        restore: async (req, res, next) => {
+            try {
+                const { id } = req.params;
+                const adminId = req.user.id;
+                const result = await catalogService.restore(modelName, id, adminId);
+                const response = responseSuccess(
+                    result,
+                    `Khôi phục ${label} thành công`
+                );
+                return res.status(response.statusCode).json(response);
+            } catch (error) {
+                if (error?.code?.startsWith?.("P") || error?.name?.includes?.("Prisma")) {
+                    return next(new ServiceUnavailableException(DB_ERROR_MESSAGE));
+                }
+                next(error);
+            }
+        },
     };
 };
 

@@ -4,6 +4,7 @@ services:
   db:
     image: mysql:8.0
     container_name: express_db
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=DADN252
@@ -11,10 +12,18 @@ services:
       - "3307:3306"
     volumes:
       - ./mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
 
   backend:
     build: .
     container_name: express_backend
+    restart: unless-stopped
     ports:
       - "3069:3069"
     environment:
@@ -23,49 +32,106 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - DATABASE_URL=mysql://root:123456@db:3306/DADN252
     depends_on:
-      - redis
-      - elasticsearch
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     env_file:
       - .env
+    networks:
+      - app-network
+      - monitor-network
 
   redis:
     image: redis:alpine
     container_name: express_redis
+    restart: unless-stopped
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
     container_name: express_elasticsearch
+    restart: unless-stopped
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
     ports:
       - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
     mem_limit: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - app-network
+      - monitor-network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.10.2
     container_name: express_kibana
+    restart: unless-stopped
     ports:
       - "5601:5601"
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - monitor-network
 
   prometheus:
     image: prom/prometheus
     container_name: express_prometheus
+    restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
     ports:
       - "9090:9090"
+    networks:
+      - monitor-network
 
   grafana:
     image: grafana/grafana
     container_name: express_grafana
+    restart: unless-stopped
     ports:
       - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
     depends_on:
       - prometheus
+    networks:
+      - monitor-network
+
+# Persistent volumes — dữ liệu không mất khi restart containers
+volumes:
+  redis_data:
+  es_data:
+  prometheus_data:
+  grafana_data:
+
+# Tách network: app không truy cập monitoring, monitoring không truy cập database trực tiếp
+networks:
+  app-network:
+    driver: bridge
+  monitor-network:
+    driver: bridge

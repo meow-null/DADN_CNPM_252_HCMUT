@@ -10,5 +10,16 @@ export const materialController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  async getMaterialGradeById(req, res, next) {
+    try {
+      const { gradeId } = req.params;
+      const result = await materialService.getMaterialGradeById(gradeId);
+      const response = responseSuccess(result, "Lấy chi tiết vật liệu thành công.");
+      res.status(response.statusCode).json(response);
+    } catch (error) {
+      next(error);
+    }
   }
 };
