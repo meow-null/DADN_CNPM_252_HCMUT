@@ -215,6 +215,8 @@ exports.Prisma.UsersScalarFieldEnum = {
   is_verified: 'is_verified',
   verify_token: 'verify_token',
   verify_token_expiry: 'verify_token_expiry',
+  change_password_token: 'change_password_token',
+  change_password_token_expiry: 'change_password_token_expiry',
   deletedBy: 'deletedBy',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
@@ -327,7 +329,8 @@ exports.Prisma.usersOrderByRelevanceFieldEnum = {
   password: 'password',
   avatar_url: 'avatar_url',
   reset_token: 'reset_token',
-  verify_token: 'verify_token'
+  verify_token: 'verify_token',
+  change_password_token: 'change_password_token'
 };
 
 exports.Prisma.material_gradesOrderByRelevanceFieldEnum = {

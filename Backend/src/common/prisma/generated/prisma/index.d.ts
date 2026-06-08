@@ -6556,6 +6556,8 @@ export namespace Prisma {
     is_verified: boolean | null
     verify_token: string | null
     verify_token_expiry: Date | null
+    change_password_token: string | null
+    change_password_token_expiry: Date | null
     deletedBy: number | null
     isDeleted: boolean | null
     deletedAt: Date | null
@@ -6575,6 +6577,8 @@ export namespace Prisma {
     is_verified: boolean | null
     verify_token: string | null
     verify_token_expiry: Date | null
+    change_password_token: string | null
+    change_password_token_expiry: Date | null
     deletedBy: number | null
     isDeleted: boolean | null
     deletedAt: Date | null
@@ -6594,6 +6598,8 @@ export namespace Prisma {
     is_verified: number
     verify_token: number
     verify_token_expiry: number
+    change_password_token: number
+    change_password_token_expiry: number
     deletedBy: number
     isDeleted: number
     deletedAt: number
@@ -6625,6 +6631,8 @@ export namespace Prisma {
     is_verified?: true
     verify_token?: true
     verify_token_expiry?: true
+    change_password_token?: true
+    change_password_token_expiry?: true
     deletedBy?: true
     isDeleted?: true
     deletedAt?: true
@@ -6644,6 +6652,8 @@ export namespace Prisma {
     is_verified?: true
     verify_token?: true
     verify_token_expiry?: true
+    change_password_token?: true
+    change_password_token_expiry?: true
     deletedBy?: true
     isDeleted?: true
     deletedAt?: true
@@ -6663,6 +6673,8 @@ export namespace Prisma {
     is_verified?: true
     verify_token?: true
     verify_token_expiry?: true
+    change_password_token?: true
+    change_password_token_expiry?: true
     deletedBy?: true
     isDeleted?: true
     deletedAt?: true
@@ -6769,6 +6781,8 @@ export namespace Prisma {
     is_verified: boolean | null
     verify_token: string | null
     verify_token_expiry: Date | null
+    change_password_token: string | null
+    change_password_token_expiry: Date | null
     deletedBy: number | null
     isDeleted: boolean | null
     deletedAt: Date | null
@@ -6807,6 +6821,8 @@ export namespace Prisma {
     is_verified?: boolean
     verify_token?: boolean
     verify_token_expiry?: boolean
+    change_password_token?: boolean
+    change_password_token_expiry?: boolean
     deletedBy?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
@@ -6830,6 +6846,8 @@ export namespace Prisma {
     is_verified?: boolean
     verify_token?: boolean
     verify_token_expiry?: boolean
+    change_password_token?: boolean
+    change_password_token_expiry?: boolean
     deletedBy?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
@@ -6837,7 +6855,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "avatar_url" | "role" | "reset_token" | "reset_token_expiry" | "is_verified" | "verify_token" | "verify_token_expiry" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
+  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "avatar_url" | "role" | "reset_token" | "reset_token_expiry" | "is_verified" | "verify_token" | "verify_token_expiry" | "change_password_token" | "change_password_token_expiry" | "deletedBy" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
   export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projects?: boolean | users$projectsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -6860,6 +6878,8 @@ export namespace Prisma {
       is_verified: boolean | null
       verify_token: string | null
       verify_token_expiry: Date | null
+      change_password_token: string | null
+      change_password_token_expiry: Date | null
       deletedBy: number | null
       isDeleted: boolean | null
       deletedAt: Date | null
@@ -7246,6 +7266,8 @@ export namespace Prisma {
     readonly is_verified: FieldRef<"users", 'Boolean'>
     readonly verify_token: FieldRef<"users", 'String'>
     readonly verify_token_expiry: FieldRef<"users", 'DateTime'>
+    readonly change_password_token: FieldRef<"users", 'String'>
+    readonly change_password_token_expiry: FieldRef<"users", 'DateTime'>
     readonly deletedBy: FieldRef<"users", 'Int'>
     readonly isDeleted: FieldRef<"users", 'Boolean'>
     readonly deletedAt: FieldRef<"users", 'DateTime'>
@@ -15233,6 +15255,8 @@ export namespace Prisma {
     is_verified: 'is_verified',
     verify_token: 'verify_token',
     verify_token_expiry: 'verify_token_expiry',
+    change_password_token: 'change_password_token',
+    change_password_token_expiry: 'change_password_token_expiry',
     deletedBy: 'deletedBy',
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
@@ -15396,7 +15420,8 @@ export namespace Prisma {
     password: 'password',
     avatar_url: 'avatar_url',
     reset_token: 'reset_token',
-    verify_token: 'verify_token'
+    verify_token: 'verify_token',
+    change_password_token: 'change_password_token'
   };
 
   export type usersOrderByRelevanceFieldEnum = (typeof usersOrderByRelevanceFieldEnum)[keyof typeof usersOrderByRelevanceFieldEnum]
@@ -15996,6 +16021,8 @@ export namespace Prisma {
     is_verified?: BoolNullableFilter<"users"> | boolean | null
     verify_token?: StringNullableFilter<"users"> | string | null
     verify_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
+    change_password_token?: StringNullableFilter<"users"> | string | null
+    change_password_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
     deletedBy?: IntNullableFilter<"users"> | number | null
     isDeleted?: BoolNullableFilter<"users"> | boolean | null
     deletedAt?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -16016,6 +16043,8 @@ export namespace Prisma {
     is_verified?: SortOrderInput | SortOrder
     verify_token?: SortOrderInput | SortOrder
     verify_token_expiry?: SortOrderInput | SortOrder
+    change_password_token?: SortOrderInput | SortOrder
+    change_password_token_expiry?: SortOrderInput | SortOrder
     deletedBy?: SortOrderInput | SortOrder
     isDeleted?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -16040,6 +16069,8 @@ export namespace Prisma {
     is_verified?: BoolNullableFilter<"users"> | boolean | null
     verify_token?: StringNullableFilter<"users"> | string | null
     verify_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
+    change_password_token?: StringNullableFilter<"users"> | string | null
+    change_password_token_expiry?: DateTimeNullableFilter<"users"> | Date | string | null
     deletedBy?: IntNullableFilter<"users"> | number | null
     isDeleted?: BoolNullableFilter<"users"> | boolean | null
     deletedAt?: DateTimeNullableFilter<"users"> | Date | string | null
@@ -16060,6 +16091,8 @@ export namespace Prisma {
     is_verified?: SortOrderInput | SortOrder
     verify_token?: SortOrderInput | SortOrder
     verify_token_expiry?: SortOrderInput | SortOrder
+    change_password_token?: SortOrderInput | SortOrder
+    change_password_token_expiry?: SortOrderInput | SortOrder
     deletedBy?: SortOrderInput | SortOrder
     isDeleted?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -16087,6 +16120,8 @@ export namespace Prisma {
     is_verified?: BoolNullableWithAggregatesFilter<"users"> | boolean | null
     verify_token?: StringNullableWithAggregatesFilter<"users"> | string | null
     verify_token_expiry?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
+    change_password_token?: StringNullableWithAggregatesFilter<"users"> | string | null
+    change_password_token_expiry?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
     deletedBy?: IntNullableWithAggregatesFilter<"users"> | number | null
     isDeleted?: BoolNullableWithAggregatesFilter<"users"> | boolean | null
     deletedAt?: DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
@@ -17082,6 +17117,8 @@ export namespace Prisma {
     is_verified?: boolean | null
     verify_token?: string | null
     verify_token_expiry?: Date | string | null
+    change_password_token?: string | null
+    change_password_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -17102,6 +17139,8 @@ export namespace Prisma {
     is_verified?: boolean | null
     verify_token?: string | null
     verify_token_expiry?: Date | string | null
+    change_password_token?: string | null
+    change_password_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -17121,6 +17160,8 @@ export namespace Prisma {
     is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verify_token?: NullableStringFieldUpdateOperationsInput | string | null
     verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    change_password_token?: NullableStringFieldUpdateOperationsInput | string | null
+    change_password_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17141,6 +17182,8 @@ export namespace Prisma {
     is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verify_token?: NullableStringFieldUpdateOperationsInput | string | null
     verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    change_password_token?: NullableStringFieldUpdateOperationsInput | string | null
+    change_password_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17161,6 +17204,8 @@ export namespace Prisma {
     is_verified?: boolean | null
     verify_token?: string | null
     verify_token_expiry?: Date | string | null
+    change_password_token?: string | null
+    change_password_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -17179,6 +17224,8 @@ export namespace Prisma {
     is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verify_token?: NullableStringFieldUpdateOperationsInput | string | null
     verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    change_password_token?: NullableStringFieldUpdateOperationsInput | string | null
+    change_password_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17198,6 +17245,8 @@ export namespace Prisma {
     is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verify_token?: NullableStringFieldUpdateOperationsInput | string | null
     verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    change_password_token?: NullableStringFieldUpdateOperationsInput | string | null
+    change_password_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18296,6 +18345,8 @@ export namespace Prisma {
     is_verified?: SortOrder
     verify_token?: SortOrder
     verify_token_expiry?: SortOrder
+    change_password_token?: SortOrder
+    change_password_token_expiry?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
@@ -18320,6 +18371,8 @@ export namespace Prisma {
     is_verified?: SortOrder
     verify_token?: SortOrder
     verify_token_expiry?: SortOrder
+    change_password_token?: SortOrder
+    change_password_token_expiry?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
@@ -18339,6 +18392,8 @@ export namespace Prisma {
     is_verified?: SortOrder
     verify_token?: SortOrder
     verify_token_expiry?: SortOrder
+    change_password_token?: SortOrder
+    change_password_token_expiry?: SortOrder
     deletedBy?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
@@ -19344,6 +19399,8 @@ export namespace Prisma {
     is_verified?: boolean | null
     verify_token?: string | null
     verify_token_expiry?: Date | string | null
+    change_password_token?: string | null
+    change_password_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -19363,6 +19420,8 @@ export namespace Prisma {
     is_verified?: boolean | null
     verify_token?: string | null
     verify_token_expiry?: Date | string | null
+    change_password_token?: string | null
+    change_password_token_expiry?: Date | string | null
     deletedBy?: number | null
     isDeleted?: boolean | null
     deletedAt?: Date | string | null
@@ -19465,6 +19524,8 @@ export namespace Prisma {
     is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verify_token?: NullableStringFieldUpdateOperationsInput | string | null
     verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    change_password_token?: NullableStringFieldUpdateOperationsInput | string | null
+    change_password_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19484,6 +19545,8 @@ export namespace Prisma {
     is_verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     verify_token?: NullableStringFieldUpdateOperationsInput | string | null
     verify_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    change_password_token?: NullableStringFieldUpdateOperationsInput | string | null
+    change_password_token_expiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedBy?: NullableIntFieldUpdateOperationsInput | number | null
     isDeleted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

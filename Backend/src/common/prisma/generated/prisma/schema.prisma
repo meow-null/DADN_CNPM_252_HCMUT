@@ -101,23 +101,25 @@ model projects {
 }
 
 model users {
-  id                  Int         @id @default(autoincrement())
-  name                String      @db.VarChar(100)
-  email               String      @unique(map: "email") @db.VarChar(150)
-  password            String      @db.VarChar(255)
-  avatar_url          String?     @db.VarChar(500)
-  role                users_role? @default(user)
-  reset_token         String?     @db.VarChar(255)
-  reset_token_expiry  DateTime?   @db.DateTime(0)
-  is_verified         Boolean?    @default(false)
-  verify_token        String?     @db.VarChar(255)
-  verify_token_expiry DateTime?   @db.DateTime(0)
-  deletedBy           Int?        @default(0)
-  isDeleted           Boolean?    @default(false)
-  deletedAt           DateTime?   @db.Timestamp(0)
-  createdAt           DateTime?   @default(now()) @db.Timestamp(0)
-  updatedAt           DateTime?   @default(now()) @db.Timestamp(0)
-  projects            projects[]
+  id                           Int         @id @default(autoincrement())
+  name                         String      @db.VarChar(100)
+  email                        String      @unique(map: "email") @db.VarChar(150)
+  password                     String      @db.VarChar(255)
+  avatar_url                   String?     @db.VarChar(500)
+  role                         users_role? @default(user)
+  reset_token                  String?     @db.VarChar(255)
+  reset_token_expiry           DateTime?   @db.DateTime(0)
+  is_verified                  Boolean?    @default(false)
+  verify_token                 String?     @db.VarChar(255)
+  verify_token_expiry          DateTime?   @db.DateTime(0)
+  change_password_token        String?     @db.VarChar(255)
+  change_password_token_expiry DateTime?   @db.DateTime(0)
+  deletedBy                    Int?        @default(0)
+  isDeleted                    Boolean?    @default(false)
+  deletedAt                    DateTime?   @db.Timestamp(0)
+  createdAt                    DateTime?   @default(now()) @db.Timestamp(0)
+  updatedAt                    DateTime?   @default(now()) @db.Timestamp(0)
+  projects                     projects[]
 }
 
 model material_grades {
