@@ -1,5 +1,5 @@
 # ==============================
-# Stage 1: Build dependencies
+# Stage 1: Build dependencies and generate Prisma client
 # ==============================
 FROM node:20-alpine AS builder
 
@@ -8,15 +8,16 @@ WORKDIR /app
 # Copy package files first for Docker cache optimization
 COPY package.json package-lock.json ./
 
-# Install all dependencies (including devDependencies for Prisma)
-RUN npm ci --omit=dev && \
-    # Install prisma CLI separately since it's in devDependencies
-    npm install prisma@latest
+# Install all dependencies (including devDependencies for Prisma generate)
+RUN npm ci --legacy-peer-deps
 
 # Copy Prisma schema and generate client
 COPY prisma ./prisma
 COPY prisma.config.ts ./
 RUN npx prisma generate
+
+# Prune devDependencies to keep production image light
+RUN npm prune --omit=dev
 
 # ==============================
 # Stage 2: Production image
