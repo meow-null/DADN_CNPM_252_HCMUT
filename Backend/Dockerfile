@@ -14,10 +14,11 @@ RUN npm ci --legacy-peer-deps
 # Copy Prisma schema and generate client
 COPY prisma ./prisma
 COPY prisma.config.ts ./
+ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
 RUN npx prisma generate
 
 # Prune devDependencies to keep production image light
-RUN npm prune --omit=dev
+RUN npm prune --omit=dev --legacy-peer-deps
 
 # ==============================
 # Stage 2: Production image
