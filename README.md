@@ -578,11 +578,11 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| POST | `/api/auth/register` | Đăng ký tài khoản | ❌ |
-| POST | `/api/auth/verify-otp` | Xác thực OTP đăng ký | ❌ |
-| POST | `/api/auth/login` | Đăng nhập | ❌ |
+| POST | `/api/auth/register` | Đăng ký tài khoản | - |
+| POST | `/api/auth/verify-otp` | Xác thực OTP đăng ký | - |
+| POST | `/api/auth/login` | Đăng nhập | - |
 | GET | `/api/auth/get-info` | Lấy thông tin người dùng hiện tại | ✅ JWT |
-| POST | `/api/auth/refresh-token` | Làm mới Access Token | ❌ |
+| POST | `/api/auth/refresh-token` | Làm mới Access Token | - |
 | POST | `/api/auth/request-change-password` | Yêu cầu đổi mật khẩu (gửi OTP qua email) | ✅ JWT |
 | POST | `/api/auth/verify-change-password` | Xác thực OTP & đổi mật khẩu | ✅ JWT |
 
@@ -590,8 +590,8 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/user` | Lấy danh sách user | ❌ |
-| GET | `/api/user/:id` | Lấy chi tiết user | ❌ |
+| GET | `/api/user` | Lấy danh sách user | - |
+| GET | `/api/user/:id` | Lấy chi tiết user | - |
 | POST | `/api/user/avatar-local` | Upload avatar xuống local storage | ✅ JWT |
 | POST | `/api/user/avatar-cloud` | Upload avatar lên Cloudinary | ✅ JWT |
 
@@ -612,7 +612,7 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/motors` | Lấy toàn bộ danh sách động cơ | ❌ |
+| GET | `/api/motors` | Lấy toàn bộ danh sách động cơ | - |
 | GET | `/api/projects/:projectId/motors/suggestions` | Gợi ý top 3 động cơ phù hợp | ✅ JWT |
 | GET | `/api/projects/:projectId/motors/candidates` | Lấy danh sách ứng viên động cơ | ✅ JWT |
 | POST | `/api/projects/:projectId/motors/select` | Lưu động cơ đã chọn | ✅ JWT |
@@ -628,7 +628,7 @@ Chạy lại seed khi:
 
 | Method | Endpoint | Mô tả | Auth |
 |--------|----------|-------|------|
-| GET | `/api/materials/grades` | Lấy danh sách vật liệu (mác thép) | ❌ |
+| GET | `/api/materials/grades` | Lấy danh sách vật liệu (mác thép) | - |
 
 > 📖 Xem đầy đủ và test trực tiếp tại: **http://localhost:3069/api-docs**
 
