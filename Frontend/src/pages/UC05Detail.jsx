@@ -150,6 +150,8 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   useEffect(() => {
     if (activeProject?.design_result) {
       setResults(activeProject.design_result);
+    } else {
+      setResults(null);
     }
   }, [activeProject]);
 

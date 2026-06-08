@@ -131,9 +131,11 @@ function App() {
             T_out: data.shafts?.T_out,
           },
         });
+      } else {
+        setKinematics(null);
       }
     } catch {
-      // Keep existing kinematics if fetch fails
+      setKinematics(null);
     }
   };
 
