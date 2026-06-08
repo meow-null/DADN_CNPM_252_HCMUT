@@ -26,6 +26,23 @@ export default function Catalog({ onNavigate, currentUser }) {
   const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
+  // Delete modal states
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingItem, setDeletingItem] = useState(null);
+  const [deleteError, setDeleteError] = useState('');
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false);
+
+  // Toast notification state
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
+  
+  const showToastMsg = (message, type = 'success') => {
+    setToast({ show: true, message, type });
+    const timer = setTimeout(() => {
+      setToast(prev => ({ ...prev, show: false }));
+    }, 4500);
+    return () => clearTimeout(timer);
+  };
+
   // Form states
   const [motorForm, setMotorForm] = useState({
     code: '',
@@ -223,19 +240,26 @@ export default function Catalog({ onNavigate, currentUser }) {
         throw new Error(payload?.message || 'Thao tác thay đổi trạng thái thất bại.');
       }
       fetchData();
+      const label = activeTab === 'motors' ? `động cơ ${item.code}` : activeTab === 'bearings' ? `ổ lăn ${item.code}` : `bước xích ${item.pitch}mm`;
+      showToastMsg(`Đã ${item.is_active ? 'ẩn' : 'kích hoạt'} thành công ${label}!`);
     } catch (err) {
-      alert("Lỗi: " + err.message);
+      showToastMsg(err.message, 'error');
     }
   };
 
-  // Hard Delete / Archive handler
-  const handleDelete = async (item) => {
-    const label = activeTab === 'motors' ? `động cơ ${item.code}` : activeTab === 'bearings' ? `ổ lăn ${item.code}` : `bước xích ${item.pitch}mm`;
-    const confirm = window.confirm(`Bạn có chắc chắn muốn XÓA linh kiện [${label}] khỏi CSDL? Hành động này không thể hoàn tác nếu linh kiện chưa được sử dụng ở dự án nào.`);
-    if (!confirm) return;
+  // Hard Delete / Archive handler (opens confirmation modal)
+  const handleOpenDelete = (item) => {
+    setDeletingItem(item);
+    setDeleteError('');
+    setShowDeleteModal(true);
+  };
 
+  const executeDelete = async () => {
+    if (!deletingItem) return;
+    setDeleteSubmitting(true);
+    setDeleteError('');
     try {
-      const response = await fetch(`${API_BASE_URL}/catalog/${activeTab}/${item.id}`, {
+      const response = await fetch(`${API_BASE_URL}/catalog/${activeTab}/${deletingItem.id}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -243,9 +267,15 @@ export default function Catalog({ onNavigate, currentUser }) {
       if (!response.ok || payload?.status === 'error') {
         throw new Error(payload?.message || 'Xóa linh kiện thất bại.');
       }
+      setShowDeleteModal(false);
+      const label = activeTab === 'motors' ? `động cơ ${deletingItem.code}` : activeTab === 'bearings' ? `ổ lăn ${deletingItem.code}` : `bước xích ${deletingItem.pitch}mm`;
+      setDeletingItem(null);
       fetchData();
+      showToastMsg(`Đã xóa thành công ${label} khỏi cơ sở dữ liệu!`);
     } catch (err) {
-      alert("Lỗi xóa linh kiện: " + err.message);
+      setDeleteError(err.message);
+    } finally {
+      setDeleteSubmitting(false);
     }
   };
 
@@ -326,6 +356,13 @@ export default function Catalog({ onNavigate, currentUser }) {
 
       setShowModal(false);
       fetchData();
+      const label = activeTab === 'motors' ? `động cơ ${bodyData.code}` : activeTab === 'bearings' ? `ổ lăn ${bodyData.code}` : `bước xích ${bodyData.pitch}mm`;
+      showToastMsg(
+        modalType === 'create'
+          ? `Đã thêm mới thành công ${label} vào thư viện!`
+          : `Đã cập nhật thành công thông số cho ${label}!`,
+        'success'
+      );
     } catch (err) {
       setFormError(err.message);
     } finally {
@@ -338,7 +375,7 @@ export default function Catalog({ onNavigate, currentUser }) {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
-          <h2 className="text-2xl font-black text-slate-800 font-heading tracking-tight">Thư viện Linh kiện (Catalog)</h2>
+          <h2 className="text-2xl font-black text-slate-800 font-heading tracking-tight">Thư viện Linh kiện</h2>
           <p className="text-xs text-slate-400 font-semibold mt-1">
             Tra cứu và quản trị cơ sở dữ liệu động cơ, đĩa xích, và vòng ổ lăn tiêu chuẩn.
           </p>
@@ -566,7 +603,7 @@ export default function Catalog({ onNavigate, currentUser }) {
                             👁️
                           </button>
                           <button
-                            onClick={() => handleDelete(item)}
+                            onClick={() => handleOpenDelete(item)}
                             className="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-premium"
                             title="Xóa linh kiện"
                           >
@@ -914,6 +951,89 @@ export default function Catalog({ onNavigate, currentUser }) {
               </div>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {showDeleteModal && deletingItem && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center z-50 animate-fade-in" onClick={() => setShowDeleteModal(false)}>
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative border border-slate-100 animate-fade-in" onClick={e => e.stopPropagation()}>
+            <button className="absolute top-5 right-5 text-slate-400 hover:text-slate-650 transition-colors" onClick={() => setShowDeleteModal(false)}>
+              ✕
+            </button>
+            
+            <div className="p-6 text-center">
+              {/* Warning Icon */}
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-rose-100 text-rose-600 mb-4 font-bold text-xl">
+                ⚠️
+              </div>
+              
+              <h3 className="text-base font-black text-slate-900 font-heading mb-2">
+                Xác nhận xóa linh kiện
+              </h3>
+              
+              <p className="text-xs text-slate-500 font-semibold px-2 mb-4 leading-relaxed">
+                Bạn có chắc chắn muốn XÓA linh kiện{' '}
+                <span className="font-bold text-slate-800">
+                  [{activeTab === 'motors' ? `động cơ ${deletingItem.code}` : activeTab === 'bearings' ? `ổ lăn ${deletingItem.code}` : `bước xích ${deletingItem.pitch}mm`}]
+                </span>{' '}
+                khỏi cơ sở dữ liệu?
+              </p>
+              
+              <p className="text-[10px] text-slate-450 italic px-2 mb-4 leading-relaxed">
+                Hành động này không thể hoàn tác nếu linh kiện chưa được sử dụng ở dự án nào.
+              </p>
+
+              {deleteError && (
+                <div className="mt-3 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 rounded-2xl text-[11px] font-semibold text-left leading-relaxed">
+                  <div className="font-bold mb-1">Không thể xóa linh kiện:</div>
+                  {deleteError}
+                </div>
+              )}
+            </div>
+
+            {/* Modal Actions */}
+            <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2.5 border border-slate-200 rounded-2xl font-bold text-xs bg-white text-slate-500 hover:bg-slate-50 transition-premium shadow-sm"
+              >
+                Hủy bỏ
+              </button>
+              <button
+                type="button"
+                disabled={deleteSubmitting}
+                onClick={executeDelete}
+                className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl hover:scale-[1.02] shadow-md shadow-rose-500/15 disabled:opacity-50 transition-premium text-xs"
+              >
+                {deleteSubmitting ? 'Đang xóa...' : 'Đồng ý xóa'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className="fixed bottom-6 right-6 z-[99] max-w-sm w-full bg-white/95 backdrop-blur-md border border-slate-200/60 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.15)] p-4 animate-slide-up flex items-start gap-3">
+          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 font-bold text-sm ${toast.type === 'success' ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
+            {toast.type === 'success' ? '✓' : '✕'}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-slate-800">
+              {toast.type === 'success' ? 'Thao tác thành công' : 'Thông báo'}
+            </p>
+            <p className="text-[11px] text-slate-500 font-semibold mt-0.5 leading-relaxed">
+              {toast.message}
+            </p>
+          </div>
+          <button 
+            onClick={() => setToast(prev => ({ ...prev, show: false }))} 
+            className="text-slate-400 hover:text-slate-600 text-xs font-bold shrink-0 self-start"
+          >
+            ✕
+          </button>
         </div>
       )}
     </div>

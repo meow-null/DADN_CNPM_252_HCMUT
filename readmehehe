@@ -19,3 +19,20 @@ Bản cập nhật 2.0 tập trung sửa đổi các lỗi liên quan đến thu
 ### 2. Frontend (Giao diện)
 - **Frontend/src/pages/UC05Detail.jsx**
   - Cập nhật giao diện kiểm nghiệm then hiển thị đúng các giá trị chiều sâu rãnh then `t1` và `t2` nhờ đồng bộ key trả về từ API.
+
+# Nhật ký Cập nhật - Update 2.1
+
+Bản cập nhật 2.1 cải thiện trải nghiệm người dùng (UX) và giao diện quản trị linh kiện (Catalog) cho Admin:
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Frontend (Giao diện & Trải nghiệm người dùng)
+- **Frontend/src/components/Sidebar.jsx**
+  - Đổi tên thương hiệu từ "CAD/CAM" thành "BK Gear" ở phần Header của Sidebar.
+- **Frontend/src/pages/Catalog.jsx**
+  - Loại bỏ hậu tố "(Catalog)" khỏi tiêu đề trang "Thư viện Linh kiện".
+  - Thêm hệ thống thông báo Toast nổi (floating toast) hiển thị góc dưới màn hình khi thêm mới, sửa hoặc ẩn/hiện thành công linh kiện với nội dung chi tiết.
+  - Thay thế hộp thoại xóa linh kiện mặc định của trình duyệt (`window.confirm` và `alert`) bằng giao diện Modal Xác nhận xóa tự chế (Custom Delete Modal) đồng bộ thẩm mỹ với hệ thống.
+  - Hiển thị trực quan thông tin phản hồi lỗi từ Backend ngay trên Delete Modal (ví dụ: khi xóa linh kiện đang được sử dụng trong dự án, hiển thị lỗi ràng buộc khóa ngoại thay vì để trang im lặng hay crash).
+- **Frontend/src/index.css**
+  - Thêm keyframes và class `.animate-slide-up` để làm mượt chuyển động xuất hiện của Toast.
