@@ -254,6 +254,34 @@ const toggleActive = async (modelName, id, adminId) => {
     }
 };
 
+const getAllDeleted = async (modelName, req) => {
+    const delegate = getModelDelegate(modelName);
+    const { index, page, pageSize, where } = buildQueryPrisma(req);
+
+    try {
+        const [items, totalItem] = await Promise.all([
+            delegate.findMany({
+                where: { ...where, isDeleted: true },
+                skip: index,
+                take: pageSize,
+                orderBy: { deletedAt: "desc" },
+            }),
+            delegate.count({
+                where: { ...where, isDeleted: true },
+            }),
+        ]);
+
+        const totalPage = Math.ceil(totalItem / pageSize);
+
+        return { totalItem, totalPage, page, pageSize, items };
+    } catch (error) {
+        if (error?.code?.startsWith?.("P") || error?.name?.includes?.("Prisma")) {
+            throw new ServiceUnavailableException(DB_ERROR_MESSAGE);
+        }
+        throw error;
+    }
+};
+
 const restore = async (modelName, id, adminId) => {
     const delegate = getModelDelegate(modelName);
     const label = getModelLabel(modelName);
@@ -268,7 +296,7 @@ const restore = async (modelName, id, adminId) => {
     });
 
     if (!existing) {
-        throw new NotfoundException(`${label} không tồn tại trong thùng rác hoặc không thể phục hồi`);
+        throw new NotfoundException(`${label} không tồn tại hoặc chưa bị xóa`);
     }
 
     try {
@@ -277,6 +305,8 @@ const restore = async (modelName, id, adminId) => {
             data: {
                 isDeleted: false,
                 is_active: true,
+                deletedAt: null,
+                deletedBy: null,
                 updatedAt: new Date(),
             },
         });
@@ -292,10 +322,12 @@ const restore = async (modelName, id, adminId) => {
 
 export const catalogService = {
     getAll,
+    getAllDeleted,
     getById,
     create,
     update,
     softDelete,
+    restore,
     toggleActive,
     restore,
 };

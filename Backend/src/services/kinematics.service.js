@@ -27,7 +27,9 @@ export const kinematicsService = {
     });
     if (!project) throw new NotfoundException('Dự án không tồn tại');
 
-    if (!project.input_P || !project.input_n_ct || !project.input_L)
+    if (project.input_P === null || project.input_P === undefined ||
+        project.input_n_ct === null || project.input_n_ct === undefined ||
+        project.input_L === null || project.input_L === undefined)
       throw new BadRequestException('Dữ liệu đầu vào bị gián đoạn. Vui lòng nhập lại thông số');
 
     const P = Number(project.input_P);

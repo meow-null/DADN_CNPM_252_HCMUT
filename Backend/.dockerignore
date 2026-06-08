@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log*
+.env
+.env.*
+.git
+.gitignore
+mysql_data
+README.md
+docker-compose.yml
+prometheus.yml
+*.md
+.DS_Store

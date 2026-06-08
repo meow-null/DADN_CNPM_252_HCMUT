@@ -37,6 +37,19 @@ app.get("/metrics", metricsEndpoint);
 //     res.setHeader("access-control-allow-origin", "*")
 //     next();
 // });
+const allowedOrigins = [
+    "http://localhost:3000", 
+    "http://localhost:5173", 
+    "http://localhost:5174",
+    "http://127.0.0.1:5173", 
+    "http://127.0.0.1:5174"
+];
+// Thêm domain Vercel frontend từ biến môi trường (khi deploy production)
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+}
+app.use(cors({ 
+    origin: allowedOrigins, 
 app.use(cors({ 
     origin: [
         "http://localhost:3000", 
@@ -64,6 +77,30 @@ app.use(express.static("public"));
 // swwagger
 // http://localhost:3069/api-docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Health Check endpoint — Railway sẽ dùng endpoint này để kiểm tra service còn sống không
+app.get("/health", async (req, res) => {
+    try {
+        // Kiểm tra kết nối database
+        const { prisma } = await import("./src/common/prisma/connect.prisma.js");
+        await prisma.$queryRaw`SELECT 1`;
+        res.status(200).json({
+            status: "healthy",
+            timestamp: new Date().toISOString(),
+            uptime: process.uptime(),
+            services: {
+                database: "connected",
+                server: "running",
+            },
+        });
+    } catch (error) {
+        res.status(503).json({
+            status: "unhealthy",
+            timestamp: new Date().toISOString(),
+            error: error.message,
+        });
+    }
+});
 
 app.use("/api", rootRouter);
 app.use(appError);
