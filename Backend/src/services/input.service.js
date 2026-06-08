@@ -144,6 +144,37 @@ export const inputService = {
     });
     if (!project) throw new NotfoundException('Dự án không tồn tại hoặc không thuộc về bạn');
 
+    // So sánh để kiểm tra xem các thông số đầu vào hoặc vật liệu có thay đổi hay không
+    const oldP = project.input_P ? Number(project.input_P) : null;
+    const newP = input_P !== undefined && input_P !== null && input_P !== '' ? Number(input_P) : null;
+    const hasPChanged = input_P !== undefined && newP !== oldP;
+
+    const oldN = project.input_n_ct ? Number(project.input_n_ct) : null;
+    const newN = input_n_ct !== undefined && input_n_ct !== null && input_n_ct !== '' ? Number(input_n_ct) : null;
+    const hasNChanged = input_n_ct !== undefined && newN !== oldN;
+
+    const oldL = project.input_L ? Number(project.input_L) : null;
+    const newL = input_L !== undefined && input_L !== null && input_L !== '' ? Number(input_L) : null;
+    const hasLChanged = input_L !== undefined && newL !== oldL;
+
+    const oldMaterialId = project.selected_material_id ? Number(project.selected_material_id) : null;
+    const newMaterialId = selected_material_id !== undefined && selected_material_id !== null ? Number(selected_material_id) : null;
+    const hasMaterialChanged = selected_material_id !== undefined && newMaterialId !== oldMaterialId;
+
+    const shouldReset = hasPChanged || hasNChanged || hasLChanged || hasMaterialChanged;
+
+    const resetData = shouldReset ? {
+      efficiency: null,
+      Pct: null,
+      total_ratio: null,
+      transmission: null,
+      shafts: null,
+      selected_motor_id: null,
+      selected_motor_snapshot: null,
+      design_result: null,
+      step: 'inputs'
+    } : {};
+
     const updatedInput = await prisma.projects.update({
       where: { id: Number(projectId) },
       data: {
@@ -152,6 +183,7 @@ export const inputService = {
         ...(input_n_ct && { input_n_ct: Number(input_n_ct) }),
         ...(input_L && { input_L: Number(input_L) }),
         ...(selected_material_id !== undefined && { selected_material_id: selected_material_id ? Number(selected_material_id) : null }),
+        ...resetData,
         updatedAt: new Date(),
       },
       select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, selected_material_id: true, cover_url: true, step: true, selected_motor_snapshot: true, design_result: true, transmission: true, shafts: true },

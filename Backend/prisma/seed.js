@@ -109,13 +109,15 @@ async function main() {
   // 4. Chains (Bổ sung P_allow cho UC05)
   const chainsData = await readCSV("chain_params.csv");
   for (const row of chainsData) {
+    const rawPitch = parseFloat(row.pitch || row.p_mm);
+    const pitchVal = Math.round(rawPitch * 100) / 100; // Làm tròn 2 chữ số thập phân khớp với Decimal(10,2) trong database
     await prisma.chains.upsert({
-      where: { pitch: parseFloat(row.pitch || row.p_mm) },
+      where: { pitch: pitchVal },
       update: {
         P_allow: parseFloat(row.P_allow) || null // Cập nhật nếu file CSV có cột này
       },
       create: {
-        pitch: parseFloat(row.pitch || row.p_mm),
+        pitch: pitchVal,
         P_allow: parseFloat(row.P_allow) || null,
         breaking_load: parseFloat(row.breaking_load || row.Q_kN),
         mass_per_m: parseFloat(row.mass_per_m || row.q_kgm),
@@ -167,7 +169,7 @@ async function main() {
           code: row.model_code,
           P_dm: parseFloat(row.power_kw) || 0,
           n_dm: parseInt(row.speed_50hz_rpm || row.speed_rpm) || 0,
-          efficiency: parseFloat(row.efficiency_pct) || null,
+          efficiency: row.efficiency_pct ? (parseFloat(row.efficiency_pct) / 100) : null,
           cos_phi: parseFloat(row.cos_phi) || null,
           t_start_ratio: parseFloat(row.tk_over_tdn) || null,
           t_max_ratio: parseFloat(row.tmax_over_tdn) || null,

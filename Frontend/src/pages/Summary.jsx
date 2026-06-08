@@ -57,9 +57,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
         
         {/* THÔNG SỐ ĐẦU VÀO & VẬT LIỆU */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
-            <span className="w-2 h-6 bg-primary rounded"></span>
-            <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">1. THÔNG SỐ ĐẦU VÀO & VẬT LIỆU</h3>
+          <div className="px-6 py-4 border-b border-slate-100 bg-white flex items-center">
+            <h3 className="text-lg font-bold text-blue-600 border-l-4 border-blue-600 pl-3 uppercase tracking-widest font-heading">1. THÔNG SỐ ĐẦU VÀO & VẬT LIỆU</h3>
           </div>
           <table className="w-full text-left">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-bold uppercase tracking-wider">
@@ -88,9 +87,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
 
         {/* ĐỘNG CƠ & ĐỘNG HỌC */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
-            <span className="w-2 h-6 bg-primary rounded"></span>
-            <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">2. ĐỘNG CƠ & ĐỘNG HỌC</h3>
+          <div className="px-6 py-4 border-b border-slate-100 bg-white flex items-center">
+            <h3 className="text-lg font-bold text-blue-600 border-l-4 border-blue-600 pl-3 uppercase tracking-widest font-heading">2. ĐỘNG CƠ & ĐỘNG HỌC</h3>
           </div>
           <table className="w-full text-left">
             <thead className="text-[11px] uppercase text-slate-400 font-bold bg-white">
@@ -118,9 +116,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
         {/* BỘ TRUYỀN XÍCH */}
         {design?.ModuleA && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
-              <span className="w-2 h-6 bg-primary rounded"></span>
-              <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">3. BỘ TRUYỀN NGOÀI (XÍCH)</h3>
+            <div className="px-6 py-4 border-b border-slate-100 bg-white flex items-center">
+              <h3 className="text-lg font-bold text-blue-600 border-l-4 border-blue-600 pl-3 uppercase tracking-widest font-heading">3. BỘ TRUYỀN NGOÀI (XÍCH)</h3>
             </div>
             <table className="w-full text-left">
               <thead className="text-[11px] uppercase text-slate-400 font-bold bg-white">
@@ -148,9 +145,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
         {/* BÁNH RĂNG CÔN */}
         {design?.ModuleB && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
-              <span className="w-2 h-6 bg-primary rounded"></span>
-              <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">4. BỘ TRUYỀN TRONG (BÁNH RĂNG CÔN)</h3>
+            <div className="px-6 py-4 border-b border-slate-100 bg-white flex items-center">
+              <h3 className="text-lg font-bold text-blue-600 border-l-4 border-blue-600 pl-3 uppercase tracking-widest font-heading">4. BỘ TRUYỀN TRONG (BÁNH RĂNG CÔN)</h3>
             </div>
             <table className="w-full text-left">
               <thead className="text-[11px] uppercase text-slate-400 font-bold bg-white">
@@ -180,9 +176,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
         {/* BÁNH RĂNG TRỤ */}
         {design?.ModuleC && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
-              <span className="w-2 h-6 bg-primary rounded"></span>
-              <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">5. BỘ TRUYỀN TRONG (BÁNH RĂNG TRỤ)</h3>
+            <div className="px-6 py-4 border-b border-slate-100 bg-white flex items-center">
+              <h3 className="text-lg font-bold text-blue-600 border-l-4 border-blue-600 pl-3 uppercase tracking-widest font-heading">5. BỘ TRUYỀN TRONG (BÁNH RĂNG TRỤ)</h3>
             </div>
             <table className="w-full text-left">
               <thead className="text-[11px] uppercase text-slate-400 font-bold bg-white">
@@ -212,9 +207,8 @@ export default function Summary({ onNavigate, activeProject, kinematicsResult })
         {/* THÔNG SỐ TRỤC */}
         {design?.ModuleD && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center gap-2">
-              <span className="w-2 h-6 bg-primary rounded"></span>
-              <h3 className="text-lg font-bold text-slate-800 uppercase tracking-widest">6. THIẾT KẾ TRỤC</h3>
+            <div className="px-6 py-4 border-b border-slate-100 bg-white flex items-center">
+              <h3 className="text-lg font-bold text-blue-600 border-l-4 border-blue-600 pl-3 uppercase tracking-widest font-heading">6. THIẾT KẾ TRỤC</h3>
             </div>
             <table className="w-full text-left">
               <thead className="text-[11px] uppercase text-slate-400 font-bold bg-white">

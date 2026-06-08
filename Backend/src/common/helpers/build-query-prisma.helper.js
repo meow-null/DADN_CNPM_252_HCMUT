@@ -38,8 +38,8 @@ export const buildQueryPrisma = (req) => {
     console.log({ page, pageSize, index, filters });
 
     const where = {
-        ...filters,
         isDeleted: false,
+        ...filters,
     };
 
     return {

@@ -4,14 +4,14 @@
 
 /* Premium Typography System */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f8fafc;
   color: #0f172a;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Custom premium tech styling & animations */
@@ -79,6 +79,11 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+.step-active {
+  color: #1488D8;
+  border-bottom: 2px solid #1488D8;
+}
+
 /* Ẩn con mắt mặc định của trình duyệt ở các ô nhập mật khẩu */
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
@@ -88,4 +93,13 @@ input::-webkit-credentials-auto-fill-button {
   visibility: hidden;
   position: absolute;
   right: 0;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

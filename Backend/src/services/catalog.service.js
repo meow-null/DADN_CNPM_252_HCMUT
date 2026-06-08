@@ -38,13 +38,13 @@ const getAll = async (modelName, req) => {
     try {
         const [items, totalItem] = await Promise.all([
             delegate.findMany({
-                where: { ...where, isDeleted: false },
+                where: where,
                 skip: index,
                 take: pageSize,
                 orderBy: { id: "asc" },
             }),
             delegate.count({
-                where: { ...where, isDeleted: false },
+                where: where,
             }),
         ]);
 
@@ -254,6 +254,42 @@ const toggleActive = async (modelName, id, adminId) => {
     }
 };
 
+const restore = async (modelName, id, adminId) => {
+    const delegate = getModelDelegate(modelName);
+    const label = getModelLabel(modelName);
+    const parsedId = Number(id);
+
+    if (!Number.isFinite(parsedId)) {
+        throw new BadRequestException("ID không hợp lệ");
+    }
+
+    const existing = await delegate.findFirst({
+        where: { id: parsedId, isDeleted: true },
+    });
+
+    if (!existing) {
+        throw new NotfoundException(`${label} không tồn tại trong thùng rác hoặc không thể phục hồi`);
+    }
+
+    try {
+        const restoredItem = await delegate.update({
+            where: { id: parsedId },
+            data: {
+                isDeleted: false,
+                is_active: true,
+                updatedAt: new Date(),
+            },
+        });
+
+        return restoredItem;
+    } catch (error) {
+        if (error?.code?.startsWith?.("P") || error?.name?.includes?.("Prisma")) {
+            throw new ServiceUnavailableException(DB_ERROR_MESSAGE);
+        }
+        throw error;
+    }
+};
+
 export const catalogService = {
     getAll,
     getById,
@@ -261,4 +297,5 @@ export const catalogService = {
     update,
     softDelete,
     toggleActive,
+    restore,
 };

@@ -17,10 +17,10 @@ const app = express();
 // Security: Helmet
 app.use(helmet());
 
-// Security: Rate Limit (100 requests per 15 minutes for all routes)
+// Security: Rate Limit (100000 requests per 15 minutes for all routes in dev)
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    max: 100000,
     message: "Quá nhiều request từ IP này, vui lòng thử lại sau 15 phút.",
 });
 app.use(limiter);
@@ -42,8 +42,12 @@ app.use(cors({
         "http://localhost:3000", 
         "http://localhost:5173", 
         "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
         "http://127.0.0.1:5173", 
-        "http://127.0.0.1:5174"
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:5176"
     ], 
     credentials: true 
 }));

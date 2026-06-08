@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { formatNumber } from '../utils/formatUtils';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
@@ -68,6 +69,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     key_h: '',
     key_t1: '',
     key_l: '',
+    key_l_I: '',
+    key_l_II: '',
+    key_l_III: '',
     m_e_I: ''
   });
   
@@ -142,6 +146,15 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     fetchMaterials();
   }, []);
 
+  // Sync results when activeProject starts with design result
+  useEffect(() => {
+    if (activeProject?.design_result) {
+      setResults(activeProject.design_result);
+    } else {
+      setResults(null);
+    }
+  }, [activeProject]);
+
   // Capture baseline mechanical calculation results once when modal opens
   useEffect(() => {
     if (showEditModal) {
@@ -164,6 +177,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         key_h: latestCalcRef?.designResult?.ModuleE?.trucI?.h || results?.ModuleE?.trucI?.h || '',
         key_t1: latestCalcRef?.designResult?.ModuleE?.trucI?.t1 || results?.ModuleE?.trucI?.t1 || '',
         key_l: latestCalcRef?.designResult?.ModuleE?.trucI?.l_t_mm || results?.ModuleE?.trucI?.l_t_mm || '',
+        key_l_I: latestCalcRef?.designResult?.ModuleE?.trucI?.l_t_mm || results?.ModuleE?.trucI?.l_t_mm || '',
+        key_l_II: latestCalcRef?.designResult?.ModuleE?.trucII?.l_t_mm || results?.ModuleE?.trucII?.l_t_mm || '',
+        key_l_III: latestCalcRef?.designResult?.ModuleE?.trucIII?.l_t_mm || results?.ModuleE?.trucIII?.l_t_mm || '',
         m_e_I: latestCalcRef?.designResult?.ModuleB?.m_e_mm || results?.ModuleB?.m_e_mm || ''
       });
       setLiveWarnings([]);
@@ -246,7 +262,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         }
 
         setLatestCalcRef({
-          project: savePayload.data,
+          project: designPayload.project || savePayload.data,
           kinematics: kinPayload.data,
           designResult: resData,
           warning: designPayload.warning
@@ -272,7 +288,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   };
 
   const handleApplySuggestion = () => {
-    const res = latestCalcRef?.designResult;
+    const res = latestCalcRef?.designResult || results;
     if (!res) return;
     let updated = { ...editForm };
     if (correctionTarget === 'A') {
@@ -291,8 +307,12 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       const valIII = res.ModuleD?.trucIII?.recommended_d_tc;
       if (valIII != null) updated.d_tc_III = valIII.toString();
     } else if (correctionTarget === 'E') {
-      const val = res.ModuleE?.trucI?.recommended_l;
-      if (val != null) updated.key_l = val.toString();
+      const valI = res.ModuleE?.trucI?.recommended_l;
+      if (valI != null) updated.key_l_I = valI.toString();
+      const valII = res.ModuleE?.trucII?.recommended_l;
+      if (valII != null) updated.key_l_II = valII.toString();
+      const valIII = res.ModuleE?.trucIII?.recommended_l;
+      if (valIII != null) updated.key_l_III = valIII.toString();
     } else if (correctionTarget === 'F') {
       const valI = res.ModuleF?.trucI?.recommended_d_tc;
       if (valI != null) updated.d_tc_I = valI.toString();
@@ -305,7 +325,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   };
 
   const handleAutoFixAll = () => {
-    const res = latestCalcRef?.designResult;
+    const res = latestCalcRef?.designResult || results;
     if (!res) return;
     
     let updated = { ...editForm };
@@ -325,8 +345,12 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     const valDIII = res.ModuleD?.trucIII?.recommended_d_tc;
     if (valDIII != null) updated.d_tc_III = valDIII.toString();
 
-    const valL = res.ModuleE?.trucI?.recommended_l;
-    if (valL != null) updated.key_l = valL.toString();
+    const valLI = res.ModuleE?.trucI?.recommended_l;
+    if (valLI != null) updated.key_l_I = valLI.toString();
+    const valLII = res.ModuleE?.trucII?.recommended_l;
+    if (valLII != null) updated.key_l_II = valLII.toString();
+    const valLIII = res.ModuleE?.trucIII?.recommended_l;
+    if (valLIII != null) updated.key_l_III = valLIII.toString();
 
     const valDFI = res.ModuleF?.trucI?.recommended_d_tc;
     if (valDFI != null) {
@@ -537,7 +561,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
       d_tc_I: { label: "Đường kính trục I d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucI?.d_tc_mm?.[0] },
       d_tc_II: { label: "Đường kính trục II d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucII?.d_tc_mm?.[0] },
       d_tc_III: { label: "Đường kính trục III d_tc", unit: "mm", fallback: "Tự động", origVal: results?.ModuleD?.trucIII?.d_tc_mm?.[0] },
-      key_l: { label: "Chiều dài then l", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.l_t_mm },
+      key_l_I: { label: "Chiều dài then l Trục I", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.l_t_mm },
+      key_l_II: { label: "Chiều dài then l Trục II", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucII?.l_t_mm },
+      key_l_III: { label: "Chiều dài then l Trục III", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucIII?.l_t_mm },
       key_b: { label: "Chiều rộng then b", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.b },
       key_h: { label: "Chiều cao then h", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.h },
       key_t1: { label: "Chiều sâu rãnh then t1", unit: "mm", fallback: "Tự động", origVal: results?.ModuleE?.trucI?.t1 }
@@ -644,14 +670,26 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
         list.push(`Thay đổi Module bánh răng m_e: ${me} mm`);
       }
     } else if (target === 'D') {
-      const d = res.ModuleD?.trucI?.recommended_d_tc;
-      if (d != null) list.push(`Thay đổi Đường kính trục d_tc: ${d} mm`);
+      const dI = res.ModuleD?.trucI?.recommended_d_tc;
+      if (dI != null) list.push(`Thay đổi Đường kính Trục I d_tc: ${dI} mm`);
+      const dII = res.ModuleD?.trucII?.recommended_d_tc;
+      if (dII != null) list.push(`Thay đổi Đường kính Trục II d_tc: ${dII} mm`);
+      const dIII = res.ModuleD?.trucIII?.recommended_d_tc;
+      if (dIII != null) list.push(`Thay đổi Đường kính Trục III d_tc: ${dIII} mm`);
     } else if (target === 'E') {
-      const l = res.ModuleE?.trucI?.recommended_l;
-      if (l != null) list.push(`Thay đổi Chiều dài then l: ${l} mm`);
+      const lI = res.ModuleE?.trucI?.recommended_l;
+      if (lI != null) list.push(`Thay đổi Chiều dài then l Trục I: ${lI} mm`);
+      const lII = res.ModuleE?.trucII?.recommended_l;
+      if (lII != null) list.push(`Thay đổi Chiều dài then l Trục II: ${lII} mm`);
+      const lIII = res.ModuleE?.trucIII?.recommended_l;
+      if (lIII != null) list.push(`Thay đổi Chiều dài then l Trục III: ${lIII} mm`);
     } else if (target === 'F') {
-      const d = res.ModuleF?.trucI?.recommended_d_tc;
-      if (d != null) list.push(`Thay đổi Đường kính trục d_tc: ${d} mm`);
+      const dI = res.ModuleF?.trucI?.recommended_d_tc;
+      if (dI != null) list.push(`Thay đổi Đường kính Trục I d_tc: ${dI} mm`);
+      const dII = res.ModuleF?.trucII?.recommended_d_tc;
+      if (dII != null) list.push(`Thay đổi Đường kính Trục II d_tc: ${dII} mm`);
+      const dIII = res.ModuleF?.trucIII?.recommended_d_tc;
+      if (dIII != null) list.push(`Thay đổi Đường kính Trục III d_tc: ${dIII} mm`);
     }
     return list;
   };
@@ -672,18 +710,45 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
     const valModule = res.ModuleB?.recommended_m_e;
     if (valModule != null) list.push(`Thay đổi Module bánh răng m_e: ${valModule} mm`);
 
-    const valD = res.ModuleD?.trucI?.recommended_d_tc;
-    const valDF = res.ModuleF?.trucI?.recommended_d_tc;
-    let finalD = null;
-    if (valD != null || valDF != null) {
-      finalD = Math.max(Number(valD || 0), Number(valDF || 0));
+    // Trục I
+    const valDI = res.ModuleD?.trucI?.recommended_d_tc;
+    const valDFI = res.ModuleF?.trucI?.recommended_d_tc;
+    let finalDI = null;
+    if (valDI != null || valDFI != null) {
+      finalDI = Math.max(Number(valDI || 0), Number(valDFI || 0));
     }
-    if (finalD) {
-      list.push(`Thay đổi Đường kính trục d_tc: ${finalD} mm (Đồng bộ bền mỏi & tra ổ)`);
+    if (finalDI) {
+      list.push(`Thay đổi Đường kính Trục I d_tc: ${finalDI} mm (Đồng bộ bền mỏi & tra ổ)`);
     }
 
-    const valL = res.ModuleE?.trucI?.recommended_l;
-    if (valL != null) list.push(`Thay đổi Chiều dài then l: ${valL} mm`);
+    // Trục II
+    const valDII = res.ModuleD?.trucII?.recommended_d_tc;
+    const valDFII = res.ModuleF?.trucII?.recommended_d_tc;
+    let finalDII = null;
+    if (valDII != null || valDFII != null) {
+      finalDII = Math.max(Number(valDII || 0), Number(valDFII || 0));
+    }
+    if (finalDII) {
+      list.push(`Thay đổi Đường kính Trục II d_tc: ${finalDII} mm (Đồng bộ bền mỏi & tra ổ)`);
+    }
+
+    // Trục III
+    const valDIII = res.ModuleD?.trucIII?.recommended_d_tc;
+    const valDFIII = res.ModuleF?.trucIII?.recommended_d_tc;
+    let finalDIII = null;
+    if (valDIII != null || valDFIII != null) {
+      finalDIII = Math.max(Number(valDIII || 0), Number(valDFIII || 0));
+    }
+    if (finalDIII) {
+      list.push(`Thay đổi Đường kính Trục III d_tc: ${finalDIII} mm (Đồng bộ bền mỏi & tra ổ)`);
+    }
+
+    const valLI = res.ModuleE?.trucI?.recommended_l;
+    if (valLI != null) list.push(`Thay đổi Chiều dài then l Trục I: ${valLI} mm`);
+    const valLII = res.ModuleE?.trucII?.recommended_l;
+    if (valLII != null) list.push(`Thay đổi Chiều dài then l Trục II: ${valLII} mm`);
+    const valLIII = res.ModuleE?.trucIII?.recommended_l;
+    if (valLIII != null) list.push(`Thay đổi Chiều dài then l Trục III: ${valLIII} mm`);
 
     return list;
   };
@@ -868,7 +933,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   };
 
   const getLiveModuleOk = (m) => {
-    if (!latestCalcRef?.designResult) return false;
+    if (!latestCalcRef?.designResult) return getModuleOk(m);
     const res = latestCalcRef.designResult;
     if (m === 'A') return res.ModuleA?.check_s_pass && res.ModuleA?.check_H_pass;
     if (m === 'B') return res.ModuleB?.check_H_pass;
@@ -889,8 +954,8 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   };
 
   const getTargetWarning = (target) => {
-    if (!latestCalcRef?.designResult) return null;
-    const res = latestCalcRef.designResult;
+    const res = latestCalcRef?.designResult || results;
+    if (!res) return null;
     if (target === 'A') return res.ModuleA?.warning;
     if (target === 'B') return res.ModuleB?.warning;
     if (target === 'C') return res.ModuleC?.warning;
@@ -932,7 +997,9 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
   }
 
   const isCurrentTargetOk = (() => {
-    if (!latestCalcRef?.designResult) return false;
+    if (!latestCalcRef?.designResult) {
+      return correctionTarget ? getModuleOk(correctionTarget) : isAllOk;
+    }
     if (!correctionTarget) return liveCheckPassed;
     return getLiveModuleOk(correctionTarget);
   })();
@@ -1041,12 +1108,14 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
 
             {/* Display panel */}
             <div className="lg:col-span-3 bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm animate-fade-in font-sans">
-              {activeModule === 'A' && <ModuleA r={results.ModuleA} onOpenCorrection={() => handleOpenCorrection('A')} />}
-              {activeModule === 'B' && <ModuleB r={results.ModuleB} onOpenCorrection={() => handleOpenCorrection('B')} />}
-              {activeModule === 'C' && <ModuleC r={results.ModuleC} onOpenCorrection={() => handleOpenCorrection('C')} />}
-              {activeModule === 'D' && <ModuleD r={results.ModuleD} onOpenCorrection={() => handleOpenCorrection('D')} />}
-              {activeModule === 'E' && <ModuleE r={results.ModuleE} onOpenCorrection={() => handleOpenCorrection('E')} />}
-              {activeModule === 'F' && <ModuleF r={results.ModuleF} onOpenCorrection={() => handleOpenCorrection('F')} />}
+              <ErrorBoundary>
+                {activeModule === 'A' && <ModuleA r={results.ModuleA} onOpenCorrection={() => handleOpenCorrection('A')} />}
+                {activeModule === 'B' && <ModuleB r={results.ModuleB} onOpenCorrection={() => handleOpenCorrection('B')} />}
+                {activeModule === 'C' && <ModuleC r={results.ModuleC} onOpenCorrection={() => handleOpenCorrection('C')} />}
+                {activeModule === 'D' && <ModuleD r={results.ModuleD} onOpenCorrection={() => handleOpenCorrection('D')} />}
+                {activeModule === 'E' && <ModuleE r={results.ModuleE} onOpenCorrection={() => handleOpenCorrection('E')} />}
+                {activeModule === 'F' && <ModuleF r={results.ModuleF} onOpenCorrection={() => handleOpenCorrection('F')} />}
+              </ErrorBoundary>
             </div>
           </div>
 
@@ -1280,15 +1349,39 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 {(showAllFields || currentConfig.fields.includes('key_l')) && (
                   <div className="space-y-1.5 animate-fade-in">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Chiều dài then l (mm)</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Then l Trục I (mm)</label>
                     <input
                       type="number"
-                      value={editForm.key_l}
+                      value={editForm.key_l_I}
                       placeholder="Tự động"
-                      onChange={(e) => setEditForm(prev => ({ ...prev, key_l: e.target.value }))}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, key_l_I: e.target.value }))}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200/80 rounded-2xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-premium font-mono font-bold text-slate-800 text-sm"
+                    />
+                  </div>
+                )}
+                {(showAllFields || currentConfig.fields.includes('key_l')) && (
+                  <div className="space-y-1.5 animate-fade-in">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Then l Trục II (mm)</label>
+                    <input
+                      type="number"
+                      value={editForm.key_l_II}
+                      placeholder="Tự động"
+                      onChange={(e) => setEditForm(prev => ({ ...prev, key_l_II: e.target.value }))}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200/80 rounded-2xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-premium font-mono font-bold text-slate-800 text-sm"
+                    />
+                  </div>
+                )}
+                {(showAllFields || currentConfig.fields.includes('key_l')) && (
+                  <div className="space-y-1.5 animate-fade-in">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Then l Trục III (mm)</label>
+                    <input
+                      type="number"
+                      value={editForm.key_l_III}
+                      placeholder="Tự động"
+                      onChange={(e) => setEditForm(prev => ({ ...prev, key_l_III: e.target.value }))}
                       className="w-full px-4 py-3 bg-slate-50 border border-slate-200/80 rounded-2xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-premium font-mono font-bold text-slate-800 text-sm"
                     />
                   </div>
@@ -1379,89 +1472,89 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
                 )}
 
                 {/* Live suggestion block */}
-                {(!isCurrentTargetOk && !isLiveCalculating) ? (() => {
-                  const suggs = correctionTarget ? getSuggestionImpact(correctionTarget, latestCalcRef?.designResult) : [];
-                  const hasSuggestion = suggs.length > 0;
-                  const recText = correctionTarget ? getDetailedDiagnostic(correctionTarget, latestCalcRef?.designResult || results)?.solution : null;
+                {!isLiveCalculating && (() => {
+                  if (correctionTarget) {
+                    // Specific module correction target (A, B, C, D, E, F)
+                    if (isCurrentTargetOk) return null; // If already OK, do not show specific suggestions anymore
 
-                  if (!recText) return null;
+                    const suggs = getSuggestionImpact(correctionTarget, latestCalcRef?.designResult || results);
+                    const hasSuggestion = suggs.length > 0;
+                    const diag = getDetailedDiagnostic(correctionTarget, latestCalcRef?.designResult || results);
+                    const recText = diag?.solution;
+                    if (!recText || recText === 'Không cần thay đổi thông số.') return null;
 
-                  return (
-                    <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
-                      <div className="space-y-1.5 flex-1">
-                        <p className="text-xs font-bold text-indigo-700 flex items-center gap-1.5">
-                          <span>📌 Gợi ý tối ưu Module {correctionTarget}:</span>
-                        </p>
-                        <p className="text-[11px] text-indigo-600 font-semibold leading-relaxed">{recText}</p>
-                        
-                        {/* Dynamic impact preview */}
-                        {hasSuggestion && (() => {
-                          const impacts = getSuggestionImpact(correctionTarget, latestCalcRef?.designResult);
-                          if (impacts.length === 0) return null;
-                          return (
+                    return (
+                      <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
+                        <div className="space-y-1.5 flex-1">
+                          <p className="text-xs font-bold text-indigo-700 flex items-center gap-1.5">
+                            <span>📌 Gợi ý tối ưu Module {correctionTarget}:</span>
+                          </p>
+                          <p className="text-[11px] text-indigo-600 font-semibold leading-relaxed">{recText}</p>
+                          
+                          {/* Dynamic impact preview */}
+                          {hasSuggestion && (
                             <div className="mt-2 pt-2 border-t border-indigo-100/50 text-[10px] text-indigo-900 space-y-1 font-bold">
                               <p className="text-indigo-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Áp dụng":</p>
                               <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-indigo-700">
-                                {impacts.map((imp, idx) => (
+                                {suggs.map((imp, idx) => (
                                   <li key={idx}>
                                     {imp}
                                   </li>
                                 ))}
                               </ul>
                             </div>
-                          );
-                        })()}
+                          )}
+                        </div>
+                        {hasSuggestion && (
+                          <button
+                            type="button"
+                            onClick={handleApplySuggestion}
+                            className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 shrink-0 self-end md:self-center"
+                          >
+                            ⚡ Áp dụng
+                          </button>
+                        )}
                       </div>
-                      {hasSuggestion && (
+                    );
+                  } else {
+                    // General "Chỉnh sửa nhanh" modal (correctionTarget is null/undefined)
+                    const hasAnyErrors = latestCalcRef?.designResult ? !liveCheckPassed : !isAllOk;
+                    if (!hasAnyErrors) return null; // Hide suggestions if everything is green
+
+                    const impacts = getAllSuggestionsImpact(latestCalcRef?.designResult || results);
+                    if (impacts.length === 0) return null;
+
+                    return (
+                      <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
+                        <div className="space-y-1.5 flex-1">
+                          <p className="text-xs font-bold text-blue-700 flex items-center gap-1.5">
+                            <span>⚡ Tự động tối ưu hóa toàn bộ hệ thống:</span>
+                          </p>
+                          <p className="text-[11px] text-blue-600 font-semibold leading-relaxed">
+                            Áp dụng đồng thời tất cả gợi ý tối ưu (vật liệu, mô-đun răng, then, đường kính trục) để sửa đổi đồng bộ toàn hệ thống.
+                          </p>
+
+                          <div className="mt-2 pt-2 border-t border-blue-100/50 text-[10px] text-blue-900 space-y-1 font-bold">
+                            <p className="text-blue-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Tối ưu tất cả":</p>
+                            <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-blue-700">
+                              {impacts.map((imp, idx) => (
+                                <li key={idx}>
+                                  {imp}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
                         <button
                           type="button"
-                          onClick={handleApplySuggestion}
-                          className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 shrink-0 self-end md:self-center"
+                          onClick={handleAutoFixAll}
+                          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md shrink-0 self-end md:self-center"
                         >
-                          ⚡ Áp dụng
+                          ⚡ Tối ưu tất cả
                         </button>
-                      )}
-                    </div>
-                  );
-                })() : (() => {
-                  const hasAnyErrors = latestCalcRef?.designResult && !liveCheckPassed;
-                  if (!hasAnyErrors) return null;
-                  
-                  return (
-                    <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl mt-3 animate-fade-in flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm">
-                      <div className="space-y-1.5 flex-1">
-                        <p className="text-xs font-bold text-blue-700 flex items-center gap-1.5">
-                          <span>⚡ Tự động tối ưu hóa toàn bộ hệ thống:</span>
-                        </p>
-                        <p className="text-[11px] text-blue-600 font-semibold leading-relaxed">Áp dụng đồng thời tất cả gợi ý tối ưu (vật liệu, mô-đun răng, then, đường kính trục) để sửa đổi đồng bộ toàn hệ thống.</p>
-
-                        {/* Dynamic impact preview for auto fix all */}
-                        {(() => {
-                          const impacts = getAllSuggestionsImpact(latestCalcRef?.designResult);
-                          if (impacts.length === 0) return null;
-                          return (
-                            <div className="mt-2 pt-2 border-t border-blue-100/50 text-[10px] text-blue-900 space-y-1 font-bold">
-                              <p className="text-blue-900 uppercase tracking-wider text-[8px] font-black">⚡ Hành động khi bấm "Tối ưu tất cả":</p>
-                              <ul className="list-disc pl-3.5 space-y-0.5 font-semibold text-blue-700">
-                                {impacts.map((imp, idx) => (
-                                  <li key={idx}>
-                                    {imp}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          );
-                        })()}
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleAutoFixAll}
-                        className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md shrink-0 self-end md:self-center"
-                      >
-                        ⚡ Tối ưu tất cả
-                      </button>
-                    </div>
-                  );
+                    );
+                  }
                 })()}
 
                 {/* Warnings inside modal */}
@@ -1660,8 +1753,8 @@ function ModuleD({ r, onOpenCorrection }) {
   const [subTab, setSubTab] = useState('overview');
 
   const passedI = r.trucI?.check_fatigue_pass;
-  const passedII = r.trucII?.check_fatigue_pass !== false;
-  const passedIII = r.trucIII?.check_fatigue_pass !== false;
+  const passedII = r.trucII?.check_fatigue_pass;
+  const passedIII = r.trucIII?.check_fatigue_pass;
   const passedAll = passedI && passedII && passedIII;
 
   const renderDetailTable = (t, label) => {
@@ -1786,8 +1879,8 @@ function ModuleE({ r, onOpenCorrection }) {
   const [subTab, setSubTab] = useState('overview');
 
   const passedI = r.trucI?.check_key_pass;
-  const passedII = r.trucII?.check_key_pass !== false;
-  const passedIII = r.trucIII?.check_key_pass !== false;
+  const passedII = r.trucII?.check_key_pass;
+  const passedIII = r.trucIII?.check_key_pass;
   const passedAll = passedI && passedII && passedIII;
 
   const renderDetailTable = (k, label) => {
@@ -1915,8 +2008,8 @@ function ModuleF({ r, onOpenCorrection }) {
   const [subTab, setSubTab] = useState('overview');
 
   const passedI = r.trucI?.check_bearing_pass;
-  const passedII = r.trucII?.check_bearing_pass !== false;
-  const passedIII = r.trucIII?.check_bearing_pass !== false;
+  const passedII = r.trucII?.check_bearing_pass;
+  const passedIII = r.trucIII?.check_bearing_pass;
   const passedAll = passedI && passedII && passedIII;
 
   const renderDetailTable = (b, label) => {

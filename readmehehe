@@ -1,0 +1,79 @@
+# Nhật ký Cập nhật - Update 2.0
+
+Bản cập nhật 2.0 tập trung sửa đổi các lỗi liên quan đến thuật toán thiết kế cơ khí chi tiết máy (Module E, F) khi chạy với các trục có đường kính lớn và đồng bộ hóa, sửa lỗi danh mục linh kiện (Catalog) ở Use Case 7.
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Backend (Logic & CSDL)
+- **Backend/src/services/design.service.js**
+  - Sửa hàm `calculateModuleE` (Then): Khi đường kính trục d_tc > 110 mm (vượt quá giới hạn database), hệ thống tự động fallback sử dụng kích thước then lớn nhất hiện có (b=28, h=16, t1=10) thay vì crash báo lỗi 503.
+  - Sửa hàm `calculateModuleE` trả về đúng khóa `t1` và `t2` (thay vì trả về `T_brc: keyDim.t1`), giúp Frontend hiển thị chính xác chiều sâu rãnh then trên giao diện.
+  - Sửa hàm `calculateModuleB` (Bánh răng côn): Recalculate lại thông số hình học `Re_calc` và `b_mm` sau khi lấy được Module tiêu chuẩn `m_e_mm` từ database để đảm bảo tính đồng bộ hình học và chính xác khi tính bền tiếp xúc.
+  - Sửa hàm `calculateModuleF` (Ổ lăn): Bổ sung bộ lọc trạng thái linh kiện `is_active: true, isDeleted: false` khi tra cứu ổ lăn côn từ database.
+  - Sửa hàm `calculateModuleF` (Ổ lăn): Khắc phục lỗi feedback loop bằng cách sử dụng ổ lăn lớn nhất hiện có làm fallback khi trục lớn hơn 60mm. Nếu tải trọng động thực tế đạt chuẩn (C >= C_d), hệ thống sẽ đánh dấu đạt chuẩn (check_bearing_pass = true) và xóa cảnh báo, ngăn chặn việc đề xuất tăng kích thước trục vô hạn gây crash then.
+- **Backend/prisma/seed.js**
+  - Cập nhật logic import động cơ: Tự động chia hiệu suất (efficiency_pct từ file CSV) cho 100 để quy đổi về hệ số thập phân 0.0 - 1.0, đồng bộ dữ liệu với Zod Schema validation (z.number().min(0).max(1)) ở Backend.
+- **Backend/prisma/data/shaft_allowable_stress.csv**
+  - Đồng bộ hóa độ bền sigma_b của Thép 45 từ 600 thành 750 để khớp với mác thép tôi cải thiện trong bảng material_grades.csv, giúp sửa lỗi tra cứu ứng suất cho phép của trục trả về rỗng.
+
+### 2. Frontend (Giao diện)
+- **Frontend/src/pages/UC05Detail.jsx**
+  - Cập nhật giao diện kiểm nghiệm then hiển thị đúng các giá trị chiều sâu rãnh then `t1` và `t2` nhờ đồng bộ key trả về từ API.
+
+# Nhật ký Cập nhật - Update 2.1
+
+Bản cập nhật 2.1 cải thiện trải nghiệm người dùng (UX) và giao diện quản trị linh kiện (Catalog) cho Admin:
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Frontend (Giao diện & Trải nghiệm người dùng)
+- **Frontend/src/components/Sidebar.jsx**
+  - Đổi tên thương hiệu từ "CAD/CAM" thành "BK Gear" ở phần Header của Sidebar.
+- **Frontend/src/pages/Catalog.jsx**
+  - Loại bỏ hậu tố "(Catalog)" khỏi tiêu đề trang "Thư viện Linh kiện".
+  - Thêm hệ thống thông báo Toast nổi (floating toast) hiển thị góc dưới màn hình khi thêm mới, sửa hoặc ẩn/hiện thành công linh kiện với nội dung chi tiết.
+  - Thay thế hộp thoại xóa linh kiện mặc định của trình duyệt (`window.confirm` và `alert`) bằng giao diện Modal Xác nhận xóa tự chế (Custom Delete Modal) đồng bộ thẩm mỹ với hệ thống.
+  - Hiển thị trực quan thông tin phản hồi lỗi từ Backend ngay trên Delete Modal (ví dụ: khi xóa linh kiện đang được sử dụng trong dự án, hiển thị lỗi ràng buộc khóa ngoại thay vì để trang im lặng hay crash).
+- **Frontend/src/index.css**
+  - Thêm keyframes và class `.animate-slide-up` để làm mượt chuyển động xuất hiện của Toast.
+
+# Nhật ký Cập nhật - Update 2.2
+
+Bản cập nhật 2.2 bổ sung thùng rác lưu trữ linh kiện đã bị xóa và cho phép Admin phục hồi (restore) linh kiện:
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Backend (Logic & APIs)
+- **Backend/src/common/helpers/build-query-prisma.helper.js**
+  - Sửa đổi hàm `buildQueryPrisma` để cho phép ghi đè cờ `isDeleted` trong filters truy vấn, thay vì luôn buộc `isDeleted: false`.
+- **Backend/src/services/catalog.service.js**
+  - Sửa hàm `catalogService.getAll` để sử dụng trực tiếp bộ lọc `where` thay vì ghi đè cứng `isDeleted: false`.
+  - Bổ sung hàm `catalogService.restore` để thực hiện phục hồi (phục hồi mềm) linh kiện bằng cách đặt `isDeleted: false` và tự động kích hoạt `is_active: true`.
+- **Backend/src/controllers/catalog.controller.js**
+  - Bổ sung handler `restore` trong bộ khung điều phối `createCatalogHandlers` cho motors, bearings và chains.
+- **Backend/src/routers/catalog.router.js**
+  - Thêm 3 API routes `PATCH /api/catalog/motors/:id/restore`, `bearings/:id/restore` và `chains/:id/restore` với middleware kiểm tra quyền Admin.
+
+### 2. Frontend (Giao diện)
+- **Frontend/src/pages/Catalog.jsx**
+  - Cập nhật logic `fetchData` để hỗ trợ lọc trạng thái `deleted`.
+  - Thêm tùy chọn lọc trạng thái `"Đã xóa"` vào thẻ `<select>` lọc trạng thái (chỉ hiển thị đối với tài khoản Admin).
+  - Khi Admin chọn lọc "Đã xóa", cột trạng thái của các linh kiện sẽ hiển thị badge `"Đã xóa"` màu đỏ nhạt, và cột hành động sẽ hiển thị duy nhất nút **"🔄 Phục hồi"** thay vì các nút sửa/ẩn/xóa thông thường.
+  - Implement hàm `handleRestore` kết nối với API khôi phục linh kiện và thông báo thành công qua Toast khi hoàn thành.
+
+# Nhật ký Cập nhật - Update 2.3
+
+Bản cập nhật 2.3 sửa lỗi lưu giữ kết quả tính toán cũ (stale data) khi thay đổi các thông số đầu vào của dự án:
+
+## Các tệp tin được chỉnh sửa và nội dung cụ thể:
+
+### 1. Backend (Logic & CSDL)
+- **Backend/src/services/input.service.js** & **Backend/src/services/project.service.js**
+  - Cập nhật hàm `update` để kiểm tra so sánh thông số đầu vào (`input_P`, `input_n_ct`, `input_L`) hoặc vật liệu (`selected_material_id`) mới với giá trị hiện tại trong cơ sở dữ liệu.
+  - Nếu bất kỳ thông số nào thay đổi, hệ thống sẽ tự động đặt các giá trị tính toán phụ thuộc (`efficiency`, `Pct`, `total_ratio`, `transmission`, `shafts`, `selected_motor_id`, `selected_motor_snapshot`, `design_result`) về `null` và đưa `step` dự án quay về `'inputs'`. Điều này đảm bảo dữ liệu cũ bị vô hiệu hóa hoàn toàn, buộc hệ thống phải tính toán lại với dữ liệu đầu vào mới.
+
+### 2. Frontend (Giao diện)
+- **Frontend/src/App.jsx**
+  - Cập nhật logic tải dự án (`handleProjectSelected`) để đặt state động học (`kinematics`) về `null` nếu dự án chưa có thông tin tỷ số truyền (`transmission`), ngăn chặn hiển thị kết quả động học cũ của dự án trước đó hoặc của lượt chạy trước.
+- **Frontend/src/pages/UC05Detail.jsx**
+  - Đồng bộ logic hiển thị kết quả thiết kế: nếu kết quả thiết kế của dự án hiện tại trống/được reset (`activeProject.design_result === null`), giao diện sẽ tự động đặt `results` về `null` và chuyển sang trạng thái chờ chạy tính toán (hiển thị nút "Chạy Pipeline A → F" và placeholder "Chưa có dữ liệu thiết kế").

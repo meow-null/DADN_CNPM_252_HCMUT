@@ -125,7 +125,7 @@ export default function Sidebar({ currentScreen, onNavigate, onLogout, userName,
             <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png" alt="Logo HCMUT" className="h-9 w-9 object-contain" />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-base tracking-tight text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">CAD/CAM</span>
+            <span className="font-extrabold text-base tracking-tight text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">BK Gear</span>
             <span className="text-[10px] font-black text-blue-400 tracking-widest uppercase mt-0.5">Hệ Dẫn Động</span>
           </div>
         </div>

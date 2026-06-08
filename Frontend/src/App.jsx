@@ -6,6 +6,7 @@ import Workspace from './pages/Workspace';
 import Calculations from './pages/Calculations';
 import Summary from './pages/Summary';
 import Reports from './pages/Reports';
+import Catalog from './pages/Catalog';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
 
@@ -130,9 +131,11 @@ function App() {
             T_out: data.shafts?.T_out,
           },
         });
+      } else {
+        setKinematics(null);
       }
     } catch {
-      // Keep existing kinematics if fetch fails
+      setKinematics(null);
     }
   };
 
@@ -232,6 +235,12 @@ function App() {
               onNavigate={setCurrentScreen}
               activeProject={activeProject}
               kinematicsResult={kinematics}
+            />
+          </div>
+          <div className={currentScreen === 'catalog' ? 'block' : 'hidden'}>
+            <Catalog
+              onNavigate={setCurrentScreen}
+              currentUser={currentUser}
             />
           </div>
         </div>

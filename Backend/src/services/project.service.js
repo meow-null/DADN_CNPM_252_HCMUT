@@ -80,12 +80,40 @@ export const projectService = {
     });
     if (!project) throw new NotfoundException('Dự án không tồn tại hoặc không thuộc về bạn');
 
+    // So sánh để kiểm tra xem các thông số đầu vào có thay đổi hay không
+    const oldP = project.input_P ? Number(project.input_P) : null;
+    const newP = input_P !== undefined && input_P !== null && input_P !== '' ? Number(input_P) : null;
+    const hasPChanged = input_P !== undefined && newP !== oldP;
+
+    const oldN = project.input_n_ct ? Number(project.input_n_ct) : null;
+    const newN = input_n_ct !== undefined && input_n_ct !== null && input_n_ct !== '' ? Number(input_n_ct) : null;
+    const hasNChanged = input_n_ct !== undefined && newN !== oldN;
+
+    const oldL = project.input_L ? Number(project.input_L) : null;
+    const newL = input_L !== undefined && input_L !== null && input_L !== '' ? Number(input_L) : null;
+    const hasLChanged = input_L !== undefined && newL !== oldL;
+
+    const shouldReset = hasPChanged || hasNChanged || hasLChanged;
+
+    const resetData = shouldReset ? {
+      efficiency: null,
+      Pct: null,
+      total_ratio: null,
+      transmission: null,
+      shafts: null,
+      selected_motor_id: null,
+      selected_motor_snapshot: null,
+      design_result: null,
+      step: 'inputs'
+    } : {};
+
     const updatedProject = await prisma.projects.update({
       where: { id: Number(projectId) },
       data: {
         ...(input_P && { input_P: Number(input_P) }),
         ...(input_n_ct && { input_n_ct: Number(input_n_ct) }),
         ...(input_L && { input_L: Number(input_L) }),
+        ...resetData,
         updatedAt: new Date(),
       },
       select: { id: true, name: true, input_P: true, input_n_ct: true, input_L: true, step: true },
