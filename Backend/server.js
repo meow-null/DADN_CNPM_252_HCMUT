@@ -50,7 +50,10 @@ const allowedOrigins = [
 ];
 // Thêm domain Vercel frontend từ biến môi trường (khi deploy production)
 if (process.env.FRONTEND_URL) {
-    allowedOrigins.push(process.env.FRONTEND_URL);
+    // Loại bỏ dấu nháy đơn, nháy kép và dấu gạch chéo cuối url nếu có
+    const formattedOrigin = process.env.FRONTEND_URL.replace(/['"]/g, "").replace(/\/$/, "");
+    allowedOrigins.push(formattedOrigin);
+    allowedOrigins.push(`${formattedOrigin}/`);
 }
 app.use(cors({ 
     origin: allowedOrigins, 
