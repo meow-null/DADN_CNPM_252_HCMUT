@@ -7,8 +7,8 @@ export const inputService = {
     const { name, input_P, input_n_ct, input_L, selected_material_id } = req.body;
     const errors = [];
     
-    if (!name || name.trim().length < 1 || name.trim().length > 50) {
-      errors.push('Tên dự án phải dài từ 1 đến 50 ký tự');
+    if (!name || name.trim().length < 3 || name.trim().length > 50) {
+      errors.push('Tên dự án phải dài từ 3 đến 50 ký tự');
     }
     
     if (input_P === undefined || input_P === null || input_P === '') {
@@ -100,8 +100,8 @@ export const inputService = {
 
     const errors = [];
     if (name !== undefined) {
-      if (!name || name.trim().length < 1 || name.trim().length > 50) {
-        errors.push('Tên dự án phải dài từ 1 đến 50 ký tự');
+      if (!name || name.trim().length < 3 || name.trim().length > 50) {
+        errors.push('Tên dự án phải dài từ 3 đến 50 ký tự');
       }
     }
 

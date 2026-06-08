@@ -68,8 +68,8 @@ export const projectService = {
 
     const errors = [];
     if (name !== undefined) {
-      if (!name || name.trim().length < 1 || name.trim().length > 50)
-        errors.push('Tên dự án phải dài từ 1 đến 50 ký tự');
+      if (!name || name.trim().length < 3 || name.trim().length > 50)
+        errors.push('Tên dự án phải dài từ 3 đến 50 ký tự');
     }
     if (input_P === '') {
       errors.push('Vui lòng nhập Công suất P');
