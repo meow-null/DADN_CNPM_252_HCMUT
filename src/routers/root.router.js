@@ -7,6 +7,7 @@ import motorRouter from "./motor.router.js";
 import designRouter from "./design.router.js";
 import materialRouter from "./material.router.js";
 import reportRouter from "./report.router.js";
+import catalogRouter from "./catalog.router.js";
 
 const rootRouter = express.Router()
 rootRouter.use("/projects", inputRouter);
@@ -18,5 +19,6 @@ rootRouter.use("/projects/:projectId/motors", motorRouter);
 rootRouter.use("/projects/:projectId/design", designRouter);
 rootRouter.use("/projects/:projectId/report", reportRouter);
 rootRouter.use("/materials", materialRouter);
+rootRouter.use("/catalog", catalogRouter);
 
 export default rootRouter
