@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { formatNumber } from '../utils/formatUtils';
 import ReactMarkdown from 'react-markdown';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3069/api';
+
 export default function Reports({ onNavigate, activeProject, kinematicsResult }) {
   // Quản lý trạng thái bật/tắt của Modal Preview PDF
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -18,7 +20,7 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
     setIsGenerating(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:3069/api/projects/${activeProject.id}/report/preview`, {
+      const response = await fetch(`${API_BASE_URL}/projects/${activeProject.id}/report/preview`, {
         credentials: 'include'
       });
       const data = await response.json();
@@ -52,7 +54,7 @@ export default function Reports({ onNavigate, activeProject, kinematicsResult })
     }
     setIsExporting(true);
     try {
-      const url = `http://localhost:3069/api/projects/${activeProject.id}/report/${type}`;
+      const url = `${API_BASE_URL}/projects/${activeProject.id}/report/${type}`;
       
       const response = await fetch(url, {
         method: 'POST',
