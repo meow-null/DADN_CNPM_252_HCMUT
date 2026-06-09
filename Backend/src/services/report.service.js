@@ -13,8 +13,8 @@ export const reportService = {
 
     if (!project) throw new BadRequestException("Project không tồn tại");
 
-    if (!process.env.LM_STUDIO_URL) {
-       throw new BadRequestException("Chưa cấu hình LM_STUDIO_URL");
+    if (!process.env.OPENROUTER_API_KEY) {
+       throw new BadRequestException("Chưa cấu hình OPENROUTER_API_KEY");
     }
 
     const prompt = `
@@ -46,25 +46,30 @@ Yêu cầu báo cáo:
 `;
 
     try {
-      const response = await fetch(process.env.LM_STUDIO_URL, {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "HTTP-Referer": "http://localhost:3000",
+          "X-Title": "Mixer Gearbox App"
+        },
         body: JSON.stringify({
-          model: "local-model",
+          model: process.env.OPENROUTER_MODEL || "google/gemini-2.5-flash",
           messages: [{ role: "user", content: prompt }],
           temperature: 0.7
         })
       });
 
       if (!response.ok) {
-        throw new Error(`LM Studio trả về lỗi: ${response.statusText}`);
+        throw new Error(`OpenRouter trả về lỗi: ${response.statusText}`);
       }
 
       const data = await response.json();
       const text = data.choices?.[0]?.message?.content || "";
       return { markdown: text };
     } catch (error) {
-      throw new BadRequestException("Lỗi khi gọi API LM Studio: " + error.message);
+      throw new BadRequestException("Lỗi khi gọi API OpenRouter: " + error.message);
     }
   },
 

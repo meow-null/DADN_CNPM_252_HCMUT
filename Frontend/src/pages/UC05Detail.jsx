@@ -1032,7 +1032,7 @@ export default function UC05Detail({ activeProject, kinematicsResult, onNavigate
           <div>
             <h3 className="font-extrabold text-slate-800 flex items-center gap-2 font-heading text-lg">
               <span className="w-1.5 h-5 bg-blue-600 rounded-full"></span>
-              Thiết kế chi tiết máy (UC-05)
+              Thiết kế chi tiết máy
             </h3>
             <p className="text-xs text-slate-400 mt-1 font-semibold">
               Dự án: <span className="text-slate-700 font-bold">{activeProject?.name || '—'}</span>
